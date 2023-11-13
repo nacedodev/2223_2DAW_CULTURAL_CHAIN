@@ -41,6 +41,20 @@ body{
     margin: auto;
     height: 75px;
 }
+#divderecha>div>div:nth-child(1)>div{
+    width: 60px;
+    height: 60px;
+    border-radius: 7px;
+    background: #6F7789;
+    float:left;
+    margin-left: 42px;
+    margin-top: 15px;
+}
+#divderecha>div>div:nth-child(1)>div:hover{
+    box-shadow: 0px 0px 24px 6px rgba(255, 255, 255, 0.25);
+    background-color: white;
+}
+
 #divderecha>div>p{
     text-align: center;
     margin-bottom: 0px;
