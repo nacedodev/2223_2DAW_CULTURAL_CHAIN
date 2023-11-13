@@ -54,6 +54,25 @@ body{
     display: block;
     top:70px;
 }
+#score{
+    width: 48px;
+    height: 158px;
+    position: relative;
+    left: 860px;
+    bottom: 624px;
+    padding-top: 60px;
+}
+#score>p{
+    color: #6F7789;
+    text-align: center;
+    font-size: 25px;
+    font-weight: 600;
+    transform: rotate(-90deg);
+}
+#score>:nth-child(2){
+    font-size: 60px;
+    margin-top: 0px;
+}
 #nombreapp{
     color: #6F7789;
     text-align: center;
