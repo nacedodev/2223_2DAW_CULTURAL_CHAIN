@@ -28,6 +28,32 @@ body{
     font-size: 20px;
     margin-top: 0px;
 }
+#restart{
+    width: 48px;
+    height: 158px;
+    position: relative;
+    left: 80px;
+    bottom: 450px;
+    border-radius: 35px;
+    background: #6F7789;
+}
+#restart>p,img{
+    transform: rotate(-90deg);
+    position: relative;
+}
+#restart>p{
+    display: block;
+    top: 70px;
+    color: #252638;
+    text-align: center;
+    font-size: 17px;
+    font-weight: 700;
+}
+#restart>img{
+    margin: auto;
+    display: block;
+    top:70px;
+}
 #nombreapp{
     color: #6F7789;
     text-align: center;
