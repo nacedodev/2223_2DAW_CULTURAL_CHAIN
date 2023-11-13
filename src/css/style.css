@@ -37,7 +37,7 @@ body{
     border-radius: 35px;
     background: #6F7789;
 }
-#restart>p,img{
+#restart>p,#restart>img{
     transform: rotate(-90deg);
     position: relative;
 }
