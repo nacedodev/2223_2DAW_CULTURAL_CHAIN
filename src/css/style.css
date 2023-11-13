@@ -1,5 +1,6 @@
 html{
     width: 1440px;
+    height: 900px;
 }
 body{
     width: 100%;
@@ -7,6 +8,7 @@ body{
     margin: 0px;
     background-color: #252638;
 }
+/*Pagina inicial*/
 #divizquierda,#divderecha{
     height: 780px;
     float: left;
@@ -14,7 +16,7 @@ body{
 #divizquierda{
     width: 70%;
 }
-#divizquierda>img{
+#logo{
     width: 60px;
     border-radius: 40px;
     margin-top: 15px;
@@ -106,7 +108,7 @@ body{
     margin: auto;
     height: 75px;
 }
-#divderecha>div>div:nth-child(1)>div{
+.boton{
     width: 60px;
     height: 60px;
     border-radius: 7px;
@@ -115,11 +117,11 @@ body{
     margin-left: 42px;
     margin-top: 15px;
 }
-#divderecha>div>div:nth-child(1)>div:hover{
+.boton:hover{
     box-shadow: 0px 0px 24px 6px rgba(255, 255, 255, 0.25);
     background-color: white;
 }
-#divderecha>div>div:nth-child(1)>div>a>img{
+.boton>a>img{
     margin: auto;
     width: 40px;
     height: 40px;
@@ -165,4 +167,68 @@ body{
     font-style: normal;
     font-weight: 700;
     margin-top: 5px;
+}
+/*Ranking*/
+#ranking>.boton{
+    float: right;
+}
+#tituloranking{
+    color: #6F7789;
+    text-align: center;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    font-size: 59px;
+    font-weight: 900;
+    margin-top: 0px;
+    position: relative;
+    bottom:35px;
+}
+#tablonranking{
+    width: 50%;
+    height: 600px;
+    border-radius: 15px;
+    background: #171726;
+    margin: auto;
+    position: relative;
+    bottom:50px;
+    overflow: scroll;
+    scrollbar-width: none;
+    padding: 15px;
+}
+#tablonranking::-webkit-scrollbar{
+    display: none;
+}
+#tablonranking>div{
+    border-radius: 14px;
+    background: #6F7789;
+    height: 75px;
+    margin-top: 15px;
+}
+#tablonranking>div>p{
+    float: left;
+    margin-left: 35px;
+    margin-bottom: 0px;
+    color: #252638;
+    font-feature-settings: 'clig' off, 'liga' off;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    font-weight: 900;
+}
+#tablonranking>div>p:nth-child(1){
+    font-size: 30px;
+    margin-top: 20px;
+}
+#tablonranking>div>p:nth-child(2){
+    font-size: 20px;
+    margin-top: 26px;
+}
+#tablonranking>div>p:nth-child(3){
+    font-size: 15px;
+    margin-left: 75px;
+    margin-top: 25px;
+}
+#tablonranking>div>p:nth-child(4){
+    font-size: 15px;
+    margin-left: 75px;
+    margin-top: 40px;
+    position: relative;
+    right: 135px;
 }
