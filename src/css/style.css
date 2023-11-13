@@ -222,7 +222,7 @@ body{
 }
 #tablonranking>div>p:nth-child(3){
     font-size: 15px;
-    margin-left: 75px;
+    margin-left: 100px;
     margin-top: 25px;
 }
 #tablonranking>div>p:nth-child(4){
@@ -231,4 +231,22 @@ body{
     margin-top: 40px;
     position: relative;
     right: 135px;
+}
+#tablonranking>div>p:nth-child(5){
+    font-size: 15px;
+    margin-top: 31px;
+    position: relative;
+    right: 80px;
+}
+#tablonranking>div>p:nth-child(6){
+    font-size: 30px;
+    margin-top: 20px;
+    position: relative;
+    right: 80px;  
+}
+#tablonranking>div>img{
+    width: 30px;
+    margin-top: 15px;
+    position: relative;
+    right: 20px;  
 }
