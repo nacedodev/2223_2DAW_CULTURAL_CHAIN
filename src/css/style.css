@@ -1,0 +1,22 @@
+html{
+    width: 100%;
+    height: 100%;
+}
+body{
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+    background-color: #252638;
+}
+#divizquierda{
+    width: 70%;
+    height: 780px;
+    background-color: red;
+    float: left;
+}
+#divderecha{
+    width: 30%;
+    height: 780px;
+    background-color: yellow;
+    float: left;
+}
