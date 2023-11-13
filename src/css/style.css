@@ -8,15 +8,22 @@ body{
     margin: 0px;
     background-color: #252638;
 }
+#divizquierda,#divderecha{
+    height: 780px;
+    float: left;
+}
 #divizquierda{
     width: 70%;
-    height: 780px;
     background-color: red;
-    float: left;
+}
+#divizquierda>img{
+    width: 60px;
+    border-radius: 40px;
+    margin-top: 15px;
+    margin-left: 20px;
+    box-shadow: 0px 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 #divderecha{
     width: 30%;
-    height: 780px;
     background-color: yellow;
-    float: left;
 }
