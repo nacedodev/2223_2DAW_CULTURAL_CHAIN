@@ -53,17 +53,16 @@ export class VistaPrincipal extends Vista{
         this.style.filter = 'none'
     }
 
-    drop(e) {
+    drop = (e) => {
         e.preventDefault();
         const personajeId = e.dataTransfer.getData('text/plain');
-        console.log(personajeId)
         const personaje = document.getElementById(personajeId);
 
         // Obtener las coordenadas del evento de soltar en relación con el tablero
         const dropX = e.clientX - 8
         const dropY = e.clientY - 8
 
-        // Establecer las coordenadas de posición del personaje
+        //Establecer las coordenadas de posición del personaje
         personaje.style.position = 'absolute';
         personaje.style.left = dropX + 'px';
         personaje.style.top = dropY + 'px';
@@ -72,6 +71,6 @@ export class VistaPrincipal extends Vista{
         this.tablero.appendChild(personaje);
         this.tablero.style.filter = 'none'; // Restaurar el fondo a su estado original
         this.divPersonajes.style.animation = 'disappearRight 2s forwards'
-        this.tablero.style.animation = 'enlargeBoard 2s forwards'
+        //this.tablero.style.animation = 'enlargeBoard 2s forwards'
     }
 }
