@@ -13,15 +13,14 @@ class ControladorCentros {
     }
 
     public function listarCentros() {
-        return $this->objCentros->listar();
+    
+            return $this->objCentros->listar();
+       
     }
     
-    public function aniadirCentro($id,$nombre,$localidad) {
+    public function aniadirCentro($nombre,$localidad) {
         
-        return $this->objCentros->aniadir($id,$nombre,$localidad);
-
+        $this->objCentros->aniadir($nombre,$localidad);
     }
-    
-   
 }
 ?>

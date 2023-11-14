@@ -7,16 +7,12 @@ class Centro {
         $this->conexion = new mysqli(HOST, USER, PASSWORD, DATABASE);
     }
 
-    public function aniadir($id, $nombre, $localidad) {
-        $query = "INSERT INTO centro (id, nombre, localidad) VALUES ('$id', '$nombre', '$localidad')";
+    public function aniadir($nombre, $localidad) {
+        $query = "INSERT INTO centro (nombre, localidad) VALUES ('$nombre', '$localidad')";
+
     
         try {
             $resultado = $this->conexion->query($query);
-            if ($resultado) {
-                return true; 
-            } else {
-                return false; 
-            }
         } catch (mysqli_sql_exception $e) {
             if ($e->getCode() === 1062) {
                 // Código 1062 indica una violación de clave única

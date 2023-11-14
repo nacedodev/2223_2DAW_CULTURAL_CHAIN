@@ -8,7 +8,7 @@
 <body>
     
 <h2>Tabla - Centro</h2>
-<button>Añadir</button>
+<a href="aniadirCentros.php"><button>Añadir</button></a>
 <table>
     <tr>
         <th>ID</th>
@@ -17,7 +17,7 @@
         
     </tr>
     <?php 
-    
+    require_once '../controllers/centros.php';
 
     $centrosController = new ControladorCentros();
     $centros = $centrosController->listarCentros(); 
