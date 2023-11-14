@@ -7,8 +7,22 @@ class Centro {
         $this->conexion = new mysqli(HOST, USER, PASSWORD, DATABASE);
     }
 
-    public function añadir() {
-      
+    public function aniadir($id, $nombre, $localidad) {
+        $query = "INSERT INTO centro (id, nombre, localidad) VALUES ('$id', '$nombre', '$localidad')";
+    
+        try {
+            $resultado = $this->conexion->query($query);
+            if ($resultado) {
+                return true; 
+            } else {
+                return false; 
+            }
+        } catch (mysqli_sql_exception $e) {
+            if ($e->getCode() === 1062) {
+                // Código 1062 indica una violación de clave única
+                echo 'nombre duplicado';
+            } 
+        }
     }
 
     public function modificar() {
@@ -42,7 +56,7 @@ class Centro {
             echo 'Error al consultar la base de datos';
         } else {
             if ($resultado->num_rows === 0) {
-                // No se encontraron filas en la tabla "lugar"
+                // No se encontraron filas en la tabla "nombre"
                 echo 'No se encontraron registros en la tabla "centros"';
             } else {
                 foreach ($resultado as $row) {

@@ -10,14 +10,36 @@
 <h2>Tabla - Centro</h2>
 <button>Añadir</button>
 <table>
+    <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Dirección</th>
+        
+    </tr>
+    <?php 
+    
 
-        <tr>
-            <th></th>
-        </tr>
-        <tr>
-            <td></td>
-        </tr>
-       
+    $centrosController = new ControladorCentros();
+    $centros = $centrosController->listarCentros(); 
+    
+foreach ($centros as $centro) {
+?>
+    <tr>
+        <td><?php echo $centro['id']; ?></td>
+        <td><?php echo $centro['nombre']; ?></td>
+        <td><?php echo $centro['localidad']; ?></td>
+        <td>
+          
+            <button>Borrar</button>
+            <button>Modificar</button>
+            <button>Clases</button>
+        </td>
+    </tr>
+<?php
+}
+?>
+
 </table>
+
 </body>
 </html>
