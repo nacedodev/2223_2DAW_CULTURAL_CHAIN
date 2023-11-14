@@ -218,6 +218,19 @@ body{
     width: 40px;
     margin-top: 20px;
 }
+#tablonranking>:nth-child(-n+3)>p:nth-child(1){
+    font-size: 45px;
+    margin-top: 10px;
+}
+#tablonranking>:nth-child(1)>p:nth-child(1){
+   color: #F5C505;
+}
+#tablonranking>:nth-child(2)>p:nth-child(1){
+    color: #C0C0C0;
+ }
+ #tablonranking>:nth-child(3)>p:nth-child(1){
+    color: #CD7F32;
+ }
 #tablonranking>div>p:nth-child(2){
     font-size: 20px;
     margin-top: 26px;
@@ -250,6 +263,10 @@ body{
     margin-top: 15px;
     position: relative; 
     right: 40px;
+}
+.medalla{
+    left: 18px;
+    bottom:45px;
 }
 #ranking>#score{
     left:1100px;
