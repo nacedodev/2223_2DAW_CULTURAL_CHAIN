@@ -6,13 +6,20 @@
     <title>aniadir</title>
 </head>
 <body>
-<form id="formularioCentro" name="formularioCentro" action="procesarForm.php?accion=aniadir" method="post">
+<?php
+$id = isset($_GET['id']) ? $_GET['id'] : '';
+$nombre = isset($_GET['nombre']) ? $_GET['nombre'] : '';
+$localidad = isset($_GET['localidad']) ? $_GET['localidad'] : '';
+?>
 
-<label for="nombre">Nombre del Centro:</label>
-<input type="text" id="nombre" name="nombre" required>
+<form method="POST" action="procesarForm.php?accion=modificar">
+    <label for="ip">IP:</label>
+    <input  readonly type="text" name="id" value="<?php echo $id; ?>">
+    <label for="nombre">nombre:</label>
+    <input type="text" name="nombre" value="<?php echo $nombre; ?>"><br>
 
-<label for="localidad">Localidad:</label>
-<input type="text" id="localidad" name="localidad" required>
+    <label for="localidad">localidad:</label>
+    <input type="text" name="localidad" value="<?php echo $localidad; ?>"><br>
 
     <input type="submit">
 </form>

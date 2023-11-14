@@ -13,19 +13,20 @@ class ControladorCentros {
     }
 
     public function listarCentros() {
-    
-            return $this->objCentros->listar();
-       
+            return $this->objCentros->listar();   
     }
     
     public function aniadirCentro($nombre,$localidad) {
-        
         $this->objCentros->aniadir($nombre,$localidad);
     }
-    public function borrarCentros($id) {
-    
+
+    public function borrarCentros($id) { 
         return $this->objCentros->borrar($id);
-   
-}
+    }
+
+    public function modificarCentros($id, $nombre, $localidad) { 
+        return $this->objCentros->modificar($id, $nombre, $localidad);
+    }
+    
 }
 ?>

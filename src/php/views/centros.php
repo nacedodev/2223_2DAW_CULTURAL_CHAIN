@@ -31,7 +31,10 @@ foreach ($centros as $centro) {
         <td>
           
         <a href="procesarForm.php?accion=borrar&id=<?php echo $centro['id']; ?>"><button>Borrar</button></a>
-            <a href="procesarForm.php?accion=modificar&id=<?php echo $centro['id']; ?>"><button>Modificar</button></a>
+        <a href="modificarCentros.php?accion=modificar&id=<?php echo $centro['id']; ?>&nombre=<?php echo ($centro['nombre']); ?>&localidad=<?php echo ($centro['localidad']); ?>">
+             <button>Modificar</button>
+        </a>
+
             <a href="procesarForm.php?accion=clases&id=<?php echo $centro['id']; ?>"><button>Clases</button></a>
         </td>
         </td>

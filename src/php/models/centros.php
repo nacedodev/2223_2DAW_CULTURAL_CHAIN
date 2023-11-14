@@ -21,8 +21,10 @@ class Centro {
         }
     }
 
-    public function modificar() {
-       
+    public function modificar($id,$nombre,$localidad) {
+        $query = "UPDATE centro SET nombre = '$nombre', localidad = '$localidad' WHERE id = $id";
+        $resultado = $this->conexion->query($query);
+        return $resultado;
     }
 
     public function borrar($id) {
