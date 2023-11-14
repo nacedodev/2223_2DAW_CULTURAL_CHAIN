@@ -3,8 +3,6 @@ import { VistaSettings } from './views/vistaSettings.js';
 import { VistaRanking } from './views/vistaRanking.js';
 
 class Game {
-
-     
     constructor() {
 
         const div1 = document.getElementById('vistaPrincipal')
