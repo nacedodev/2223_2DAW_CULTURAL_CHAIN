@@ -30,9 +30,10 @@ foreach ($centros as $centro) {
         <td><?php echo $centro['localidad']; ?></td>
         <td>
           
-            <button>Borrar</button>
-            <button>Modificar</button>
-            <button>Clases</button>
+        <a href="procesarForm.php?accion=borrar&id=<?php echo $centro['id']; ?>"><button>Borrar</button></a>
+            <a href="procesarForm.php?accion=modificar&id=<?php echo $centro['id']; ?>"><button>Modificar</button></a>
+            <a href="procesarForm.php?accion=clases&id=<?php echo $centro['id']; ?>"><button>Clases</button></a>
+        </td>
         </td>
     </tr>
 <?php

@@ -22,5 +22,10 @@ class ControladorCentros {
         
         $this->objCentros->aniadir($nombre,$localidad);
     }
+    public function borrarCentros($id) {
+    
+        return $this->objCentros->borrar($id);
+   
+}
 }
 ?>

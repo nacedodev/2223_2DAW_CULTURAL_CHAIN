@@ -13,8 +13,12 @@ if ($accion === "aniadir") {
         header('Location: centros.php');
     
 } elseif ($accion === "modificar") {
-    // Resto del código para "modificar"
+    
 } elseif ($accion === "borrar") {
-    // Resto del código para "borrar"
+    $id =$_GET["id"];
+        $centrosController = new ControladorCentros();
+        $centrosController->borrarCentros($id);
+        header('Location: centros.php');
+
 }
 ?>
