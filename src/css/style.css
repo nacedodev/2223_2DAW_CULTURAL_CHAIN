@@ -171,6 +171,7 @@ button {
 }
 #divderecha>div>div>figure>img{
     width: 37px;
+    height: 60px;
     margin: auto;
     margin-top:15px;
     display: block;
