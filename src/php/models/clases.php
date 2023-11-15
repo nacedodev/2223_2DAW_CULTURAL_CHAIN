@@ -27,7 +27,20 @@ class Clase {
     }
 
     public function borrar($id) {
+        try {
+            $query = "DELETE FROM clase WHERE id = '$id'";
+            $resultado = $this->conexion->query($query);
     
+            if ($resultado === false) {
+               echo 'Error al eliminar la clase ';
+            }
+            //código de error de la existencia en otras tablas
+        } catch (mysqli_sql_exception $e) {
+            if ($e->getCode() === 1451) {
+                
+                echo 'clase tiene valores en otras tablas';
+            } 
+        }
     }
     public function listar($centro_id) {
         $query = "SELECT * FROM Clase WHERE centro_id = '$centro_id'";

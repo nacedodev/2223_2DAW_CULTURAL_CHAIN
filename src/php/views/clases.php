@@ -10,8 +10,6 @@
 <h2>Tabla - clase</h2>
 <?php   $centro_id = isset($_GET['id']) ? $_GET['id'] : null;?>
 <a href="aniadirClases.php?id=<?php echo $centro_id; ?>"><button>Añadir</button></a>
-
-
 <table>
     <tr>
         <th>ID</th>
@@ -33,7 +31,7 @@ foreach ($clases as $clase) {
         <td><?php echo $clase['clase']; ?></td>
         <td>
           
-        <a href="procesarForm.php?accion=borrar&id=<?php echo $clase['id']; ?>"><button>Borrar</button></a>
+        <a href="procesarClases.php?accion=borrar&id=<?php echo $clase['id']; ?>"><button>Borrar</button></a>
         <a href="modificarclases.php?accion=modificar&id=<?php echo $clase['id']; ?>&nombre=<?php echo ($clase['etapa']); ?>&localidad=<?php echo ($clase['clase']); ?>">
              <button>Modificar</button>
         </a>
