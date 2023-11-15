@@ -7,6 +7,15 @@ body{
     margin: 0px;
     background-color: #252638;
 }
+button {
+    border: none;
+    background: none;
+    padding: 0;
+    margin: 0;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit;
+}
 #titulo,#restart>p,#score>p,#nombreapp,#divderecha>div>p,#panelajustes>p,#divderecha>div>div>figure>figcaption,.tituloranking{
     text-align: center;  
 }
@@ -167,11 +176,14 @@ body{
     margin-top: 5px;
 }
 /*Ranking*/
-#ranking>.boton{
+#vistaRanking>.boton,
+#vistaAjustes>.boton{
     float: right;
 }
 .tituloranking{
     color: #6F7789;
+    width: fit-content;
+    margin: auto;
     font-size: 59px;
     font-weight: 900;
     margin-top: 0px;
@@ -184,6 +196,7 @@ body{
     border-radius: 15px;
     background: #171726;
     margin: auto;
+    margin-top: 35px;
     position: relative;
     bottom:50px;
     overflow: scroll;
@@ -268,7 +281,7 @@ body{
     left: 18px;
     bottom:45px;
 }
-#ranking>#score{
+#vistaRanking>#score{
     left:1100px;
     bottom:500px;
 }
@@ -294,9 +307,6 @@ a{
 /*Ajustes*/
 .boton>img{
     margin-top: 0px;
-}
-#ajustes>.boton{
-    float: right;  
 }
 #panelajustes{
     margin: auto;
@@ -325,4 +335,25 @@ a{
     color: #252638;
     text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     font-weight: 900;
+}
+
+@keyframes disappearRight {
+    0% {
+        transform: translateX(0%);
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(100%);
+        opacity: 0;
+        display: none;
+    }
+}
+
+@keyframes enlargeBoard {
+    0% {
+        transform: translateX(0px) scale(1);
+      }
+      100% {
+        transform: translateX(200px) scale(1.1);
+      }
 }
