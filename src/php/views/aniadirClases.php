@@ -6,10 +6,13 @@
     <title>aniadir</title>
 </head>
 <body>
-<form id="formularioClases" name="formularioClases" action="procesarClases.php?accion=aniadir" method="post">
 
 
-
+<?php
+    $centro_id = isset($_GET['id']) ? $_GET['id'] : null;
+    ?>
+<form id="formularioClases" name="formularioClases" action="procesarClases.php?accion=aniadir&id=<?php echo $centro_id; ?>" method="post">
+    <input type="hidden" name="centro_id" value="<?php echo $centro_id; ?>">
 <label for="etapa">etapa:</label>
 <input type="text" id="etapa" name="etapa" required>
 

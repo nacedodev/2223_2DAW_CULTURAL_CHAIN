@@ -8,7 +8,10 @@
 <body>
     
 <h2>Tabla - clase</h2>
-<a href="aniadirClases.php"><button>Añadir</button></a>
+<?php   $centro_id = isset($_GET['id']) ? $_GET['id'] : null;?>
+<a href="aniadirClases.php?id=<?php echo $centro_id; ?>"><button>Añadir</button></a>
+
+
 <table>
     <tr>
         <th>ID</th>
@@ -18,9 +21,9 @@
     </tr>
     <?php 
     require_once '../controllers/clases.php';
-    $curso_id = isset($_GET['id']) ? $_GET['id'] : null;
+  
     $clasesController = new ControladorClases();
-    $clases = $clasesController->listarClases($curso_id); 
+    $clases = $clasesController->listarClases($centro_id); 
     
 foreach ($clases as $clase) {
 ?>

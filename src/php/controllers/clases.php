@@ -17,8 +17,10 @@ class ControladorClases {
             return $this->objClases->listar($centro_id);   
     }
     
-    public function aniadirClases($etapa,$clase) {
-        $this->objClases->aniadir($etapa,$clase);
+    public function aniadirClases($etapa,$clase,$centro_id) {
+        $centro_id = isset($_GET['id']) ? $_GET['id'] : null;
+         $this->objClases->aniadir($etapa,$clase,$centro_id);
+         
     }
 
     public function borrarClases($id) { 

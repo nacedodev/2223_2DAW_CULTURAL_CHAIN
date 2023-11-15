@@ -7,9 +7,9 @@ class Clase {
         $this->conexion = new mysqli(HOST, USER, PASSWORD, DATABASE);
     }
 
-    public function aniadir($etapa, $clase) {
-            $query = "INSERT INTO clase (etapa, c) VALUES ('$etapa', '$clase')";
-    
+    public function aniadir($etapa, $clase,$centro_id) {
+        $query = "INSERT INTO clase (etapa, clase, centro_id) VALUES ('$etapa', '$clase', '$centro_id')";
+        echo $query;
         
             try {
                 $resultado = $this->conexion->query($query);
