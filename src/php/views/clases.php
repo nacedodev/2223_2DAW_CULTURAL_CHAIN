@@ -31,7 +31,9 @@ foreach ($clases as $clase) {
         <td><?php echo $clase['clase']; ?></td>
         <td>
           
-        <a href="procesarClases.php?accion=borrar&id=<?php echo $clase['id']; ?>"><button>Borrar</button></a>
+        <a href="procesarClases.php?accion=borrar&id=<?php echo $clase['id']; ?>&id_centro=<?php echo $centro_id; ?>"><button>Borrar</button></a>
+
+
         <a href="modificarclases.php?accion=modificar&id=<?php echo $clase['id']; ?>&nombre=<?php echo ($clase['etapa']); ?>&localidad=<?php echo ($clase['clase']); ?>">
              <button>Modificar</button>
         </a>

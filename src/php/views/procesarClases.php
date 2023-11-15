@@ -13,7 +13,7 @@ if ($accion === "aniadir") {
     $clasesController = new ControladorClases();
     $clasesController->aniadirClases($etapa, $clase, $centro_id);
     
-    // Redirige después de agregar clases
+
     header("Location: clases.php?id=$centro_id");
     
 } elseif ($accion === "modificar") {
@@ -25,11 +25,18 @@ if ($accion === "aniadir") {
     $clasesController->modificarCentros($id,$etapa, $clase);
     header("Location: clases.php?id=$centro_id");
 } elseif ($accion === "borrar") {
-    $id =$_GET["id"];
     $id = isset($_GET["id"]) ? $_GET["id"] : null;
-        $clasesController = new ControladorClases();
-        $clasesController->borrarClases($id);
-        header("Location: clases.php?id=$centro_id");
+    $centro_id = isset($_GET["id_centro"]) ? $_GET["id_centro"] : null;
 
+    echo "ID de la clase a borrar: $id<br>";
+    echo "ID del centro asociado: $centro_id<br>";
+
+    $clasesController = new ControladorClases();
+    $resultadoBorrado = $clasesController->borrarClases($id);
+
+    
+        echo "Clase borrada correctamente.";
+        header("Location: clases.php?id=$centro_id");
+   
 }
 ?>

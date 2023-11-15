@@ -6,7 +6,7 @@ class ControladorClases {
    
     private $pagina;
     private $objClases;
-
+   
     public function __construct() {
         $this->pagina = '';
         $this->objClases = new Clase();
