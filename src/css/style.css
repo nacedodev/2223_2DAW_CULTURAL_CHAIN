@@ -19,6 +19,12 @@ button {
 #titulo,#restart>p,#score>p,#nombreapp,#divderecha>div>p,#panelajustes>p,#divderecha>div>div>figure>figcaption,.tituloranking{
     text-align: center;  
 }
+#vistaRanking>.boton,
+#vistaAjustes>.boton,
+#vistaCentro>.boton,
+#vistaCurso>.boton{
+    float: right;
+}
 /*Pagina inicial*/
 #divderecha{
     height: 780px;
@@ -185,10 +191,6 @@ button {
     margin-top: 5px;
 }
 /*Ranking*/
-#vistaRanking>.boton,
-#vistaAjustes>.boton{
-    float: right;
-}
 .tituloranking{
     color: #6F7789;
     width: fit-content;
@@ -220,7 +222,6 @@ button {
     background: #6F7789;
     height: 75px;
     margin-top: 15px;
-    scale:1;
 }
 #tablonranking>div:hover{
     scale: 1.03;
@@ -345,7 +346,73 @@ a{
     text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     font-weight: 900;
 }
-
+/*Centro*/
+#panelCentro{
+    width: 40%;
+    height: 450px;
+    border-radius: 15px;
+    background: #171726;
+    padding-top: 0px;
+    margin: auto;
+    margin-top: 35px;
+    position: relative;
+    bottom:50px;
+    overflow: scroll;
+    scrollbar-width: none;
+}
+#panelCentro::-webkit-scrollbar{
+    display: none;
+}
+#panelCentro>div:first-child{
+    width: 100%;
+    border-radius: 16px 16px 0px 0px;
+    background: #6F7789;
+    box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    padding-top: 15px;
+    position: absolute;
+}
+#panelCentro p{
+    margin-top: 0px;
+    float: left;
+    color: #252638;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    font-weight: 900;
+    font-size:30px;
+    margin-bottom: 10px;
+    margin-left: 25px;
+}
+#panelCentro>div:first-child>a>button{
+    margin-left: 320px;
+}
+#panelCentro>div:nth-child(2){
+    margin-top: 80px;
+    width: 100%;
+}
+#panelCentro>div:nth-child(2)>div{
+    border-radius: 14px;
+    background: #6F7789;
+    height: 30px;
+    padding-bottom:30px;
+    margin: 25px 5px;
+}
+#panelCentro>div:nth-child(2)>div p{
+    float: left;
+    font-size: 25px;
+    margin-top: 15px;
+}
+#panelCentro>div:nth-child(2)>div>a>img{
+    width: 40px;
+    float:left;
+    margin-left: 85px;
+    margin-top: 10px;
+}
+/*Curso*/
+#vistaCurso>#panelCentro{
+    width:25%;
+}
+#vistaCurso>#panelCentro>div:first-child>a>button{
+    margin-left: 150px;
+}
 @keyframes disappearRight {
     0% {
         transform: translateX(0%);
