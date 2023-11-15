@@ -3,5 +3,8 @@ CREATE TABLE Clase (
     etapa VARCHAR(50) NOT NULL,
     clase VARCHAR(50) NOT NULL,
     centro_id INT,
-    CONSTRAINT fk_nombre_centro FOREIGN KEY (centro_id) REFERENCES Centro(id)
+    CONSTRAINT fk_nombre_centro 
+        FOREIGN KEY (centro_id) 
+        REFERENCES Centro(id) 
+        ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
