@@ -6,7 +6,7 @@
     <title>aniadir</title>
 </head>
 <body>
-<form id="formularioCentro" name="formularioCentro" action="procesarForm.php?accion=aniadir" method="post">
+<form id="formularioCentro" name="formularioCentro" action="procesarCentros.php?accion=aniadir" method="post">
 
 <label for="nombre">Nombre del Centro:</label>
 <input type="text" id="nombre" name="nombre" required>

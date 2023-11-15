@@ -8,8 +8,6 @@
 <body>
 <div id="selector">
     <a href="php/views/centros.php">Centros</a>
-
-    <a href="">Cursos</a>
     <a href="">Personajes</a>
 </div>
 </body>

@@ -12,7 +12,7 @@ $nombre = isset($_GET['nombre']) ? $_GET['nombre'] : '';
 $localidad = isset($_GET['localidad']) ? $_GET['localidad'] : '';
 ?>
 
-<form method="POST" action="procesarForm.php?accion=modificar">
+<form method="POST" action="procesarCentros.php?accion=modificar">
     <label for="ip">IP:</label>
     <input  readonly type="text" name="id" value="<?php echo $id; ?>">
     <label for="nombre">nombre:</label>
