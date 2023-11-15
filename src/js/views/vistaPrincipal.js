@@ -8,6 +8,7 @@ export class VistaPrincipal extends Vista{
         const btnRanking = this.base.querySelectorAll('button')[1]
         const btnSettings = this.base.querySelectorAll('button')[2]
         this.tablero = document.getElementById('divtablero')
+        this.divIzq = document.getElementById('divizquierda')
         const personajes = this.base.querySelectorAll('.personaje')
         this.divPersonajes = document.getElementById('divderecha')
 
@@ -21,7 +22,7 @@ export class VistaPrincipal extends Vista{
         this.tablero.addEventListener('dragover', this.dragOver);
         this.tablero.addEventListener('dragenter', this.dragEnter);
         this.tablero.addEventListener('dragleave', this.dragLeave);
-        this.tablero.addEventListener('drop', this.drop);
+        this.divIzq.addEventListener('drop', this.drop);
 
         btnRanking.onclick = this.irRanking
         btnSettings.onclick = this.irSettings
@@ -31,12 +32,14 @@ export class VistaPrincipal extends Vista{
     irRanking = () => this.controlador.irAVista(this.controlador.vistaRanking)
 
     dragStart(e){
-        this.style.opacity = '0.5'
+        this.style.opacity = '0.6'
+        this.style.filter = 'drop-shadow(0px 0px 15px #000)';
         e.dataTransfer.setData('text/plain', e.target.id);
     }
 
     dragEnd(e){
-        this.style.opacity = 1
+        this.style.opacity = '1'
+        this.style.filter = 'none'
     }
 
     dragOver(e){
@@ -57,10 +60,10 @@ export class VistaPrincipal extends Vista{
         e.preventDefault();
         const personajeId = e.dataTransfer.getData('text/plain');
         const personaje = document.getElementById(personajeId);
-
         // Obtener las coordenadas del evento de soltar en relación con el tablero
+
         const dropX = e.clientX - 8
-        const dropY = e.clientY - 8
+        const dropY = e.clientY - parseInt(window.getComputedStyle(this.divIzq).marginTop)
 
         //Establecer las coordenadas de posición del personaje
         personaje.style.position = 'absolute';
@@ -71,6 +74,6 @@ export class VistaPrincipal extends Vista{
         this.tablero.appendChild(personaje);
         this.tablero.style.filter = 'none'; // Restaurar el fondo a su estado original
         this.divPersonajes.style.animation = 'disappearRight 2s forwards'
-        //this.tablero.style.animation = 'enlargeBoard 2s forwards'
+        this.divIzq.style.animation = 'enlargeBoard 2s forwards'
     }
 }
