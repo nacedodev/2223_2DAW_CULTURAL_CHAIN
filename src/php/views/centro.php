@@ -19,26 +19,24 @@
                 <a href="aniadirCentros.php"><button id="aniadircentro"><p>+</p></button></a>
            </div>
            <div>
-           <?php 
-    require_once '../controllers/centros.php';
+    <?php 
+        require_once '../controllers/centros.php';
 
-    $centrosController = new ControladorCentros();
-    $centros = $centrosController->listarCentros(); 
-    
-    foreach ($centros as $centro) {
+        $centrosController = new ControladorCentros();
+        $centros = $centrosController->listarCentros(); 
+        
+        foreach ($centros as $centro) {
     ?>
-                <div>  
-                     
+                <div>
                     <p><?php echo $centro['nombre']; ?></p>
                     <p><?php echo $centro['localidad']; ?></p>
                     <a href="clases.php?accion=clases&id=<?php echo $centro['id']; ?>"><p>></p></a> 
                     <a href="modificarCentros.php?accion=modificar&id=<?php echo $centro['id']; ?>&nombre=<?php echo ($centro['nombre']); ?>&localidad=<?php echo ($centro['localidad']); ?>"><p>M</p></a>
                     <a href="procesarCentros.php?accion=borrar&id=<?php echo $centro['id']; ?>"><img src="../../img/iconos/basura.png"></a>
-              
                 </div>
-                <?php
-}
-?>
+    <?php
+        }
+    ?>
            </div>
         </div>
         <p id="botonatras"><a href="inicio.html">ATRAS</a></p>
