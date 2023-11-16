@@ -4,13 +4,15 @@ export class VistaPrincipal extends Vista{
     constructor(controlador , base){
         super(controlador,base)
 
-
         const btnRanking = this.base.querySelectorAll('button')[1]
         const btnSettings = this.base.querySelectorAll('button')[2]
         this.tablero = document.getElementById('divtablero')
         this.divIzq = document.getElementById('divizquierda')
         const personajes = this.base.querySelectorAll('.personaje')
         this.divPersonajes = document.getElementById('divderecha')
+        this.info = this.base.querySelector('#info')
+        this.end = this.base.querySelector('#end')
+
 
         // habilitamos la capacidad de hacer drag & drop a los personajes
         personajes.forEach(personaje => {
@@ -26,6 +28,7 @@ export class VistaPrincipal extends Vista{
 
         btnRanking.onclick = this.irRanking
         btnSettings.onclick = this.irSettings
+        window.onkeydown = mostrarFormulario
     }
 
     irSettings = () => this.controlador.irAVista(this.controlador.vistaSettings)
@@ -62,7 +65,7 @@ export class VistaPrincipal extends Vista{
         const personaje = document.getElementById(personajeId);
         // Obtener las coordenadas del evento de soltar en relación con el tablero
 
-        const dropX = e.clientX - 8
+        const dropX = e.clientX
         const dropY = e.clientY - parseInt(window.getComputedStyle(this.divIzq).marginTop)
 
         //Establecer las coordenadas de posición del personaje
@@ -75,5 +78,8 @@ export class VistaPrincipal extends Vista{
         this.tablero.style.filter = 'none'; // Restaurar el fondo a su estado original
         this.divPersonajes.style.animation = 'disappearRight 2s forwards'
         this.divIzq.style.animation = 'enlargeBoard 2s forwards'
+        personaje.style.pointerEvents = 'none';
+        this.info.style.animation = 'ocultarTexto 1.5s forwards'
+        this.end.style.animation = 'mostrarTexto 4s forwards'
     }
 }
