@@ -8,7 +8,7 @@ class Clase {
     }
 
     public function aniadir($etapa, $clase,$centro_id) {
-        $query = "INSERT INTO clase (etapa, clase, centro_id) VALUES ('$etapa', '$clase', '$centro_id')";
+        $query = "INSERT INTO Clase (etapa, clase, centro_id) VALUES ('$etapa', '$clase', '$centro_id')";
         echo $query;
         
             try {
@@ -28,7 +28,7 @@ class Clase {
 
     public function borrar($id) {
         try {
-            $query = "DELETE FROM clase WHERE id = '$id'";
+            $query = "DELETE FROM Clase WHERE id = '$id'";
             $resultado = $this->conexion->query($query);
     
             if ($resultado === false) {

@@ -8,7 +8,7 @@ class Centro {
     }
 
     public function aniadir($nombre, $localidad) {
-        $query = "INSERT INTO centro (nombre, localidad) VALUES ('$nombre', '$localidad')";
+        $query = "INSERT INTO Centro (nombre, localidad) VALUES ('$nombre', '$localidad')";
 
     
         try {
@@ -22,17 +22,18 @@ class Centro {
     }
 
     public function modificar($id,$nombre,$localidad) {
-        $query = "UPDATE centro SET nombre = '$nombre', localidad = '$localidad' WHERE id = $id";
+        $query = "UPDATE Centro SET nombre = '$nombre', localidad = '$localidad' WHERE id = $id";
         $resultado = $this->conexion->query($query);
         return $resultado;
     }
 
     public function borrar($id) {
         try {
-            $query = "DELETE FROM centro WHERE id = '$id'";
-            $resultado = $this->conexion->query($query);
-    
+            $query = "DELETE FROM Centro WHERE id = '$id'";
+            
+            $resultado = $this->conexion->query($query); 
             if ($resultado === false) {
+               
                echo 'Error al eliminar el centro';
             }
             //código de error de la existencia en otras tablas

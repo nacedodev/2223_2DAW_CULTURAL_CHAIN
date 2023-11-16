@@ -10,7 +10,7 @@ if ($accion === "aniadir") {
  
         $centrosController = new ControladorCentros();
         $centrosController->aniadirCentro($nombre, $localidad);
-        header('Location: centros.php');
+    header('Location: centros.php');
     
 } elseif ($accion === "modificar") {
     $id = isset($_POST["id"]) ? $_POST["id"] : null;
@@ -19,7 +19,7 @@ if ($accion === "aniadir") {
 
     $centrosController = new ControladorCentros();
     $centrosController->modificarCentros($id,$nombre, $localidad);
-    header('Location: centros.php');
+   header('Location: centros.php');
 } elseif ($accion === "borrar") {
     $id =$_GET["id"];
     $id = isset($_GET["id"]) ? $_GET["id"] : null;
