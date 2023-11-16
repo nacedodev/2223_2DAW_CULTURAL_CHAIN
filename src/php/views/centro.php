@@ -7,9 +7,9 @@
         <link rel="stylesheet" href="../../css/style.css">
     </head>
     <body id="vistaCentro">
-        <img id="logo" src="img/iconos/logo.jpeg">
+        <img id="logo" src="../../img/iconos/logo.jpeg">
         <button class="boton">
-            <img src="img/iconos/sol.png">
+            <img src="../../img/iconos/sol.png">
         </button>
         <p class="tituloranking">CENTRO</p>
         <div id="panelCentro">
@@ -33,7 +33,7 @@
                     <p><?php echo $centro['localidad']; ?></p>
                     <a href="clases.php?accion=clases&id=<?php echo $centro['id']; ?>"><p>></p></a> 
                     <a href="modificarCentros.php?accion=modificar&id=<?php echo $centro['id']; ?>&nombre=<?php echo ($centro['nombre']); ?>&localidad=<?php echo ($centro['localidad']); ?>"><p>M</p></a>
-                    <a href="procesarCentros.php?accion=borrar&id=<?php echo $centro['id']; ?>"><img src="img/iconos/basura.png"></a>
+                    <a href="procesarCentros.php?accion=borrar&id=<?php echo $centro['id']; ?>"><img src="../../img/iconos/basura.png"></a>
               
                 </div>
                 <?php
