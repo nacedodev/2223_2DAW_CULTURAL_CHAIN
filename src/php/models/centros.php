@@ -56,7 +56,7 @@ class Centro {
         } else {
             if ($resultado->num_rows === 0) {
                 // No se encontraron filas en la tabla "nombre"
-                echo 'No se encontraron registros en la tabla "centros"';
+                echo '<div><p>No se encontraron registros en la tabla "centros"</p></div>';
             } else {
                 foreach ($resultado as $row) {
                     $centros[] = $row;
