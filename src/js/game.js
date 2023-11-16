@@ -31,6 +31,10 @@ class Game {
         this.ocultarVistas()
         vista.mostrar(true);
     }
+    
+    overlayForm(){
+        this.vistaForm.base.style.animation = 'mostrarForm 2s forwards'
+    }
 }
 
 // Crear una instancia de la clase Game

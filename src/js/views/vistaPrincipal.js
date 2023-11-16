@@ -12,6 +12,7 @@ export class VistaPrincipal extends Vista{
         this.divPersonajes = document.getElementById('divderecha')
         this.info = this.base.querySelector('#info')
         this.end = this.base.querySelector('#end')
+        this.showForm = false
 
 
         // habilitamos la capacidad de hacer drag & drop a los personajes
@@ -28,11 +29,20 @@ export class VistaPrincipal extends Vista{
 
         btnRanking.onclick = this.irRanking
         btnSettings.onclick = this.irSettings
-        window.onkeydown = mostrarFormulario
+        window.onkeydown = this.mostrarFormulario
     }
 
     irSettings = () => this.controlador.irAVista(this.controlador.vistaSettings)
     irRanking = () => this.controlador.irAVista(this.controlador.vistaRanking)
+     
+    mostrarFormulario = evento => {
+        if (evento.keyCode === 13 && this.showForm) {
+          this.controlador.overlayForm();
+          this.showForm = false;
+        }
+      }
+      
+      
 
     dragStart(e){
         this.style.opacity = '0.6'
@@ -75,6 +85,7 @@ export class VistaPrincipal extends Vista{
 
         // Agregar el personaje al tablero
         this.tablero.appendChild(personaje);
+        this.showForm = true
         this.tablero.style.filter = 'none'; // Restaurar el fondo a su estado original
         this.divPersonajes.style.animation = 'disappearRight 2s forwards'
         this.divIzq.style.animation = 'enlargeBoard 2s forwards'

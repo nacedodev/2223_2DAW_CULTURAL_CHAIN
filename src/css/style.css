@@ -366,6 +366,17 @@ a{
     font-weight: 900;
 }
 
+#vistaForm {
+    position: absolute;
+    z-index: 99;
+    width:1400px;
+    display: flex;
+    justify-content: center; /* Centrar horizontalmente */
+    align-items: center; /* Centrar verticalmente */
+    height: 100vh;
+    font-family: Arial, sans-serif;
+}
+
 form {
     background: #171726;
     width:30%;
@@ -520,3 +531,21 @@ form {
         display: none;
     }
 }
+
+@keyframes mostrarForm {
+    0% {
+        transform: scale(0);
+      opacity: 0;
+      visibility: hidden;
+      background-color: transparent;
+    }
+    20%{
+        transform: scale(1);
+        opacity: 1;
+    }
+    100% {
+      
+      visibility: visible;
+      background-color: rgba(0, 0, 0, 0.7);
+    }
+  }
