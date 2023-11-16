@@ -25,6 +25,42 @@
                 <p>00</p>
             </div>
         </div>
+        <div id="vistaForm" style="display: none;">
+            <form id="end">
+                <p id="over">GAME OVER</p>
+                <label for="nickname">Nickname:</label><br>
+                <input type="text" id="nickname" name="nickname" required>
+                <span id="nickname-error" class="error-message"></span><br><br>
+            
+                <label for="centro">Centro:</label><br>
+                <select id="centro" name="centro" required>
+                <option value="">Selecciona un centro</option>
+                <option value="Virgen de Guadalupe">Virgen de Guadalupe</option>
+                <option value="Clase 2">I.E.S San Roque</option>
+                <option value="Clase 3">Enrique Iglesias</option>
+                </select>
+            
+                <label for="correo">Email:</label><br>
+                <input type="email" id="correo" name="correo" required>
+                <span id="correo-error" class="error-message"></span><br><br>
+            
+                <label for="localidad">Localidad:</label><br>
+                <select id="localidad" name="barlocalidadrio" required>
+                    <option value="">Selecciona una localidad</option>
+                    <option value="Badajoz">Badajoz</option>
+                    <option value="Merida">Mérida</option>
+                    <option value="Caceres">Cáceres</option>
+                    <option value="Sevilla">Sevilla</option>
+                </select>
+            
+                <label for="cp">Código Postal:</label><br>
+                <input type="text" id="cp" name="cp" required>
+                <span id="cp-error" class="error-message"></span><br><br>
+            
+                <button type="button"">Enviar</button>
+                <span id="status-message" style="margin-left: 100px;"></span>
+            </form>
+        </div>
         <div id="divderecha">
             <div>
                 <div>
