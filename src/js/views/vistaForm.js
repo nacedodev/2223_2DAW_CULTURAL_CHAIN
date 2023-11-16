@@ -96,10 +96,8 @@ export class VistaForm extends Vista{
             input.style.filter = "drop-shadow(0 0 0.4em #FF4562)";
         }else{
             input.style.filter = "none";
-            return true
         }
         if(correo.value != '') this.validarEmail({target:correo})
-        return false
       }
 
     validarSelectL = evento => {
@@ -119,7 +117,7 @@ export class VistaForm extends Vista{
     const selectCentros = document.querySelectorAll("select")[0]
     const selectLocalidad = document.querySelectorAll('select')[1]
     const statusSpan = document.getElementById('status-message')
-    const errorMessages = document.querySelectorAll('span');
+    const errorMessages = document.getElementsByClassName('error-message');
   
     let todosLosCamposLlenos = true;
     let todosLosCamposVacios = true;
@@ -151,8 +149,7 @@ export class VistaForm extends Vista{
           todosLosCamposLlenos = false;
       }
     });
-
-    const todosLosMensajesVacios = Array.from(errorMessages).filter(errorMessage => errorMessage.id !== 'status-message').every(errorMessage => errorMessage.textContent === '');
+    const todosLosMensajesVacios = Array.from(errorMessages).every(errorMessage => errorMessage.textContent === '');
    
     if (todosLosCamposLlenos && todosLosMensajesVacios && this.centro.selectedIndex != 0 && this.localidad.selectedIndex != 0) {
         statusSpan.textContent = ''

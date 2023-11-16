@@ -151,7 +151,6 @@ button {
     height: 60px;
     border-radius: 7px;
     background: #6F7789;
-    float:left;
     margin-left: 42px;
     margin-top: 15px;
     padding:0px;
@@ -346,10 +345,10 @@ a{
     margin: auto;
     margin-bottom: 25px;
     width: 30%;
-    height: 400px;
     border-radius: 15px;
     background: #171726;
     padding-top:15px;
+    padding-bottom: 15px;
 }
 #panelbotones{
     width: fit-content;
