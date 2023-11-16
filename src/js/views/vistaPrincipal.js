@@ -4,14 +4,15 @@ export class VistaPrincipal extends Vista{
     constructor(controlador , base){
         super(controlador,base)
 
-        const btnRanking = this.base.querySelectorAll('button')[1]
-        const btnSettings = this.base.querySelectorAll('button')[2]
+        const btnRanking = this.base.querySelectorAll('button')[2]
+        const btnSettings = this.base.querySelectorAll('button')[3]
         this.tablero = document.getElementById('divtablero')
         this.divIzq = document.getElementById('divizquierda')
         const personajes = this.base.querySelectorAll('.personaje')
         this.divPersonajes = document.getElementById('divderecha')
         this.info = this.base.querySelector('#info')
         this.end = this.base.querySelector('#end')
+        this.form = document.getElementById('form-end')
         this.showForm = false
 
 
@@ -37,7 +38,7 @@ export class VistaPrincipal extends Vista{
      
     mostrarFormulario = evento => {
         if (evento.keyCode === 13 && this.showForm) {
-          this.controlador.overlayForm();
+          this.controlador.overlayForm(this.form);
           this.showForm = false;
         }
       }

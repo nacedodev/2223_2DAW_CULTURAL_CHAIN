@@ -32,8 +32,9 @@ class Game {
         vista.mostrar(true);
     }
     
-    overlayForm(){
-        this.vistaForm.base.style.animation = 'mostrarForm 2s forwards'
+    overlayForm(form) {
+        this.vistaForm.base.style.animation = 'blurBG 1s forwards';
+        form.style.animation = 'mostrarForm 2s forwards';
     }
 }
 

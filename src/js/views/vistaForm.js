@@ -5,15 +5,15 @@ export class VistaForm extends Vista{
         super(controlador,base)
         const nickname = document.getElementById("nickname");
         const correo = document.getElementById("correo");
-        const centro = document.getElementById("centro")
+        this.centro = document.getElementById("centro")
         const cp = document.getElementById("cp");
-        const localidad = document.getElementById('localidad')
-        const send = document.querySelectorAll('button')[0]
+        this. localidad = document.getElementById('localidad')
+        const send = document.getElementById('send')
 
         nickname.onblur = this.validarNick
         correo.onblur = this.validarEmail
-        centro.onchange = this.validarSelectC
-        localidad.onchange = this.validarSelectL
+        this.centro.onchange = this.validarSelectC
+        this.localidad.onchange = this.validarSelectL
         cp.onblur = this.validarCP
         send.onclick = this.validarForm
     }
@@ -96,8 +96,10 @@ export class VistaForm extends Vista{
             input.style.filter = "drop-shadow(0 0 0.4em #FF4562)";
         }else{
             input.style.filter = "none";
+            return true
         }
-        if(correo.value != '') validarEmail({target:correo})
+        if(correo.value != '') this.validarEmail({target:correo})
+        return false
       }
 
     validarSelectL = evento => {
@@ -108,7 +110,7 @@ export class VistaForm extends Vista{
             }else{
                 input.style.filter = "none";
             }
-            if(cp.value != '') validarCP({target:cp})
+            if(cp.value != '') this.validarCP({target:cp})
     }
    
    validarForm = () => {
@@ -124,11 +126,11 @@ export class VistaForm extends Vista{
   
     inputs.forEach(input => {
       if (input.id === "nickname") {
-          validarNick({ target: input });
+          this.validarNick({ target: input });
       } else if (input.id === "correo") {
-          validarEmail({ target: input });
+          this.validarEmail({ target: input });
       } else if (input.id === "cp") {
-          validarCP({ target: input });
+          this.validarCP({ target: input });
       } 
 
       if(selectCentros.selectedIndex === 0){
@@ -152,13 +154,18 @@ export class VistaForm extends Vista{
 
     const todosLosMensajesVacios = Array.from(errorMessages).filter(errorMessage => errorMessage.id !== 'status-message').every(errorMessage => errorMessage.textContent === '');
    
-    if (todosLosCamposLlenos && todosLosMensajesVacios) {
+    if (todosLosCamposLlenos && todosLosMensajesVacios && this.centro.selectedIndex != 0 && this.localidad.selectedIndex != 0) {
         statusSpan.textContent = ''
         form.style.animation = 'okAnimation 3s forwards'
     
         setTimeout(function() {
             form.style.animation = 'sendTop 1.8s forwards'
+            form.parentElement.style.animation = 'hideBG 2s forwards'
           }, 3000);
+
+          setTimeout(function() {
+              form.parentElement.style.display = 'none'
+          }, 4800);
         
     }else if(todosLosCamposLlenos && !todosLosMensajesVacios){
         statusSpan.textContent = 'Algún campo es incorrecto'
