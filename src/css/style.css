@@ -4,6 +4,9 @@
 html{
     width: 1400px;
 }
+html::-webkit-scrollbar{
+    display: none;
+}
 body{
     width: 100%;
     height: 100vh;
@@ -36,7 +39,7 @@ button {
 }
 #divizquierda{
     width: 70%;
-    height: 90%;
+    height: 700px;
     float: left;
     margin-top: 60px;
 }
