@@ -31,6 +31,7 @@ out/
 
 # Dotfile detritus
 .DS_Store
+src/.DS_Store
 
 package.json
 package-lock.json
