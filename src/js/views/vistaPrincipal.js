@@ -1,5 +1,11 @@
 import { Vista } from "./vista.js"
-
+/**
+ * Clase que representa la vista principal del juego, que extiende de la clase `Vista`.
+ * @memberof VistaPrincipal
+ * @extends Vista
+ * @param {Object} controlador - El controlador asociado a la vista.
+ * @param {HTMLElement} base - El elemento base de la vista.
+ */
 export class VistaPrincipal extends Vista{
     constructor(controlador , base){
         super(controlador,base)
@@ -37,9 +43,21 @@ export class VistaPrincipal extends Vista{
         window.onkeydown = this.mostrarFormulario
     }
 
+     /**
+         * Realiza la navegación a la vista de configuración.
+         * @method
+         */
     irSettings = () => this.controlador.irAVista(this.controlador.vistaSettings)
+    /**
+         * Realiza la navegación al ranking.
+         * @method
+         */
     irRanking = () => this.controlador.irAVista(this.controlador.vistaRanking)
-     
+      /**
+         * Controla la visualización del formulario cuando se presiona la tecla Enter.
+         * @method
+         * @param {Event} evento - El evento del teclado que activa la acción.
+         */
     mostrarFormulario = evento => {
         if (evento.keyCode === 13 && this.showForm) {
           this.controlador.overlayForm(this.form);
@@ -60,6 +78,10 @@ export class VistaPrincipal extends Vista{
           }
       }
 
+        /**
+     * Reinicia el juego, eliminando todos los personajes del tablero y restableciendo los elementos de animación y visualización.
+     * @method
+     */
       restartGame = () => {
         // Remove all the characters from the tablero
         const personajes = this.tablero.querySelectorAll('.personaje');
@@ -82,31 +104,61 @@ export class VistaPrincipal extends Vista{
       }
     
 
-    dragStart(e){
-        this.style.opacity = '0.6'
+        /**
+     * Gestiona el evento dragStart para el personaje: cambia la opacidad y el filtro, y establece los datos de transferencia.
+     * @method
+     * @param {DragEvent} e - El evento de arrastre (dragStart).
+     */
+    dragStart(e) {
+        this.style.opacity = '0.6';
         this.style.filter = 'drop-shadow(0px 0px 15px #000)';
         e.dataTransfer.setData('text/plain', e.target.id);
     }
 
-    dragEnd(e){
-        this.style.opacity = '1'
-        this.style.filter = 'none'
+    /**
+     * Gestiona el evento dragEnd para el personaje: restablece la opacidad y el filtro.
+     * @method
+     * @param {DragEvent} e - El evento de arrastre (dragEnd).
+     */
+    dragEnd(e) {
+        this.style.opacity = '1';
+        this.style.filter = 'none';
     }
 
-    dragOver(e){
-        e.preventDefault()
+    /**
+     * Gestiona el evento dragOver para el tablero: previene el comportamiento predeterminado y aplica un filtro de sombra.
+     * @method
+     * @param {DragEvent} e - El evento de arrastre (dragOver).
+     */
+    dragOver(e) {
+        e.preventDefault();
         this.style.filter = 'drop-shadow(0px 0px 8px rgba(0, 0, 0, 0.5))';
     }
 
+    /**
+     * Gestiona el evento dragEnter para el tablero: previene el comportamiento predeterminado y aplica un filtro de sombra.
+     * @method
+     * @param {DragEvent} e - El evento de arrastre (dragEnter).
+     */
     dragEnter(e) {
         e.preventDefault();
         this.style.filter = 'drop-shadow(0px 0px 8px rgba(0, 0, 0, 0.5))';
     }
 
+    /**
+     * Gestiona el evento dragLeave para el tab ```javascript
+     * Gestiona el evento dragLeave para el tablero: elimina el filtro de sombra.
+     * @method
+     */
     dragLeave() {
-        this.style.filter = 'none'
+        this.style.filter = 'none';
     }
 
+    /**
+     * Gestiona el evento drop para el tablero: previene el comportamiento predeterminado, obtiene el ID del personaje arrastrado y clonado, establece las coordenadas de posición y agrega el personaje al tablero.
+     * @method
+     * @param {DragEvent} e - El evento de arrastre (drop).
+     */
     drop = (e) => {
         e.preventDefault();
         const personajeId = e.dataTransfer.getData('text/plain');

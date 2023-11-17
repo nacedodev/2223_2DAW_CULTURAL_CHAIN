@@ -1,5 +1,18 @@
-/* Clase de Servicio para llamadas AJAX */
+/**
+ * @class
+ * @classdesc Clase que representa un servicio para realizar llamadas AJAX utilizando los métodos GET y POST.
+ * @memberof Rest
+ * @author Nacho - Antonio - Mario
+ * @license MIT
+ */
 export class Rest {
+  /**
+   * Realiza una petición GET a la URL especificada con los parámetros proporcionados.
+   * @static
+   * @param {string} url - La URL a la que se realizará la petición.
+   * @param {Object} params - Los parámetros de la petición.
+   * @param {function} callback - La función de retorno para manejar la respuesta de la petición.
+   */
   static get(url, params, callback) {
     let paramsGET = '?';
     for (let param in params) {
@@ -21,7 +34,13 @@ export class Rest {
       )}
       });
   }
-  
+  /**
+     * Realiza una petición POST a la URL especificada con los parámetros proporcionados.
+     * @static
+     * @param {string} url - La URL a la que se realizará la petición.
+     * @param {Object} params - Los parámetros de la petición.
+     * @param {function} callback - La función de retorno para manejar la respuesta de la petición.
+     */
   static post(url, params, callback) {
     const requestOptions = {
       method: 'POST',

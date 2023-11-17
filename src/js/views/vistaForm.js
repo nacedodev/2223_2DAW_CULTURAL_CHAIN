@@ -1,5 +1,12 @@
 import { Vista } from "./vista.js"
-
+/**
+ * @class
+ * @classdesc Clase que representa una vista para la gestión y validación de formularios.
+ * @memberof VistaForm
+ * @extends Vista
+ * @param {Object} controlador - El controlador asociado a la vista.
+ * @param {HTMLElement} base - El elemento base de la vista.
+ */
 export class VistaForm extends Vista{
     constructor(controlador,base){
         super(controlador,base)
@@ -18,6 +25,11 @@ export class VistaForm extends Vista{
         send.onclick = this.validarForm
     }
 
+    /**
+ * Realiza la validación del campo de `nickname` en un formulario.
+ * @method
+ * @param {Event} evento - El evento `blur` que activa la validación.
+ */
     validarNick = evento => {
         const input = evento.target;
         const errorSpan = document.getElementById("nickname-error");
@@ -33,6 +45,11 @@ export class VistaForm extends Vista{
         }
     }
 
+    /**
+ * Realiza la validación del campo de `Email` en un formulario.
+ * @method
+ * @param {Event} evento - El evento `blur` que activa la validación.
+ */
     validarEmail = evento => {
         const input = evento.target;
         const errorSpan = document.getElementById("correo-error");
@@ -54,6 +71,11 @@ export class VistaForm extends Vista{
         }
     }
 
+        /**
+     * Realiza la validación del campo de `CP` en un formulario.
+     * @method
+     * @param {Event} evento - El evento `blur` que activa la validación.
+     */
     validarCP = evento => {
         const input = evento.target;
         const errorSpan = document.getElementById("cp-error");
@@ -89,88 +111,156 @@ export class VistaForm extends Vista{
         }
     }
 
-     validarSelectC = evento => {
-        const input = evento.target;
     
-        if(input.selectedIndex === 0){
+    /**
+     * Realiza la validación del campo de select `centro` en un formulario , para que se seleccione algún centro que no sea el por defecto.
+     * @method
+     * @param {Event} evento - El evento que activa la validación en este caso onchange.
+     */
+    validarSelectC = (evento) => {
+        const input = evento.target;
+
+        if (input.selectedIndex === 0) {
             input.style.filter = "drop-shadow(0 0 0.4em #FF4562)";
-        }else{
+        } else {
             input.style.filter = "none";
         }
-        if(correo.value != '') this.validarEmail({target:correo})
-      }
+        
+        if (correo.value !== '') {
+            // Se llama al método validarEmail pasando el campo de `correo` como parámetro.
+            this.validarEmail({ target: correo });
+        }
+    }
 
-    validarSelectL = evento => {
+    /**
+     * Realiza la validación del campo de select `centro` en un formulario , para que se seleccione algún centro que no sea el por defecto.
+     * @method
+     * @param {Event} evento - El evento que activa la validación en este caso onchange.
+     */
+    validarSelectL = (evento) => {
         const input = evento.target;
+
+        if (input.selectedIndex === 0) {
+            input.style.filter = "drop-shadow(0 0 0.4em #FF4562)";
+        } else {
+            input.style.filter = "none";
+        }
         
-            if(input.selectedIndex === 0){
-                input.style.filter = "drop-shadow(0 0 0.4em #FF4562)";
-            }else{
-                input.style.filter = "none";
+        if (cp.value !== '') {
+            // Se llama al método validarCP pasando el campo de `cp` como parámetro.
+            this.validarCP({ target: cp });
+        }
+    }
+
+   
+    /**
+     * Realiza la validación de un formulario completo y maneja su estado resultante.
+     * @method
+     */
+    validarForm = () => {
+        /**
+         *  Elemento del formulario
+         *  @type {HTMLElement}
+         */
+        const form = document.getElementById("form-end");
+        
+        /**
+         * Colección de elementos de entrada del formulario
+         * @type {NodeListOf<HTMLInputElement>}
+         */
+        const inputs = document.querySelectorAll("input");
+        
+        /**
+         * Elemento de selección de centros
+         * @type {HTMLSelectElement}
+         */
+        const selectCentros = document.querySelectorAll("select")[0];
+
+        /**
+         * Elemento de selección de localidad
+         * @type {HTMLSelectElement}
+         */
+        const selectLocalidad = document.querySelectorAll('select')[1];
+        
+        /**
+         * Elemento de espacio para mensajes de estado
+         * @type {HTMLElement}
+         */
+        const statusSpan = document.getElementById('status-message');
+        
+        /**
+         * Colección de elementos para mensajes de error
+         * @type {HTMLCollection}
+         */
+        const errorMessages = document.getElementsByClassName('error-message');
+        
+        let todosLosCamposLlenos = true;
+        let todosLosCamposVacios = true;
+    
+        inputs.forEach(input => {
+            if (input.id === "nickname") {
+                /**
+                 * Realiza la validación del campo `nickname`
+                 * @type {Function}
+                 */
+                this.validarNick({ target: input });
+            } else if (input.id === "correo") {
+                /**
+                 * Realiza la validación del campo `correo`
+                 * @type {Function}
+                 */
+                this.validarEmail({ target: input });
+            } else if (input.id === "cp") {
+                /**
+                 * Realiza la validación del campo `cp`
+                 * @type {Function}
+                 */
+                this.validarCP({ target: input });
             }
-            if(cp.value != '') this.validarCP({target:cp})
-    }
-   
-   validarForm = () => {
-    const form = document.getElementById("form-end");
-    const inputs = document.querySelectorAll("input");
-    const selectCentros = document.querySelectorAll("select")[0]
-    const selectLocalidad = document.querySelectorAll('select')[1]
-    const statusSpan = document.getElementById('status-message')
-    const errorMessages = document.getElementsByClassName('error-message');
-  
-    let todosLosCamposLlenos = true;
-    let todosLosCamposVacios = true;
-  
-    inputs.forEach(input => {
-      if (input.id === "nickname") {
-          this.validarNick({ target: input });
-      } else if (input.id === "correo") {
-          this.validarEmail({ target: input });
-      } else if (input.id === "cp") {
-          this.validarCP({ target: input });
-      } 
 
-      if(selectCentros.selectedIndex === 0){
-        selectCentros.style.filter = "drop-shadow(0 0 0.4em #FF4562)";
-      }else{
-        selectCentros.style.filter = "none";
-      }
+            if (selectCentros.selectedIndex === 0) {
+                selectCentros.style.filter = "drop-shadow(0 0 0.4em #FF4562)";
+            } else {
+                selectCentros.style.filter = "none";
+            }
 
-      if(selectLocalidad.selectedIndex === 0){
-        selectLocalidad.style.filter = "drop-shadow(0 0 0.4em #FF4562)";
-      }else{
-        selectLocalidad.style.filter = "none";
-      }
-      
-      if (input.value !== '') {
-          todosLosCamposVacios = false;
-      } else {
-          todosLosCamposLlenos = false;
-      }
-    });
-    const todosLosMensajesVacios = Array.from(errorMessages).every(errorMessage => errorMessage.textContent === '');
-   
-    if (todosLosCamposLlenos && todosLosMensajesVacios && this.centro.selectedIndex != 0 && this.localidad.selectedIndex != 0) {
-        statusSpan.textContent = ''
-        form.style.animation = 'okAnimation 3s forwards'
-    
-        setTimeout(function() {
-            form.style.animation = 'sendTop 1.8s forwards'
-            form.parentElement.style.animation = 'hideBG 2s forwards'
-          }, 3000);
-
-          setTimeout(function() {
-              form.parentElement.style.display = 'none'
-          }, 4800);
+            if (selectLocalidad.selectedIndex === 0) {
+                selectLocalidad.style.filter = "drop-shadow(0 0 0.4em #FF4562)";
+            } else {
+                selectLocalidad.style.filter = "none";
+            }
         
-    }else if(todosLosCamposLlenos && !todosLosMensajesVacios){
-        statusSpan.textContent = 'Algún campo es incorrecto'
-    }else if (todosLosCamposVacios) {
-        statusSpan.textContent = 'Todos los campos están vacíos';
-    } else {
-        statusSpan.textContent = 'Hay algún campo vacío';
-    }
-  };
-    
+            if (input.value !== '') {
+                todosLosCamposVacios = false;
+            } else {
+                todosLosCamposLlenos = false;
+            }
+        });
+        
+        /**
+         * Indica si todos los mensajes de error están vacíos
+         * @type {boolean}
+         */
+        const todosLosMensajesVacios = Array.from(errorMessages).every(errorMessage => errorMessage.textContent === '');
+
+        if (todosLosCamposLlenos && todosLosMensajesVacios && this.centro.selectedIndex !== 0 && this.localidad.selectedIndex !== 0) {
+            statusSpan.textContent = '';
+            form.style.animation = 'okAnimation 3s forwards';
+
+            setTimeout(function() {
+                form.style.animation = 'sendTop 1.8s forwards';
+                form.parentElement.style.animation = 'hideBG 2s forwards';
+            }, 3000);
+
+            setTimeout(function() {
+                form.parentElement.style.display = 'none';
+            }, 4800);
+        } else if (todosLosCamposLlenos && !todosLosMensajesVacios) {
+            statusSpan.textContent = 'Algún campo es incorrecto';
+        } else if (todosLosCamposVacios) {
+            statusSpan.textContent = 'Todos los campos están vacíos';
+        } else {
+            statusSpan.textContent = 'Hay algún campo vacío';
+        }
+    };
 }
