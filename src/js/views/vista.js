@@ -1,7 +1,6 @@
 /**
  * @class
  * @classdesc Clase que representa la gestión general para mostrar y ocultar vistas.
- * @memberof Vista
  * @author Nacho - Antonio - Mario
  * @license MIT
  * @param {Object} controlador - El controlador asociado a la vista.

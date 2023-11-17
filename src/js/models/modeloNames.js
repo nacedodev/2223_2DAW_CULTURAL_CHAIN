@@ -1,7 +1,6 @@
 /**
  * @class
  * @classdesc Clase que representa el modelo de almacenamiento de nombres de personajes.
- * @memberof ModeloNames
  * @author Nacho - Antonio - Mario
  * @license MIT
  */

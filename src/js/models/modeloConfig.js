@@ -1,7 +1,6 @@
 /**
  * @class
  * @classdesc Clase que representa el modelo de configuración del juego.
- * @memberof ModeloConfig
  * @author Nacho - Antonio - Mario
  * @license MIT
  */

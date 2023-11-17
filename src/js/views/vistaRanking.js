@@ -1,8 +1,9 @@
 import { Vista } from "./vista.js"
 /**
  * Clase que representa la vista del ranking, que extiende de la clase `Vista`.
- * @memberof VistaRanking
  * @extends Vista
+ * @author Nacho - Antonio - Mario
+ * @license MIT
  * @param {Object} controlador - El controlador asociado a la vista.
  * @param {HTMLElement} base - El elemento base de la vista.
  */
