@@ -1,8 +1,8 @@
 <?php
-define('HOST', 'localhost');   // Dirección del servidor MySQL
-define('USER', 'root');    // Nombre de usuario de MySQL
-define('PASSWORD', ''); // Contraseña de MySQL
-define('DATABASE', 'proyecto'); // Nombre de la base de datos
+define('HOST', '2daw.esvirgua.com');   // Dirección del servidor MySQL
+define('USER', 'user2daw_ABP');    // Nombre de usuario de MySQL
+define('PASSWORD', 'L.=K#2AM^F7T'); // Contraseña de MySQL
+define('DATABASE', 'user2daw_ABP_GrupoB'); // Nombre de la base de datos
 
 define('DEFAULT_CONTROLLER', 'Centros');
 define('DEFAULT_ACTION', 'listarCentros');
