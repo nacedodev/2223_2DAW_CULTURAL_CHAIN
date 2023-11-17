@@ -3,13 +3,13 @@
 class Clase {
     
     public function __construct() { 
-        require '../config/config_db.php';
+       
         $this->conexion = new mysqli(HOST, USER, PASSWORD, DATABASE);
     }
 
     public function aniadir($etapa, $clase,$centro_id) {
         $query = "INSERT INTO Clase (etapa, clase, centro_id) VALUES ('$etapa', '$clase', '$centro_id')";
-        echo $query;
+        
         
             try {
                 $resultado = $this->conexion->query($query);
@@ -22,8 +22,10 @@ class Clase {
     }
     
 
-    public function modificar() {
-       
+    public function modificar($id,$etapa,$clase) {
+        $query = "UPDATE Clase SET etapa = '$etapa', clase = '$clase' WHERE id = '$id'";
+        $resultado = $this->conexion->query($query);
+        return $resultado;
     }
 
     public function borrar($id) {

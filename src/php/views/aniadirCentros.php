@@ -1,12 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>aniadir</title>
-</head>
-<body>
-<form id="formularioCentro" name="formularioCentro" action="procesarCentros.php?accion=aniadir" method="post">
+
+
+<form id="formularioCentro" name="formularioCentro" action="index.php?action=aniadirCentro&controller=Centros" method="post">
 
 <label for="nombre">Nombre del Centro:</label>
 <input type="text" id="nombre" name="nombre" required>
@@ -16,6 +10,3 @@
 
     <input type="submit">
 </form>
-
-</body>
-</html>

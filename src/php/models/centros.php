@@ -3,7 +3,7 @@
 class Centro {
     
     public function __construct() { 
-        require '../config/config_db.php';
+       
         $this->conexion = new mysqli(HOST, USER, PASSWORD, DATABASE);
     }
 
@@ -22,7 +22,7 @@ class Centro {
     }
 
     public function modificar($id,$nombre,$localidad) {
-        $query = "UPDATE Centro SET nombre = '$nombre', localidad = '$localidad' WHERE id = $id";
+        $query = "UPDATE Centro SET nombre = '$nombre', localidad = '$localidad' WHERE id = '$id'";
         $resultado = $this->conexion->query($query);
         return $resultado;
     }
