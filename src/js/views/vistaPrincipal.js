@@ -6,8 +6,9 @@ export class VistaPrincipal extends Vista{
 
         this.asignarNames()
 
-        const btnRanking = this.base.querySelectorAll('button')[2]
-        const btnSettings = this.base.querySelectorAll('button')[3]
+        const btnRestart = document.getElementById('restart')
+        const btnRanking = this.base.querySelectorAll('button')[3]
+        const btnSettings = this.base.querySelectorAll('button')[4]
         this.tablero = document.getElementById('divtablero')
         this.divIzq = document.getElementById('divizquierda')
         const personajes = this.base.querySelectorAll('.personaje')
@@ -32,6 +33,7 @@ export class VistaPrincipal extends Vista{
 
         btnRanking.onclick = this.irRanking
         btnSettings.onclick = this.irSettings
+        btnRestart.onclick = this.restartGame
         window.onkeydown = this.mostrarFormulario
     }
 
@@ -56,8 +58,29 @@ export class VistaPrincipal extends Vista{
               figcaptions[i].innerText = '';
             }
           }
-          console.log(names)
       }
+
+      restartGame = () => {
+        // Remove all the characters from the tablero
+        const personajes = this.tablero.querySelectorAll('.personaje');
+        personajes.forEach(personaje => {
+          personaje.remove();
+        });
+    
+        // Reset the animations and display elements
+        this.divPersonajes.style.animation = 'none';
+        this.divIzq.style.animation = 'none';
+        this.divPersonajes.style.display = 'block';
+        this.divIzq.style.display = 'block';
+        this.info.style.animation = 'none';
+        this.end.style.animation = 'none';
+        this.form.style.animation = 'none';
+        this.tablero.style.filter = 'none';
+    
+        // Reset the showForm variable
+        this.showForm = false;
+      }
+    
 
     dragStart(e){
         this.style.opacity = '0.6'
@@ -88,18 +111,22 @@ export class VistaPrincipal extends Vista{
         e.preventDefault();
         const personajeId = e.dataTransfer.getData('text/plain');
         const personaje = document.getElementById(personajeId);
+
+        const personajeSelected = personaje.cloneNode(true);
+        
         // Obtener las coordenadas del evento de soltar en relación con el tablero
-
-        const dropX = e.clientX
-        const dropY = e.clientY - parseInt(window.getComputedStyle(this.divIzq).marginTop)
-
+        
+        const dropX = e.clientX - 15
+        const dropY = e.clientY - parseInt(window.getComputedStyle(this.divIzq).marginTop) - 10
+        
         //Establecer las coordenadas de posición del personaje
-        personaje.style.position = 'absolute';
-        personaje.style.left = dropX + 'px';
-        personaje.style.top = dropY + 'px';
+        personajeSelected.style.left = dropX + 'px';
+        personajeSelected.style.position = 'absolute';
+        personajeSelected.style.top = dropY + 'px';
 
+        
         // Agregar el personaje al tablero
-        this.tablero.appendChild(personaje);
+        this.tablero.appendChild(personajeSelected);
         this.showForm = true
         this.tablero.style.filter = 'none'; // Restaurar el fondo a su estado original
         this.divPersonajes.style.animation = 'disappearRight 2s forwards'

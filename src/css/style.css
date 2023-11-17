@@ -6,7 +6,7 @@ html{
 }
 body{
     width: 100%;
-    height: 100vh;
+    height: 100vh; 
     margin: 0px;
     background-color: #252638;
     font-family: 'Poppins', sans-serif;
@@ -22,6 +22,12 @@ button {
 }
 #titulo,#restart>p,#score>p,#nombreapp,#divderecha>div>p,#panelajustes>p,#divderecha>div>div>figure>figcaption,.tituloranking{
     text-align: center;  
+}
+#vistaRanking>.boton,
+#vistaAjustes>.boton,
+#vistaCentro>.boton,
+#vistaCurso>.boton{
+    float: right;
 }
 /*Pagina inicial*/
 #divderecha{
@@ -49,7 +55,7 @@ button {
 #titulo{
     color: #F5C505;
     text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    font-size: 12px;
+    font-size: 20px;
     margin-top: 0px;
     font-family: 'Press Start 2P', sans-serif;
 }
@@ -68,26 +74,25 @@ button {
 }
 #restart>p{
     display: block;
-    top: 70px;
     color: #252638;
     font-size: 17px;
     font-weight: 700;
+    top:15px;
 }
 #restart>img{
     margin: auto;
     display: block;
-    top:70px;
+    top:20px;
 }
 #score{
     width: 48px;
     height: 158px;
     position: relative;
-    left: 840px;
-    bottom: 660px;
+    left: 860px;
+    bottom: 624px;
     padding-top: 60px;
 }
 #score>p{
-    text-shadow: -3px 1px 4px rgba(0, 0, 0, 0.5);
     color: #6F7789;
     font-size: 25px;
     font-weight: 600;
@@ -137,7 +142,7 @@ button {
     margin-top: 15px;
     margin-bottom: 15px;
     flex-shrink: 0;
-    border-radius: 10px;
+    border-radius: 15px;
     background-color: #171726;
     box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.74);
 }
@@ -151,6 +156,7 @@ button {
     height: 60px;
     border-radius: 7px;
     background: #6F7789;
+    float:left;
     margin-left: 42px;
     margin-top: 15px;
     padding:0px;
@@ -164,12 +170,11 @@ button {
     width: 40px;
     height: 40px;
     display: block;
-    margin-top: 10px;
+    margin-top: 0px;
 }
 #divderecha>div>p,#panelajustes>p{
     margin-bottom: 0px;
     color: #6F7789;
-    /*font-family: Poppins;*/
     font-size: 18px;
 }
 #divderecha>div>p,#panelajustes>p,.tituloranking{
@@ -200,7 +205,7 @@ button {
 }
 #divderecha>div>div>figure>figcaption{
     color: #6F7789;
-    font-size: 11px;
+    font-size: 13px;
     font-style: normal;
     font-weight: 700;
     margin-top: 5px;
@@ -326,6 +331,7 @@ button {
     border-radius: 16px;
     background: #6F7789;
     box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    color:#252638;
     text-align: center;
     font-size: 25px;
 }
@@ -338,9 +344,6 @@ a{
     color: #252638;
 }
 /*Ajustes*/
-.boton>img{
-    margin-top: 0px;
-}
 #panelajustes{
     margin: auto;
     margin-bottom: 25px;
@@ -375,8 +378,8 @@ a{
     z-index: 99;
     width:1400px;
     display: flex;
-    justify-content: center; /* Centrar horizontalmente */
-    align-items: center; /* Centrar verticalmente */
+    justify-content: center; 
+    align-items: center;
     height: 100vh;
     font-family: Arial, sans-serif;
 }
@@ -395,74 +398,178 @@ a{
     font-size: 10px;
     margin-bottom: 13px;
 }
-
-
-form {
+/*Administracion*/
+#panelAdmin{
+    width: 40%;
+    height: 450px;
+    border-radius: 15px;
+    background: #171726;
+    padding-top: 0px;
+    margin: auto;
+    margin-top: 35px;
+    position: relative;
+    bottom:50px;
+    overflow: scroll;
+    scrollbar-width: none;
+}
+#panelAdmin::-webkit-scrollbar{
+    display: none;
+}
+#panelAdmin>a>div{
+    border-radius: 14px;
+    background: #6F7789;
+    height: 70px;
+    width: 80%;
+    margin: auto;
+    margin-top: 15px;
+}
+#panelAdmin>a>div:hover{
+    scale: 1.03;
+    box-shadow: 0px 0px 24px 6px rgba(255, 255, 255, 0.25);
+    background-color: rgb(209, 207, 207);
+}
+/*Centro*/
+#panelCentro{
+    width: 80%;
+    height: 450px;
+    border-radius: 15px;
+    background: #171726;
+    padding-top: 0px;
+    margin: auto;
+    margin-top: 35px;
+    position: relative;
+    bottom:50px;
+    overflow: scroll;
+    scrollbar-width: none;
+}
+#panelCentro::-webkit-scrollbar{
+    display: none;
+}
+#panelCentro>div:first-child{
+    width: 100%;
+    border-radius: 16px 16px 0px 0px;
+    background: #6F7789;
+    box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    padding-top: 15px;
+    position: absolute;
+}
+#panelCentro p{
+    margin-top: 0px;
+    float: left;
+    color: #252638;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    font-weight: 900;
+    font-size:20px;
+    margin-left: 25px;
+    margin-bottom: 10px;
+}
+#panelCentro>div:first-child>a>button{
+   float:right;
+   margin-right: 25px;
+}
+#panelCentro>div:nth-child(2){
+    margin-top: 80px;
+    width: 100%;
+}
+#panelCentro>div:nth-child(2)>div{
+    border-radius: 14px;
+    background: #6F7789;
+    height: 20px;
+    padding-bottom: 30px;
+    margin: 5px 5px;
+}
+#panelCentro>div:nth-child(2)>div p{
+    float: right;
+    font-size: 20px;
+    margin-top: 10px;
+    margin-right: 15px;
+}
+#panelCentro>div:nth-child(2)>div>p{
+    float: left;
+}
+#panelCentro>div:nth-child(2)>div>a>img{
+    width: 40px;
+    float:right;
+    margin-top: 5px;
+}
+/*Curso*/
+#vistaCurso>#panelCentro{
+    width:35%;
+}
+#vistaCurso>#panelCentro>div:first-child>a>button{
+    margin-left: 150px;
+}
+#panelCentro>#curso>div{
+    height: 10px;
+}
+#panelCentro>#curso>div p{
+    font-size:16px;
+    margin-top: 8px;
+}
+#panelCentro>#curso>div>a>img{
+    width: 30px;
+}
+/*Form inicio*/
+#vistaForm>form {
     background: #171726;
     width:30%;
     padding: 20px;
     border-radius: 5px;
     filter: drop-shadow(0 0 0.7em #000000);
-  }
-
-  label {
+}
+#vistaForm label {
     margin-bottom: 5px;
     font-weight: bold;
     color: #6F7789;
-  }
+}
+#vistaForm input,
+#vistaForm select {
+    color: #171726;
+    width: 100%;
+    padding: 10px;
+    border-radius: 4px;
+    margin-top: 6px; 
+    margin-bottom: 15px;
+    box-sizing: border-box;
+    background-color: #6F7789;
+    font-weight: bold;
+    border: none;
+}
+input:focus, select:focus {
+    outline: none;
+    filter: drop-shadow(0 0 0.2em #6F7789);
+}
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px #6F7789 inset !important;
+    -webkit-text-fill-color: #171726 !important;
+}
+#vistaForm form button{
+        background-color: #525865;
+        color: #171726;
+        font-weight: bold;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        margin: 0 auto;
+}
+#vistaForm form button:hover {
+    background-color: #6F7789;
+}
+#over{
+    text-align: center;
+    font-weight: bolder;
+    margin: 0;
+    padding: 10px;
+    font-size: 20px;
+    color: #6F7789;
+}
+.error-message ,#status-message{
+        color: rgb(255, 0, 76);
+        font-size: 12px;
+}
 
-  input,
-  select {
-      color: #171726;
-      width: 100%;
-      padding: 10px;
-      border-radius: 4px;
-      margin-top: 6px; 
-      margin-bottom: 15px;
-      box-sizing: border-box;
-      background-color: #6F7789;
-      font-weight: bold;
-      border: none;
-  }
-  input:focus, select:focus {
-      outline: none;
-      filter: drop-shadow(0 0 0.2em #6F7789);
-  }
-
-  input:-webkit-autofill {
-      -webkit-box-shadow: 0 0 0 1000px #6F7789 inset !important;
-      -webkit-text-fill-color: #171726 !important;
-  }
-
-  button {
-      background-color: #525865;
-      color: #171726;
-      font-weight: bold;
-      padding: 10px 15px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background-color 0.3s;
-      margin: 0 auto;
-  }
-
-  button:hover {
-      background-color: #6F7789;
-  }
-
-  #over{
-      text-align: center;
-      font-weight: bolder;
-      margin: 0;
-      padding: 10px;
-      font-size: 20px;
-      color: #6F7789;
-  }
-
-  .error-message ,#status-message{
-      color: rgb(255, 0, 76);
-      font-size: 12px;
-  }
 
 
 @keyframes disappearRight {

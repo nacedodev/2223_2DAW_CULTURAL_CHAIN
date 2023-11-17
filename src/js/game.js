@@ -17,7 +17,7 @@ class Game {
         this.ModelConfig = new ModeloConfig()
 
         // Nombres de los personajes
-        const nombres = ['Kai', 'Jake', 'Baku','Pauline','Ayara','Logan','Manu','Eva'];
+        const nombres = ['Kai', 'Jake', 'Baku','Pauline','Ayara','Logan','Manu','Eva','Nalani','Michael'];
         this.almacenarNames(nombres)
 
         const configs = ['fácil','muted']
