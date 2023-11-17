@@ -14,7 +14,7 @@ body{
     background-color: #252638;
     font-family: 'Poppins', sans-serif;
 }
-button {
+button,input{
     border: none;
     background: none;
     padding: 0;
@@ -335,6 +335,7 @@ button {
     background: #6F7789;
     box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.25);
     color:#252638;
+    font:inherit;
     text-align: center;
     font-size: 25px;
 }
@@ -403,7 +404,7 @@ a{
 }
 /*Administracion*/
 #panelAdmin{
-    width: 40%;
+    width: 30%;
     height: 450px;
     border-radius: 15px;
     background: #171726;
@@ -421,7 +422,7 @@ a{
 #panelAdmin>a>div{
     border-radius: 14px;
     background: #6F7789;
-    height: 70px;
+    padding: 10px;
     width: 80%;
     margin: auto;
     margin-top: 15px;
@@ -430,6 +431,11 @@ a{
     scale: 1.03;
     box-shadow: 0px 0px 24px 6px rgba(255, 255, 255, 0.25);
     background-color: rgb(209, 207, 207);
+}
+#panelAdmin>a>div p{
+    font-size: 30px;
+    margin: 3px;
+    text-align: center;
 }
 /*Centro*/
 #panelCentro{
@@ -494,6 +500,66 @@ a{
     width: 40px;
     float:right;
     margin-top: 5px;
+}
+/*FormularioAñadir*/
+#panelFormulario{
+    width: 50%;
+    height: 250px;
+    border-radius: 15px;
+    background: #171726;
+    padding-top: 0px;
+    margin: auto;
+    margin-top: 35px;
+    position: relative;
+    bottom:50px;
+    overflow: scroll;
+    scrollbar-width: none;
+}
+#panelFormulario::-webkit-scrollbar{
+    display: none;
+}
+#panelFormulario>div:first-child{
+    width: 100%;
+    border-radius: 16px 16px 0px 0px;
+    background: #6F7789;
+    box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    padding-top: 15px;
+    position: absolute;
+}
+#panelFormulario p{
+    margin-top: 0px;
+    float: left;
+    color: #252638;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    font-weight: 900;
+    font-size:20px;
+    margin-left: 25px;
+    margin-bottom: 10px;
+}
+#panelFormulario>div:nth-child(2){
+    margin-top: 80px;
+}
+#panelFormulario>div>div{
+    width: 90%;
+    border-radius: 16px;
+    background: #6F7789;
+    box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    padding: 15px;
+    margin: auto;
+}
+#panelFormulario>div>div:nth-child(2){
+    margin-top:20px;
+}
+#panelFormulario>div>div>input{
+    width: 60%;
+    height:25px;
+    background-color:white;
+    margin-left: 60px;
+    border-radius: 16px;
+    box-shadow: 0px;
+}
+#panelFormulario,#botonatras{
+    margin-bottom: 25px;
 }
 /*Curso*/
 #vistaCurso>#panelCentro{
