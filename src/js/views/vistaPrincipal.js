@@ -64,7 +64,7 @@ export class VistaPrincipal extends Vista{
         // Remove all the characters from the tablero
         const personajes = this.tablero.querySelectorAll('.personaje');
         personajes.forEach(personaje => {
-          personaje.remove();
+            personaje.remove();
         });
     
         // Reset the animations and display elements
@@ -131,7 +131,7 @@ export class VistaPrincipal extends Vista{
         this.tablero.style.filter = 'none'; // Restaurar el fondo a su estado original
         this.divPersonajes.style.animation = 'disappearRight 2s forwards'
         this.divIzq.style.animation = 'enlargeBoard 2s forwards'
-        personaje.style.pointerEvents = 'none';
+        personajeSelected.style.pointerEvents = 'none';
         this.info.style.animation = 'ocultarTexto 1.5s forwards'
         this.end.style.animation = 'mostrarTexto 4s forwards'
     }
