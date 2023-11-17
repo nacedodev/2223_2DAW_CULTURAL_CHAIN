@@ -1,6 +1,6 @@
 <?php
  
-require_once './models/centros.php';
+require_once '../models/centros.php';
 
 class ControladorCentros {
    

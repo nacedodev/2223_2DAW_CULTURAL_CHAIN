@@ -1,6 +1,6 @@
 <?php
 
-require_once './models/clases.php';
+require_once '../models/clases.php';
 
 class ControladorClases{
 
