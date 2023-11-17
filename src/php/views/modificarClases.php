@@ -1,5 +1,5 @@
 
-<form id="formularioClases" name="formularioClases" action="index.php?action=modificarClases&controller=Clases" method="post">
+<form id="formularioClases" name="formularioClases" action="admin.php?action=modificarClases&controller=Clases" method="post">
 
 <label for="etapa">etapa:</label>
 <input type="text" id="etapa" name="etapa" value="<?php echo isset($_GET['etapa']) ? $_GET['etapa'] : ''; ?>" required>
