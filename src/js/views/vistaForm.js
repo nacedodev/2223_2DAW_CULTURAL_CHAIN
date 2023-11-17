@@ -3,10 +3,10 @@ import { Vista } from "./vista.js"
 export class VistaForm extends Vista{
     constructor(controlador,base){
         super(controlador,base)
-        const nickname = document.getElementById("nickname");
-        const correo = document.getElementById("correo");
+        const nickname = document.getElementById("nickname")
+        const correo = document.getElementById("correo")
         this.centro = document.getElementById("centro")
-        const cp = document.getElementById("cp");
+        const cp = document.getElementById("cp")
         this. localidad = document.getElementById('localidad')
         const send = document.getElementById('send')
 
@@ -26,7 +26,7 @@ export class VistaForm extends Vista{
 
         if (!regex.test(input.value)) {
             input.style.filter = "drop-shadow(0 0 0.4em #FF4562)";
-            errorSpan.textContent = "El nickname debe contener solo letras y tener entre 3 y 20 caracteres.";
+            errorSpan.textContent = "El nickname debe contener solo letras y números y tener entre 3 y 20 caracteres.";
         } else {
             input.style.filter = "drop-shadow(0 0 0.2em lightgreen)";
             errorSpan.textContent = "";

@@ -4,6 +4,8 @@ export class VistaPrincipal extends Vista{
     constructor(controlador , base){
         super(controlador,base)
 
+        this.asignarNames()
+
         const btnRanking = this.base.querySelectorAll('button')[2]
         const btnSettings = this.base.querySelectorAll('button')[3]
         this.tablero = document.getElementById('divtablero')
@@ -43,7 +45,19 @@ export class VistaPrincipal extends Vista{
         }
       }
       
-      
+      asignarNames(){
+        const figcaptions = document.querySelectorAll('figcaption');
+
+        let names = this.controlador.devolverNames()
+        for (let i = 0; i < figcaptions.length; i++) {
+            if (i < names.length) {
+              figcaptions[i].innerText = names[i];
+            } else {
+              figcaptions[i].innerText = '';
+            }
+          }
+          console.log(names)
+      }
 
     dragStart(e){
         this.style.opacity = '0.6'

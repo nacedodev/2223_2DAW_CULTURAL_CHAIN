@@ -23,7 +23,7 @@ export class VistaSettings extends Vista{
     }
 
     llamarGET = () => {
-        Rest.get("http://localhost/server/peticionGet.php",{"param1":42,"param2":"Nacho"},this.resultadoGET)
+        Rest.get("http://00.2daw.esvirgua.com/DWEC/peticionGet.php",{"param1":42,"param2":"Nacho"},this.resultadoGET)
     }
 
     resultadoGET = (status,texto,method) => {
@@ -33,7 +33,7 @@ export class VistaSettings extends Vista{
 
     llamarPOST = () => {
     const params = { param1: 1337, param2: "Nacho" };
-        Rest.post("http://localhost/server/peticionPost.php", params, this.resultadoPOST);
+        Rest.post("http://00.2daw.esvirgua.com/DWEC/peticionPost.php", params, this.resultadoPOST);
     }
 
     resultadoPOST = (status, texto, method) => {
