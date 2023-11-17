@@ -1,6 +1,6 @@
 
 
-<form id="formularioCentro" name="formularioCentro" action="admin.php?action=aniadirClases&controller=Clases&centro_id=<?php echo $_GET['centro_id']; ?>" method="post">
+<form id="formularioCentro" name="formularioCentro" action="index.php?action=aniadirClases&controller=Clases&centro_id=<?php echo $_GET['centro_id']; ?>" method="post">
 
 
 <label for="etapa">etapa</label>

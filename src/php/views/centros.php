@@ -1,13 +1,13 @@
-        <img id="logo" src="img/iconos/logo.jpeg">
+        <img id="logo" src="../img/iconos/logo.jpeg">
         <button class="boton">
-            <img src="img/iconos/sol.png">
+            <img src="../img/iconos/sol.png">
         </button>
         <p class="tituloranking">CENTRO</p>
         <div id="panelCentro">
            <div>
         
                 <p>CENTRO</p>
-                <a href="admin.php?action=aniadirCentro&controller=Centros"><button id="aniadircentro"><p>+</p></button></a>
+                <a href="index.php?action=aniadirCentro&controller=Centros"><button id="aniadircentro"><p>+</p></button></a>
            </div>
            <div>
     <?php 
@@ -16,11 +16,11 @@
                 <div>
                     <p><?php echo $centro['nombre']; ?></p>
                     <p><?php echo $centro['localidad']; ?></p>
-                    <a href="admin.php?controller=Clases&action=listarClases&centro_id=<?php echo $centro['id']; ?>"><p>></p></a> 
-                    <a href="admin.php?action=modificarCentro&controller=Centros&id=<?php echo $centro['id']; ?>&nombre=<?php echo $centro['nombre']; ?>&localidad=<?php echo $centro['localidad']; ?>"><p>M</p></a>
+                    <a href="index.php?controller=Clases&action=listarClases&centro_id=<?php echo $centro['id']; ?>"><p>></p></a> 
+                    <a href="index.php?action=modificarCentro&controller=Centros&id=<?php echo $centro['id']; ?>&nombre=<?php echo $centro['nombre']; ?>&localidad=<?php echo $centro['localidad']; ?>"><img style="margin-left:15px;" src="../img/iconos/edit.png"></a>
 
 
-                    <a href="admin.php?action=borrarCentro&controller=Centros&id=<?php echo $centro['id']; ?>"><img src="img/iconos/basura.png"></a>
+                    <a href="index.php?action=borrarCentro&controller=Centros&id=<?php echo $centro['id']; ?>"><img src="../img/iconos/basura.png"></a>
                 </div>
     <?php
         }
