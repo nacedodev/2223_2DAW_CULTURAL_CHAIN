@@ -12,27 +12,28 @@ export class Rest {
    * @param {Object} params - Los parámetros de la petición.
    * @param {function} callback - La función de retorno para manejar la respuesta de la petición.
    */
-  static get(url, params, callback) {
-    let paramsGET = '?';
-    for (let param in params) {
-      paramsGET += param + '=';
-      paramsGET += params[param] + '&';
+  static get (url, params, callback) {
+    let paramsGET = '?'
+    for (const param in params) {
+      paramsGET += param + '='
+      paramsGET += params[param] + '&'
     }
 
     fetch(url + paramsGET.substring(0, paramsGET.length - 1))
       .then(response => {
-        const status = response.status;
-        return { responseStatus: status, responseText: response.text() , method: 'GET'};
+        const status = response.status
+        return { responseStatus: status, responseText: response.text(), method: 'GET' }
       })
       .then(data => {
-          
         if (callback) {
           data.responseText.then(texto => {
-              callback(data.responseStatus, texto,data.method);
+            callback(data.responseStatus, texto, data.method)
           }
-      )}
-      });
+          )
+        }
+      })
   }
+
   /**
      * Realiza una petición POST a la URL especificada con los parámetros proporcionados.
      * @static
@@ -40,25 +41,25 @@ export class Rest {
      * @param {Object} params - Los parámetros de la petición.
      * @param {function} callback - La función de retorno para manejar la respuesta de la petición.
      */
-  static post(url, params, callback) {
+  static post (url, params, callback) {
     const requestOptions = {
       method: 'POST',
       body: JSON.stringify(params),
       headers: { 'Content-Type': 'application/json' }
-    };
-  
+    }
+
     fetch(url, requestOptions)
       .then(response => {
-        const status = response.status;
-        return { responseStatus: status, response: response.json(), method: 'POST' };
+        const status = response.status
+        return { responseStatus: status, response: response.json(), method: 'POST' }
       })
       .then(data => {
         if (callback) {
           return data.response.then(jsonData => {
-            callback(data.responseStatus, jsonData, data.method);
-          });
+            callback(data.responseStatus, jsonData, data.method)
+          })
         }
       })
-      .catch(error => console.error('Error:', error));
+      .catch(error => console.error('Error:', error))
   }
-  }
+}
