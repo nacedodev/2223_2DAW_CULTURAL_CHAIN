@@ -31,6 +31,7 @@ export class VistaForm extends Vista {
  * @method
  * @param {Event} evento - El evento `blur` que activa la validación.
  */
+
   validarNick = evento => {
     const input = evento.target
     const errorSpan = document.getElementById('nickname-error')
