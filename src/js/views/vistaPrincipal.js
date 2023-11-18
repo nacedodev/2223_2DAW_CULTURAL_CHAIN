@@ -182,6 +182,7 @@ export class VistaPrincipal extends Vista {
     this.divPersonajes.style.animation = 'disappearRight 2s forwards'
     this.divIzq.style.animation = 'enlargeBoard 2s forwards'
     personajeSelected.style.pointerEvents = 'none'
+    this.divPersonajes.style.pointerEvents = 'none'
     this.info.style.animation = 'ocultarTexto 1.5s forwards'
     this.end.style.animation = 'mostrarTexto 4s forwards'
   }

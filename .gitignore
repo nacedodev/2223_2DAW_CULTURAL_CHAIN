@@ -38,5 +38,4 @@ package-lock.json
 .eslintrc.json
 
 .htaccess
-
-php/config
+src/php/config
