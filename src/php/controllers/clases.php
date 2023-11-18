@@ -29,7 +29,7 @@ class ControladorClases{
           $this->objClases->aniadir($_POST['etapa'], $_POST['clase'], $centro_id);
         
        
-            header("Location: index.php?action=listarClases&controller=Clases&centro_id=.$centro_id");
+          header("Location: index.php?action=listarClases&controller=Clases&centro_id=$centro_id");
          
         
     }
