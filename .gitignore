@@ -41,3 +41,4 @@ package-lock.json
 **/config/
 config_db.php
 /src/php/config/config_db.php
+src/php/config/
