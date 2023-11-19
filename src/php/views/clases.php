@@ -1,4 +1,4 @@
-<p class="tituloranking">Clase</p>
+<p class="tituloranking" style="margin-top:30px">Clase</p>
 <div id="panelCentro">
     <div>
         <p>Clases</p>

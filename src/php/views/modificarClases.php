@@ -1,4 +1,3 @@
-
 <form id="formularioClases" name="formularioClases" action="index.php?action=modificarClases&controller=Clases" method="post">
 
 <label for="etapa">etapa:</label>

@@ -1,10 +1,11 @@
 <?php
-
 class Centro {
-    
+  private $conexion;
+  private $driver;  
     public function __construct() { 
        
         $this->conexion = new mysqli(HOST, USER, PASSWORD, DATABASE);
+
     }
 
     public function aniadir($nombre, $localidad) {
@@ -56,7 +57,7 @@ class Centro {
         } else {
             if ($resultado->num_rows === 0) {
                 // No se encontraron filas en la tabla "nombre"
-                echo '<div><p>No se encontraron registros en la tabla "centros"</p></div>';
+                echo '<p style="color:#6F7789;position:absolute;font-size:30px;left:490px;top:370px;z-index:99">No hay centros registrados </p>';
             } else {
                 foreach ($resultado as $row) {
                     $centros[] = $row;

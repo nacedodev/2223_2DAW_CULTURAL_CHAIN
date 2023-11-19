@@ -1,4 +1,3 @@
-
 <form id="formularioCentro" name="formularioCentro" action="index.php?action=modificarCentro&controller=Centros" method="post">
 
 <label for="nombre">Nombre del Centro:</label>

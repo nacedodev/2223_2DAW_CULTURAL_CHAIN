@@ -28,5 +28,4 @@ if(method_exists($controller,$_GET["action"])) $dataToView["data"] = $controller
 require_once '../php/views/template/header.php';
 require_once '../php/views/'.$controller->view.'.php';
 require_once '../php/views/template/footer.php';
-
 ?>

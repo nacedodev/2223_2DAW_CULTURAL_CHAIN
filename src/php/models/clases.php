@@ -1,10 +1,14 @@
 <?php
-
 class Clase {
+
+    private $conexion;
+    private $driver; 
     
     public function __construct() { 
        
         $this->conexion = new mysqli(HOST, USER, PASSWORD, DATABASE);
+
+
     }
 
     public function aniadir($etapa, $clase,$centro_id) {
@@ -56,7 +60,7 @@ class Clase {
         } else {
             if ($resultado->num_rows === 0) {
                 // No se encontraron filas en la tabla "nombre"
-                echo 'No se encontraron registros en la tabla "centros"';
+                echo '<p style="color:#6F7789;position:absolute;font-size:30px;left:290px;top:280px;z-index:99">No se han encontrado clases asociadas a este centro</p>';
             } else {
                 foreach ($resultado as $row) {
                     $centros[] = $row;

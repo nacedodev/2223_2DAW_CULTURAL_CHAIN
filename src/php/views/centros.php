@@ -2,7 +2,7 @@
         <button class="boton">
             <img src="../img/iconos/sol.png">
         </button>
-        <p class="tituloranking">CENTRO</p>
+        <p class="tituloranking" style="margin-top:30px">CENTRO</p>
         <div id="panelCentro">
            <div>
         
