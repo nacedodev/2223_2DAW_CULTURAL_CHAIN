@@ -24,7 +24,6 @@ export class VistaForm extends Vista {
     this.localidad.onchange = this.validarSelectL
     this.cp.onblur = this.validarCP
     send.onclick = this.validarForm
-    console.log('cargado')
   }
 
   /**
