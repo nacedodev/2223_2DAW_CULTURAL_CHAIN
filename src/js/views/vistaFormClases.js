@@ -29,7 +29,7 @@ const validarEtapa = evento => {
 
   if (!regex.test(input.value)) {
     input.style.filter = 'drop-shadow(0 0 0.4em #FF4562)'
-    errorSpan.textContent = 'La etapa solo puede contener letras'
+    errorSpan.textContent = 'La etapa solo puede contener letras.'
   } else {
     input.style.filter = 'drop-shadow(0 0 0.2em lightgreen)'
     errorSpan.textContent = ''
@@ -48,7 +48,7 @@ const validarClase = evento => {
 
   if (!regex.test(input.value)) {
     input.style.filter = 'drop-shadow(0 0 0.4em #FF4562)'
-    errorSpan.textContent = 'La clase solo puede contener letras y números como máximo 10'
+    errorSpan.textContent = 'La clase solo puede contener letras y números sin espacios.'
   } else {
     input.style.filter = 'drop-shadow(0 0 0.2em lightgreen)'
     errorSpan.textContent = ''

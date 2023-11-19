@@ -1,13 +1,27 @@
 <?php
+
+/**
+ * Clase para la manipulación de datos relacionados con los centros.
+ */
 class Centro {
+    /** @var mysqli Conexión a la base de datos. */
   private $conexion;
-  private $driver;  
+
+    /**
+     * Constructor de la clase Centro.
+     * Inicia la conexión a la base de datos.
+     */
     public function __construct() { 
        
         $this->conexion = new mysqli(HOST, USER, PASSWORD, DATABASE);
 
     }
-
+ /**
+     * Añade un nuevo centro a la base de datos.
+     *
+     * @param string $nombre     Nombre del centro.
+     * @param string $localidad  Localidad del centro.
+     */
     public function aniadir($nombre, $localidad) {
         $query = "INSERT INTO Centro (nombre, localidad) VALUES ('$nombre', '$localidad')";
 
@@ -21,13 +35,24 @@ class Centro {
             } 
         }
     }
-
+ /**
+     * Modifica un centro existente en la base de datos.
+     *
+     * @param int    $id         ID del centro a modificar.
+     * @param string $nombre     Nuevo nombre del centro.
+     * @param string $localidad  Nueva localidad del centro.
+     * @return bool              True si la modificación fue exitosa, false de lo contrario.
+     */
     public function modificar($id,$nombre,$localidad) {
         $query = "UPDATE Centro SET nombre = '$nombre', localidad = '$localidad' WHERE id = '$id'";
         $resultado = $this->conexion->query($query);
         return $resultado;
     }
-
+ /**
+     * Borra un centro de la base de datos.
+     *
+     * @param int $id ID del centro a borrar.
+     */
     public function borrar($id) {
         try {
             $query = "DELETE FROM Centro WHERE id = '$id'";
@@ -45,7 +70,11 @@ class Centro {
             } 
         }
     }
-    
+     /**
+     * Lista todos los centros registrados en la base de datos.
+     *
+     * @return array Arreglo asociativo con los datos de los centros.
+     */
     public function listar() {
         $query= 'SELECT * FROM Centro';
         $resultado = $this->conexion->query($query); 

@@ -25,7 +25,7 @@ const inicio = () => {
 const validarCentro = evento => {
   const input = evento.target
   const errorSpan = document.getElementById('centro-error')
-  const regex = /^[A-Za-záéíóúñ]{3,40}$/
+  const regex = /^[A-Za-záéíóúñ\s]{3,40}$/
 
   if (!regex.test(input.value)) {
     input.style.filter = 'drop-shadow(0 0 0.4em #FF4562)'
@@ -44,7 +44,7 @@ const validarCentro = evento => {
 const validarLocalidad = evento => {
   const input = evento.target
   const errorSpan = document.getElementById('localidad-error')
-  const regex = /^[A-Za-záéíóúñ]{3,40}$/
+  const regex = /^[A-Za-záéíóúñ\s]{3,40}$/
 
   if (!regex.test(input.value)) {
     input.style.filter = 'drop-shadow(0 0 0.4em #FF4562)'
