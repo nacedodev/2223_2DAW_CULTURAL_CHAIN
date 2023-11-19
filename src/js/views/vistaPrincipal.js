@@ -98,6 +98,7 @@ export class VistaPrincipal extends Vista {
     this.end.style.animation = 'none'
     this.form.style.animation = 'none'
     this.tablero.style.filter = 'none'
+    this.divPersonajes.style.pointerEvents = 'auto'
 
     // Reset the showForm variable
     this.showForm = false

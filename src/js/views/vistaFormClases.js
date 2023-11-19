@@ -82,7 +82,7 @@ const validarForm = (e) => {
                  * @type {Function}
                  */
       validarClase({ target: input })
-    } 
+    }
 
     if (input.value !== '') {
       todosLosCamposVacios = false

@@ -82,7 +82,7 @@ const validarForm = (e) => {
                  * @type {Function}
                  */
       validarLocalidad({ target: input })
-    } 
+    }
 
     if (input.value !== '') {
       todosLosCamposVacios = false
