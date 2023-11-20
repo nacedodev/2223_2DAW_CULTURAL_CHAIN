@@ -1,13 +1,15 @@
-<form id="formularioCentro" name="formularioCentro" action="index.php?action=modificarCentro&controller=Centros" method="post">
+<div id="vistaForm">
+    <form id="formularioClases" name="formularioClases" action="index.php?action=modificarClases&controller=Clases&centronombre=<?php echo $_GET['centronombre']; ?>" method="post">
 
-<label for="nombre">Nombre del Centro:</label>
-<input type="text" id="nombre" name="nombre" value="<?php echo isset($_GET['nombre']) ? $_GET['nombre'] : ''; ?>" required>
+    <label for="etapa">etapa:</label>
+    <input type="text" id="etapa" name="etapa" value="<?php echo isset($_GET['etapa']) ? $_GET['etapa'] : ''; ?>" required>
+    <input type="hidden" name="centro_id" value="<?php echo $_GET['centro_id']; ?>">
+    <label for="clase">clase:</label>
+    <input type="text" id="clase" name="clase" value="<?php echo isset($_GET['clase']) ? $_GET['clase'] : ''; ?>" required>
 
-<label for="localidad">Localidad:</label>
-<input type="text" id="localidad" name="localidad" value="<?php echo isset($_GET['localidad']) ? $_GET['localidad'] : ''; ?>" required>
+    <!-- Agrega un campo oculto para pasar el ID -->
+    <input type="hidden" name="id" value="<?php echo isset($_GET['id']) ? $_GET['id'] : ''; ?>">
 
-<!-- Agrega un campo oculto para pasar el ID -->
-<input type="hidden" name="id" value="<?php echo isset($_GET['id']) ? $_GET['id'] : ''; ?>">
-
-<input type="submit">
-</form>
+    <input type="submit">
+    </form>
+</div>

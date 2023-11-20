@@ -1,5 +1,4 @@
 <?php
-
 require_once '../php/models/clases.php';
 /**
  * Controlador para la gestión de clases.
@@ -81,3 +80,4 @@ class ControladorClases{
            
         }
 }
+?>
