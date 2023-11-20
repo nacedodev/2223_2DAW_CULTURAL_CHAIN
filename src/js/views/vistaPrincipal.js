@@ -36,6 +36,12 @@ export class VistaPrincipal extends Vista {
     this.tablero.addEventListener('dragenter', this.dragEnter)
     this.tablero.addEventListener('dragleave', this.dragLeave)
     this.divIzq.addEventListener('drop', this.drop)
+ 
+    this.tablero.style.backgroundImage = 'url("img/nivel/nivel1.jpg")';
+    this.tablero.style.backgroundSize = 'cover';
+    this.tablero.style.position = 'relative';
+    this.tablero.style.opacity = '0.2';
+    
 
     btnRanking.onclick = this.irRanking
     btnSettings.onclick = this.irSettings
@@ -98,7 +104,13 @@ export class VistaPrincipal extends Vista {
     this.end.style.animation = 'none'
     this.form.style.animation = 'none'
     this.tablero.style.filter = 'none'
+    this.tablero.style.backgroundImage='none'
     this.divPersonajes.style.pointerEvents = 'auto'
+
+    this.tablero.style.backgroundImage = 'url("img/nivel/nivel1.jpg")';
+    this.tablero.style.backgroundSize = 'cover';
+    this.tablero.style.position = 'relative';
+    this.tablero.style.opacity = '0.2';
 
     // Reset the showForm variable
     this.showForm = false
@@ -113,6 +125,7 @@ export class VistaPrincipal extends Vista {
     this.style.opacity = '0.6'
     this.style.filter = 'drop-shadow(0px 0px 15px #000)'
     e.dataTransfer.setData('text/plain', e.target.id)
+    
   }
 
   /**
@@ -123,6 +136,7 @@ export class VistaPrincipal extends Vista {
   dragEnd (e) {
     this.style.opacity = '1'
     this.style.filter = 'none'
+    
   }
 
   /**
@@ -143,6 +157,7 @@ export class VistaPrincipal extends Vista {
   dragEnter (e) {
     e.preventDefault()
     this.style.filter = 'drop-shadow(0px 0px 8px rgba(0, 0, 0, 0.5))'
+    
   }
 
   /**
@@ -161,6 +176,7 @@ export class VistaPrincipal extends Vista {
      */
   drop = (e) => {
     e.preventDefault()
+    
     const personajeId = e.dataTransfer.getData('text/plain')
     const personaje = document.getElementById(personajeId)
 
@@ -168,9 +184,9 @@ export class VistaPrincipal extends Vista {
 
     // Obtener las coordenadas del evento de soltar en relación con el tablero
 
-    const dropX = e.clientX - 15
-    const dropY = e.clientY - parseInt(window.getComputedStyle(this.divIzq).marginTop) - 10
-
+    const dropX = e.clientX - 200
+    const dropY = e.clientY - parseInt(window.getComputedStyle(this.divIzq).marginTop) - 60
+    
     // Establecer las coordenadas de posición del personaje
     personajeSelected.style.left = dropX + 'px'
     personajeSelected.style.position = 'absolute'
@@ -186,5 +202,19 @@ export class VistaPrincipal extends Vista {
     this.divPersonajes.style.pointerEvents = 'none'
     this.info.style.animation = 'ocultarTexto 1.5s forwards'
     this.end.style.animation = 'mostrarTexto 4s forwards'
+    this.nivel1()
   }
+  nivel1 = () => {
+
+    setTimeout(() => {
+        this.tablero.style.transition = 'opacity 1s';  // Transición de 1 segundo en la opacidad
+        this.tablero.style.opacity = '1';  // Establecer la opacidad a 1 para mostrar la imagen
+    }, 0);
+        
+
+  }
+  nivel2 = () => {
+
+  }
+  
 }
