@@ -1,16 +1,36 @@
 @import url('https://fonts.googleapis.com/css2?family=Oswald&family=Poppins:wght@900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@900&family=Press+Start+2P&display=swap');
 
+
+
+/* COLORS */
+:root{
+    /* dark */
+--primary-dark: #252638;
+--secondary-dark : #171726;
+--terciary-dark: #6F7789;
+--extra-dark: 
+--constrast-dark: #F5C505;
+    /* light */
+--primary-light: #FFF5DD;
+--secondary-light: #FCC34D;
+--terciary-light: #CCAC92;
+--extra-light: #3E0900;
+--contrast-light: #42547A;
+}
+
 html{
     width: 1400px;
 }
+
 body{
     width: 100%;
     height: 100vh; 
-    margin: 0px;
+    margin: 0px; 
     background-color: #252638;
     font-family: 'Poppins', sans-serif;
 }
+
 button {
     border: none;
     background: none;
@@ -20,38 +40,50 @@ button {
     cursor: pointer;
     outline: inherit;
 }
+
 #titulo,#restart>p,#score>p,#nombreapp,#divderecha>div>p,#panelajustes>p,#divderecha>div>div>figure>figcaption,.tituloranking{
     text-align: center;  
 }
+
 #vistaRanking>.boton,
 #vistaAjustes>.boton,
 #vistaCentro>.boton,
 #vistaCurso>.boton{
     float: right;
 }
+
 /*Pagina inicial*/
 #divderecha{
     height: 780px;
     float: left;
 }
+
 #divizquierda{
     width: 70%;
     height: 600px;
     float: left;
     margin-top: 60px;
 }
+
 #logo{
     width: 60px;
     border-radius: 40px;
     margin-top: 15px;
     margin-left: 20px;
     box-shadow: 0px 0px 4px 4px rgba(0, 0, 0, 0.25);
+    transition: filter 0.3s ease;
 }
+
+#logo:hover{
+    filter:drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.4))
+}
+
 #vistaPrincipal>#logo{
     position: absolute;
     top: 0px;
     left: 0px;
 }
+
 #titulo{
     color: #F5C505;
     text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -59,6 +91,7 @@ button {
     margin-top: 0px;
     font-family: 'Press Start 2P', sans-serif;
 }
+
 #restart{
     width: 48px;
     height: 158px;
@@ -68,10 +101,12 @@ button {
     border-radius: 35px;
     background: #6F7789;
 }
+
 #restart>p,#restart>img{
     transform: rotate(-90deg);
     position: relative;
 }
+
 #restart>p{
     display: block;
     color: #252638;
@@ -79,11 +114,13 @@ button {
     font-weight: 700;
     top:15px;
 }
+
 #restart>img{
     margin: auto;
     display: block;
     top:20px;
 }
+
 #score{
     width: 48px;
     height: 158px;
@@ -92,22 +129,26 @@ button {
     bottom: 624px;
     padding-top: 60px;
 }
+
 #score>p{
     color: #6F7789;
     font-size: 25px;
     font-weight: 600;
     transform: rotate(-90deg);
 }
+
 #score>:nth-child(2){
     font-size: 60px;
     margin-top: 0px;
 }
+
 #nombreapp{
     color: #6F7789;
     text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     font-weight: 900;
     font-size: 20px;
 }
+
 #divtablero{
     width: 60%;
     height: 600px;
@@ -116,6 +157,7 @@ button {
     background-color: #171726;
     border-radius: 5px;
 }
+
 #info , #end{
     position: relative;
     top: 50%;
@@ -127,14 +169,17 @@ button {
     width: 580px;
     pointer-events: none;
 }
+
 #end{
     visibility: hidden;
     top: 83%;
     font-size: 15px;
 }
+
 #divderecha{
     width: 30%;
 }
+
 #divderecha>div{
     width: 80%;
     height: fit-content;
@@ -146,11 +191,34 @@ button {
     background-color: #171726;
     box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.74);
 }
+
 #divderecha>div>div:nth-child(1){
     width: 100%;
     margin: auto;
     height: 75px;
 }
+
+#theme{
+    box-shadow: 0px 0px 24px 6px rgba(255, 255, 255, 0.25);
+    background-color: white;
+}
+
+#theme > img,
+#settings > img,
+#rk > img{
+    transition: transform 0.5s ease;
+}
+
+
+#theme:hover > img ,
+#settings:hover > img{
+    transform: rotate(180deg);
+}
+
+#rk:hover > img{
+    transform: scale(1.1);
+}
+
 .boton{
     width: 60px;
     height: 60px;
@@ -161,10 +229,7 @@ button {
     margin-top: 15px;
     padding:0px;
 }
-.boton:hover{
-    box-shadow: 0px 0px 24px 6px rgba(255, 255, 255, 0.25);
-    background-color: white;
-}
+
 .boton>img{
     margin: auto;
     width: 40px;
@@ -172,19 +237,23 @@ button {
     display: block;
     margin-top: 0px;
 }
+
 #divderecha>div>p,#panelajustes>p{
     margin-bottom: 0px;
     color: #6F7789;
     font-size: 18px;
 }
+
 #divderecha>div>p,#panelajustes>p,.tituloranking{
     text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
+
 #divderecha>div>div:nth-child(3){
     padding: 0px;
     width: content;
     overflow: hidden;
 }
+
 #divderecha>div>div>figure{
     border-radius: 7px;
     background: #414467;
@@ -196,6 +265,7 @@ button {
     margin-top: 10px;
     float: left;
 }
+
 #divderecha>div>div>figure>img{
     width: 37px;
     height: 60px;
@@ -203,6 +273,7 @@ button {
     margin-top:15px;
     display: block;
 }
+
 #divderecha>div>div>figure>figcaption{
     color:#171726;
     font-size: 13px;
@@ -210,11 +281,13 @@ button {
     font-weight: 700;
     margin-top: 5px;
 }
+
 /*Ranking*/
 #vistaRanking>.boton,
 #vistaSettings>.boton{
     float: right;
 }
+
 .tituloranking{
     color: #6F7789;
     width: fit-content;
@@ -225,6 +298,7 @@ button {
     position: relative;
     bottom:35px;
 }
+
 #tablonranking{
     width: 50%;
     height: 450px;
@@ -238,9 +312,11 @@ button {
     scrollbar-width: none;
     padding: 15px;
 }
+
 #tablonranking::-webkit-scrollbar{
     display: none;
 }
+
 #tablonranking>div{
     border-radius: 14px;
     background: #6F7789;
@@ -248,14 +324,17 @@ button {
     margin-top: 15px;
     scale:1;
 }
+
 #tablonranking>div:first-child{
     margin-top: 0px;
 }
+
 #tablonranking>div:hover{
     scale: 1.03;
     box-shadow: 0px 0px 24px 6px rgba(255, 255, 255, 0.25);
     background-color: rgb(209, 207, 207);
 }
+
 #tablonranking>div>p{
     float: left;
     margin-left: 35px;
@@ -264,65 +343,79 @@ button {
     text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     font-weight: 900;
 }
+
 #tablonranking>div>p:nth-child(1){
     font-size: 30px;
     width: 40px;
     margin-top: 20px;
 }
+
 #tablonranking>:nth-child(-n+3)>p:nth-child(1){
     font-size: 45px;
     margin-top: 10px;
 }
+
 #tablonranking>:nth-child(1)>p:nth-child(1){
    color: #F5C505;
 }
+
 #tablonranking>:nth-child(2)>p:nth-child(1){
     color: #C0C0C0;
- }
+}
+
  #tablonranking>:nth-child(3)>p:nth-child(1){
     color: #CD7F32;
  }
+
 #tablonranking>div>p:nth-child(2){
     font-size: 20px;
     margin-top: 26px;
 }
+
 #tablonranking>div>p:nth-child(3){
     font-size: 15px;
     margin-left: 70px;
     margin-top: 25px;
 }
+
 #tablonranking>div>p:nth-child(4){
     font-size: 15px;
     margin-top: 40px;
     position: relative;
     right: 105px;
 }
+
 #tablonranking>div>p:nth-child(5){
     font-size: 15px;
     margin-top: 31px;
     position: relative;
     right: 80px;
 }
+
 #tablonranking>div>p:nth-child(6){
     font-size: 30px;
     margin-top: 20px;
     position: relative;
     right: 80px;  
 }
+
 #tablonranking>div>img{
     width: 30px;
     margin-top: 15px;
     position: relative; 
     right: 40px;
 }
+
 .medalla{
     left: 18px;
     bottom:45px;
 }
+
 #vistaRanking>#score{
     left:1100px;
     bottom:500px;
 }
+
 #botonatras{
     padding: 15px;
     width: 175px;
@@ -335,14 +428,17 @@ button {
     text-align: center;
     font-size: 25px;
 }
+
 #botonatras:hover{
     box-shadow: 0px 0px 24px 6px rgba(255, 255, 255, 0.25);
     background-color: white;
 }
+
 a{
     text-decoration: none;
     color: #252638;
 }
+
 /*Ajustes*/
 #panelajustes{
     margin: auto;
@@ -353,19 +449,23 @@ a{
     padding-top:15px;
     padding-bottom: 15px;
 }
+
 #panelbotones{
     width: fit-content;
     margin: auto;
 }
+
 #panelbotones>.boton{
     float: none;
     margin-right: 25px;
     margin-left: 25px;
 }
+
 #panelajustes>.tituloranking{
     top:0px;
     margin-top: 15px;
 }
+
 #panelajustes>.boton{
     width: 80%;
     color: #252638;
@@ -398,6 +498,7 @@ a{
     font-size: 10px;
     margin-bottom: 13px;
 }
+
 /*Administracion*/
 #panelAdmin{
     width: 40%;
@@ -412,9 +513,11 @@ a{
     overflow: scroll;
     scrollbar-width: none;
 }
+
 #panelAdmin::-webkit-scrollbar{
     display: none;
 }
+
 #panelAdmin>a>div{
     border-radius: 14px;
     background: #6F7789;
@@ -423,11 +526,13 @@ a{
     margin: auto;
     margin-top: 15px;
 }
+
 #panelAdmin>a>div:hover{
     scale: 1.03;
     box-shadow: 0px 0px 24px 6px rgba(255, 255, 255, 0.25);
     background-color: rgb(209, 207, 207);
 }
+
 /*Centro*/
 #panelCentro{
     width: 80%;
@@ -442,9 +547,11 @@ a{
     overflow: scroll;
     scrollbar-width: none;
 }
+
 #panelCentro::-webkit-scrollbar{
     display: none;
 }
+
 #panelCentro>div:first-child{
     width: 100%;
     border-radius: 16px 16px 0px 0px;
@@ -453,6 +560,7 @@ a{
     padding-top: 15px;
     position: absolute;
 }
+
 #panelCentro p{
     margin-top: 0px;
     float: left;
@@ -463,14 +571,17 @@ a{
     margin-left: 25px;
     margin-bottom: 10px;
 }
+
 #panelCentro>div:first-child>a>button{
    float:right;
    margin-right: 25px;
 }
+
 #panelCentro>div:nth-child(2){
     margin-top: 80px;
     width: 100%;
 }
+
 #panelCentro>div:nth-child(2)>div{
     border-radius: 14px;
     background: #6F7789;
@@ -478,37 +589,46 @@ a{
     padding-bottom: 30px;
     margin: 5px 5px;
 }
+
 #panelCentro>div:nth-child(2)>div p{
     float: right;
     font-size: 20px;
     margin-top: 10px;
     margin-right: 15px;
 }
+
 #panelCentro>div:nth-child(2)>div>p{
     float: left;
 }
+
 #panelCentro>div:nth-child(2)>div>a>img{
     width: 40px;
     float:right;
     margin-top: 5px;
 }
+
 /*Curso*/
 #vistaCurso>#panelCentro{
     width:35%;
 }
+
 #vistaCurso>#panelCentro>div:first-child>a>button{
     margin-left: 150px;
 }
+
 #panelCentro>#curso>div{
     height: 10px;
 }
+
 #panelCentro>#curso>div p{
     font-size:16px;
     margin-top: 8px;
 }
+
 #panelCentro>#curso>div>a>img{
     width: 30px;
 }
+
 /*Form inicio*/
 #vistaForm>form {
     background: #171726;
@@ -517,11 +637,13 @@ a{
     border-radius: 5px;
     filter: drop-shadow(0 0 0.7em #000000);
 }
+
 #vistaForm label {
     margin-bottom: 5px;
     font-weight: bold;
     color: #6F7789;
 }
+
 #vistaForm input,
 #vistaForm select {
     color: #171726;
@@ -535,14 +657,17 @@ a{
     font-weight: bold;
     border: none;
 }
+
 input:focus, select:focus {
     outline: none;
     filter: drop-shadow(0 0 0.2em #6F7789);
 }
+
 input:-webkit-autofill {
     -webkit-box-shadow: 0 0 0 1000px #6F7789 inset !important;
     -webkit-text-fill-color: #171726 !important;
 }
+
 #vistaForm form button{
         background-color: #525865;
         color: #171726;
@@ -554,9 +679,11 @@ input:-webkit-autofill {
         transition: background-color 0.3s;
         margin: 0 auto;
 }
+
 #vistaForm form button:hover {
     background-color: #6F7789;
 }
+
 #over{
     text-align: center;
     font-weight: bolder;
@@ -565,12 +692,11 @@ input:-webkit-autofill {
     font-size: 20px;
     color: #6F7789;
 }
+
 .error-message ,#status-message{
         color: rgb(255, 0, 76);
         font-size: 12px;
 }
-
-
 
 @keyframes disappearRight {
     0% {
@@ -695,3 +821,13 @@ input:-webkit-autofill {
         background-color: transparent;
     }
   }
+
+  @keyframes resetAnimation {
+    0% {
+      animation: none;
+      display: block;
+      filter: none;
+      pointer-events: auto;
+    }
+  }
+  
