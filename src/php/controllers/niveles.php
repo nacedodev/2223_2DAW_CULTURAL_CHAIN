@@ -35,8 +35,8 @@ class ControladorNiveles {
         $this->view='aniadirNiveles';
         if (isset($_POST['nombrepais'])) {
             // Llamar a la función aniadir solo si las variables están presentes y no son vacías
-             $this->objNiveles->aniadir($_POST['nombrepais']);
-             header("Location: index.php?action=listarNiveles&controller=Niveles");
+            $this->objNiveles->aniadir($_POST['nombrepais'],$_POST['imagen']);
+            header("Location: index.php?action=listarNiveles&controller=Niveles");
          }
     }
      /**

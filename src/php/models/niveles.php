@@ -22,9 +22,10 @@ class Nivel {
      * @param string $nombre     Nombre del centro.
      * @param string $localidad  Localidad del centro.
      */
-    public function aniadir($nombrepais) {
-        $query = "INSERT INTO Nivel (nombrepais) VALUES ('$nombrepais')";
-    
+    public function aniadir($nombrepais,$imagen) {
+        $contenido=file_get_contents($imagen);
+        $codificado=base64_encode($contenido);
+        $query = "INSERT INTO Nivel (nombrepais,imagen) VALUES ('$nombrepais',$codificado)";
         try {
             $resultado = $this->conexion->query($query);
         } catch (mysqli_sql_exception $e) {

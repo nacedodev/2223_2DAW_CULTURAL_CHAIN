@@ -1,9 +1,12 @@
 <div id="vistaForm">
     <form id="form-end" name="formularioCentro" action="index.php?action=aniadirNivel&controller=Niveles" method="post">
 
-    <label for="nombre">Nombre del País:</label>
-    <input type="text" id="nombre" name="nombrepais" >
+    <label for="nombrepais">Nombre del País:</label>
+    <input type="text" id="nombrepais" name="nombrepais" >
     <span id="centro-error" class="error-message"></span><br><br>
+    
+    <label for="imagen">Imagen de fondo:</label>
+    <input type="file" id="imagen" name="imagen">
 
     <span id="localidad-error" class="error-message"></span><br><br>
         <button id="send" type="submit">Enviar</button>
