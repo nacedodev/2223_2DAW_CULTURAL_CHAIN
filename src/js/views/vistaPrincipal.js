@@ -53,8 +53,9 @@ export class VistaPrincipal extends Vista {
 
     this.posX
     this.posY
-    this.dir=1
+    this.dir=null
     this.distanciapaso=5
+    this.temp=0
 
 
     btnRanking.onclick = this.irRanking
@@ -130,7 +131,9 @@ export class VistaPrincipal extends Vista {
     this.tablero.style.opacity = '0.2';
 
   
-
+    while (this.tablero.firstChild) {
+      this.tablero.removeChild(this.tablero.firstChild);
+  }
     // Reset the showForm variable
     this.showForm = false
   }
@@ -232,14 +235,9 @@ export class VistaPrincipal extends Vista {
     // Agregar el personaje al tablero
     this.cadena.appendChild(personajeSelected);
     this.tablero.appendChild(this.cadena);
-    console.log(this.posX)
+    this.generacionPersonas();
+    this.temp++;
 
-
-    // Limpiar el tablero antes de agregar los elementos
-   
-    this.miFuncion
- 
-  
 }
 
 avanzar=()=> {
@@ -271,29 +269,59 @@ direccion=(event)=> {
 }
 moverObjeto =()=> {
   this.avanzar();  // Mover la this.cadena
-  this.limites()
+  this.limites();
+ 
+ 
 }
  limites=()=> {
-  // Obtener las dimensiones reales del tablero
-  var tableroAncho = this.tablero.clientWidth;
-  var tableroAlto = this.tablero.clientHeight;
+      // Obtener las dimensiones reales del tablero
+      var tableroAncho = this.tablero.clientWidth;
+      var tableroAlto = this.tablero.clientHeight;
 
-// Establecer límite derecho
-if (this.posX > tableroAncho-25) {
-    this.posX = 0
-}
-if (this.posX < 0) {
-  this.posX = tableroAncho-25
-}
+    // Establecer límite derecho
+    if (this.posX > tableroAncho-25) {
+        this.posX = 0
+    }
+    if (this.posX < 0) {
+      this.posX = tableroAncho-25
+    }
 
-if (this.posY > tableroAlto-25) {
-  this.posY = 0
-}
+    if (this.posY > tableroAlto-25) {
+      this.posY = 0
+    }
 
-// Establecer límite superior
-if (this.posY < 0) {
-  this.posY = tableroAlto-25
-}
-}
+    // Establecer límite superior
+    if (this.posY < 0) {
 
+      this.posY = tableroAlto-25
+     
+    }
+  }
+
+  generacionPersonas=()=>{
+    if(this.temp%100 ===0){
+      var tableroAncho = this.tablero.clientWidth;
+      var tableroAlto = this.tablero.clientHeight;
+      
+      // Crear un nuevo elemento div
+      var nuevoDiv = document.createElement('div');
+      
+      // Establecer el estilo del borde del nuevo div
+      nuevoDiv.style.border = 'solid 2px black';
+      
+      // Calcular posiciones aleatorias dentro del tablero
+      var posX = Math.floor(Math.random() * tableroAncho)-25;
+      var posY = Math.floor(Math.random() * tableroAlto);
+      
+      // Establecer la posición absoluta del nuevo div dentro del tablero
+      nuevoDiv.style.position = 'absolute';
+      nuevoDiv.style.left = posX + 'px';
+      nuevoDiv.style.top = posY + 'px';
+      nuevoDiv.style.width= '20px'
+      nuevoDiv.style.height='20px'
+      
+      // Añadir el nuevo div al elemento con el id 'cadena' (asegúrate de que 'cadena' sea el id correcto)
+      this.tablero.appendChild(nuevoDiv);
+    }
+  }
 }
