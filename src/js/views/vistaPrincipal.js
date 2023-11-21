@@ -35,13 +35,23 @@ export class VistaPrincipal extends Vista {
     this.tablero.addEventListener('dragover', this.dragOver)
     this.tablero.addEventListener('dragenter', this.dragEnter)
     this.tablero.addEventListener('dragleave', this.dragLeave)
-    this.divIzq.addEventListener('drop', this.drop)
+    this.tablero .addEventListener('drop', this.drop)
  
     this.tablero.style.backgroundImage = 'url("img/nivel/nivel1.jpg")';
     this.tablero.style.backgroundSize = 'cover';
     this.tablero.style.position = 'relative';
     this.tablero.style.opacity = '0.2';
     
+  
+     this.cadena = document.createElement("div");
+     this.cadena.style.position = 'relative';
+     this.cadena.style.width = '20px';
+     this.cadena.style.height = '20px'
+     this.cadena.style.border="solid black 2px"
+     window.addEventListener('keydown', this.moverObjeto);
+    this.posX
+    this.posY
+
 
     btnRanking.onclick = this.irRanking
     btnSettings.onclick = this.irSettings
@@ -112,6 +122,8 @@ export class VistaPrincipal extends Vista {
     this.tablero.style.position = 'relative';
     this.tablero.style.opacity = '0.2';
 
+  
+
     // Reset the showForm variable
     this.showForm = false
   }
@@ -122,7 +134,7 @@ export class VistaPrincipal extends Vista {
      * @param {DragEvent} e - El evento de arrastre (dragStart).
      */
   dragStart (e) {
-    this.style.opacity = '0.6'
+    this.style.opacity = '1'
     this.style.filter = 'drop-shadow(0px 0px 15px #000)'
     e.dataTransfer.setData('text/plain', e.target.id)
     
@@ -175,46 +187,91 @@ export class VistaPrincipal extends Vista {
      * @param {DragEvent} e - El evento de arrastre (drop).
      */
   drop = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     
-    const personajeId = e.dataTransfer.getData('text/plain')
-    const personaje = document.getElementById(personajeId)
+    const personajeId = e.dataTransfer.getData('text/plain');
+    const personaje = document.getElementById(personajeId);
 
-    const personajeSelected = personaje.cloneNode(true)
+    const personajeSelected = personaje.cloneNode(true);
 
-    // Obtener las coordenadas del evento de soltar en relación con el tablero
-
-    const dropX = e.clientX - 200
-    const dropY = e.clientY - parseInt(window.getComputedStyle(this.divIzq).marginTop) - 60
     
-    // Establecer las coordenadas de posición del personaje
-    personajeSelected.style.left = dropX + 'px'
-    personajeSelected.style.position = 'absolute'
-    personajeSelected.style.top = dropY + 'px'
-
-    // Agregar el personaje al tablero
-    this.tablero.appendChild(personajeSelected)
-    this.showForm = true
-    this.tablero.style.filter = 'none' // Restaurar el fondo a su estado original
-    this.divPersonajes.style.animation = 'disappearRight 2s forwards'
-    this.divIzq.style.animation = 'enlargeBoard 2s forwards'
-    personajeSelected.style.pointerEvents = 'none'
-    this.divPersonajes.style.pointerEvents = 'none'
-    this.info.style.animation = 'ocultarTexto 1.5s forwards'
-    this.end.style.animation = 'mostrarTexto 4s forwards'
-    this.nivel1()
-  }
-  nivel1 = () => {
-
+    this.showForm = true;
+    this.tablero.style.filter = 'none'; // Restaurar el fondo a su estado original
+    this.divPersonajes.style.animation = 'disappearRight 2s forwards';
+    this.divIzq.style.animation = 'enlargeBoard 2s forwards';
+    personajeSelected.style.pointerEvents = 'none';
+    this.divPersonajes.style.pointerEvents = 'none';
+    this.info.style.animation = 'ocultarTexto 1.5s forwards';
+    this.end.style.animation = 'mostrarTexto 4s forwards';
+   
     setTimeout(() => {
         this.tablero.style.transition = 'opacity 1s';  // Transición de 1 segundo en la opacidad
         this.tablero.style.opacity = '1';  // Establecer la opacidad a 1 para mostrar la imagen
-    }, 0);
+    });
+
+  
+    // Obtener las coordenadas del evento de soltar en relación con el tablero
+    this.posX = e.clientX - this.tablero.getBoundingClientRect().left;
+    this.posY = e.clientY - this.tablero.getBoundingClientRect().top;
+    
+      console.log(this)
+      console.log(this)
+      
+    // Establecer las coordenadas de posición del personaje
+    this.cadena.style.left = this.posX + 'px';
+    this.cadena.style.position = 'absolute';
+    this.cadena.style.top = this.posY + 'px';
+  
+    // Agregar el personaje al tablero
+    this.cadena.appendChild(personajeSelected);
+    this.tablero.appendChild(this.cadena);
+    console.log(this.posX)
+
+
+    // Limpiar el tablero antes de agregar los elementos
+   
+
+ 
+  
+}
+  nivel1 = () => {
+    
+  
+
+   
         
 
   }
   nivel2 = () => {
 
   }
-  
+
+  moverObjeto = (event) => {
+    var velocidad = 5;
+
+    // Verificar si la tecla presionada es la "w"
+    if (event.key === 'w') {
+        this.posY -= velocidad;
+    }
+    
+    // Verificar si la tecla presionada es la "s"
+    if (event.key === 's') {
+      this.posY += velocidad;
+    }
+
+    // Verificar si la tecla presionada es la "a"
+    if (event.key === 'a') {
+      this.posX -= velocidad;
+    }
+
+    // Verificar si la tecla presionada es la "d"
+    if (event.key === 'd') {
+      this.posX += velocidad;
+    }
+
+    // Aplicar nuevas coordenadas al objeto
+    this.cadena.style.left = this.posX + "px";
+    this.cadena.style.top = this.posY + "px";
+};
+
 }
