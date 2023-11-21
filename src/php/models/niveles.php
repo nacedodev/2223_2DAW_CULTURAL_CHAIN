@@ -24,7 +24,6 @@ class Nivel {
      */
     public function aniadir($nombrepais) {
         $query = "INSERT INTO Nivel (nombrepais) VALUES ('$nombrepais')";
-
     
         try {
             $resultado = $this->conexion->query($query);
@@ -78,7 +77,7 @@ class Nivel {
     public function listar() {
         $query= 'SELECT * FROM Nivel';
         $resultado = $this->conexion->query($query); 
-        $centros = [];
+        $niveles = [];
 
         if ($resultado === false) {
             // La consulta SELECT falló
