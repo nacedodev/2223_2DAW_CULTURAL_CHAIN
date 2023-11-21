@@ -6,18 +6,32 @@
 /* COLORS */
 :root{
     /* dark */
---primary-dark: #252638;
---secondary-dark : #171726;
---terciary-dark: #6F7789;
---extra-dark: 
---constrast-dark: #F5C505;
-    /* light */
---primary-light: #FFF5DD;
---secondary-light: #FCC34D;
---terciary-light: #CCAC92;
---extra-light: #3E0900;
---contrast-light: #42547A;
+--primary: #252638;
+--secondary: #171726;
+--terciary: #6F7789;
+--personajes: #414467;
+--contrast: #F5C505;
+--theme-img: url('img/iconos/sol.png');
 }
+
+[data-theme="dark"] {
+    /* Estilos para el modo oscuro */
+    --primary: #252638;
+    --secondary: #171726;
+    --terciary: #6F7789;
+    --personajes: #414467;
+    --contrast: #F5C505;
+  }
+  
+  /* Estilos por defecto o para el modo claro */
+  [data-theme="light"] {
+    --primary: #FFF5DD;
+    --secondary: #FCC34D;
+    --terciary: #CCAC92;
+    --personajes: #3E0900;
+    --contrast: #42547A;
+  }
+  
 
 html{
     width: 1400px;
@@ -27,7 +41,7 @@ body{
     width: 100%;
     height: 100vh; 
     margin: 0px; 
-    background-color: #252638;
+    background-color: var(--primary);
     font-family: 'Poppins', sans-serif;
 }
 
@@ -85,8 +99,8 @@ button {
 }
 
 #titulo{
-    color: #F5C505;
-    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    color: var(--contrast);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
     font-size: 20px;
     margin-top: 0px;
     font-family: 'Press Start 2P', sans-serif;
@@ -99,7 +113,7 @@ button {
     left: 80px;
     bottom: 450px;
     border-radius: 35px;
-    background: #6F7789;
+    background: var(--terciary);
 }
 
 #restart>p,#restart>img{
@@ -109,7 +123,7 @@ button {
 
 #restart>p{
     display: block;
-    color: #252638;
+    color: var(--primary);
     font-size: 17px;
     font-weight: 700;
     top:15px;
@@ -131,10 +145,11 @@ button {
 }
 
 #score>p{
-    color: #6F7789;
+    color: var(--terciary);
     font-size: 25px;
     font-weight: 600;
     transform: rotate(-90deg);
+    text-shadow: -4px 1px 4px rgba(0, 0, 0, 0.88);
 }
 
 #score>:nth-child(2){
@@ -143,7 +158,7 @@ button {
 }
 
 #nombreapp{
-    color: #6F7789;
+    color: var(--terciary);
     text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     font-weight: 900;
     font-size: 20px;
@@ -154,7 +169,7 @@ button {
     height: 600px;
     margin:auto;
     margin-top: 20px;
-    background-color: #171726;
+    background-color: var(--secondary);
     border-radius: 5px;
 }
 
@@ -164,7 +179,7 @@ button {
     left: 50%;
     transform: translate(-50%, -50%);
     font-size: 26px;
-    color: #252638;
+    color: var(--primary);
     text-align: center;
     width: 580px;
     pointer-events: none;
@@ -188,7 +203,7 @@ button {
     margin-bottom: 15px;
     flex-shrink: 0;
     border-radius: 15px;
-    background-color: #171726;
+    background-color: var(--secondary);
     box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.74);
 }
 
@@ -203,27 +218,32 @@ button {
     background-color: white;
 }
 
+#theme img{
+    content: url('../img/iconos/sol.png');
+}
+
 #theme > img,
 #settings > img,
 #rk > img{
-    transition: transform 0.5s ease;
+    transition: transform 1s ease ;
 }
 
 
 #theme:hover > img ,
 #settings:hover > img{
-    transform: rotate(180deg);
+    transform: rotate(360deg);
 }
 
 #rk:hover > img{
-    transform: scale(1.1);
+    transform: rotateY(360deg);
 }
 
 .boton{
     width: 60px;
     height: 60px;
     border-radius: 7px;
-    background: #6F7789;
+    background: var(--terciary);
+    color: var(--primary);
     float:left;
     margin-left: 42px;
     margin-top: 15px;
@@ -240,7 +260,7 @@ button {
 
 #divderecha>div>p,#panelajustes>p{
     margin-bottom: 0px;
-    color: #6F7789;
+    color: var(--primary);
     font-size: 18px;
 }
 
@@ -256,7 +276,7 @@ button {
 
 #divderecha>div>div>figure{
     border-radius: 7px;
-    background: #414467;
+    background: var(--personajes);
     box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.25);
     width: 100px;
     height: 100px;
@@ -275,7 +295,7 @@ button {
 }
 
 #divderecha>div>div>figure>figcaption{
-    color:#171726;
+    color: var(--secondary);
     font-size: 13px;
     font-style: normal;
     font-weight: 700;
@@ -289,7 +309,7 @@ button {
 }
 
 .tituloranking{
-    color: #6F7789;
+    color: var(--terciary);
     width: fit-content;
     margin: auto;
     font-size: 59px;
@@ -303,7 +323,7 @@ button {
     width: 50%;
     height: 450px;
     border-radius: 15px;
-    background: #171726;
+    background: var(--secondary);
     margin: auto;
     margin-top: 35px;
     position: relative;
@@ -319,7 +339,7 @@ button {
 
 #tablonranking>div{
     border-radius: 14px;
-    background: #6F7789;
+    background: var(--terciary);
     height: 75px;
     margin-top: 15px;
     scale:1;
@@ -339,7 +359,7 @@ button {
     float: left;
     margin-left: 35px;
     margin-bottom: 0px;
-    color: #252638;
+    color: var(--primary);
     text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     font-weight: 900;
 }
@@ -422,9 +442,9 @@ button {
     margin:auto;
     display: block;
     border-radius: 16px;
-    background: #6F7789;
+    background: var(--terciary);
     box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.25);
-    color:#252638;
+    color:var(--primary);
     text-align: center;
     font-size: 25px;
 }
@@ -436,7 +456,7 @@ button {
 
 a{
     text-decoration: none;
-    color: #252638;
+    color: var();
 }
 
 /*Ajustes*/
@@ -445,7 +465,7 @@ a{
     margin-bottom: 25px;
     width: 30%;
     border-radius: 15px;
-    background: #171726;
+    background: var(--secondary);
     padding-top:15px;
     padding-bottom: 15px;
 }
@@ -468,7 +488,7 @@ a{
 
 #panelajustes>.boton{
     width: 80%;
-    color: #252638;
+    color: var(--primary);
     text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     font-weight: 900;
 }
@@ -494,7 +514,7 @@ a{
 #respuesta {
     text-align: center;
     display: block;
-    color: #6F7789;
+    color: var(--terciary);
     font-size: 10px;
     margin-bottom: 13px;
 }
@@ -504,7 +524,7 @@ a{
     width: 40%;
     height: 450px;
     border-radius: 15px;
-    background: #171726;
+    background: var(--secondary);
     padding-top: 0px;
     margin: auto;
     margin-top: 35px;
@@ -520,7 +540,7 @@ a{
 
 #panelAdmin>a>div{
     border-radius: 14px;
-    background: #6F7789;
+    background: var(--terciary);
     height: 70px;
     width: 80%;
     margin: auto;
@@ -538,7 +558,7 @@ a{
     width: 80%;
     height: 450px;
     border-radius: 15px;
-    background: #171726;
+    background: var(--secondary);
     padding-top: 0px;
     margin: auto;
     margin-top: 35px;
@@ -555,7 +575,7 @@ a{
 #panelCentro>div:first-child{
     width: 100%;
     border-radius: 16px 16px 0px 0px;
-    background: #6F7789;
+    background: var(--terciary);
     box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.25);
     padding-top: 15px;
     position: absolute;
@@ -564,7 +584,7 @@ a{
 #panelCentro p{
     margin-top: 0px;
     float: left;
-    color: #252638;
+    color: var(--primary);
     text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     font-weight: 900;
     font-size:20px;
@@ -584,7 +604,7 @@ a{
 
 #panelCentro>div:nth-child(2)>div{
     border-radius: 14px;
-    background: #6F7789;
+    background: var(--terciary);
     height: 20px;
     padding-bottom: 30px;
     margin: 5px 5px;
@@ -631,7 +651,7 @@ a{
 
 /*Form inicio*/
 #vistaForm>form {
-    background: #171726;
+    background: var(--secondary);
     width:30%;
     padding: 20px;
     border-radius: 5px;
@@ -641,36 +661,36 @@ a{
 #vistaForm label {
     margin-bottom: 5px;
     font-weight: bold;
-    color: #6F7789;
+    color: var(--primary);
 }
 
 #vistaForm input,
 #vistaForm select {
-    color: #171726;
+    color:var(--primary);
     width: 100%;
     padding: 10px;
     border-radius: 4px;
     margin-top: 6px; 
     margin-bottom: 15px;
     box-sizing: border-box;
-    background-color: #6F7789;
+    background-color: var(--terciary);
     font-weight: bold;
     border: none;
 }
 
 input:focus, select:focus {
     outline: none;
-    filter: drop-shadow(0 0 0.2em #6F7789);
+    filter: drop-shadow(0 0 0.2em var(--terciary));
 }
 
 input:-webkit-autofill {
-    -webkit-box-shadow: 0 0 0 1000px #6F7789 inset !important;
-    -webkit-text-fill-color: #171726 !important;
+    -webkit-box-shadow: 0 0 0 1000px var(--terciary) inset !important;
+    -webkit-text-fill-color: var(--primary) !important;
 }
 
 #vistaForm form button{
-        background-color: #525865;
-        color: #171726;
+        background-color: var(--terciary);
+        color: var(--primary);
         font-weight: bold;
         padding: 10px 15px;
         border: none;
@@ -681,7 +701,7 @@ input:-webkit-autofill {
 }
 
 #vistaForm form button:hover {
-    background-color: #6F7789;
+    background-color: var(--terciary);
 }
 
 #over{
@@ -690,7 +710,7 @@ input:-webkit-autofill {
     margin: 0;
     padding: 10px;
     font-size: 20px;
-    color: #6F7789;
+    color: var(--primary);
 }
 
 .error-message ,#status-message{
@@ -698,6 +718,38 @@ input:-webkit-autofill {
         font-size: 12px;
 }
 
+@media (prefers-color-scheme: dark) , (data-theme="dark") {
+   /* dark mode */
+   :root{
+    --primary: #252638;
+    --secondary: #171726;
+    --terciary: #6F7789;
+    --personajes: #414467;
+    --contrast: #F5C505;
+   }
+  }
+
+@media (prefers-color-scheme: light) , (data-theme="light"){
+   /* light mode */
+   :root{
+    --primary: #FFF5DD;
+    --secondary: #FCC34D;
+    --terciary: #CCAC92;
+    --personajes: #3E0900;
+    --contrast: #42547A;  
+   } 
+
+   #theme{
+    box-shadow: 0px 0px 24px 6px rgba(0, 0, 0, 0.88);
+    background-color: black;
+}
+
+    #theme img{
+        content: url('../img/iconos/luna.png');
+    }
+      
+  }
+  
 @keyframes disappearRight {
     0% {
         transform: translateX(0%);

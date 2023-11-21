@@ -1,5 +1,5 @@
 <img id="logo" src="../img/iconos/logo.jpeg">
-        <button class="boton">
+        <button class="boton" id="theme">
             <img src="../img/iconos/sol.png">
         </button>
         <p class="tituloranking" style="margin-top:30px">CENTRO</p>

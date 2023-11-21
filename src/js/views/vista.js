@@ -32,4 +32,5 @@ export class Vista {
       this.base.style.display = 'none'
     }
   }
+
 }

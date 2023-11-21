@@ -16,6 +16,7 @@ export class VistaPrincipal extends Vista {
     const btnRestart = document.getElementById('restart')
     const btnRanking = this.base.querySelectorAll('button')[3]
     const btnSettings = this.base.querySelectorAll('button')[4]
+    const btnTheme = document.getElementById('theme')
     this.tablero = document.getElementById('divtablero')
     this.divIzq = document.getElementById('divizquierda')
     const personajes = this.base.querySelectorAll('.personaje')
@@ -35,10 +36,11 @@ export class VistaPrincipal extends Vista {
     this.tablero.addEventListener('dragover', this.dragOver)
     this.tablero.addEventListener('dragenter', this.dragEnter)
     this.tablero.addEventListener('dragleave', this.dragLeave)
-    this.divIzq.addEventListener('drop', this.drop)
+    this.tablero.addEventListener('drop', this.drop)
 
     btnRanking.onclick = this.irRanking
     btnSettings.onclick = this.irSettings
+    btnTheme.onclick = this.changeTheme
     btnRestart.onclick = this.restartGame
     window.onkeydown = this.mostrarFormulario
   }
@@ -77,6 +79,21 @@ export class VistaPrincipal extends Vista {
       }
     }
   }
+
+  changeTheme = () => {
+    const element = this.tablero;
+    const rootElement = document.documentElement;
+  
+    const backgroundColor = window.getComputedStyle(element).getPropertyValue('background-color');
+    
+    // Si el color de fondo es '#171726' (el modo oscuro)
+    if (backgroundColor === 'rgb(23, 23, 38)') {
+      rootElement.setAttribute('data-theme', 'light');
+    } else {
+      rootElement.setAttribute('data-theme', 'dark');
+    }
+  }
+  
 
   /**
      * Reinicia el juego, eliminando todos los personajes del tablero y restableciendo los elementos de animación y visualización.
