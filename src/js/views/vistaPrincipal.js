@@ -134,7 +134,7 @@ export class VistaPrincipal extends Vista {
     while (this.tablero.firstChild) {
       this.tablero.removeChild(this.tablero.firstChild);
   }
-  while (this.cadena.firstChild) {
+   while (this.cadena.firstChild) {
     this.cadena.removeChild(this.cadena.firstChild);
   }
     this.temp=0
