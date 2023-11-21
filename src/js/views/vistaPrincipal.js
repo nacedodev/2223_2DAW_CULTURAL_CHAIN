@@ -21,6 +21,7 @@ export class VistaPrincipal extends Vista {
     this.divIzq = document.getElementById('divizquierda')
     const personajes = this.base.querySelectorAll('.personaje')
     this.divPersonajes = document.getElementById('divderecha')
+    this.titulo = document.getElementById('titulo')
     this.info = this.base.querySelector('#info')
     this.end = this.base.querySelector('#end')
     this.form = document.getElementById('form-end')
@@ -88,13 +89,20 @@ export class VistaPrincipal extends Vista {
     
     // Si el color de fondo es '#171726' (el modo oscuro)
     if (backgroundColor === 'rgb(23, 23, 38)') {
-      rootElement.setAttribute('data-theme', 'light');
+      rootElement.style.setProperty('--primary', '#FFF5DD');
+      rootElement.style.setProperty('--secondary', '#FCC34D');
+      rootElement.style.setProperty('--terciary', '#CCAC92');
+      rootElement.style.setProperty('--personajes', '#3E0900');
+      rootElement.style.setProperty('--contrast', '#42547A');
     } else {
-      rootElement.setAttribute('data-theme', 'dark');
+      rootElement.style.setProperty('--primary', '#252638');
+      rootElement.style.setProperty('--secondary', '#171726');
+      rootElement.style.setProperty('--terciary', '#6F7789');
+      rootElement.style.setProperty('--personajes', '#414467');
+      rootElement.style.setProperty('--contrast', '#F5C505'); 
     }
   }
   
-
   /**
      * Reinicia el juego, eliminando todos los personajes del tablero y restableciendo los elementos de animación y visualización.
      * @method
@@ -199,6 +207,7 @@ export class VistaPrincipal extends Vista {
     this.tablero.style.filter = 'none' // Restaurar el fondo a su estado original
     this.divPersonajes.style.animation = 'disappearRight 2s forwards'
     this.divIzq.style.animation = 'enlargeBoard 2s forwards'
+    this.titulo.style.animation = 'ocultarTexto 1s forwards'
     personajeSelected.style.pointerEvents = 'none'
     this.divPersonajes.style.pointerEvents = 'none'
     this.info.style.animation = 'ocultarTexto 1.5s forwards'

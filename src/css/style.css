@@ -14,27 +14,9 @@
 --theme-img: url('img/iconos/sol.png');
 }
 
-[data-theme="dark"] {
-    /* Estilos para el modo oscuro */
-    --primary: #252638;
-    --secondary: #171726;
-    --terciary: #6F7789;
-    --personajes: #414467;
-    --contrast: #F5C505;
-  }
-  
-  /* Estilos por defecto o para el modo claro */
-  [data-theme="light"] {
-    --primary: #FFF5DD;
-    --secondary: #FCC34D;
-    --terciary: #CCAC92;
-    --personajes: #3E0900;
-    --contrast: #42547A;
-  }
-  
-
-html{
-    width: 1400px;
+#vistaPrincipal{
+    width: 100%;
+    height: 100vh;
 }
 
 body{
@@ -66,17 +48,83 @@ button {
     float: right;
 }
 
-/*Pagina inicial*/
-#divderecha{
-    height: 780px;
-    float: left;
+#divderecha {
+    height: 100%;
+    float: right;
+    width: 20%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-#divizquierda{
-    width: 70%;
-    height: 600px;
+#divderecha > div {
+    width: 100%;
+    height: 96%;
+    flex-shrink: 0;
+    margin-right: 40px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    border-radius: 15px;
+    background-color: var(--secondary);
+    box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.74);
+    display: flex;
+    flex-direction: column;
+}
+
+#divderecha > div > div:nth-child(3) {
+    padding: 0px;
+    width: 100%;
+    overflow: auto;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+#divderecha > div > p{
+    color: var(--terciary);
+    margin-bottom: 10px;
+    margin-top: 25px;
+}
+
+#divderecha > div > div:first-child{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 0 9%;
+
+}
+
+#divderecha > div figcaption{
+    color: var(--primary);
+}
+
+#divderecha > div > div > figure {
+    border-radius: 7px;
+    background: var(--personajes);
+    box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    width: 35%;
+    margin: 10px 20px;
+    aspect-ratio: 1/1;
+}
+
+#divderecha > div > div > figure > img {
+    aspect-ratio: 37/60;
+    width: 40%;
+    margin: auto;
+    margin-top: 15px;
+    display: block;
+}
+
+#divizquierda {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 80%;
+    height: 100vh;
     float: left;
-    margin-top: 60px;
+    flex-direction: column;
 }
 
 #logo{
@@ -102,16 +150,15 @@ button {
     color: var(--contrast);
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
     font-size: 20px;
-    margin-top: 0px;
+    margin-top: 0;
     font-family: 'Press Start 2P', sans-serif;
 }
 
 #restart{
     width: 48px;
     height: 158px;
-    position: relative;
-    left: 80px;
-    bottom: 450px;
+    position: absolute;
+    left: 19%;
     border-radius: 35px;
     background: var(--terciary);
 }
@@ -122,10 +169,10 @@ button {
 }
 
 #restart>p{
+    width: 100%;
+    text-align: center;
     display: block;
     color: var(--primary);
-    font-size: 17px;
-    font-weight: 700;
     top:15px;
 }
 
@@ -138,9 +185,9 @@ button {
 #score{
     width: 48px;
     height: 158px;
-    position: relative;
-    left: 860px;
-    bottom: 624px;
+    position: absolute;
+    left: 78%;
+    margin-bottom: 60px;
     padding-top: 60px;
 }
 
@@ -162,13 +209,13 @@ button {
     text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     font-weight: 900;
     font-size: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 #divtablero{
-    width: 60%;
-    height: 600px;
-    margin:auto;
-    margin-top: 20px;
+    aspect-ratio: 1/1   ;
+    width: 50%;
     background-color: var(--secondary);
     border-radius: 5px;
 }
@@ -191,31 +238,11 @@ button {
     font-size: 15px;
 }
 
-#divderecha{
-    width: 30%;
-}
-
-#divderecha>div{
-    width: 80%;
-    height: fit-content;
-    margin: auto;
-    margin-top: 15px;
-    margin-bottom: 15px;
-    flex-shrink: 0;
-    border-radius: 15px;
-    background-color: var(--secondary);
-    box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.74);
-}
-
-#divderecha>div>div:nth-child(1){
-    width: 100%;
-    margin: auto;
-    height: 75px;
-}
 
 #theme{
     box-shadow: 0px 0px 24px 6px rgba(255, 255, 255, 0.25);
     background-color: white;
+    margin-right: 20px;
 }
 
 #theme img{
@@ -238,14 +265,16 @@ button {
     transform: rotateY(360deg);
 }
 
+#rk{
+    margin-right: 20px;
+}
 .boton{
-    width: 60px;
-    height: 60px;
+    width: 65px;
+    height: 65px;
     border-radius: 7px;
     background: var(--terciary);
     color: var(--primary);
     float:left;
-    margin-left: 42px;
     margin-top: 15px;
     padding:0px;
 }
@@ -256,50 +285,6 @@ button {
     height: 40px;
     display: block;
     margin-top: 0px;
-}
-
-#divderecha>div>p,#panelajustes>p{
-    margin-bottom: 0px;
-    color: var(--primary);
-    font-size: 18px;
-}
-
-#divderecha>div>p,#panelajustes>p,.tituloranking{
-    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-}
-
-#divderecha>div>div:nth-child(3){
-    padding: 0px;
-    width: content;
-    overflow: hidden;
-}
-
-#divderecha>div>div>figure{
-    border-radius: 7px;
-    background: var(--personajes);
-    box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.25);
-    width: 100px;
-    height: 100px;
-    margin-left: 50px;
-    margin-right: 0px;
-    margin-top: 10px;
-    float: left;
-}
-
-#divderecha>div>div>figure>img{
-    width: 37px;
-    height: 60px;
-    margin: auto;
-    margin-top:15px;
-    display: block;
-}
-
-#divderecha>div>div>figure>figcaption{
-    color: var(--secondary);
-    font-size: 13px;
-    font-style: normal;
-    font-weight: 700;
-    margin-top: 5px;
 }
 
 /*Ranking*/
@@ -436,6 +421,10 @@ button {
     bottom:500px;
 }
 
+#vistaRanking{
+    height: 100vh;
+}
+
 #botonatras{
     padding: 15px;
     width: 175px;
@@ -496,7 +485,7 @@ a{
 #vistaForm {
     position: absolute;
     z-index: 99;
-    width:1400px;
+    width:100%;
     display: flex;
     justify-content: center; 
     align-items: center;
@@ -661,7 +650,7 @@ a{
 #vistaForm label {
     margin-bottom: 5px;
     font-weight: bold;
-    color: var(--primary);
+    color: var(--terciary);
 }
 
 #vistaForm input,
@@ -710,7 +699,7 @@ input:-webkit-autofill {
     margin: 0;
     padding: 10px;
     font-size: 20px;
-    color: var(--primary);
+    color: var(--terciary);
 }
 
 .error-message ,#status-message{
@@ -718,10 +707,10 @@ input:-webkit-autofill {
         font-size: 12px;
 }
 
-@media (prefers-color-scheme: dark) , (data-theme="dark") {
+@media (prefers-color-scheme: dark)  {
    /* dark mode */
    :root{
-    --primary: #252638;
+    --primary: #252638 !important;
     --secondary: #171726;
     --terciary: #6F7789;
     --personajes: #414467;
@@ -729,7 +718,7 @@ input:-webkit-autofill {
    }
   }
 
-@media (prefers-color-scheme: light) , (data-theme="light"){
+@media (prefers-color-scheme: light) {
    /* light mode */
    :root{
     --primary: #FFF5DD;
@@ -764,10 +753,10 @@ input:-webkit-autofill {
 
 @keyframes enlargeBoard {
     0% {
-        transform: translateX(0px) scale(1);
+        width: 80%;
     }
     100% {
-        transform: translateX(210px) translateY(40px) scale(1.19);
+        width: 100%;
     }
 }
 
