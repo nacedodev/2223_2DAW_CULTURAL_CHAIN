@@ -138,6 +138,7 @@ export class VistaPrincipal extends Vista {
     this.cadena.removeChild(this.cadena.firstChild);
   }
     this.temp=0
+    this.dir=null
     clearInterval(this.intervalo);
     // Reset the showForm variable
     this.showForm = false
