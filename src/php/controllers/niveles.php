@@ -42,26 +42,26 @@ class ControladorNiveles {
      /**
      * Borra un centro existente.
      */
-    /*public function borrarCentro() { 
-        $this->view='borradoCentros';
+    public function borrarNivel() { 
+        $this->view='borradoNiveles';
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
              if (isset($_GET['id'])) {
-            $this->objCentros->borrar($_GET['id']);
-            header("Location: index.php?action=listarCentros&controller=Centros");
+            $this->objNiveles->borrar($_GET['id']);
+            header("Location: index.php?action=listarNiveles&controller=Niveles");
             }
         }
     }
     /**
      * Modifica un centro existente.
      */
-    /*public function modificarCentro() { 
-        $this->view='modificarCentros';
+    public function modificarNivel() { 
+        $this->view='modificarNiveles';
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Lógica para actualizar el centro en la base de datos
-        $this->objCentros->modificar($_POST['id'], $_POST['nombre'], $_POST['localidad']);
-        header("Location: index.php?action=listarCentros&controller=Centros");
+        $this->objNiveles->modificar($_POST['id'], $_POST['nombrepais']);
+        header("Location: index.php?action=listarNiveles&controller=Niveles");
     }
        
-    }*/
+    }
     
 }
