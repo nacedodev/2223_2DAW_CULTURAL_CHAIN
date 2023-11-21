@@ -44,7 +44,7 @@ export class VistaPrincipal extends Vista {
     
   
      this.cadena = document.createElement("div");
-     this.cadena.style.position = 'relative';
+     this.cadena.style.position = 'absolute';
      this.cadena.style.width = '20px';
      this.cadena.style.height = '20px'
      this.cadena.style.border="solid black 2px"
@@ -57,7 +57,7 @@ export class VistaPrincipal extends Vista {
     this.temp=0
     this.reload=50
     
-    console.log(this.intervalo)
+  
     btnRanking.onclick = this.irRanking
     btnSettings.onclick = this.irSettings
     btnRestart.onclick = this.restartGame
@@ -109,7 +109,7 @@ export class VistaPrincipal extends Vista {
     personajes.forEach(personaje => {
       personaje.remove()
     })
-
+    
     // Reset the animations and display elements
     this.divPersonajes.style.animation = 'none'
     this.divIzq.style.animation = 'none'
@@ -133,6 +133,9 @@ export class VistaPrincipal extends Vista {
   
     while (this.tablero.firstChild) {
       this.tablero.removeChild(this.tablero.firstChild);
+  }
+  while (this.cadena.firstChild) {
+    this.cadena.removeChild(this.cadena.firstChild);
   }
     this.temp=0
     clearInterval(this.intervalo);
@@ -230,7 +233,6 @@ export class VistaPrincipal extends Vista {
       
     // Establecer las coordenadas de posición del personaje
     this.cadena.style.left = this.posX + 'px';
-    this.cadena.style.position = 'absolute';
     this.cadena.style.top = this.posY + 'px';
   
     // Agregar el personaje al tablero
@@ -272,8 +274,9 @@ moverObjeto =()=> {
   this.avanzar();  // Mover la this.cadena
   this.limites();
   this.generacionPersonas();
+  this.recogerImagen();
   this.temp++;
- console.log(this.temp)
+
 }
  limites=()=> {
       // Obtener las dimensiones reales del tablero
@@ -300,30 +303,67 @@ moverObjeto =()=> {
     }
   }
 
-  generacionPersonas=()=>{
-    if(this.temp%100 ===0){
-      var tableroAncho = this.tablero.clientWidth;
-      var tableroAlto = this.tablero.clientHeight;
-      
-      // Crear un nuevo elemento div
-      var nuevoDiv = document.createElement('div');
-      
-      // Establecer el estilo del borde del nuevo div
-      nuevoDiv.style.border = 'solid 2px black';
-      
-      // Calcular posiciones aleatorias dentro del tablero
-      var posX = Math.floor(Math.random() * tableroAncho)-25;
-      var posY = Math.floor(Math.random() * tableroAlto);
-      
-      // Establecer la posición absoluta del nuevo div dentro del tablero
-      nuevoDiv.style.position = 'absolute';
-      nuevoDiv.style.left = posX + 'px';
-      nuevoDiv.style.top = posY + 'px';
-      nuevoDiv.style.width= '20px'
-      nuevoDiv.style.height='20px'
-      
-      // Añadir el nuevo div al elemento con el id 'cadena' (asegúrate de que 'cadena' sea el id correcto)
-      this.tablero.appendChild(nuevoDiv);
-    }
+  generacionPersonas = () => {
+  if (this.temp % 100 === 0) {
+    var tableroAncho = this.tablero.clientWidth;
+    var tableroAlto = this.tablero.clientHeight;
+
+    // Crear un nuevo elemento img en lugar de div
+    var nuevaImagen = document.createElement('img');
+
+    var numeroAleatorio = Math.floor(Math.random() * 15) + 1;
+    var numeroFormateado = ('00' + numeroAleatorio).slice(-3);
+
+    // Crear la URL de la imagen utilizando el número formateado
+   
+    nuevaImagen.src = 'img/personajes/person'+ numeroFormateado + '.png';;
+
+    // Establecer el estilo del borde de la nueva imagen
+    nuevaImagen.style.border = 'solid 2px black';
+
+    // Calcular posiciones aleatorias dentro del tablero
+    var posX = Math.floor(Math.random() * tableroAncho) ;
+    var posY = Math.floor(Math.random() * tableroAlto);
+
+    // Establecer la posición absoluta de la nueva imagen dentro del tablero
+    nuevaImagen.style.position = 'absolute';
+    nuevaImagen.style.left = posX + 'px';
+    nuevaImagen.style.top = posY + 'px';
+    nuevaImagen.style.width = '20px';
+    nuevaImagen.style.height = '20px';
+
+    // Añadir la nueva imagen al elemento con el id 'tablero'
+    this.tablero.appendChild(nuevaImagen);
+   
   }
+ 
+}
+
+recogerImagen = () => {
+  // Detectar el objeto (imagen) en las coordenadas actuales del this.cadena
+  var objetoEnPunto = document.elementFromPoint(
+    this.cadena.getBoundingClientRect().left + this.cadena.offsetWidth / 2,
+    this.cadena.getBoundingClientRect().top + this.cadena.offsetHeight / 2
+  );
+
+  if (objetoEnPunto && objetoEnPunto.tagName === 'IMG') {
+    // Crear una nueva imagen en lugar de clonarla
+    var imagenRecogida = new Image();
+    imagenRecogida.src = objetoEnPunto.src;
+    imagenRecogida.style.width = '20px';  // Ajusta según sea necesario
+    imagenRecogida.style.height = '20px'; // Ajusta según sea necesario
+
+    // Ocultar la imagen original
+    objetoEnPunto.style.display = 'none';
+
+    // Añadir la imagen recogida directamente al div móvil
+    this.cadena.appendChild(imagenRecogida);
+
+    // Ajusta según sea necesario para mostrar el div móvil
+    this.cadena.style.display = 'flex';
+  } else {
+    console.log('No hay ninguna imagen para recoger en estas coordenadas.');
+  }
+  console.log(this.cadena);
+};
 }
