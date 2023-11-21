@@ -48,9 +48,13 @@ export class VistaPrincipal extends Vista {
      this.cadena.style.width = '20px';
      this.cadena.style.height = '20px'
      this.cadena.style.border="solid black 2px"
-     window.addEventListener('keydown', this.moverObjeto);
+     window.addEventListener('keydown',this.direccion);
+     this.intervalo = setInterval(() => this.moverObjeto(), 50);
+
     this.posX
     this.posY
+    this.dir=1
+    this.distanciapaso=5
 
 
     btnRanking.onclick = this.irRanking
@@ -116,6 +120,9 @@ export class VistaPrincipal extends Vista {
     this.tablero.style.filter = 'none'
     this.tablero.style.backgroundImage='none'
     this.divPersonajes.style.pointerEvents = 'auto'
+
+
+    
 
     this.tablero.style.backgroundImage = 'url("img/nivel/nivel1.jpg")';
     this.tablero.style.backgroundSize = 'cover';
@@ -204,10 +211,10 @@ export class VistaPrincipal extends Vista {
     this.info.style.animation = 'ocultarTexto 1.5s forwards';
     this.end.style.animation = 'mostrarTexto 4s forwards';
    
-    setTimeout(() => {
+   
         this.tablero.style.transition = 'opacity 1s';  // Transición de 1 segundo en la opacidad
         this.tablero.style.opacity = '1';  // Establecer la opacidad a 1 para mostrar la imagen
-    });
+   
 
   
     // Obtener las coordenadas del evento de soltar en relación con el tablero
@@ -230,48 +237,63 @@ export class VistaPrincipal extends Vista {
 
     // Limpiar el tablero antes de agregar los elementos
    
-
+    this.miFuncion
  
   
 }
-  nivel1 = () => {
-    
-  
 
-   
-        
+avanzar=()=> {
 
+  if (this.dir == 1) {
+      this.cadena.style.top = this.posY - this.distanciapaso + "px";
+      this.posY = this.posY - this.distanciapaso;
   }
-  nivel2 = () => {
-
+  if (this.dir == 2) {
+      this.cadena.style.left = this.posX + this.distanciapaso + "px";
+      this.posX =  this.posX + this.distanciapaso;
   }
+  if (this.dir == 3) {
+      this.cadena.style.top = this.posY + this.distanciapaso + "px";
+      this.posY = this.posY + this.distanciapaso;
+  }
+  if (this.dir == 4) {
+      this.cadena.style.left = this.posX - this.distanciapaso + "px";
+      this.posX = this.posX - this.distanciapaso;
+  }
+  //animacion();  // Actualizar la animación de la this.cadena
+}
+direccion=(event)=> {
+  if (event.key == "w") this.dir = 1;
+  if ( event.key== "d") this.dir = 2;
+  if ( event.key== "s") this.dir = 3;
+  if (event.key== "a") this.dir = 4;
+  console.log(this.dir)
+}
+moverObjeto =()=> {
+  this.avanzar();  // Mover la this.cadena
+  this.limites()
+}
+ limites=()=> {
+  // Obtener las dimensiones reales del tablero
+  var tableroAncho = this.tablero.clientWidth;
+  var tableroAlto = this.tablero.clientHeight;
 
-  moverObjeto = (event) => {
-    var velocidad = 5;
+// Establecer límite derecho
+if (this.posX > tableroAncho-25) {
+    this.posX = 0
+}
+if (this.posX < 0) {
+  this.posX = tableroAncho-25
+}
 
-    // Verificar si la tecla presionada es la "w"
-    if (event.key === 'w') {
-        this.posY -= velocidad;
-    }
-    
-    // Verificar si la tecla presionada es la "s"
-    if (event.key === 's') {
-      this.posY += velocidad;
-    }
+if (this.posY > tableroAlto-25) {
+  this.posY = 0
+}
 
-    // Verificar si la tecla presionada es la "a"
-    if (event.key === 'a') {
-      this.posX -= velocidad;
-    }
-
-    // Verificar si la tecla presionada es la "d"
-    if (event.key === 'd') {
-      this.posX += velocidad;
-    }
-
-    // Aplicar nuevas coordenadas al objeto
-    this.cadena.style.left = this.posX + "px";
-    this.cadena.style.top = this.posY + "px";
-};
+// Establecer límite superior
+if (this.posY < 0) {
+  this.posY = tableroAlto-25
+}
+}
 
 }
