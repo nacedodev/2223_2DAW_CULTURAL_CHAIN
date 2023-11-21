@@ -4,7 +4,7 @@ CREATE TABLE Conflicto (
     posx smallint NOT NULL,
     posy smallint NOT NULL,
     imagenconflicto smallint NOT NULL,
-    estadoconflicto VARCHAR(50)
+    estadoconflicto VARCHAR(50),
     nivel_id INT,
     CONSTRAINT fk_nombre_nivel 
         FOREIGN KEY (nivel_id) 
