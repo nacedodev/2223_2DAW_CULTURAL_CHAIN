@@ -48,16 +48,16 @@ export class VistaPrincipal extends Vista {
      this.cadena.style.width = '20px';
      this.cadena.style.height = '20px'
      this.cadena.style.border="solid black 2px"
-     window.addEventListener('keydown',this.direccion);
-     this.intervalo = setInterval(() => this.moverObjeto(), 50);
+    
 
     this.posX
     this.posY
     this.dir=null
     this.distanciapaso=5
     this.temp=0
-
-
+    this.reload=50
+    
+    console.log(this.intervalo)
     btnRanking.onclick = this.irRanking
     btnSettings.onclick = this.irSettings
     btnRestart.onclick = this.restartGame
@@ -134,6 +134,8 @@ export class VistaPrincipal extends Vista {
     while (this.tablero.firstChild) {
       this.tablero.removeChild(this.tablero.firstChild);
   }
+    this.temp=0
+    clearInterval(this.intervalo);
     // Reset the showForm variable
     this.showForm = false
   }
@@ -224,8 +226,7 @@ export class VistaPrincipal extends Vista {
     this.posX = e.clientX - this.tablero.getBoundingClientRect().left;
     this.posY = e.clientY - this.tablero.getBoundingClientRect().top;
     
-      console.log(this)
-      console.log(this)
+    
       
     // Establecer las coordenadas de posición del personaje
     this.cadena.style.left = this.posX + 'px';
@@ -235,9 +236,9 @@ export class VistaPrincipal extends Vista {
     // Agregar el personaje al tablero
     this.cadena.appendChild(personajeSelected);
     this.tablero.appendChild(this.cadena);
-    this.generacionPersonas();
-    this.temp++;
-
+    window.addEventListener('keydown',this.direccion);
+    
+    this.intervalo = setInterval(() => this.moverObjeto(), this.reload);
 }
 
 avanzar=()=> {
@@ -265,13 +266,14 @@ direccion=(event)=> {
   if ( event.key== "d") this.dir = 2;
   if ( event.key== "s") this.dir = 3;
   if (event.key== "a") this.dir = 4;
-  console.log(this.dir)
+ 
 }
 moverObjeto =()=> {
   this.avanzar();  // Mover la this.cadena
   this.limites();
- 
- 
+  this.generacionPersonas();
+  this.temp++;
+ console.log(this.temp)
 }
  limites=()=> {
       // Obtener las dimensiones reales del tablero
