@@ -16,9 +16,10 @@ export class VistaPrincipal extends Vista {
     const btnRestart = document.getElementById('restart')
     const btnRanking = this.base.querySelectorAll('button')[3]
     const btnSettings = this.base.querySelectorAll('button')[4]
-    const btnTheme = document.getElementById('theme')
+    this.btnTheme = document.getElementById('theme')
     this.tablero = document.getElementById('divtablero')
     this.divIzq = document.getElementById('divizquierda')
+    this.gameStarted = false
     const personajes = this.base.querySelectorAll('.personaje')
     this.divPersonajes = document.getElementById('divderecha')
     this.titulo = document.getElementById('titulo')
@@ -41,7 +42,7 @@ export class VistaPrincipal extends Vista {
 
     btnRanking.onclick = this.irRanking
     btnSettings.onclick = this.irSettings
-    btnTheme.onclick = this.changeTheme
+    this.btnTheme.onclick = this.changeTheme
     btnRestart.onclick = this.restartGame
     window.onkeydown = this.mostrarFormulario
   }
@@ -81,48 +82,64 @@ export class VistaPrincipal extends Vista {
     }
   }
 
-  // changeTheme = () => {
-  //   const element = this.tablero;
-  //   const rootElement = document.documentElement;
-  //   const backgroundColor = window.getComputedStyle(element).getPropertyValue('background-color');
-  //   // Si el color de fondo es '#171726' (el modo oscuro)
-  //   if (backgroundColor === 'rgb(23, 23, 38)') {
-  //     rootElement.style.setProperty('--primary', '#FFF5DD');
-  //     rootElement.style.setProperty('--secondary', '#FCC34D');
-  //     rootElement.style.setProperty('--terciary', '#CCAC92');
-  //     rootElement.style.setProperty('--personajes', '#3E0900');
-  //     rootElement.style.setProperty('--contrast', '#42547A');
-  //   } else {
-  //     rootElement.style.setProperty('--primary', '#252638');
-  //     rootElement.style.setProperty('--secondary', '#171726');
-  //     rootElement.style.setProperty('--terciary', '#6F7789');
-  //     rootElement.style.setProperty('--personajes', '#414467');
-  //     rootElement.style.setProperty('--contrast', '#F5C505');
-  //   }
-  // }
+  changeTheme = () => {
+    const element = this.tablero
+    const rootElement = document.documentElement
+    const backgroundColor = window.getComputedStyle(element).getPropertyValue('background-color')
+    // Si el color de fondo es '#171726' (el modo oscuro)
+    if (backgroundColor === 'rgb(23, 23, 38)') {
+      rootElement.style.setProperty('--primary', '#FFF5DD', 'important')
+      rootElement.style.setProperty('--secondary', '#FCC34D', 'important')
+      rootElement.style.setProperty('--terciary', '#CCAC92', 'important')
+      rootElement.style.setProperty('--personajes', '#3E0900', 'important')
+      rootElement.style.setProperty('--contrast', '#42547A', 'important')
+      rootElement.style.setProperty('--shadow', '#ffffff40', 'important')
+      rootElement.style.setProperty('--theme-img', 'url(../img/iconos/sol.png)', 'important')
+      this.btnTheme.style.backgroundColor = 'white'
+    } else {
+      rootElement.style.setProperty('--primary', '#252638', 'important')
+      rootElement.style.setProperty('--secondary', '#171726', 'important')
+      rootElement.style.setProperty('--terciary', '#6F7789', 'important')
+      rootElement.style.setProperty('--personajes', '#414467', 'important')
+      rootElement.style.setProperty('--contrast', '#F5C505', 'important')
+      rootElement.style.setProperty('--shadow', '#000000e0', 'important')
+      rootElement.style.setProperty('--theme-img', 'url(../img/iconos/luna.png)', 'important')
+      this.btnTheme.style.backgroundColor = 'black'
+    }
+  }
+
   /**
      * Reinicia el juego, eliminando todos los personajes del tablero y restableciendo los elementos de animación y visualización.
      * @method
      */
   restartGame = () => {
     // Remove all the characters from the tablero
-    const personajes = this.tablero.querySelectorAll('.personaje')
-    personajes.forEach(personaje => {
-      personaje.remove()
-    })
+    if (this.gameStarted) {
+      const personajes = this.tablero.querySelectorAll('.personaje')
+      personajes.forEach(personaje => {
+        personaje.remove()
+      })
 
-    // Reset the animations and display elements
-    this.divIzq.style.animation = 'shortBoard 1s forwards'
-    this.divPersonajes.style.animation = 'appearRight 1s forwards'
-    this.info.style.animation = 'mostrarTexto 1s forwards'
-    this.titulo.style.animation = 'mostrarTexto 1s forwards'
-    this.end.style.animation = 'none'
-    this.form.style.animation = 'none'
-    this.tablero.style.filter = 'none'
-    this.divPersonajes.style.pointerEvents = 'auto'
+      // Reset the animations and display elements
+      this.divIzq.style.animation = 'shortBoard 1s forwards'
+      this.divPersonajes.style.animation = 'appearRight 1s forwards'
+      this.info.style.animation = 'mostrarTexto 1s forwards'
+      this.titulo.style.animation = 'mostrarTexto 1s forwards'
+      this.end.style.animation = 'none'
+      this.form.style.animation = 'none'
+      this.tablero.style.filter = 'none'
+      this.divPersonajes.style.pointerEvents = 'auto'
 
-    // Reset the showForm variable
-    this.showForm = false
+      // Reset the showForm variable
+      this.showForm = false
+      this.gameStarted = false
+    } else {
+      const restartImg = document.querySelector('#restart > img')
+      restartImg.style.animation = 'shakeAnimation 0.3s ease-in-out'
+      setTimeout(() => {
+        restartImg.style.animation = 'none'
+      }, 300)
+    }
   }
 
   /**
@@ -209,5 +226,6 @@ export class VistaPrincipal extends Vista {
     this.divPersonajes.style.pointerEvents = 'none'
     this.info.style.animation = 'ocultarTexto 1.5s forwards'
     this.end.style.animation = 'mostrarTexto 4s forwards'
+    this.gameStarted = true
   }
 }

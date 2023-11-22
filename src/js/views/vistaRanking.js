@@ -10,7 +10,6 @@ import { Vista } from './vista.js'
 export class VistaRanking extends Vista {
   constructor (controlador, base) {
     super(controlador, base)
-
     /**
          * Realiza la navegación de vuelta a la vista principal.
          * @method

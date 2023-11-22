@@ -9,7 +9,12 @@
 --terciary: #6F7789;
 --personajes: #414467;
 --contrast: #F5C505;
+--shadow: #000000e0;
 --theme-img: url('img/iconos/sol.png');
+}
+
+*{
+    transition: background-color 0.8s ease , color 0.8s ease, box-shadow 0.8s ease;
 }
 
 #vistaPrincipal{
@@ -102,6 +107,11 @@ button {
 }
 
 #divderecha > div > div > figure {
+    display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+   text-align: center;
     flex-grow: 1;
     border-radius: 7px;
     background: var(--personajes);
@@ -116,7 +126,6 @@ button {
     aspect-ratio: 37/60;
     width: 40%;
     margin: auto;
-    margin-top: 15px;
     display: block;
 }
 
@@ -163,7 +172,7 @@ button {
     width: 48px;
     height: 158px;
     position: absolute;
-    transition: all 0.5s ease;
+    transition: all 0.3s ease;
     left: 15%;
     border-radius: 35px;
     background: var(--terciary);
@@ -179,40 +188,55 @@ button {
     text-align: center;
     display: block;
     color: var(--primary);
-    top:15px;
+    position: absolute;
+    bottom: 55px;
+    transition: all 0.3s ease
+}
+
+#restart:hover p{
+    opacity: 0;
 }
 
 #restart>img{
-    margin: auto;
-    display: block;
-    top:20px;
+    margin: 0 auto;
+    top:50px;
+    transition: all 0.3s ease;
+}
+
+#restart:hover img{
+    transform: rotate(0deg);
+    top:4px;
+    left: 1px
 }
 
 #restart:hover{
-    height: 60px;
-    border-radius: 50%;
+    height: 50px;
 }
 
 #score{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     width: 48px;
-    height: 158px;
+    height: fit-content;
     position: absolute;
     left: 81%;
+    top: 39%;
     margin-bottom: 60px;
-    padding-top: 60px;
+    padding-top: 0px;
 }
 
 #score>p{
     color: var(--terciary);
+    width: fit-content;
     font-size: 25px;
-    font-weight: 600;
     transform: rotate(-90deg);
     text-shadow: -4px 1px 4px rgba(0, 0, 0, 0.88);
 }
 
 #score>:nth-child(2){
     font-size: 60px;
-    margin-top: 0px;
+    margin-top: 30px;
 }
 
 #nombreapp{
@@ -251,19 +275,19 @@ button {
 
 
 #theme{
-    box-shadow: 0px 0px 24px 6px rgba(255, 255, 255, 0.25);
+    box-shadow: 0px 0px 24px 6px var(--shadow);
     background-color: white;
     margin-right: 20px;
 }
 
 #theme img{
-    content: url('../img/iconos/sol.png');
+    content: var(--theme-img);
 }
 
 #theme > img,
 #settings > img,
 #rk > img{
-    transition: transform 1s ease ;
+    transition: transform 0.5s ease ;
 }
 
 
@@ -310,11 +334,8 @@ button {
 
 /*Ranking*/
 #vistaRanking{
-    position: relative;
     width: 100%;
     height: 100vh;
-    float: left;
-    flex-direction: column;
 }
 
 #vistaRanking>.boton,
@@ -346,7 +367,11 @@ button {
     padding: 15px;
 }
 
-#tablonranking::-webkit-scrollbar{
+#tablonranking p{
+    margin:0px;
+}
+
+::-webkit-scrollbar{
     display: none;
 }
 
@@ -378,12 +403,14 @@ button {
 }
 
 #tablonranking>div>p:nth-child(1){
-    font-size: 30px;
+    margin-left: 30px;
+    margin-top: 0;
+    font-size: 35px;
     width: 40px;
 }
 
 #tablonranking>:nth-child(-n+3)>p:nth-child(1){
-    font-size: 45px;
+    font-size: 50px;
 }
 
 #tablonranking>:nth-child(1)>p:nth-child(1){
@@ -404,39 +431,34 @@ button {
 
 #tablonranking>div>p:nth-child(3){
     font-size: 15px;
-    margin-top: 25px;
 }
 
 #tablonranking>div>p:nth-child(4){
     font-size: 15px;
-    margin-top: 40px;
     position: relative;
     right: 105px;
 }
 
 #tablonranking>div>p:nth-child(5){
     font-size: 15px;
-    margin-top: 31px;
     position: relative;
     right: 80px;
 }
 
 #tablonranking>div>p:nth-child(6){
     font-size: 30px;
-    margin-top: 20px;
     position: relative;
     right: 80px;  
 }
 
 #tablonranking>div>img{
     width: 30px;
-    margin-top: 15px;
     position: relative; 
     right: 40px;
 }
 
 .medalla{
-    position: relative;
+    position: fixed;
     left: 15px;
     bottom:65px;
 }
@@ -459,6 +481,13 @@ button {
     font-size: 25px;
 }
 
+#vistaSettings #botonatras{
+  position: absolute;
+  margin-top: 38%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
 #botonatras:hover{
     box-shadow: 0px 0px 24px 6px rgba(255, 255, 255, 0.25);
     background-color: white;
@@ -470,8 +499,15 @@ a{
 }
 
 /*Ajustes*/
+#vistaSettings{
+    height: 100%;
+}
+
 #panelajustes{
-    margin: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     margin-bottom: 25px;
     width: 30%;
     border-radius: 15px;
@@ -743,20 +779,17 @@ input:-webkit-autofill {
 @media (prefers-color-scheme: dark)  {
    /* dark mode */
    :root{
-    --primary: #252638 !important;
+    --primary: #252638;
     --secondary: #171726;
     --terciary: #6F7789;
     --personajes: #414467;
     --contrast: #F5C505;
+    --shadow: #000000e0;
+    --theme-img: url('../img/iconos/luna.png')
    }
-
    #theme{
-    box-shadow: 0px 0px 24px 6px rgba(0, 0, 0, 0.88);
     background-color: black;
-   }
-   #theme img{
-    content: url('../img/iconos/luna.png');
-   }
+}
   }
 
 @media (prefers-color-scheme: light) {
@@ -767,21 +800,24 @@ input:-webkit-autofill {
     --terciary: #CCAC92;
     --personajes: #3E0900;
     --contrast: #42547A;  
+    --shadow: #ffffff40; 
+    --theme-img: url('../img/iconos/sol.png ')
    } 
 
    #theme{
-    box-shadow: 0px 0px 24px 6px rgba(255, 255, 255, 0.25);
     background-color: white;
 }
-
-    #theme img{
-        content: url('../img/iconos/sol.png');
-    }
     #divderecha > div > p{
         color: var(--primary);
     }
       
   }
+
+@media  screen and (width < 1340px) {
+    #divderecha > div > div > figure{
+        max-width: none;
+    }
+}
 
   
 @keyframes disappearRight {
@@ -906,6 +942,14 @@ input:-webkit-autofill {
     100% {
       visibility: visible;
     }
+  }
+
+  @keyframes shakeAnimation {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-3px); }
+    50% { transform: translateX(4px); }
+    75% { transform: translateX(-3px); }
+    100% { transform: translateX(0); }
   }
   
   @keyframes blurBG {
