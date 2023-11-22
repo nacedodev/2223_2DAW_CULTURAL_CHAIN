@@ -45,8 +45,11 @@ class Nivel {
      * @return bool              True si la modificación fue exitosa, false de lo contrario.
      */
     public function modificar($id,$nombrepais,$imagen) {
-        $imagen = $this->conexion->real_escape_string($imagen);
-        $query = "UPDATE Nivel SET nombrepais = '$nombrepais',imagen = '$imagen' WHERE id = '$id'";
+        if(!$imagen==0){
+            $imagen = $this->conexion->real_escape_string($imagen);
+            $query = "UPDATE Nivel SET nombrepais = '$nombrepais',imagen = '$imagen' WHERE id = '$id'";
+        }else
+        $query = "UPDATE Nivel SET nombrepais = '$nombrepais' WHERE id = '$id'";
         $resultado = $this->conexion->query($query);
         return $resultado;
     }

@@ -65,9 +65,11 @@ class ControladorNiveles {
         $this->view='modificarNiveles';
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Lógica para actualizar el centro en la base de datos
-        $nombrepais = $_POST['nombrepais'];
-        $imagenTmp = $_FILES['imagen']['tmp_name'];
-        $imagenBinaria = file_get_contents($imagenTmp);
+        if(!empty($_FILES['imagen'])){
+            $imagenTmp = $_FILES['imagen']['tmp_name'];
+            $imagenBinaria = file_get_contents($imagenTmp);
+        }else
+        $imagenBinaria = 0;
         $this->objNiveles->modificar($_POST['id'], $_POST['nombrepais'],$imagenBinaria);
         header("Location: index.php?action=listarNiveles&controller=Niveles");
     }

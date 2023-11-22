@@ -6,7 +6,7 @@
     <img id="imagenmodificar" src="data:image/png;base64,<?php $nivel = new Nivel(); echo $nivel->obtenerImagenPorId($_GET['id']);?>">
     
     <label for="imagen">Nueva imagen de fondo:</label>
-    <input type="file" id="imagen" name="imagen" value="<?php $nivel = new Nivel(); echo $nivel->obtenerImagenPorId($_GET['id']);?>">
+    <input type="file" id="imagen" name="imagen">
     
     <!-- Agrega un campo oculto para pasar el ID -->
     <input type="hidden" name="id" value="<?php echo isset($_GET['id']) ? $_GET['id'] : ''; ?>">
