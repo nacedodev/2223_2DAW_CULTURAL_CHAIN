@@ -51,10 +51,12 @@ export class VistaPrincipal extends Vista {
     this.dir=null
     this.distanciapaso=5
     this.temp=0
-    this.reload=50
+    this.reload=25
     this.part=[]
     this.fila=0
     this.score=0
+    this.personita
+    this.tiempo
     
   
     btnRanking.onclick = this.irRanking
@@ -275,8 +277,8 @@ avanzar=()=> {
 }
 direccion=(event)=> {
   if (event.key == "w") this.dir = 1;
-  if ( event.key== "d") this.dir = 2;
-  if ( event.key== "s") this.dir = 3;
+  if (event.key== "d") this.dir = 2;
+  if (event.key== "s") this.dir = 3;
   if (event.key== "a") this.dir = 4;
  
 }
@@ -286,10 +288,12 @@ moverObjeto =()=> {
     this.part[i].style.left = this.part[i - 1].style.left;
     this.part[i].style.top = this.part[i - 1].style.top;
   }
+ 
   this.avanzar();  // Mover la this.part[0]
   this.limites();
   this.generacionPersonas();
   this.recogerImagen();
+  this.hueco();
   this.temp++;
 }
  limites=()=> {
@@ -318,7 +322,7 @@ moverObjeto =()=> {
   }
 
   generacionPersonas = () => {
-  if (this.temp % 100 === 0) {
+  if (this.temp % 200 === 0) {
     var tableroAncho = this.tablero.clientWidth;
     var tableroAlto = this.tablero.clientHeight;
 
@@ -354,7 +358,7 @@ moverObjeto =()=> {
  
 }
 recogerImagen = () => {
-  
+
   // Detectar el objeto (imagen) en las coordenadas actuales del this.part[0]
   var objetoEnPunto = document.elementFromPoint(
     this.part[0].getBoundingClientRect().left + this.part[0].offsetWidth / 2,
@@ -369,34 +373,37 @@ recogerImagen = () => {
     var imagenVacia = new Image();
    
     imagenRecogida.src = objetoEnPunto.src;
-
+    this.personita = imagenRecogida;
+    this.tiempo=this.temp;
     // Remove de la imagen cogida
     objetoEnPunto.remove();
 
     // Añadir la imange recogida al final de la cola de la serpiente
-  
-
-    this.fila++;
-    this.part.push(imagenVacia);
-    this.fila++;
-    this.part.push(imagenRecogida);
-    
-    
-    // Calcular la posición con un espacio entre cada imagen (ajusta el valor según sea necesario)
-    var espacioEntreImagenes = -10; // Puedes ajustar este valor según tu preferencia
-    var nuevaPosicionLeft = parseInt(this.part[this.fila - 1].style.left, 10) + this.part[0].offsetWidth + espacioEntreImagenes;
-
-    // Ajustar la posición de la nueva imagen en relación con la imagen anterior
-    this.part[this.fila].style.position = 'absolute';
-    this.part[this.fila].style.left = nuevaPosicionLeft + 'px';
-    this.part[this.fila].style.top = this.part[0].style.top;
-    
-
-    this.tablero.appendChild(this.part[this.fila]);
-
-  } else {
-    console.log('No hay ninguna imagen para recoger en estas coordenadas.');
-  }
+    this.espacio(imagenVacia);
 };
+}
+unir=(imagen)=>{
+  this.fila++;
+  this.part.push(imagen);
+  this.tablero.appendChild(this.part[this.fila]);
+  
+  // Calcular la posición con un espacio entre cada imagen (ajusta el valor según sea necesario)
+  var nuevaPosicionLeft = parseInt(this.part[this.fila - 1].style.left, 10) + this.part[0].offsetWidth;
 
+  // Ajustar la posición de la nueva imagen en relación con la imagen anterior
+  this.part[this.fila].style.position = 'absolute';
+  this.part[this.fila].style.left = nuevaPosicionLeft + 'px';
+  this.part[this.fila].style.top = this.part[0].style.top;
+  
+  this.tablero.appendChild(this.part[this.fila]);
+  
+}
+hueco=()=>{
+  if(this.temp==this.tiempo+1){
+    this.unir(new Image());
+  }
+  if(this.temp==this.tiempo+2){
+    this.unir(this.personita);
+  }
+}
 }
