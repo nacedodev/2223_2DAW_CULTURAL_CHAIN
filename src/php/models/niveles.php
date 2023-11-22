@@ -44,8 +44,9 @@ class Nivel {
      * @param string $localidad  Nueva localidad del centro.
      * @return bool              True si la modificación fue exitosa, false de lo contrario.
      */
-    public function modificar($id,$nombrepais) {
-        $query = "UPDATE Nivel SET nombrepais = '$nombrepais' WHERE id = '$id'";
+    public function modificar($id,$nombrepais,$imagen) {
+        $imagen = $this->conexion->real_escape_string($imagen);
+        $query = "UPDATE Nivel SET nombrepais = '$nombrepais',imagen = '$imagen' WHERE id = '$id'";
         $resultado = $this->conexion->query($query);
         return $resultado;
     }
