@@ -45,7 +45,7 @@ export class VistaPrincipal extends Vista {
   
    
     
-
+    this.puntuacion = document.getElementById("puntuacion");
     this.posX
     this.posY
     this.dir=null
@@ -54,6 +54,7 @@ export class VistaPrincipal extends Vista {
     this.reload=50
     this.part=[]
     this.fila=0
+    this.score=0
     
   
     btnRanking.onclick = this.irRanking
@@ -135,8 +136,15 @@ export class VistaPrincipal extends Vista {
    while (this.part[0].firstChild) {
     this.part[0].removeChild(this.part[0].firstChild);
   }
-    this.temp=0
-    this.dir=null
+  this.posX
+  this.posY
+  this.dir=null
+  this.distanciapaso=5
+  this.temp=0
+  this.reload=50
+  this.part=[]
+  this.fila=0
+  this.score=0
     clearInterval(this.intervalo);
     // Reset the showForm variable
     this.showForm = false
@@ -282,8 +290,6 @@ moverObjeto =()=> {
   this.generacionPersonas();
   this.recogerImagen();
   this.temp++;
-  
-
 }
  limites=()=> {
       // Obtener las dimensiones reales del tablero
@@ -291,21 +297,21 @@ moverObjeto =()=> {
       var tableroAlto = this.tablero.clientHeight;
 
     // Establecer límite derecho
-    if (this.posX > tableroAncho-25) {
+    if (this.posX > tableroAncho-15) {
         this.posX = 0
     }
     if (this.posX < 0) {
-      this.posX = tableroAncho-25
+      this.posX = tableroAncho-15
     }
 
-    if (this.posY > tableroAlto-25) {
+    if (this.posY > tableroAlto-15) {
       this.posY = 0
     }
 
     // Establecer límite superior
     if (this.posY < 0) {
 
-      this.posY = tableroAlto-25
+      this.posY = tableroAlto-15
      
     }
   }
@@ -346,6 +352,7 @@ moverObjeto =()=> {
  
 }
 recogerImagen = () => {
+  
   // Detectar el objeto (imagen) en las coordenadas actuales del this.part[0]
   var objetoEnPunto = document.elementFromPoint(
     this.part[0].getBoundingClientRect().left + this.part[0].offsetWidth / 2,
@@ -354,18 +361,18 @@ recogerImagen = () => {
 
   if (objetoEnPunto && objetoEnPunto.className === 'generado') {
     // Crear una nueva imagen en lugar de clonarla
+    this.score=this.score+10
+  this.puntuacion.textContent =''+ this.score;
     var imagenRecogida = new Image();
-    var imagenVacia = new Image();
+   
     imagenRecogida.src = objetoEnPunto.src;
 
-    // Ocultar la imagen original
+    // Remove de la imagen cogida
     objetoEnPunto.remove();
 
-    // Añadir la imagen recogida al final de la cola de la serpiente
+    // Añadir la imange recogida al final de la cola de la serpiente
+    
     this.fila++;
-    this.part.push(imagenVacia);
-    this.fila++;
-  
     this.part.push(imagenRecogida);
     
     
