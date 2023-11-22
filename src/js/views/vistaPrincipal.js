@@ -235,8 +235,8 @@ export class VistaPrincipal extends Vista {
     // Establecer las coordenadas de posición del personaje
     this.part[0].style.left = this.posX + 'px';
     this.part[0].style.top = this.posY + 'px';
-    this.part[0].style.border='solid black 2px'
-
+   
+  
     // Agregar el personaje al tablero
  
     window.addEventListener('keydown',this.direccion);
@@ -274,10 +274,9 @@ direccion=(event)=> {
 moverObjeto =()=> {
   for (let i = this.fila; i > 0; i--) {
     // Mover cada parte de la serpiente a la posición de la parte anterior
-    this.part[i].style.left = this.part[i - 1].offsetLeft + 'px';
-    this.part[i].style.top = this.part[i - 1].offsetTop + 'px';
-}
-
+    this.part[i].style.left = this.part[i - 1].style.left;
+    this.part[i].style.top = this.part[i - 1].style.top;
+  }
   this.avanzar();  // Mover la this.part[0]
   this.limites();
   this.generacionPersonas();
@@ -327,16 +326,17 @@ moverObjeto =()=> {
     nuevaImagen.src = 'img/personajes/person'+ numeroFormateado + '.png';;
 
     // Establecer el estilo del borde de la nueva imagen
-    nuevaImagen.style.border = 'solid 2px black';
+    
 
     // Calcular posiciones aleatorias dentro del tablero
     var posX = Math.floor(Math.random() * tableroAncho) ;
     var posY = Math.floor(Math.random() * tableroAlto);
 
     // Establecer la posición absoluta de la nueva imagen dentro del tablero
-    nuevaImagen.style.position = 'relative';
+    nuevaImagen.style.position = 'absolute';
     nuevaImagen.style.left = posX + 'px';
     nuevaImagen.style.top = posY + 'px';
+    nuevaImagen.classList.add('generado');
    
 
     // Añadir la nueva imagen al elemento con el id 'tablero'
@@ -352,7 +352,7 @@ recogerImagen = () => {
     this.part[0].getBoundingClientRect().top + this.part[0].offsetHeight / 2
   );
 
-  if (objetoEnPunto && objetoEnPunto.tagName === 'IMG') {
+  if (objetoEnPunto && objetoEnPunto.className === 'generado') {
     // Crear una nueva imagen en lugar de clonarla
     var imagenRecogida = new Image();
     imagenRecogida.src = objetoEnPunto.src;
@@ -361,20 +361,21 @@ recogerImagen = () => {
     objetoEnPunto.style.display = 'none';
 
     // Añadir la imagen recogida al final de la cola de la serpiente
-    this.part.push(imagenRecogida);
     this.fila++;
+    this.part.push(imagenRecogida);
+    
 
     // Calcular la posición con un espacio entre cada imagen (ajusta el valor según sea necesario)
-    var espacioEntreImagenes = 25; // Puedes ajustar este valor según tu preferencia
+    var espacioEntreImagenes = -10; // Puedes ajustar este valor según tu preferencia
     var nuevaPosicionLeft = parseInt(this.part[this.fila - 1].style.left, 10) + this.part[0].offsetWidth + espacioEntreImagenes;
 
     // Ajustar la posición de la nueva imagen en relación con la imagen anterior
     this.part[this.fila].style.position = 'absolute';
     this.part[this.fila].style.left = nuevaPosicionLeft + 'px';
     this.part[this.fila].style.top = this.part[0].style.top;
-    this.part[this.fila].style.border = 'solid black 2px';
+    
 
-    this.tablero.appendChild(this.part);
+    this.tablero.appendChild(this.part[this.fila]);
   } else {
     console.log('No hay ninguna imagen para recoger en estas coordenadas.');
   }
