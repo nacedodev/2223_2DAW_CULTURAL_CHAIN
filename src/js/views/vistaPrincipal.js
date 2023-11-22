@@ -203,7 +203,7 @@ export class VistaPrincipal extends Vista {
     this.tablero.style.filter = 'none' // Restaurar el fondo a su estado original
     this.divPersonajes.style.animation = 'disappearRight 1s forwards'
     this.divIzq.style.animation = 'enlargeBoard 1.5s forwards'
-    this.titulo.style.animation = 'ocultarTexto 1s forwards'
+    this.titulo.style.animation = 'ocultarTexto 0.5s forwards'
     personajeSelected.style.pointerEvents = 'none'
     personajeSelected.style.opacity = '1'
     this.divPersonajes.style.pointerEvents = 'none'
