@@ -145,6 +145,7 @@ export class VistaPrincipal extends Vista {
   this.part=[]
   this.fila=0
   this.score=0
+  this.puntuacion.textContent ='0'+ this.score;
     clearInterval(this.intervalo);
     // Reset the showForm variable
     this.showForm = false
@@ -323,6 +324,7 @@ moverObjeto =()=> {
 
     // Crear un nuevo elemento img en lugar de div
     var nuevaImagen = document.createElement('img');
+    
 
     var numeroAleatorio = Math.floor(Math.random() * 15) + 1;
     var numeroFormateado = ('00' + numeroAleatorio).slice(-3);
@@ -335,8 +337,8 @@ moverObjeto =()=> {
     
 
     // Calcular posiciones aleatorias dentro del tablero
-    var posX = Math.floor(Math.random() * tableroAncho) ;
-    var posY = Math.floor(Math.random() * tableroAlto);
+    var posX = Math.floor(Math.random() * tableroAncho-10) ;
+    var posY = Math.floor(Math.random() * tableroAlto-10);
 
     // Establecer la posición absoluta de la nueva imagen dentro del tablero
     nuevaImagen.style.position = 'absolute';
@@ -364,6 +366,7 @@ recogerImagen = () => {
     this.score=this.score+10
   this.puntuacion.textContent =''+ this.score;
     var imagenRecogida = new Image();
+    var imagenVacia = new Image();
    
     imagenRecogida.src = objetoEnPunto.src;
 
@@ -371,7 +374,10 @@ recogerImagen = () => {
     objetoEnPunto.remove();
 
     // Añadir la imange recogida al final de la cola de la serpiente
-    
+  
+
+    this.fila++;
+    this.part.push(imagenVacia);
     this.fila++;
     this.part.push(imagenRecogida);
     
@@ -392,8 +398,5 @@ recogerImagen = () => {
     console.log('No hay ninguna imagen para recoger en estas coordenadas.');
   }
 };
-
-
-
 
 }
