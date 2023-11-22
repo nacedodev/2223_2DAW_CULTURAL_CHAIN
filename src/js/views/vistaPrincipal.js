@@ -355,16 +355,20 @@ recogerImagen = () => {
   if (objetoEnPunto && objetoEnPunto.className === 'generado') {
     // Crear una nueva imagen en lugar de clonarla
     var imagenRecogida = new Image();
+    var imagenVacia = new Image();
     imagenRecogida.src = objetoEnPunto.src;
 
     // Ocultar la imagen original
-    objetoEnPunto.style.display = 'none';
+    objetoEnPunto.remove();
 
     // Añadir la imagen recogida al final de la cola de la serpiente
     this.fila++;
+    this.part.push(imagenVacia);
+    this.fila++;
+  
     this.part.push(imagenRecogida);
     
-
+    
     // Calcular la posición con un espacio entre cada imagen (ajusta el valor según sea necesario)
     var espacioEntreImagenes = -10; // Puedes ajustar este valor según tu preferencia
     var nuevaPosicionLeft = parseInt(this.part[this.fila - 1].style.left, 10) + this.part[0].offsetWidth + espacioEntreImagenes;
@@ -376,6 +380,7 @@ recogerImagen = () => {
     
 
     this.tablero.appendChild(this.part[this.fila]);
+
   } else {
     console.log('No hay ninguna imagen para recoger en estas coordenadas.');
   }
