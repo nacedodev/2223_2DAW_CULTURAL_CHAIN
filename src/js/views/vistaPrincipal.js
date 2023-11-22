@@ -43,11 +43,7 @@ export class VistaPrincipal extends Vista {
     this.tablero.style.opacity = '0.2';
     
   
-     this.cadena = document.createElement("div");
-     this.cadena.style.position = 'absolute';
-     this.cadena.style.width = '20px';
-     this.cadena.style.height = '20px'
-     this.cadena.style.border="solid black 2px"
+   
     
 
     this.posX
@@ -56,6 +52,8 @@ export class VistaPrincipal extends Vista {
     this.distanciapaso=5
     this.temp=0
     this.reload=50
+    this.part=[]
+    this.fila=0
     
   
     btnRanking.onclick = this.irRanking
@@ -134,8 +132,8 @@ export class VistaPrincipal extends Vista {
     while (this.tablero.firstChild) {
       this.tablero.removeChild(this.tablero.firstChild);
   }
-   while (this.cadena.firstChild) {
-    this.cadena.removeChild(this.cadena.firstChild);
+   while (this.part[0].firstChild) {
+    this.part[0].removeChild(this.part[0].firstChild);
   }
     this.temp=0
     this.dir=null
@@ -231,14 +229,16 @@ export class VistaPrincipal extends Vista {
     this.posY = e.clientY - this.tablero.getBoundingClientRect().top;
     
     
-      
+    this.part.push(personajeSelected);
+    this.tablero.appendChild(this.part[0]);
+    this.part[0].style.position='absolute'
     // Establecer las coordenadas de posición del personaje
-    this.cadena.style.left = this.posX + 'px';
-    this.cadena.style.top = this.posY + 'px';
-  
+    this.part[0].style.left = this.posX + 'px';
+    this.part[0].style.top = this.posY + 'px';
+    this.part[0].style.border='solid black 2px'
+
     // Agregar el personaje al tablero
-    this.cadena.appendChild(personajeSelected);
-    this.tablero.appendChild(this.cadena);
+ 
     window.addEventListener('keydown',this.direccion);
     
     this.intervalo = setInterval(() => this.moverObjeto(), this.reload);
@@ -247,22 +247,22 @@ export class VistaPrincipal extends Vista {
 avanzar=()=> {
 
   if (this.dir == 1) {
-      this.cadena.style.top = this.posY - this.distanciapaso + "px";
+      this.part[0].style.top = this.posY - this.distanciapaso + "px";
       this.posY = this.posY - this.distanciapaso;
   }
   if (this.dir == 2) {
-      this.cadena.style.left = this.posX + this.distanciapaso + "px";
+      this.part[0].style.left = this.posX + this.distanciapaso + "px";
       this.posX =  this.posX + this.distanciapaso;
   }
   if (this.dir == 3) {
-      this.cadena.style.top = this.posY + this.distanciapaso + "px";
+      this.part[0].style.top = this.posY + this.distanciapaso + "px";
       this.posY = this.posY + this.distanciapaso;
   }
   if (this.dir == 4) {
-      this.cadena.style.left = this.posX - this.distanciapaso + "px";
+      this.part[0].style.left = this.posX - this.distanciapaso + "px";
       this.posX = this.posX - this.distanciapaso;
   }
-  //animacion();  // Actualizar la animación de la this.cadena
+  //animacion();  // Actualizar la animación de la this.part[0]
 }
 direccion=(event)=> {
   if (event.key == "w") this.dir = 1;
@@ -272,11 +272,18 @@ direccion=(event)=> {
  
 }
 moverObjeto =()=> {
-  this.avanzar();  // Mover la this.cadena
+  for (let i = this.fila; i > 0; i--) {
+    // Mover cada parte de la serpiente a la posición de la parte anterior
+    this.part[i].style.left = this.part[i - 1].offsetLeft + 'px';
+    this.part[i].style.top = this.part[i - 1].offsetTop + 'px';
+}
+
+  this.avanzar();  // Mover la this.part[0]
   this.limites();
   this.generacionPersonas();
   this.recogerImagen();
   this.temp++;
+  
 
 }
  limites=()=> {
@@ -327,11 +334,10 @@ moverObjeto =()=> {
     var posY = Math.floor(Math.random() * tableroAlto);
 
     // Establecer la posición absoluta de la nueva imagen dentro del tablero
-    nuevaImagen.style.position = 'absolute';
+    nuevaImagen.style.position = 'relative';
     nuevaImagen.style.left = posX + 'px';
     nuevaImagen.style.top = posY + 'px';
-    nuevaImagen.style.width = '20px';
-    nuevaImagen.style.height = '20px';
+   
 
     // Añadir la nueva imagen al elemento con el id 'tablero'
     this.tablero.appendChild(nuevaImagen);
@@ -339,32 +345,42 @@ moverObjeto =()=> {
   }
  
 }
-
 recogerImagen = () => {
-  // Detectar el objeto (imagen) en las coordenadas actuales del this.cadena
+  // Detectar el objeto (imagen) en las coordenadas actuales del this.part[0]
   var objetoEnPunto = document.elementFromPoint(
-    this.cadena.getBoundingClientRect().left + this.cadena.offsetWidth / 2,
-    this.cadena.getBoundingClientRect().top + this.cadena.offsetHeight / 2
+    this.part[0].getBoundingClientRect().left + this.part[0].offsetWidth / 2,
+    this.part[0].getBoundingClientRect().top + this.part[0].offsetHeight / 2
   );
 
   if (objetoEnPunto && objetoEnPunto.tagName === 'IMG') {
     // Crear una nueva imagen en lugar de clonarla
     var imagenRecogida = new Image();
     imagenRecogida.src = objetoEnPunto.src;
-    imagenRecogida.style.width = '20px';  // Ajusta según sea necesario
-    imagenRecogida.style.height = '20px'; // Ajusta según sea necesario
 
     // Ocultar la imagen original
     objetoEnPunto.style.display = 'none';
 
-    // Añadir la imagen recogida directamente al div móvil
-    this.cadena.appendChild(imagenRecogida);
+    // Añadir la imagen recogida al final de la cola de la serpiente
+    this.part.push(imagenRecogida);
+    this.fila++;
 
-    // Ajusta según sea necesario para mostrar el div móvil
-    this.cadena.style.display = 'flex';
+    // Calcular la posición con un espacio entre cada imagen (ajusta el valor según sea necesario)
+    var espacioEntreImagenes = 25; // Puedes ajustar este valor según tu preferencia
+    var nuevaPosicionLeft = parseInt(this.part[this.fila - 1].style.left, 10) + this.part[0].offsetWidth + espacioEntreImagenes;
+
+    // Ajustar la posición de la nueva imagen en relación con la imagen anterior
+    this.part[this.fila].style.position = 'absolute';
+    this.part[this.fila].style.left = nuevaPosicionLeft + 'px';
+    this.part[this.fila].style.top = this.part[0].style.top;
+    this.part[this.fila].style.border = 'solid black 2px';
+
+    this.tablero.appendChild(this.part);
   } else {
     console.log('No hay ninguna imagen para recoger en estas coordenadas.');
   }
-  console.log(this.cadena);
 };
+
+
+
+
 }
