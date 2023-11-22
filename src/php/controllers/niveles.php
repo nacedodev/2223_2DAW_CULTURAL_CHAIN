@@ -32,13 +32,20 @@ class ControladorNiveles {
      * Añade un nuevo centro.
      */
     public function aniadirNivel() {
-        $this->view='aniadirNiveles';
-        if (isset($_POST['nombrepais'])) {
-            // Llamar a la función aniadir solo si las variables están presentes y no son vacías
-            $this->objNiveles->aniadir($_POST['nombrepais'],$_POST['imagen']);
-            header("Location: index.php?action=listarNiveles&controller=Niveles");
-         }
+        $this->view = 'aniadirNiveles';
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if (isset($_POST['nombrepais']) && isset($_FILES['imagen']['tmp_name'])) {
+                $nombrepais = $_POST['nombrepais'];
+                $imagenTmp = $_FILES['imagen']['tmp_name'];
+                $imagenBinaria = file_get_contents($imagenTmp);
+    
+                $this->objNiveles->aniadir($nombrepais, $imagenBinaria);
+    
+                header("Location: index.php?action=listarNiveles&controller=Niveles");
+            }
+        }
     }
+    
      /**
      * Borra un centro existente.
      */

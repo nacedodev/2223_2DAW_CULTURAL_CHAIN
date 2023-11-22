@@ -22,17 +22,18 @@ class Nivel {
      * @param string $nombre     Nombre del centro.
      * @param string $localidad  Localidad del centro.
      */
-    public function aniadir($nombrepais,$imagen) {
-        $contenido=file_get_contents($imagen);
-        $codificado=base64_encode($contenido);
-        $query = "INSERT INTO Nivel (nombrepais,imagen) VALUES ('$nombrepais',$codificado)";
+    public function aniadir($nombrepais, $imagen) {
+
+        $imagen = $this->conexion->real_escape_string($imagen);
+    
+        $query = "INSERT INTO Nivel (nombrepais, imagen) VALUES ('$nombrepais', '$imagen')";
+        
         try {
             $resultado = $this->conexion->query($query);
         } catch (mysqli_sql_exception $e) {
             if ($e->getCode() === 1062) {
-                // Código 1062 indica una violación de clave única
                 echo 'nombre duplicado';
-            } 
+            }
         }
     }
  /**
@@ -94,5 +95,18 @@ class Nivel {
             }
         }
         return $niveles;
+    }
+    public function obtenerImagenPorId($id) {
+        $id = $this->conexion->real_escape_string($id);
+        
+        $query = "SELECT imagen FROM Nivel WHERE id = '$id'";
+        $resultado = $this->conexion->query($query);
+    
+        if ($resultado && $resultado->num_rows > 0) {
+            $fila = $resultado->fetch_assoc();
+            return base64_encode($fila['imagen']); // Codifica la imagen en base64
+        } else {
+            return null; // o maneja el error de alguna manera
+        }
     }
 }
