@@ -316,8 +316,8 @@ for(let i =1;i<this.fila;i++){
   this.avanzar();  // Mover la this.part[0]
   this.limites();
   this.generacionPersonas();
-  this.recogerPersona();
   this.hueco();
+  this.recogerPersona();
   this.generacionBanderas();
   this.temp++;
 }
@@ -436,13 +436,15 @@ recogerPersona = () => {
 
     // Añadir la imange recogida al final de la cola de la serpiente
 };
-if (objetoEnPunto && objetoEnPunto.className === 'bandera') {
-  this.score+=50
-  this.puntuacion.textContent =''+ this.score
-  objetoEnPunto.remove();
-}
+
+  if (objetoEnPunto && objetoEnPunto.className === 'bandera') {
+    this.score+=50
+    this.puntuacion.textContent =''+ this.score
+    objetoEnPunto.remove();
+  }
 
 }
+
 unir=(imagen)=>{
   this.fila++;
   this.part.push(imagen);
