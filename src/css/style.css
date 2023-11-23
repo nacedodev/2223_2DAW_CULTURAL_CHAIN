@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Oswald&family=Poppins:wght@900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@900&family=Press+Start+2P&display=swap');
-
+  
 /* COLORES */
 :root{
 
@@ -11,12 +11,13 @@
 --contrast: #F5C505;
 --shadow: #000000e0;
 --theme-img: url('img/iconos/sol.png');
---theme-color: #000
+--theme-color: #000;
 
 }
 
 *{
-    transition: background-color 0.8s ease , color 0.8s ease, box-shadow 0.8s ease;
+    transition: background-color 0.8s ease , color 0.8s ease, box-shadow 0.8s ease,text-shadow 0.8s ease;
+    user-select: none;
 }
 
 #vistaPrincipal{
@@ -110,16 +111,16 @@ button {
 
 #divderecha > div > div > figure {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+   text-align: center;
     flex-grow: 1;
     border-radius: 7px;
     background: var(--personajes);
     box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.25);
     width: 35%;
-    max-width: 140px;
+    max-width: 125px;
     margin: 10px 20px;
     aspect-ratio: 1/1;
 }
@@ -171,6 +172,7 @@ button {
 }
 
 #restart{
+    pointer-events: auto;
     width: 48px;
     height: 158px;
     position: absolute;
@@ -353,7 +355,34 @@ button {
     margin-top: 0px;
     position: relative;
     bottom:35px;
+    text-shadow: .03em .03em 0 var(--primary);
 }
+
+.tituloranking:after {
+    content: attr(data-shadow);
+    position: absolute;
+    top: .06em; left: .06em;
+    z-index: -1;
+    text-shadow: none;
+    background-image:
+      linear-gradient(
+        45deg,
+        transparent 45%,
+        var(--terciary) 45%,
+        var(--terciary) 55%,
+        transparent 0
+        );
+    background-size: .05em .05em;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  
+    animation: shad-anim 50s linear infinite;
+    }
+
+@keyframes shad-anim {
+  0% {background-position: 0 0}
+  0% {background-position: 100% -100%}
+  }
 
 #tablonranking{
     width: 70%;
@@ -405,7 +434,7 @@ button {
 }
 
 #tablonranking>div>p:nth-child(1){
-    margin-left: 30px;
+    margin-left: 45px;
     margin-top: 0;
     font-size: 35px;
     width: 40px;
@@ -428,29 +457,37 @@ button {
  }
 
 #tablonranking>div>p:nth-child(2){
-    font-size: 20px;
+    font-size: 28px;
 }
 
 #tablonranking>div>p:nth-child(3){
+    position:relative;
     font-size: 15px;
+    bottom:20%;
+    left: 4.5%;
 }
 
 #tablonranking>div>p:nth-child(4){
     font-size: 15px;
     position: relative;
-    right: 105px;
+    top: 10%;
+    right: 10.5%;
 }
 
 #tablonranking>div>p:nth-child(5){
     font-size: 15px;
     position: relative;
-    right: 80px;
+    right: 55px;
 }
 
 #tablonranking>div>p:nth-child(6){
     font-size: 30px;
     position: relative;
     right: 80px;  
+    text-transform: uppercase;
+    background: linear-gradient(to left, var(--secondary) 0%, var(--primary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 #tablonranking>div>img{
@@ -470,29 +507,23 @@ button {
     top:33%;
 }
 
-#botonatras{
+#botonatras {
+    aspect-ratio: 4/1;
     padding: 15px;
-    width: 175px;
-    margin:10px auto;
+    width: 10%;
+    font-size: 2vw;
+    margin:15px auto;
+    margin-bottom: 50px;
     display: block;
     border-radius: 16px;
     background: var(--terciary);
     box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.25);
     color:var(--primary);
     text-align: center;
-    font-size: 25px;
-}
-
-#vistaSettings #botonatras{
-    display: block;
-    text-align: center;
-    width: 78%;
-    color: var(--primary);
-    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 25px;
-    background: var(--terciary);
-    margin: 25px auto;
-    padding:5%;
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 #botonatras:hover{
@@ -516,8 +547,7 @@ a{
     left: 50%;
     transform: translate(-50%, -50%);
     margin-bottom: 25px;
-    width: 45%;
-    height: 77%;
+    width: 30%;
     border-radius: 15px;
     background: var(--secondary);
     padding-top:15px;
@@ -822,7 +852,21 @@ input:-webkit-autofill {
     #divderecha > div > div > figure{
         max-width: none;
     }
+    
 }
+
+@media screen and (max-width: 950px) {
+    #tablonranking > div > p:nth-child(5),
+    #tablonranking > div > p:nth-child(4),
+    #tablonranking > div > p:nth-child(3) {
+      display: none;
+    }
+
+    #tablonranking > div > p:nth-child(6){
+        margin-left: 20%;
+    }
+  }
+  
 
 
   
