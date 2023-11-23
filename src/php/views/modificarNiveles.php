@@ -16,4 +16,4 @@
     </form>
     </form>
 </div>
-<script type="module" src="../js/views/vistaFormNiveles.js"></script>
+<script type="module" src="../js/views/vistaFormNivelesModificar.js"></script>
