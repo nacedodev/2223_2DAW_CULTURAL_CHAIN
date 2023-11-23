@@ -33,7 +33,7 @@ class ControladorConflictos{
      * Añade una nueva clase.
      */
     public function aniadirConflictos() {
-        $this->view = 'aniadirConflicto';
+        $this->view = 'aniadirConflictos';
         $centronombre=$_GET['nombrepais'];
     
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['etapa']) && isset($_POST['clase']) && !empty($_POST['etapa']) && !empty($_POST['clase'])) {
