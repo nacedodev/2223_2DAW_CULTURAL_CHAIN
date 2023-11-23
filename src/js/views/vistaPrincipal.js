@@ -1,4 +1,5 @@
 import { Vista } from './vista.js'
+import { Rest } from '../services/rest.js'
 /**
  * Clase que representa la vista principal del juego, que extiende de la clase `Vista`.
  * @extends Vista
@@ -64,6 +65,17 @@ export class VistaPrincipal extends Vista {
     btnSettings.onclick = this.irSettings
     btnRestart.onclick = this.restartGame
     window.onkeydown = this.mostrarFormulario
+    const url = 'https://jsonplaceholder.typicode.com/todos/1';
+
+    // Llama a la función getDataFromDatabase y maneja la promesa resultante
+    Rest.getDataFromDatabase(url)
+      .then(data => {
+        console.log('Datos obtenidos:', data);
+        // Aquí puedes hacer lo que quieras con los datos recibidos
+      })
+      .catch(error => {
+        console.error('Error al obtener datos:', error);
+      });
   }
 
   /**
@@ -469,4 +481,7 @@ hueco=()=>{
     this.unir(this.personita);
   }
 }
+  cogerNiveles = () =>{
+
+  }
 }

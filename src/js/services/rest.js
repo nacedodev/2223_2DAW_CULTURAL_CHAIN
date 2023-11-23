@@ -62,4 +62,19 @@ export class Rest {
       })
       .catch(error => console.error('Error:', error))
   }
+  static async getDataFromDatabase(url) {
+    try {
+      const response = await fetch(url);
+  
+      if (!response.ok) {
+        throw new Error('Error al obtener los datos de la base de datos');
+      }
+  
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error('Error al procesar datos:', error);
+      throw error; // Propagar el error para que la llamada a la promesa pueda manejarlo
+    }
+  }
 }
