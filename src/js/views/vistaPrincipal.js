@@ -144,7 +144,7 @@ export class VistaPrincipal extends Vista {
   this.distanciapaso=5
   this.temp=0
   this.reload=25
-  this.part=[]
+  
   this.fila=0
   this.score=0
   this.puntuacion.textContent ='0'+ this.score;
@@ -213,7 +213,7 @@ export class VistaPrincipal extends Vista {
      */
   drop = (e) => {
     e.preventDefault();
-    
+    this.part=[]
     const personajeId = e.dataTransfer.getData('text/plain');
     const personaje = document.getElementById(personajeId);
 
@@ -276,10 +276,10 @@ avanzar=()=> {
   //animacion();  // Actualizar la animación de la this.part[0]
 }
 direccion=(event)=> {
-  if (event.key == "w") this.dir = 1;
-  if (event.key== "d") this.dir = 2;
-  if (event.key== "s") this.dir = 3;
-  if (event.key== "a") this.dir = 4;
+  if (event.key == "w" && this.dir!=3) this.dir = 1;
+  if (event.key== "d"&& this.dir!=4) this.dir = 2;
+  if (event.key== "s"&& this.dir!=1) this.dir = 3;
+  if (event.key== "a"&& this.dir!=2) this.dir = 4;
  
 }
 moverObjeto =()=> {
