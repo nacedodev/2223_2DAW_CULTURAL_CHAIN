@@ -283,11 +283,15 @@ direccion=(event)=> {
  
 }
 moverObjeto =()=> {
-  for (let i = this.fila; i > 0; i--) {
-    // Mover cada parte de la serpiente a la posición de la parte anterior
-    this.part[i].style.left = this.part[i - 1].style.left;
-    this.part[i].style.top = this.part[i - 1].style.top;
-  }
+for (let i = this.fila; i > 0; i--) {
+  // Mover cada parte de la serpiente a la posición de la parte anterior
+  this.part[i].style.left = this.part[i - 1].style.left;
+  this.part[i].style.top = this.part[i - 1].style.top;
+}
+for(let i =1;i<this.fila;i++){
+  if(this.part[0].style.left == this.part[i+1].style.left && this.part[0].style.top == this.part[i+1].style.top)
+    this.restartGame();
+}
  
   this.avanzar();  // Mover la this.part[0]
   this.limites();
