@@ -9,5 +9,5 @@ define('USER', 'root');    // Nombre de usuario de MySQL
 define('PASSWORD', ''); // Contraseña de MySQL
 define('DATABASE', 'culturalchain'); // Nombre de la base de datos
 
-define('DEFAULT_CONTROLLER', 'Niveles');
-define('DEFAULT_ACTION', 'listarNiveles');
+define('DEFAULT_CONTROLLER', 'administracion');
+define('DEFAULT_ACTION', 'mostrarPanel');

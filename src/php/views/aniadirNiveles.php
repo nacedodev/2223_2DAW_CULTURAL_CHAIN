@@ -13,4 +13,4 @@
         <span id="status-message" style="margin-left: 100px;"></span>
     </form>
 </div>
-<!--<script type="module" src="../js/views/vistaFormCentros.js"></script>-->
+<script type="module" src="../js/views/vistaFormNiveles.js"></script>

@@ -21,4 +21,4 @@
         ?>
     </div>
 </div>
-<p id="botonatras"><a href="index.php">ATRAS</a></p>
+<p id="botonatras"><a href="index.php?controller=Centros&action=listarCentros">ATRAS</a></p>

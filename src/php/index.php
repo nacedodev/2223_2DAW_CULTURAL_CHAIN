@@ -4,6 +4,7 @@ require_once '../php/config/config_db.php';
 require_once '../php/models/centros.php';
 require_once '../php/models/clases.php';
 require_once '../php/models/niveles.php';
+require_once '../php/models/conflictos.php';
 
 if(!isset($_GET["controller"])) $_GET["controller"] = constant("DEFAULT_CONTROLLER");
 if(!isset($_GET["action"])) $_GET["action"] = constant("DEFAULT_ACTION");

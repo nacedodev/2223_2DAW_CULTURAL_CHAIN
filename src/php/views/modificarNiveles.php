@@ -13,3 +13,4 @@
     <input type="submit">
     </form>
 </div>
+<script type="module" src="../js/views/vistaFormNiveles.js"></script>

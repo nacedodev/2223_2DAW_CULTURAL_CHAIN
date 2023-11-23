@@ -1,7 +1,3 @@
-<img id="logo" src="../img/iconos/logo.jpeg">
-        <button class="boton">
-            <img src="../img/iconos/sol.png">
-        </button>
         <p class="tituloranking" style="margin-top:30px">NIVEL</p>
         <div id="panelCentro">
            <div>
@@ -14,7 +10,7 @@
     ?>
                 <div>   
                     <p><?php echo $nivel['nombrepais']; ?></p>
-                    <a href="index.php?controller=Niveles&action=listarNiveles&nivel_id=<?php echo $nivel['id']; ?>&nombrepais=<?php echo $nivel['nombrepais']; ?>"><p>></p></a> 
+                    <a href="index.php?controller=Conflictos&action=listarConflictos&id=<?php echo $nivel['id']; ?>&nombrepais=<?php echo $nivel['nombrepais']; ?>"><p>></p></a> 
                     <a href="index.php?action=modificarNivel&controller=Niveles&id=<?php echo $nivel['id']; ?>&nombrepais=<?php echo $nivel['nombrepais']; ?>"><img style="margin-left:15px;" src="../img/iconos/edit.png"></a>
                     <a href="index.php?action=borrarNivel&controller=Niveles&id=<?php echo $nivel['id']; ?>&nombrepais=<?php echo $nivel['nombrepais']; ?>"><img src="../img/iconos/basura.png"></a>
                 </div>
@@ -23,3 +19,4 @@
     ?>
            </div>
         </div>
+        <p id="botonatras"><a href="index.php">ATRAS</a></p>
