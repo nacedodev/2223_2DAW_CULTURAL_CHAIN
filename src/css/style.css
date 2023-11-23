@@ -1,9 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Oswald&family=Poppins:wght@900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@900&family=Press+Start+2P&display=swap');
 
-/* COLORS */
+/* COLORES */
 :root{
-    /* dark */
+
 --primary: #252638;
 --secondary: #171726;
 --terciary: #6F7789;
@@ -11,6 +11,8 @@
 --contrast: #F5C505;
 --shadow: #000000e0;
 --theme-img: url('img/iconos/sol.png');
+--theme-color: #000
+
 }
 
 *{
@@ -108,10 +110,10 @@ button {
 
 #divderecha > div > div > figure {
     display: flex;
-   flex-direction: column;
-   align-items: center;
-   justify-content: center;
-   text-align: center;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
     flex-grow: 1;
     border-radius: 7px;
     background: var(--personajes);
@@ -236,7 +238,7 @@ button {
 
 #score>:nth-child(2){
     font-size: 60px;
-    margin-top: 30px;
+    margin-top: 10px;
 }
 
 #nombreapp{
@@ -276,7 +278,7 @@ button {
 
 #theme{
     box-shadow: 0px 0px 24px 6px var(--shadow);
-    background-color: white;
+    background-color: var(--theme-color);
     margin-right: 20px;
 }
 
@@ -482,10 +484,15 @@ button {
 }
 
 #vistaSettings #botonatras{
-  position: absolute;
-  margin-top: 38%;
-  left: 50%;
-  transform: translateX(-50%);
+    display: block;
+    text-align: center;
+    width: 78%;
+    color: var(--primary);
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 25px;
+    background: var(--terciary);
+    margin: 25px auto;
+    padding:5%;
 }
 
 #botonatras:hover{
@@ -509,7 +516,8 @@ a{
     left: 50%;
     transform: translate(-50%, -50%);
     margin-bottom: 25px;
-    width: 30%;
+    width: 45%;
+    height: 77%;
     border-radius: 15px;
     background: var(--secondary);
     padding-top:15px;
@@ -785,11 +793,10 @@ input:-webkit-autofill {
     --personajes: #414467;
     --contrast: #F5C505;
     --shadow: #000000e0;
-    --theme-img: url('../img/iconos/luna.png')
+    --theme-img: url('../img/iconos/luna.png');
+    --theme-color: #000;
    }
-   #theme{
-    background-color: black;
-}
+
   }
 
 @media (prefers-color-scheme: light) {
@@ -801,23 +808,22 @@ input:-webkit-autofill {
     --personajes: #3E0900;
     --contrast: #42547A;  
     --shadow: #ffffff40; 
-    --theme-img: url('../img/iconos/sol.png ')
+    --theme-img: url('../img/iconos/sol.png ');
+    --theme-color: #fff;
    } 
 
-   #theme{
-    background-color: white;
-}
     #divderecha > div > p{
         color: var(--primary);
     }
       
   }
 
-@media  screen and (width < 1340px) {
+@media  screen and (width < 1400px) {
     #divderecha > div > div > figure{
         max-width: none;
     }
 }
+
 
   
 @keyframes disappearRight {

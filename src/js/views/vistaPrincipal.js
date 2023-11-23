@@ -16,7 +16,7 @@ export class VistaPrincipal extends Vista {
     const btnRestart = document.getElementById('restart')
     const btnRanking = this.base.querySelectorAll('button')[3]
     const btnSettings = this.base.querySelectorAll('button')[4]
-    this.btnTheme = document.getElementById('theme')
+    this.btnTheme = this.base.querySelector('#theme')
     this.tablero = document.getElementById('divtablero')
     this.divIzq = document.getElementById('divizquierda')
     this.gameStarted = false
@@ -51,12 +51,26 @@ export class VistaPrincipal extends Vista {
          * Realiza la navegación a la vista de configuración.
          * @method
          */
-  irSettings = () => this.controlador.irAVista(this.controlador.vistaSettings)
+  irSettings = () => {
+    this.controlador.irAVista(this.controlador.vistaSettings)
+    this.divIzq.style.animation = 'none'
+    this.divPersonajes.style.animation = 'none'
+    this.info.style.animation = 'none'
+    this.titulo.style.animation = 'none'
+  }
+
   /**
          * Realiza la navegación al ranking.
          * @method
          */
-  irRanking = () => this.controlador.irAVista(this.controlador.vistaRanking)
+  irRanking = () => {
+    this.controlador.irAVista(this.controlador.vistaRanking)
+    this.divIzq.style.animation = 'none'
+    this.divPersonajes.style.animation = 'none'
+    this.info.style.animation = 'none'
+    this.titulo.style.animation = 'none'
+  }
+
   /**
          * Controla la visualización del formulario cuando se presiona la tecla Enter.
          * @method
@@ -79,32 +93,6 @@ export class VistaPrincipal extends Vista {
       } else {
         figcaptions[i].innerText = ''
       }
-    }
-  }
-
-  changeTheme = () => {
-    const element = this.tablero
-    const rootElement = document.documentElement
-    const backgroundColor = window.getComputedStyle(element).getPropertyValue('background-color')
-    // Si el color de fondo es '#171726' (el modo oscuro)
-    if (backgroundColor === 'rgb(23, 23, 38)') {
-      rootElement.style.setProperty('--primary', '#FFF5DD', 'important')
-      rootElement.style.setProperty('--secondary', '#FCC34D', 'important')
-      rootElement.style.setProperty('--terciary', '#CCAC92', 'important')
-      rootElement.style.setProperty('--personajes', '#3E0900', 'important')
-      rootElement.style.setProperty('--contrast', '#42547A', 'important')
-      rootElement.style.setProperty('--shadow', '#ffffff40', 'important')
-      rootElement.style.setProperty('--theme-img', 'url(../img/iconos/sol.png)', 'important')
-      this.btnTheme.style.backgroundColor = 'white'
-    } else {
-      rootElement.style.setProperty('--primary', '#252638', 'important')
-      rootElement.style.setProperty('--secondary', '#171726', 'important')
-      rootElement.style.setProperty('--terciary', '#6F7789', 'important')
-      rootElement.style.setProperty('--personajes', '#414467', 'important')
-      rootElement.style.setProperty('--contrast', '#F5C505', 'important')
-      rootElement.style.setProperty('--shadow', '#000000e0', 'important')
-      rootElement.style.setProperty('--theme-img', 'url(../img/iconos/luna.png)', 'important')
-      this.btnTheme.style.backgroundColor = 'black'
     }
   }
 

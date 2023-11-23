@@ -10,19 +10,22 @@ import { Vista } from './vista.js'
 export class VistaRanking extends Vista {
   constructor (controlador, base) {
     super(controlador, base)
-    /**
-         * Realiza la navegación de vuelta a la vista principal.
-         * @method
-         */
-    this.irMain = () => this.controlador.irAVista(this.controlador.vistaPrincipal)
 
     /**
          * Elemento de botón para volver atrás.
          * @type {HTMLButtonElement}
          */
     const btnBack = this.base.querySelectorAll('button')[1]
+    const btnTheme = this.base.querySelector('#vistaRanking #theme')
 
     // Asignar evento para ir a la vista principal al hacer clic en el botón de volver atrás
     btnBack.onclick = this.irMain
+    btnTheme.onclick = this.changeTheme
   }
+  /**
+         * Realiza la navegación de vuelta a la vista principal.
+         * @method
+         */
+
+  irMain = () => this.controlador.irAVista(this.controlador.vistaPrincipal)
 }

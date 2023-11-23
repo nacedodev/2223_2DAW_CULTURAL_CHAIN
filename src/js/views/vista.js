@@ -33,4 +33,29 @@ export class Vista {
     }
   }
 
+  changeTheme = () => {
+    const element = this.controlador.vistaPrincipal.tablero
+    const rootElement = document.documentElement
+    const backgroundColor = window.getComputedStyle(element).getPropertyValue('background-color')
+    // Si el color de fondo es '#171726' (el modo oscuro)
+    if (backgroundColor === 'rgb(23, 23, 38)') {
+      rootElement.style.setProperty('--primary', '#FFF5DD', 'important')
+      rootElement.style.setProperty('--secondary', '#FCC34D', 'important')
+      rootElement.style.setProperty('--terciary', '#CCAC92', 'important')
+      rootElement.style.setProperty('--personajes', '#3E0900', 'important')
+      rootElement.style.setProperty('--contrast', '#42547A', 'important')
+      rootElement.style.setProperty('--shadow', '#ffffff40', 'important')
+      rootElement.style.setProperty('--theme-img', 'url(../img/iconos/sol.png)', 'important')
+      rootElement.style.setProperty('--theme-color', '#fff', 'important')
+    } else {
+      rootElement.style.setProperty('--primary', '#252638', 'important')
+      rootElement.style.setProperty('--secondary', '#171726', 'important')
+      rootElement.style.setProperty('--terciary', '#6F7789', 'important')
+      rootElement.style.setProperty('--personajes', '#414467', 'important')
+      rootElement.style.setProperty('--contrast', '#F5C505', 'important')
+      rootElement.style.setProperty('--shadow', '#000000e0', 'important')
+      rootElement.style.setProperty('--theme-img', 'url(../img/iconos/luna.png)', 'important')
+      rootElement.style.setProperty('--theme-color', '#000', 'important')
+    }
+  }
 }
