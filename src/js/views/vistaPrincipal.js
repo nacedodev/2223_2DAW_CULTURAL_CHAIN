@@ -37,8 +37,9 @@ export class VistaPrincipal extends Vista {
     this.tablero.addEventListener('dragleave', this.dragLeave)
     this.tablero .addEventListener('drop', this.drop)
  
-    this.tablero.style.backgroundImage = 'url("img/nivel/nivel1.jpg")';
-    this.tablero.style.backgroundSize = 'cover';
+    //this.tablero.style.backgroundImage = 'url("img/nivel/nivel1.jpg")';
+   // this.tablero.style.backgroundSize = 'cover';
+    this.tablero.style.backgroundColor='white'
     this.tablero.style.position = 'relative';
     this.tablero.style.opacity = '0.2';
     
@@ -126,8 +127,8 @@ export class VistaPrincipal extends Vista {
 
     
 
-    this.tablero.style.backgroundImage = 'url("img/nivel/nivel1.jpg")';
-    this.tablero.style.backgroundSize = 'cover';
+    //this.tablero.style.backgroundImage = 'url("img/nivel/nivel1.jpg")';
+   // this.tablero.style.backgroundSize = 'cover';
     this.tablero.style.position = 'relative';
     this.tablero.style.opacity = '0.2';
 
