@@ -251,6 +251,7 @@ export class VistaPrincipal extends Vista {
     // Agregar el personaje al tablero
  
     window.addEventListener('keydown',this.direccion);
+    window.addEventListener("touchstart", this.direccion);
     
     this.intervalo = setInterval(() => this.moverObjeto(), this.reload);
 }
@@ -280,7 +281,25 @@ direccion=(event)=> {
   if (event.key== "d"&& this.dir!=4) this.dir = 2;
   if (event.key== "s"&& this.dir!=1) this.dir = 3;
   if (event.key== "a"&& this.dir!=2) this.dir = 4;
- 
+  event.preventDefault();
+  // Verifica si el evento es táctil
+  if (event.touches && event.touches.length > 0) {
+    // Obtén las coordenadas x del toque
+    const touchX = event.touches[0].clientX;
+
+    // Obtiene el ancho total de la pantalla
+    const screenWidth = window.innerWidth;
+
+    // Si el toque fue en la mitad izquierda, resta 1 a dir; si fue en la mitad derecha, suma 1 a dir
+    this.dir = touchX < screenWidth / 2 ? (this.dir === 1 ? 4 : this.dir - 1) : this.dir === 4 ? 1 : this.dir + 1;
+
+    // Asegura que dir esté en el rango de 1 a 4
+    if (this.dir > 4) {
+      this.dir = 1;
+    } else if (this.dir < 1) {
+      this.dir = 4;
+    }
+  }
 }
 moverObjeto =()=> {
 for (let i = this.fila; i > 0; i--) {
