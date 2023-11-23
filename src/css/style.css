@@ -31,6 +31,7 @@ body{
     margin: 0px; 
     background-color: var(--primary);
     font-family: 'Poppins', sans-serif;
+    touch-action: none;
 }
 
 button {
@@ -508,6 +509,7 @@ button {
 }
 
 #botonatras {
+    opacity: 0.6;
     aspect-ratio: 4/1;
     padding: 15px;
     width: 10%;
