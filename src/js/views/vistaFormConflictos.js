@@ -1,23 +1,47 @@
 // Obtener el div blanco
 const whiteDiv = document.getElementById('whiteDiv');
+whiteDiv.style.position='relative'
+const redDiv = document.createElement('div');
 
+redDiv.id = 'redDiv';
+    redDiv.style.width = '2%'; // Ajusta el tamaño según tus necesidades
+    redDiv.style.height = '2%'; // Ajusta el tamaño según tus necesidades
+    redDiv.style.background = 'red';
+    redDiv.style.position = 'absolute';
+    redDiv.style.display = 'none'; // Comienza oculto
+  
 // Función para obtener las coordenadas del ratón
 const obtenerCoordenadasRaton = (evento) => {
-  const rect = whiteDiv.getBoundingClientRect();
-  const x = Math.round(evento.clientX - rect.left);
-  const y = Math.round(evento.clientY - rect.top);
+    // Obtener las dimensiones y la posición del rectángulo del elemento whiteDiv
+    const rect = whiteDiv.getBoundingClientRect();
 
-  return { x, y };
-};
+    
+    
+    // Calcular la posición del ratón en el eje X relativa a whiteDiv en porcentaje
+    const xPorcentaje = Math.round(((evento.clientX - rect.left) / whiteDiv.offsetWidth) * 100);
+  
+    // Calcular la posición del ratón en el eje Y relativa a whiteDiv en porcentaje
+    const yPorcentaje = Math.round(((evento.clientY - rect.top) / whiteDiv.offsetHeight) * 100);
+    
+    
+
+    // Devolver un objeto con las coordenadas X e Y en porcentaje
+    return { x: xPorcentaje, y: yPorcentaje };
+  };
+
+// Función para crear el div rojo
 
 const inicio = () => {
+   
     const nombreConflicto = document.getElementById('nombreConflicto');
     const ejeX = document.getElementById('ejeX');
     const ejeY = document.getElementById('ejeY');
     const imagen = document.getElementById('imagen');
     const send = document.getElementById('send');
     const whiteDiv = document.getElementById('whiteDiv');
+    
     const statusMessage = document.getElementById('status-message');
+    
 
     nombreConflicto.onblur = validarNombreConflicto;
     imagen.onchange = validarImagen;
@@ -27,12 +51,21 @@ const inicio = () => {
 
     // Asignar las coordenadas del clic al div
     whiteDiv.addEventListener('click', (evento) => {
-        const coordenadas = obtenerCoordenadasRaton(evento);
-        ejeX.value = coordenadas.x;
-        ejeY.value = coordenadas.y;
-        validarEjeX(coordenadas.x);
-        validarEjeY(coordenadas.y);
-    });
+    const coordenadas = obtenerCoordenadasRaton(evento);
+    whiteDiv.appendChild(redDiv);
+        redDiv.style.display='block'
+        redDiv.style.left = coordenadas.x  + '%';
+        redDiv.style.top = coordenadas.y  + '%';
+        redDiv.style.transition = 'left 0.3s, top 0.3s'; // Agregar transición
+       
+    console.log('Posición X:', redDiv.style.left, 'Posición Y:', redDiv.style.top);
+   
+     validarEjeX(coordenadas.x);
+     validarEjeY(coordenadas.y);
+   
+    
+  });
+    
 
     send.onclick = validarForm;
 };
@@ -161,12 +194,12 @@ const validarForm = (e) => {
   const todosLosMensajesVacios = Array.from(errorMessages).every(errorMessage => errorMessage.textContent === '');
 
   if (todosLosCamposLlenos && todosLosMensajesVacios) {
-    
+ 
       statusMessage.textContent = '';
       whiteDiv.style.animation = 'okAnimation 3s forwards';
       document.forms[0].style.animation = 'okAnimation 3s forwards'
       setTimeout(function () {
-        // Envía el formulario después de que la animación 'sendTop' se haya completado
+        
       
 
         // Otras acciones después de enviar el formulario
