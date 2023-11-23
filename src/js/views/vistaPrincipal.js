@@ -143,7 +143,7 @@ export class VistaPrincipal extends Vista {
   this.dir=null
   this.distanciapaso=5
   this.temp=0
-  this.reload=50
+  this.reload=25
   this.part=[]
   this.fila=0
   this.score=0
@@ -322,7 +322,7 @@ moverObjeto =()=> {
   }
 
   generacionPersonas = () => {
-  if (this.temp % 200 === 0) {
+  if (this.temp % 100 === 0) {
     var tableroAncho = this.tablero.clientWidth;
     var tableroAlto = this.tablero.clientHeight;
 
@@ -370,7 +370,7 @@ recogerImagen = () => {
     this.score=this.score+10
   this.puntuacion.textContent =''+ this.score;
     var imagenRecogida = new Image();
-    var imagenVacia = new Image();
+   
    
     imagenRecogida.src = objetoEnPunto.src;
     this.personita = imagenRecogida;
@@ -379,7 +379,6 @@ recogerImagen = () => {
     objetoEnPunto.remove();
 
     // Añadir la imange recogida al final de la cola de la serpiente
-    this.espacio(imagenVacia);
 };
 }
 unir=(imagen)=>{
