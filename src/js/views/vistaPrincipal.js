@@ -316,8 +316,9 @@ for(let i =1;i<this.fila;i++){
   this.avanzar();  // Mover la this.part[0]
   this.limites();
   this.generacionPersonas();
-  this.recogerImagen();
+  this.recogerPersona();
   this.hueco();
+  this.generacionBanderas();
   this.temp++;
 }
  limites=()=> {
@@ -381,7 +382,38 @@ for(let i =1;i<this.fila;i++){
   }
  
 }
-recogerImagen = () => {
+
+generacionBanderas = () => {
+  if (this.temp % 500 === 0) {
+    var tableroAncho = this.tablero.clientWidth;
+    var tableroAlto = this.tablero.clientHeight;
+
+    // Crear un nuevo elemento img en lugar de div
+    var nuevaBandera = document.createElement('img');
+
+   
+
+    // Crear la URL de la imagen utilizando el número formateado
+    nuevaBandera.src = 'img/objetos/bandera.png';
+
+    // Calcular posiciones aleatorias dentro del tablero
+    var posX = Math.floor(Math.random() * tableroAncho - 10);
+    var posY = Math.floor(Math.random() * tableroAlto - 10);
+
+    // Establecer la posición absoluta de la nueva bandera dentro del tablero
+    nuevaBandera.style.position = 'absolute';
+    nuevaBandera.style.height='20px'
+    nuevaBandera.style.width='20px'
+    nuevaBandera.style.left = posX + 'px';
+    nuevaBandera.style.top = posY + 'px';
+    nuevaBandera.classList.add('bandera');
+
+    // Añadir la nueva bandera al elemento con el id 'tablero'
+    this.tablero.appendChild(nuevaBandera);
+  }
+}
+
+recogerPersona = () => {
 
   // Detectar el objeto (imagen) en las coordenadas actuales del this.part[0]
   var objetoEnPunto = document.elementFromPoint(
@@ -390,7 +422,7 @@ recogerImagen = () => {
   );
 
   if (objetoEnPunto && objetoEnPunto.className === 'generado') {
-    // Crear una nueva imagen en lugar de clonarla
+   
     this.score=this.score+10
   this.puntuacion.textContent =''+ this.score;
     var imagenRecogida = new Image();
@@ -404,6 +436,12 @@ recogerImagen = () => {
 
     // Añadir la imange recogida al final de la cola de la serpiente
 };
+if (objetoEnPunto && objetoEnPunto.className === 'bandera') {
+  this.score+=50
+  this.puntuacion.textContent =''+ this.score
+  objetoEnPunto.remove();
+}
+
 }
 unir=(imagen)=>{
   this.fila++;
