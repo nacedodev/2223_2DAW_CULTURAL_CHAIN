@@ -65,17 +65,12 @@ export class VistaPrincipal extends Vista {
     btnSettings.onclick = this.irSettings
     btnRestart.onclick = this.restartGame
     window.onkeydown = this.mostrarFormulario
-    const url = 'https://jsonplaceholder.typicode.com/todos/1';
-
+   
+   //url para establecer llamada
+   
+    const url = 'http://16.2daw.esvirgua.com/2223_2DAW_CULTURAL_CHAIN/src/php/views/datos.php';
     // Llama a la función getDataFromDatabase y maneja la promesa resultante
-    Rest.getDataFromDatabase(url)
-      .then(data => {
-        console.log('Datos obtenidos:', data);
-        // Aquí puedes hacer lo que quieras con los datos recibidos
-      })
-      .catch(error => {
-        console.error('Error al obtener datos:', error);
-      });
+    Rest.ejemploGet(url)
   }
 
   /**

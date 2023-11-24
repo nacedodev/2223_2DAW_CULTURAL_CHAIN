@@ -32,8 +32,22 @@ export class Rest {
           )
         }
       })
+      
   }
+  static ejemploGet(url) {
+    Rest.get(url, {}, (status, responseText, method) => {
+      if (status === 200) {
+        // Parsear la respuesta JSON
+        const datosCentros = JSON.parse(responseText);
 
+        // Mostrar los datos en la consola
+        console.log('Datos de centros:', datosCentros);
+      } else {
+        console.error(`Error en la solicitud (${status}): ${responseText}`);
+      }
+    });
+  
+}
   /**
      * Realiza una petición POST a la URL especificada con los parámetros proporcionados.
      * @static
@@ -61,20 +75,5 @@ export class Rest {
         }
       })
       .catch(error => console.error('Error:', error))
-  }
-  static async getDataFromDatabase(url) {
-    try {
-      const response = await fetch(url);
-  
-      if (!response.ok) {
-        throw new Error('Error al obtener los datos de la base de datos');
-      }
-  
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      console.error('Error al procesar datos:', error);
-      throw error; // Propagar el error para que la llamada a la promesa pueda manejarlo
-    }
   }
 }
