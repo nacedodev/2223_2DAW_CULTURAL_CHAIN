@@ -9,6 +9,12 @@ import { Rest } from '../services/rest.js'
  * @param {HTMLElement} base - El elemento base de la vista.
  */
 export class VistaPrincipal extends Vista {
+   /**
+   * Constructor de la clase VistaPrincipal.
+   * @constructor
+   * @param {Object} controlador - El controlador asociado a la vista.
+   * @param {HTMLElement} base - El elemento base de la vista.
+   */
   constructor (controlador, base) {
     super(controlador, base)
 
@@ -94,7 +100,10 @@ export class VistaPrincipal extends Vista {
       this.showForm = false
     }
   }
-
+ /**
+   * Asigna nombres a los elementos de la vista.
+   * @method
+   */
   asignarNames () {
     const figcaptions = document.querySelectorAll('figcaption')
 
@@ -263,7 +272,10 @@ export class VistaPrincipal extends Vista {
     
     this.intervalo = setInterval(() => this.moverObjeto(), this.reload);
 }
-
+  /**
+   * Mueve el objeto (imagen) en el juego hacia adelante según la dirección actual.
+   * @method
+   */
 avanzar=()=> {
 
   if (this.dir == 1) {
@@ -284,6 +296,11 @@ avanzar=()=> {
   }
   //animacion();  // Actualizar la animación de la this.part[0]
 }
+/**
+   * Maneja la dirección del objeto (imagen) en el juego en función de la entrada del usuario.
+   * @method
+   * @param {Event} event - El evento de teclado o táctil que activa la acción.
+   */
 direccion=(event)=> {
   if (event.key == "w" && this.dir!=3) this.dir = 1;
   if (event.key== "d"&& this.dir!=4) this.dir = 2;
@@ -309,6 +326,10 @@ direccion=(event)=> {
     }
   }
 }
+/**
+   * Mueve el objeto (imagen) en el juego y realiza diversas acciones según el estado del juego.
+   * @method
+   */
 moverObjeto =()=> {
 for (let i = this.fila; i > 0; i--) {
   // Mover cada parte de la serpiente a la posición de la parte anterior
@@ -328,6 +349,10 @@ for(let i =1;i<this.fila;i++){
   this.generacionBanderas();
   this.temp++;
 }
+/**
+   * Aplica límites al objeto (imagen) en el juego para que no salga del tablero.
+   * @method
+   */
  limites=()=> {
       // Obtener las dimensiones reales del tablero
       var tableroAncho = this.tablero.clientWidth;
@@ -352,7 +377,9 @@ for(let i =1;i<this.fila;i++){
      
     }
   }
-
+/**
+ * Genera personas de manera aleatoria en el tablero.
+ */
   generacionPersonas = () => {
   if (this.temp % 100 === 0) {
     var tableroAncho = this.tablero.clientWidth;
@@ -389,7 +416,9 @@ for(let i =1;i<this.fila;i++){
   }
  
 }
-
+/**
+ * Genera banderas de manera aleatoria en el tablero.
+ */
 generacionBanderas = () => {
   if (this.temp % 500 === 0) {
     var tableroAncho = this.tablero.clientWidth;
@@ -419,7 +448,9 @@ generacionBanderas = () => {
     this.tablero.appendChild(nuevaBandera);
   }
 }
-
+/**
+ * Recoge la persona en la posición actual y actualiza la puntuación.
+ */
 recogerPersona = () => {
 
   // Detectar el objeto (imagen) en las coordenadas actuales del this.part[0]
@@ -451,7 +482,10 @@ recogerPersona = () => {
   }
 
 }
-
+/**
+ * Une una imagen al final de la fila en el tablero.
+ * @param {Image} imagen - La imagen que se va a unir.
+ */
 unir=(imagen)=>{
   this.fila++;
   this.part.push(imagen);
@@ -468,6 +502,9 @@ unir=(imagen)=>{
   this.tablero.appendChild(this.part[this.fila]);
   
 }
+/**
+ * Crea un hueco en la fila después de un tiempo determinado.
+ */
 hueco=()=>{
   if(this.temp==this.tiempo+1){
     this.unir(new Image());
@@ -476,7 +513,5 @@ hueco=()=>{
     this.unir(this.personita);
   }
 }
-  cogerNiveles = () =>{
 
-  }
 }
