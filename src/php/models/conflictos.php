@@ -3,8 +3,8 @@ class Conflicto {
  /** @var mysqli Conexión a la base de datos. */
     private $conexion;
    
-     /**
-     * Constructor de la clase Clase.
+    /**
+     * Constructor de la clase Conflicto.
      * Inicia la conexión a la base de datos.
      */
     public function __construct() { 
@@ -13,12 +13,14 @@ class Conflicto {
 
 
     }
- /**
+    /**
      * Añade una nueva clase a la base de datos.
      *
-     * @param string $etapa      Etapa de la clase.
-     * @param string $clase      Nombre de la clase.
-     * @param int    $centro_id  ID del centro asociado a la clase.
+     * @param string $nombreConflicto Nombre del conflicto.
+     * @param int    $posX            Posición X.
+     * @param int    $posY            Posición Y.
+     * @param string $estado          Estado del conflicto.
+     * @param int    $nivel_id        ID del nivel asociado al conflicto.
      */
     public function aniadir($nombreConflicto, $posX, $posY,$estado,$nivel_id) {
         //$imagen = $this->conexion->real_escape_string($imagen);
@@ -33,13 +35,15 @@ class Conflicto {
         }
     }
     
- /**
-     * Modifica una clase existente en la base de datos.
+    /**
+     * Modifica un conflicto existente en la base de datos.
      *
-     * @param int    $id     ID de la clase a modificar.
-     * @param string $etapa  Nueva etapa de la clase.
-     * @param string $clase  Nuevo nombre de la clase.
-     * @return bool          True si la modificación fue exitosa, false de lo contrario.
+     * @param int    $id            ID del conflicto a modificar.
+     * @param string $nombreconflicto Nuevo nombre del conflicto.
+     * @param string $estado        Nuevo estado del conflicto.
+     * @param int    $ejex          Nueva posición X.
+     * @param int    $ejey          Nueva posición Y.
+     * @return bool                 True si la modificación fue exitosa, false de lo contrario.
      */
     public function modificar($id,$nombreconflicto,$estado,$ejex,$ejey) {
         $query = "UPDATE Conflicto SET nombreconflicto = '$nombreconflicto' , estadoconflicto = '$estado', posx = '$ejex',  posy = '$ejey' WHERE id = '$id'";
@@ -47,10 +51,10 @@ class Conflicto {
         $resultado = $this->conexion->query($query);
         return $resultado;
     }
-/**
-     * Borra una clase de la base de datos.
+    /**
+     * Borra un conflicto de la base de datos.
      *
-     * @param int $id ID de la clase a borrar.
+     * @param int $id ID del conflicto a borrar.
      */
     public function borrar($id) {
         try {
@@ -69,10 +73,10 @@ class Conflicto {
         }
     }
     /**
-     * Lista todas las clases asociadas a un centro específico.
+     * Lista todos los conflictos asociados a un nivel específico.
      *
-     * @param int $centro_id ID del centro asociado a las clases.
-     * @return array Arreglo asociativo con los datos de las clases.
+     * @param int $nivel_id ID del nivel asociado a los conflictos.
+     * @return array        Arreglo asociativo con los datos de los conflictos.
      */
     public function listar($id) {
         $query = "SELECT * FROM Conflicto WHERE nivel_id = '$id'";

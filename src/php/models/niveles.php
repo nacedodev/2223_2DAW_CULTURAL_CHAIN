@@ -1,14 +1,14 @@
 <?php
 
 /**
- * Clase para la manipulación de datos relacionados con los centros.
+ * Clase para la manipulación de datos relacionados con los niveles.
  */
 class Nivel {
     /** @var mysqli Conexión a la base de datos. */
   private $conexion;
 
     /**
-     * Constructor de la clase Centro.
+     * Constructor de la clase Nivel.
      * Inicia la conexión a la base de datos.
      */
     public function __construct() { 
@@ -16,11 +16,11 @@ class Nivel {
         $this->conexion = new mysqli(HOST, USER, PASSWORD, DATABASE);
 
     }
- /**
-     * Añade un nuevo centro a la base de datos.
+    /**
+     * Añade un nuevo nivel a la base de datos.
      *
-     * @param string $nombre     Nombre del centro.
-     * @param string $localidad  Localidad del centro.
+     * @param string $nombrepais Nombre del país asociado al nivel.
+     * @param string $imagen     Imagen del nivel.
      */
     public function aniadir($nombrepais, $imagen) {
 
@@ -35,12 +35,12 @@ class Nivel {
             }
         }
     }
- /**
-     * Modifica un centro existente en la base de datos.
+    /**
+     * Modifica un nivel existente en la base de datos.
      *
-     * @param int    $id         ID del centro a modificar.
-     * @param string $nombre     Nuevo nombre del centro.
-     * @param string $localidad  Nueva localidad del centro.
+     * @param int    $id         ID del nivel a modificar.
+     * @param string $nombrepais Nuevo nombre del país asociado al nivel.
+     * @param string $imagen     Nueva imagen del nivel.
      * @return bool              True si la modificación fue exitosa, false de lo contrario.
      */
     public function modificar($id,$nombrepais,$imagen) {
@@ -52,10 +52,10 @@ class Nivel {
         $resultado = $this->conexion->query($query);
         return $resultado;
     }
- /**
-     * Borra un centro de la base de datos.
+    /**
+     * Borra un nivel de la base de datos.
      *
-     * @param int $id ID del centro a borrar.
+     * @param int $id ID del nivel a borrar.
      */
     public function borrar($id) {
         try {
@@ -75,9 +75,9 @@ class Nivel {
         }
     }
      /**
-     * Lista todos los centros registrados en la base de datos.
+     * Lista todos los niveles registrados en la base de datos.
      *
-     * @return array Arreglo asociativo con los datos de los centros.
+     * @return array Arreglo asociativo con los datos de los niveles.
      */
     public function listar() {
         $query= 'SELECT * FROM Nivel';
@@ -99,6 +99,12 @@ class Nivel {
         }
         return $niveles;
     }
+    /**
+     * Obtiene la imagen de un nivel por su ID.
+     *
+     * @param int $id ID del nivel.
+     * @return string|null Imagen en formato base64 o null si no se encuentra.
+     */
     public function obtenerImagenPorId($id) {
         $id = $this->conexion->real_escape_string($id);
         
