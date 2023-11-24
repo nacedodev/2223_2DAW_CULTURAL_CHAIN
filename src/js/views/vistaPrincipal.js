@@ -74,9 +74,9 @@ export class VistaPrincipal extends Vista {
    
    //url para establecer llamada
    
-    const url = 'http://16.2daw.esvirgua.com/2223_2DAW_CULTURAL_CHAIN/src/php/views/datos.php';
+    
     // Llama a la función getDataFromDatabase y maneja la promesa resultante
-    Rest.ejemploGet(url)
+    this.llamarGET();
   }
 
   /**
@@ -513,5 +513,23 @@ hueco=()=>{
     this.unir(this.personita);
   }
 }
+resultadoGET = (status, jsonData, method) => {
+  if (status === 200) {
+    // Devuelve la promesa directamente
+    return jsonData.then(data => {
+      console.log(data);
+     
+    });
+  } else {
+    // Si hay un error, lanza una excepción para ser capturada fuera de la promesa
+    throw new Error(`Error (${method}): ${jsonData}`);
+  }
+}
+
+llamarGET = () => {
+    Rest.getJSON('../src/php/models/datos.php', {}, this.resultadoGET)
+}
+
+
 
 }
