@@ -47,9 +47,9 @@ export class VistaPrincipal extends Vista {
     window.onkeydown = this.mostrarFormulario
 
     const confetti = new Confetti("logo")
-    confetti.setCount(1300)
+    confetti.setCount(800)
     confetti.setSize(1.6)
-    confetti.setPower(50)
+    confetti.setPower(40)
     confetti.setFade(false)
     confetti.destroyTarget(true)
 
