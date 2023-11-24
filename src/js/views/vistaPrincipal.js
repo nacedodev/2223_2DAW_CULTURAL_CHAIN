@@ -23,10 +23,13 @@ export class VistaPrincipal extends Vista {
     const btnRestart = document.getElementById('restart')
     const btnRanking = this.base.querySelectorAll('button')[3]
     const btnSettings = this.base.querySelectorAll('button')[4]
+    this.btnTheme = this.base.querySelector('#theme')
     this.tablero = document.getElementById('divtablero')
     this.divIzq = document.getElementById('divizquierda')
+    this.gameStarted = false
     const personajes = this.base.querySelectorAll('.personaje')
     this.divPersonajes = document.getElementById('divderecha')
+    this.titulo = document.getElementById('titulo')
     this.info = this.base.querySelector('#info')
     this.end = this.base.querySelector('#end')
     this.form = document.getElementById('form-end')
@@ -67,24 +70,55 @@ export class VistaPrincipal extends Vista {
     this.tiempo
     
   
+    this.tablero.addEventListener('drop', this.drop)
+
     btnRanking.onclick = this.irRanking
     btnSettings.onclick = this.irSettings
+    this.btnTheme.onclick = this.changeTheme
     btnRestart.onclick = this.restartGame
     window.onkeydown = this.mostrarFormulario
    
   
+
+    const confetti = new Confetti("logo")
+    confetti.setCount(800)
+    confetti.setSize(1.6)
+    confetti.setPower(40)
+    confetti.setFade(false)
+    confetti.destroyTarget(true)
+
+    function removeButton(t) {
+      (t.target.style.opacity = 0),
+      setTimeout(() => {
+      (t.target.style.visibility = ""), (t.target.style.opacity = 1);
+      }, 5e3);
+    }
   }
 
   /**
          * Realiza la navegación a la vista de configuración.
          * @method
          */
-  irSettings = () => this.controlador.irAVista(this.controlador.vistaSettings)
+  irSettings = () => {
+    this.controlador.irAVista(this.controlador.vistaSettings)
+    this.divIzq.style.animation = 'none'
+    this.divPersonajes.style.animation = 'none'
+    this.info.style.animation = 'none'
+    this.titulo.style.animation = 'none'
+  }
+
   /**
          * Realiza la navegación al ranking.
          * @method
          */
-  irRanking = () => this.controlador.irAVista(this.controlador.vistaRanking)
+  irRanking = () => {
+    this.controlador.irAVista(this.controlador.vistaRanking)
+    this.divIzq.style.animation = 'none'
+    this.divPersonajes.style.animation = 'none'
+    this.info.style.animation = 'none'
+    this.titulo.style.animation = 'none'
+  }
+
   /**
          * Controla la visualización del formulario cuando se presiona la tecla Enter.
          * @method
@@ -164,6 +198,31 @@ export class VistaPrincipal extends Vista {
     clearInterval(this.intervalo);
     // Reset the showForm variable
     this.showForm = false
+    if (this.gameStarted) {
+      const personajes = this.tablero.querySelectorAll('.personaje')
+      personajes.forEach(personaje => {
+        personaje.remove()
+      })
+      // Reset the animations and display elements
+      this.divIzq.style.animation = 'shortBoard 1s forwards'
+      this.divPersonajes.style.animation = 'appearRight 1s forwards'
+      this.info.style.animation = 'mostrarTexto 1s forwards'
+      this.titulo.style.animation = 'mostrarTexto 1s forwards'
+      this.end.style.animation = 'none'
+      this.form.style.animation = 'none'
+      this.tablero.style.filter = 'none'
+      this.divPersonajes.style.pointerEvents = 'auto'
+
+      // Reset the showForm variable
+      this.showForm = false
+      this.gameStarted = false
+    } else {
+      const restartImg = document.querySelector('#restart > img')
+      restartImg.style.animation = 'shakeAnimation 0.3s ease-in-out'
+      setTimeout(() => {
+        restartImg.style.animation = 'none'
+      }, 300)
+    }
   }
 
   /**
@@ -320,6 +379,19 @@ direccion=(event)=> {
     } else if (this.dir < 1) {
       this.dir = 4;
     }
+
+    this.showForm = true
+    this.tablero.style.filter = 'none' // Restaurar el fondo a su estado original
+    this.divPersonajes.style.animation = 'disappearRight 1s forwards'
+    this.divIzq.style.animation = 'enlargeBoard 1.5s forwards'
+    this.titulo.style.animation = 'ocultarTexto 0.5s forwards'
+    personajeSelected.style.pointerEvents = 'none'
+    personajeSelected.style.opacity = '1'
+    personajeSelected.style.width = '1.5%'
+    this.divPersonajes.style.pointerEvents = 'none'
+    this.info.style.animation = 'ocultarTexto 1.5s forwards'
+    this.end.style.animation = 'mostrarTexto 4s forwards'
+    this.gameStarted = true
   }
 }
 /**

@@ -76,6 +76,7 @@ export class VistaSettings extends Vista {
     const btnGET = this.base.querySelectorAll('button')[7]
     const btnPOST = this.base.querySelectorAll('button')[8]
     const btnJSON = this.base.querySelectorAll('button')[9]
+    const btnTheme = this.base.querySelector('#vistaSettings #theme')
 
     /**
          * Elemento de texto para el estado de la petición.
@@ -99,5 +100,57 @@ export class VistaSettings extends Vista {
     btnPOST.onclick = this.llamarPOST
     btnJSON.onclick= this.llamarJSON
     
+    btnTheme.onclick = this.changeTheme
+  }
+
+  /**
+         * Realiza la navegación de vuelta a la vista principal.
+         * @method
+         */
+  irMain = () => {
+    this.controlador.irAVista(this.controlador.vistaPrincipal)
+    this.textStatus.textContent = ''
+    this.textRespuesta.textContent = ''
+  }
+
+  /**
+         * Realiza una petición GET.
+         * @method
+         */
+  llamarGET = () => {
+    Rest.get('http://00.2daw.esvirgua.com/DWEC/peticionGet.php', { param1: 42, param2: 'Nacho' }, this.resultadoGET)
+  }
+
+  /**
+         * Muestra el resultado de la petición GET.
+         * @method
+         * @param {number} status - El código de estado de la respuesta.
+         * @param {string} texto - El texto de respuesta.
+         * @param {string} method - El método de la petición.
+         */
+  resultadoGET = (status, texto, method) => {
+    this.textStatus.innerHTML = `● ${status}`
+    this.textRespuesta.innerHTML = `(<span style='color:#F5C505;'>${method}</span>) ${texto}`
+  }
+
+  /**
+         * Realiza una petición POST.
+         * @method
+         */
+  llamarPOST = () => {
+    const params = { param1: 1337, param2: 'Nacho' }
+    Rest.post('http://00.2daw.esvirgua.com/DWEC/peticionPost.php', params, this.resultadoPOST)
+  }
+
+  /**
+         * Muestra el resultado de la petición POST.
+         * @method
+         * @param {number} status - El código de estado de la respuesta.
+         * @param {string} texto - El texto de respuesta.
+         * @param {string} method - El método de la petición.
+         */
+  resultadoPOST = (status, texto, method) => {
+    this.textStatus.innerHTML = `● ${status}`
+    this.textRespuesta.innerHTML = `(<span style='color:#CD7F32;'>${method}</span>) ${texto.message}`
   }
 }

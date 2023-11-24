@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Cultural Chain</title>
     <link
       rel="shortcut icon"
@@ -13,7 +13,8 @@
 </head>
 <body>
     <div id="vistaPrincipal" style="display: none;">
-        <img id="logo" src="img/iconos/logo.jpeg">
+        <canvas width="1672" height="1768" style="position: fixed; top: 0px; left: 0px; width: calc(100%); height: calc(100%); margin: 0px; padding: 0px; z-index: 999999999; pointer-events: none;"></canvas>
+        <img id="logo" src="img/iconos/logo.jpeg" onclick="removeButton(event)">
         <div id="divizquierda">
             <p id="titulo">LISTO?</p>
             <div id="divtablero">
@@ -69,13 +70,13 @@
         <div id="divderecha">
             <div>
                 <div>
-                    <button class="boton">
+                    <button class="boton" id="theme">
                         <img src="img/iconos/sol.png">
                     </button>
-                    <button class="boton">
+                    <button class="boton" id="rk"> 
                         <img src="img/iconos/ranking.png">
                     </button>
-                    <button class="boton">
+                    <button class="boton" id="settings">
                         <img src="img/iconos/ajustes.png">
                     </button>
                 </div>
@@ -127,47 +128,47 @@
     </div>
     <div id="vistaRanking" style="display: none;">
         <img id="logo" src="img/iconos/logo.jpeg">
-        <button class="boton">
+        <button class="boton" id="theme">
             <img src="img/iconos/sol.png">
         </button>
-        <p class="tituloranking">RANKING</p>
+        <p data-shadow = 'RANKING'class="tituloranking">RANKING</p>
         <div id="tablonranking">
             <div>
                 <p>1</p>
                 <p>CARLOS</p>
                 <p>1ESO</p>
                 <p>GUADALUPE</p>
-                <p>SCORE</p>
+                <p>SCORE:</p>
                 <p>30123</p>
                 <img src="img/personajes/astronaut 1.png">
-                <img class="medalla" src="img/iconos/medallaoro.png">
+                <!-- <img class="medalla" src="img/iconos/medallaoro.png"> -->
             </div>
             <div>
                 <p>2</p>
                 <p>CARLOS</p>
                 <p>1ESO</p>
                 <p>GUADALUPE</p>
-                <p>SCORE</p>
+                <p>SCORE:</p>
                 <p>30123</p>
                 <img src="img/personajes/astronaut 1.png">
-                <img class="medalla" src="img/iconos/medallaplata.png">
+                <!-- <img class="medalla" src="img/iconos/medallaplata.png"> -->
             </div>
             <div>
                 <p>3</p>
                 <p>CARLOS</p>
                 <p>1ESO</p>
                 <p>GUADALUPE</p>
-                <p>SCORE</p>
+                <p>SCORE:</p>
                 <p>30123</p>
                 <img src="img/personajes/astronaut 1.png">
-                <img class="medalla" src="img/iconos/medallabronce.png">
+                <!-- <img class="medalla" src="img/iconos/medallabronce.png"> -->
             </div>
             <div>
                 <p>4</p>
                 <p>CARLOS</p>
                 <p>1ESO</p>
                 <p>GUADALUPE</p>
-                <p>SCORE</p>
+                <p>SCORE:</p>
                 <p>30123</p>
                 <img src="img/personajes/astronaut 1.png">
             </div>
@@ -176,7 +177,7 @@
                 <p>CARLOS</p>
                 <p>1ESO</p>
                 <p>GUADALUPE</p>
-                <p>SCORE</p>
+                <p>SCORE:</p>
                 <p>30123</p>
                 <img src="img/personajes/astronaut 1.png">
             </div>
@@ -185,7 +186,7 @@
                 <p>CARLOS</p>
                 <p>1ESO</p>
                 <p>GUADALUPE</p>
-                <p>SCORE</p>
+                <p>SCORE:</p>
                 <p>30123</p>
                 <img src="img/personajes/astronaut 1.png">
             </div>
@@ -194,7 +195,7 @@
                 <p>CARLOS</p>
                 <p>1ESO</p>
                 <p>GUADALUPE</p>
-                <p>SCORE</p>
+                <p>SCORE:</p>
                 <p>30123</p>
                 <img src="img/personajes/astronaut 1.png">
             </div>
@@ -203,7 +204,7 @@
                 <p>CARLOS</p>
                 <p>1ESO</p>
                 <p>GUADALUPE</p>
-                <p>SCORE</p>
+                <p>SCORE:</p>
                 <p>30123</p>
                 <img src="img/personajes/astronaut 1.png">
             </div>
@@ -212,7 +213,7 @@
                 <p>CARLOS</p>
                 <p>1ESO</p>
                 <p>GUADALUPE</p>
-                <p>SCORE</p>
+                <p>SCORE:</p>
                 <p>30123</p>
                 <img src="img/personajes/astronaut 1.png">
             </div>
@@ -221,7 +222,7 @@
                 <p>CARLOS</p>
                 <p>1ESO</p>
                 <p>GUADALUPE</p>
-                <p>SCORE</p>
+                <p>SCORE:</p>
                 <p>30123</p>
                 <img src="img/personajes/astronaut 1.png">
             </div>
@@ -230,7 +231,7 @@
                 <p>CARLOS</p>
                 <p>1ESO</p>
                 <p>GUADALUPE</p>
-                <p>SCORE</p>
+                <p>SCORE:</p>
                 <p>30123</p>
                 <img src="img/personajes/astronaut 1.png">
             </div>
@@ -239,12 +240,14 @@
                 <p>CARLOS</p>
                 <p>1ESO</p>
                 <p>GUADALUPE</p>
-                <p>SCORE</p>
+                <p>SCORE:</p>
                 <p>30123</p>
                 <img src="img/personajes/astronaut 1.png">
             </div>
         </div>
-        <button id="botonatras">ATRAS</button>
+        <button id="botonatras">
+            <img src="img/iconos/back.png" alt="atras" id="back">
+        </button>
         <div id="score">
             <p>TOP</p>
             <p>10</p>
@@ -252,7 +255,7 @@
         </div>
         <div id="vistaSettings" style="display: none;">
         <img id="logo" src="img/iconos/logo.jpeg">
-        <button class="boton">
+        <button class="boton" id="theme">
             <img src="img/iconos/sol.png">
         </button>
         <span id="status"></span>
@@ -268,10 +271,10 @@
                 </button>
             </div>
             <p class="tituloranking">DIFICULTAD</p>
-            <button class="boton">FACIL</button>
-            <button class="boton">MEDIO</button>
-            <button class="boton">DIFICIL</button>
-            <button class="boton" onclick="window.location.href ='../doc/home.html'">DOCUMENTACIÓN</button>
+            <button class="botonsettings">FACIL</button>
+            <button class="botonsettings">MEDIO</button>
+            <button class="botonsettings">DIFICIL</button>
+            <button class="botonsettings" onclick="window.location.href ='../doc/home.html'">DOCUMENTACIÓN</button>
             <p>AJAX</p>
             <div id="panelbotones">
                 <button class="boton">
@@ -285,8 +288,11 @@
                 </button>
             </div>
         </div>
-        <button id="botonatras">ATRAS</button>
+        <button id="botonatras">
+            <img src="img/iconos/back.png" alt="atras" id="back">
+        </button>
     </div>
     <script type="module" src="js/game.js"></script>
+    <script src="js/services/confetti.min.js"></script>
 </body>
 </html>
