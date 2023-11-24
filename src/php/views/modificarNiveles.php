@@ -12,8 +12,7 @@
     <input type="hidden" name="id" value="<?php echo isset($_GET['id']) ? $_GET['id'] : ''; ?>">
     <span id="localidad-error" class="error-message"></span><br><br>
         <button id="send" type="submit">Enviar</button>
-        <span id="status-message" style="margin-left: 100px;"></span>
-    </form>
+    <span id="status-message" style="margin-left: 100px;"></span>
     </form>
 </div>
 <script type="module" src="../js/views/vistaFormNivelesModificar.js"></script>

@@ -41,8 +41,9 @@ class Conflicto {
      * @param string $clase  Nuevo nombre de la clase.
      * @return bool          True si la modificación fue exitosa, false de lo contrario.
      */
-    public function modificar($id,$etapa,$clase) {
-        $query = "UPDATE Clase SET etapa = '$etapa', clase = '$clase' WHERE id = '$id'";
+    public function modificar($id,$nombreconflicto,$estado,$ejex,$ejey) {
+        $query = "UPDATE Conflicto SET nombreconflicto = '$nombreconflicto' , estadoconflicto = '$estado', posx = '$ejex',  posy = '$ejey' WHERE id = '$id'";
+        echo $query;
         $resultado = $this->conexion->query($query);
         return $resultado;
     }

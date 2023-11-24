@@ -76,16 +76,17 @@ class ControladorConflictos{
     /**
      * Modifica una clase existente.
      */
-    public function modificarClases() {
+    public function modificarConflictos() {
 
-        $this->view='modificarClases';
-        $centronombre=$_GET['centronombre'];
+        $this->view='modificarConflictos';
+        $nombrepais=$_GET['nombrepais'];
             
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $centro_id = $_POST['centro_id'];
+            $nivel_id = $_GET['nivel_id'];
+            $id=$_POST['id'];
             // Lógica para actualizar el centro en la base de datos
-            $this->objClases->modificar($_POST['id'], $_POST['etapa'], $_POST['clase']);
-            header("Location: index.php?action=listarClases&controller=Clases&centro_id=$centro_id&centronombre=$centronombre");
+            $this->objConflictos->modificar($_POST['id'], $_POST['nombreconflicto'], $_POST['estadoconflicto'], $_POST['ejeX'], $_POST['ejeY']);
+            header("Location: index.php?action=listarConflictos&controller=Conflictos&nivel_id=$nivel_id&id=$id&nombrepais=$nombrepais");
         }
            
         }
