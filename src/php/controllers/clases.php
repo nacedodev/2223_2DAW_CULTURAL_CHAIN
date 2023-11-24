@@ -15,7 +15,6 @@ class ControladorClases{
      */
     public function __construct() {
         $this->pagina = '';
-        $this->view = '';
         $this->objClases = new Clase();
     }
  /**

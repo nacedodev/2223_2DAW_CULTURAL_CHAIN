@@ -18,7 +18,6 @@ class ControladorCentros {
     public function __construct() {
         $this->pagina = '';
         $this->objCentros = new Centro();
-        $this->view='centros';
     }
 /**
      * Lista los centros disponibles.
@@ -26,7 +25,8 @@ class ControladorCentros {
      * @return array Datos de los centros.
      */
     public function listarCentros() {
-            return $this->objCentros->listar();   
+        $this->view='centros';    
+        return $this->objCentros->listar();   
     }
     /**
      * Añade un nuevo centro.

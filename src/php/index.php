@@ -3,6 +3,8 @@
 require_once '../php/config/config_db.php';
 require_once '../php/models/centros.php';
 require_once '../php/models/clases.php';
+require_once '../php/models/niveles.php';
+require_once '../php/models/conflictos.php';
 
 if(!isset($_GET["controller"])) $_GET["controller"] = constant("DEFAULT_CONTROLLER");
 if(!isset($_GET["action"])) $_GET["action"] = constant("DEFAULT_ACTION");
@@ -24,7 +26,7 @@ $dataToView["data"] = array();
 if(method_exists($controller,$_GET["action"])) $dataToView["data"] = $controller->{$_GET["action"]}();
 
 
-/* Load views */
+/* Load views*/
 require_once '../php/views/template/header.php';
 require_once '../php/views/'.$controller->view.'.php';
 require_once '../php/views/template/footer.php';

@@ -36,7 +36,6 @@ const inicio = () => {
     const nombreConflicto = document.getElementById('nombreConflicto');
     const ejeX = document.getElementById('ejeX');
     const ejeY = document.getElementById('ejeY');
-    const imagen = document.getElementById('imagen');
     const send = document.getElementById('send');
     const whiteDiv = document.getElementById('whiteDiv');
     
@@ -44,7 +43,6 @@ const inicio = () => {
     
 
     nombreConflicto.onblur = validarNombreConflicto;
-    imagen.onchange = validarImagen;
     ejeX.onblur = () => validarEjeX(ejeX.value);
     ejeY.onblur = () => validarEjeY(ejeY.value);
 
@@ -122,28 +120,6 @@ const validarEjeY = (valor) => {
       errorSpan.textContent = '';
   }
 };
-
-const validarImagen = () => {
-    const imagen = document.getElementById('imagen');
-    const errorSpan = document.getElementById('imagen-error');
-    const allowedExtensions = ['jpg', 'jpeg', 'png'];
-
-    if (imagen.files.length === 0) {
-        errorSpan.textContent = 'Debe seleccionar una imagen.';
-        aplicarEstilo(imagen, false);
-    } else {
-        const fileName = imagen.files[0].name;
-        const fileExtension = fileName.split('.').pop().toLowerCase();
-
-        if (!allowedExtensions.includes(fileExtension)) {
-            errorSpan.textContent = 'Formato de imagen no válido. Solo se permiten archivos JPG, JPEG o PNG.';
-            aplicarEstilo(imagen, false);
-        } else {
-            errorSpan.textContent = '';
-            aplicarEstilo(imagen, true);
-        }
-    }
-};
 const validarForm = (e) => {
     e.preventDefault();
   let todosLosCamposLlenos = true;
@@ -153,7 +129,6 @@ const validarForm = (e) => {
   const nombreConflicto = document.getElementById('nombreConflicto');
   const ejeX = document.getElementById('ejeX');
   const ejeY = document.getElementById('ejeY');
-  const imagen = document.getElementById('imagen');
   const statusMessage = document.getElementById('status-message');
   const whiteDiv = document.getElementById('whiteDiv'); // Asegúrate de que esté presente en tu HTML
 
@@ -163,10 +138,6 @@ const validarForm = (e) => {
   // Validar las coordenadas ejeX y ejeY
   validarEjeX(ejeX.value);
   validarEjeY(ejeY.value);
-
-
-  // Validar la imagen
-  validarImagen();
 
   // Validar que ejeX y ejeY sean números
   const ejeXValue = parseFloat(ejeX.value);
@@ -180,7 +151,7 @@ const validarForm = (e) => {
   }
 
   // Validar campos vacíos
-  const inputs = [nombreConflicto, ejeX, ejeY, imagen];
+  const inputs = [nombreConflicto, ejeX, ejeY];
   inputs.forEach(input => {
       if (input.value !== '') {
           todosLosCamposVacios = false;

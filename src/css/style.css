@@ -569,7 +569,11 @@ input:-webkit-autofill {
         color: rgb(255, 0, 76);
         font-size: 12px;
 }
-
+#imagenmodificar{
+    width: 70%;
+    display: block;
+    margin:auto;
+}
 
 
 @keyframes disappearRight {
