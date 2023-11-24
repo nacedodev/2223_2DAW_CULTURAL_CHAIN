@@ -13,7 +13,8 @@
 </head>
 <body>
     <div id="vistaPrincipal" style="display: none;">
-        <img id="logo" src="img/iconos/logo.jpeg">
+        <canvas width="1672" height="1768" style="position: fixed; top: 0px; left: 0px; width: calc(100%); height: calc(100%); margin: 0px; padding: 0px; z-index: 999999999; pointer-events: none;"></canvas>
+        <img id="logo" src="img/iconos/logo.jpeg" onclick="removeButton(event)">
         <div id="divizquierda">
             <p id="titulo">LISTO?</p>
             <div id="divtablero">
@@ -289,5 +290,22 @@
         </button>
     </div>
     <script type="module" src="js/game.js"></script>
+    <script src="js/services/confetti.min.js"></script>
+    <script>
+        function removeButton(t) {
+          (t.target.style.opacity = 0),
+            setTimeout(() => {
+              (t.target.style.visibility = ""), (t.target.style.opacity = 1);
+            }, 5e3);
+        }
+      </script>
+    <script>
+        let confetti = new Confetti("logo");
+        confetti.setCount(1300);
+        confetti.setSize(1.6);
+        confetti.setPower(50);
+        confetti.setFade(false);
+        confetti.destroyTarget(true);
+      </script>
 </body>
 </html>

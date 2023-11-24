@@ -30,6 +30,7 @@ body{
     margin: 0px; 
     background-color: var(--primary);
     font-family: 'Poppins', sans-serif;
+    user-select: none;
 }
 
 button {

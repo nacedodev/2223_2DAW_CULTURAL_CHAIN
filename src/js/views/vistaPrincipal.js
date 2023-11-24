@@ -107,7 +107,6 @@ export class VistaPrincipal extends Vista {
       personajes.forEach(personaje => {
         personaje.remove()
       })
-
       // Reset the animations and display elements
       this.divIzq.style.animation = 'shortBoard 1s forwards'
       this.divPersonajes.style.animation = 'appearRight 1s forwards'
