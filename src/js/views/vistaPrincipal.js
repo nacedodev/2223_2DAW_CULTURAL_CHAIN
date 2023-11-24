@@ -45,6 +45,20 @@ export class VistaPrincipal extends Vista {
     this.btnTheme.onclick = this.changeTheme
     btnRestart.onclick = this.restartGame
     window.onkeydown = this.mostrarFormulario
+
+    const confetti = new Confetti("logo")
+    confetti.setCount(1300)
+    confetti.setSize(1.6)
+    confetti.setPower(50)
+    confetti.setFade(false)
+    confetti.destroyTarget(true)
+
+    function removeButton(t) {
+      (t.target.style.opacity = 0),
+      setTimeout(() => {
+      (t.target.style.visibility = ""), (t.target.style.opacity = 1);
+      }, 5e3);
+    }
   }
 
   /**
@@ -210,6 +224,7 @@ export class VistaPrincipal extends Vista {
     this.titulo.style.animation = 'ocultarTexto 0.5s forwards'
     personajeSelected.style.pointerEvents = 'none'
     personajeSelected.style.opacity = '1'
+    personajeSelected.style.width = '1.5%'
     this.divPersonajes.style.pointerEvents = 'none'
     this.info.style.animation = 'ocultarTexto 1.5s forwards'
     this.end.style.animation = 'mostrarTexto 4s forwards'
