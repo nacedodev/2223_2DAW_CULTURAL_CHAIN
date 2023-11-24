@@ -62,10 +62,20 @@ export class VistaSettings extends Vista {
       this.textStatus.innerHTML = `● ${status}`
       this.textRespuesta.innerHTML = `(<span style='color:#CD7F32;'>${method}</span>) ${texto.message}`
     }
+    this.llamarJSON = () => {
+      Rest.getJSON('https://jsonplaceholder.typicode.com/todos/1', {  }, this.resultadoJSON);
+    }
 
-    const btnBack = this.base.querySelectorAll('button')[9]
+    this.resultadoJSON = (status, texto, method) => {
+      this.textStatus.innerHTML = `● ${status}`;
+      this.textRespuesta.innerHTML = `(<span style='color:#00FF00;'>${method}</span>) ${JSON.stringify(texto)}`;
+    }
+    
+
+    const btnBack = this.base.querySelectorAll('button')[10]
     const btnGET = this.base.querySelectorAll('button')[7]
     const btnPOST = this.base.querySelectorAll('button')[8]
+    const btnJSON = this.base.querySelectorAll('button')[9]
 
     /**
          * Elemento de texto para el estado de la petición.
@@ -87,5 +97,7 @@ export class VistaSettings extends Vista {
 
     // Asignar evento para realizar la petición POST al hacer clic en el botón correspondiente.
     btnPOST.onclick = this.llamarPOST
+    btnJSON.onclick= this.llamarJSON
+    
   }
 }

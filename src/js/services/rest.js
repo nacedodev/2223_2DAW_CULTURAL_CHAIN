@@ -62,4 +62,27 @@ export class Rest {
       })
       .catch(error => console.error('Error:', error))
   }
+  static getJSON(url, params, callback) {
+    const queryParams = new URLSearchParams(params).toString();
+    const fullUrl = url + (queryParams ? `?${queryParams}` : '');
+
+    fetch(fullUrl, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then(response => {
+        const status = response.status;
+        return { responseStatus: status, response: response.json(), method: 'GET' };
+      })
+      .then(data => {
+        if (callback) {
+          return data.response.then(jsonData => {
+            callback(data.responseStatus, jsonData, data.method);
+          });
+        }
+      })
+      .catch(error => console.error('Error:', error));
+  }
 }
