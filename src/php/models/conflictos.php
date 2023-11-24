@@ -20,18 +20,17 @@ class Conflicto {
      * @param string $clase      Nombre de la clase.
      * @param int    $centro_id  ID del centro asociado a la clase.
      */
-    public function aniadir($etapa, $clase,$centro_id) {
-        $query = "INSERT INTO Clase (etapa, clase, centro_id) VALUES ('$etapa', '$clase', '$centro_id')";
-        
-        
-            try {
-                $resultado = $this->conexion->query($query);
-            } catch (mysqli_sql_exception $e) {
-                if ($e->getCode() === 1062) {
-                    // Código 1062 indica una violación de clave única
-                    echo 'nombre duplicado';
-                } 
-            }
+    public function aniadir($nombreConflicto, $posX,$posY,$estado,$imagen,$nivel_id) {
+        $imagen = $this->conexion->real_escape_string($imagen);
+        $query = "INSERT INTO Conflicto (nombreconflicto, posx,posy,estadoconflicto,nivel_id) VALUES ('$nombreConflicto', $posx, $posy,$estado,$nivel_id)";
+        try {
+            $resultado = $this->conexion->query($query);
+        } catch (mysqli_sql_exception $e) {
+            if ($e->getCode() === 1062) {
+                // Código 1062 indica una violación de clave única
+                echo 'nombre duplicado';
+            } 
+        }
     }
     
  /**

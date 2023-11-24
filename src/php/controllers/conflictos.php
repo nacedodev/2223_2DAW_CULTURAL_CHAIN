@@ -34,16 +34,15 @@ class ControladorConflictos{
      */
     public function aniadirConflictos() {
         $this->view = 'aniadirConflictos';
-        $centronombre=$_GET['nombrepais'];
+        $nombrepais=$_GET['nombrepais'];
     
-        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['etapa']) && isset($_POST['clase']) && !empty($_POST['etapa']) && !empty($_POST['clase'])) {
-        $centro_id = $_GET['centro_id'];
-          $this->objClases->aniadir($_POST['etapa'], $_POST['clase'], $centro_id);
-        
-       
-          header("Location: index.php?action=listarClases&controller=Clases&centro_id=$centro_id&centronombre=$centronombre");
-         
-        
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nombreconficto']) && isset($_POST['ejeX']) && isset($_POST['ejeY']) && isset($_FILES['imagen']['tmp_name']) ) {
+            $nivel_id = $_GET['nivel_id'];
+            $imagenTmp = $_FILES['imagen']['tmp_name'];
+            $imagenBinaria = file_get_contents($imagenTmp);
+
+            $this->objConflictos->aniadir($_POST['nombreconflicto'],$_POST['ejeX'],$_POST['ejeY'],$imagenBinaria,$nivel_id);
+           header("Location: index.php?action=listarConflictos&controller=Conflictos&nivel_id=$nivel_id&nombrepais=$nombrepais"); 
     }
     }
     /**

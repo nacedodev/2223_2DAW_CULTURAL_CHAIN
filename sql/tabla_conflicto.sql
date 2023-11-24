@@ -3,7 +3,7 @@ CREATE TABLE Conflicto (
     nombreconflicto VARCHAR(100) NOT NULL,
     posx smallint NOT NULL,
     posy smallint NOT NULL,
-    imagenconflicto smallint NOT NULL,
+    imagen mediumblob NOT NULL,
     estadoconflicto VARCHAR(50),
     nivel_id INT,
     CONSTRAINT fk_nombre_nivel 

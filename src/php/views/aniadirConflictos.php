@@ -1,12 +1,16 @@
 <div id="vistaForm">
-<form id="form-end" enctype="multipart/form-data" name="formularioCentro" action="index.php?action=aniadirNivel&controller=Niveles" method="post">
+<form id="form-end" enctype="multipart/form-data" name="formularioCentro" action="index.php?action=listarConflictos&controller=conflictos&id=<?php echo $_GET['id'];?>&nombrepais=<?php echo $_GET['nombrepais'];?>" method="post">
 
     <label for="nombreConflicto">Nombre del conflicto:</label>
     <input type="text" id="nombreConflicto" name="nombreConflicto">
     <span id="nombreConflicto-error" class="error-message"></span><br><br>
 
+    <label for="estado">Estado:</label>
+    <input type="text" id="estado" name="estado">
+    <span id="nombreConflicto-error" class="error-message"></span><br><br>
+
     <label for="ejeX">Eje X:</label>
-    <input type="text" id="ejeX" name="ejeX">
+    <input type="text" id="ejeX" name="ejeX" >
     <span id="ejeX-error" class="error-message"></span><br><br>
 
     <label for="ejeY">Eje Y:</label>
