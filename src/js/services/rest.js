@@ -12,31 +12,26 @@ export class Rest {
    * @param {Object} params - Los parámetros de la petición.
    * @param {function} callback - La función de retorno para manejar la respuesta de la petición.
    */
-  static get(url, params, callback) {
-    let paramsGET = '?';
+  static get (url, params, callback) {
+    let paramsGET = '?'
     for (const param in params) {
-      paramsGET += param + '=';
-      paramsGET += params[param] + '&';
+      paramsGET += param + '='
+      paramsGET += params[param] + '&'
     }
-  
+
     fetch(url + paramsGET.substring(0, paramsGET.length - 1))
       .then(response => {
-        // Imprime la respuesta completa antes de intentar analizarla como JSON
-        console.log('Respuesta del servidor:', response);
-        const status = response.status;
-        return { responseStatus: status, responseData: response.json(), method: 'GET' };
+        const status = response.status
+        return { responseStatus: status, responseText: response.text(), method: 'GET' }
       })
       .then(data => {
-        data.responseData.then(jsonData => {
-          console.log('Datos JSON:', jsonData);
-          if (callback) {
-            callback(data.responseStatus, jsonData, data.method);
+        if (callback) {
+          data.responseText.then(texto => {
+            callback(data.responseStatus, texto, data.method)
           }
-        });
+          )
+        }
       })
-      .catch(error => {
-        console.error('Error en la solicitud:', error);
-      });
   }
 
   /**
@@ -67,17 +62,4 @@ export class Rest {
       })
       .catch(error => console.error('Error:', error))
   }
-  static getJSON(url, params, callback){
-		let paramsGET = '?'
-		for(let param in params){
-			paramsGET += param + '='
-			paramsGET += params[param] + '&'
-		}
-		fetch(encodeURI(url + paramsGET.substring(0, paramsGET.length-1)))
-        .then( respuesta => respuesta.json())
-		.then( objeto => {
-			if (callback)
-				callback(objeto)
-		})
-	}
 }
