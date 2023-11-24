@@ -15,7 +15,6 @@ class ControladorConflictos{
      */
     public function __construct() {
         $this->pagina = '';
-        $this->view = '';
         $this->objConflictos = new Conflicto();
     }
  /**
@@ -34,17 +33,28 @@ class ControladorConflictos{
      */
     public function aniadirConflictos() {
         $this->view = 'aniadirConflictos';
-        $nombrepais=$_GET['nombrepais'];
+        $nombrepais = $_GET['nombrepais'];
+        $nivel_id = $_GET['id'] ?? null;
     
-        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nombreconficto']) && isset($_POST['ejeX']) && isset($_POST['ejeY']) && isset($_FILES['imagen']['tmp_name']) ) {
-            $nivel_id = $_GET['nivel_id'];
-            $imagenTmp = $_FILES['imagen']['tmp_name'];
-            $imagenBinaria = file_get_contents($imagenTmp);
-
-            $this->objConflictos->aniadir($_POST['nombreconflicto'],$_POST['ejeX'],$_POST['ejeY'],$imagenBinaria,$nivel_id);
-           header("Location: index.php?action=listarConflictos&controller=Conflictos&nivel_id=$nivel_id&nombrepais=$nombrepais"); 
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' &&
+            isset($_POST['nombreConficto']) &&
+            isset($_POST['ejeX']) &&
+            isset($_POST['ejeY'])
+        ) {
+            // Resto del código para añadir el conflicto
+            $this->objConflictos->aniadir(
+                $_POST['nombreConficto'],
+                $_POST['ejeX'],
+                $_POST['ejeY'],
+                $_POST['estadoconflicto'],
+                $nivel_id
+            );
+            // Redirección después de añadir el conflicto
+            header("Location: index.php?action=listarConflictos&controller=Conflictos&id=$nivel_id&nombrepais=$nombrepais");
+            exit();  // Añadí esta línea para evitar ejecución adicional después de la redirección
+        }
     }
-    }
+    
     /**
      * Borra una clase existente.
      */

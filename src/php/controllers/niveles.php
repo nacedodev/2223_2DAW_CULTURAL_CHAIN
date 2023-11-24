@@ -18,7 +18,6 @@ class ControladorNiveles {
     public function __construct() {
         $this->pagina = '';
         $this->objNiveles = new Nivel();
-        $this->view='niveles';
     }
 /**
      * Lista los centros disponibles.
@@ -26,7 +25,8 @@ class ControladorNiveles {
      * @return array Datos de los centros.
      */
     public function listarNiveles() {
-            return $this->objNiveles->listar();   
+        $this->view='niveles';
+        return $this->objNiveles->listar();   
     }
     /**
      * Añade un nuevo centro.

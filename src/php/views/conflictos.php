@@ -10,6 +10,8 @@
         ?>
             <div>
                 <p><?php echo $conflicto['id']; ?></p>
+                <p><?php echo $conflicto['nombreconflicto']; ?></p>
+                <p><?php echo $conflicto['estadoconflicto']; ?></p>
                
             </div>
         <?php
