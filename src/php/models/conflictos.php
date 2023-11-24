@@ -53,17 +53,17 @@ class Conflicto {
      */
     public function borrar($id) {
         try {
-            $query = "DELETE FROM Clase WHERE id = '$id'";
+            $query = "DELETE FROM Conflicto WHERE id = '$id'";
             $resultado = $this->conexion->query($query);
     
             if ($resultado === false) {
-               echo 'Error al eliminar la clase ';
+               echo 'Error al eliminar la conflicto ';
             }
             //código de error de la existencia en otras tablas
         } catch (mysqli_sql_exception $e) {
             if ($e->getCode() === 1451) {
                 
-                echo 'clase tiene valores en otras tablas';
+                echo 'conflicto tiene valores en otras tablas';
             } 
         }
     }

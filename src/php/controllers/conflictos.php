@@ -26,7 +26,7 @@ class ControladorConflictos{
         $this->view = 'conflictos';
         $this->pagina = 'Conflictos listadas';
 
-        return $this->objConflictos->listar($_GET['id']);
+        return $this->objConflictos->listar($_GET['nivel_id']);
     }
 /**
      * Añade una nueva clase.
@@ -34,7 +34,7 @@ class ControladorConflictos{
     public function aniadirConflictos() {
         $this->view = 'aniadirConflictos';
         $nombrepais = $_GET['nombrepais'];
-        $nivel_id = $_GET['id'] ?? null;
+        $nivel_id = $_GET['nivel_id'] ?? null;
     
         if ($_SERVER['REQUEST_METHOD'] === 'POST' &&
             isset($_POST['nombreConficto']) &&
@@ -50,7 +50,7 @@ class ControladorConflictos{
                 $nivel_id
             );
             // Redirección después de añadir el conflicto
-            header("Location: index.php?action=listarConflictos&controller=Conflictos&id=$nivel_id&nombrepais=$nombrepais");
+            header("Location: index.php?action=listarConflictos&controller=Conflictos&nivel_id=$nivel_id&nombrepais=$nombrepais");
             exit();  // Añadí esta línea para evitar ejecución adicional después de la redirección
         }
     }
@@ -58,17 +58,18 @@ class ControladorConflictos{
     /**
      * Borra una clase existente.
      */
-    public function borrarClases() {
-        $this->view='borradoClases';
+    public function borrarConflictos() {
+        $this->view='borradoConflictos';
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (isset($_GET['id'])) {
 
-                $this->objClases->borrar($_GET['id']);
-                $centro_id = $_GET['centro_id'];
-                $centronombre=$_GET['centronombre'];
+                $this->objConflictos->borrar($_GET['id']);
+                $nivel_id = $_GET['nivel_id'];
+                $nombrepais=$_GET['nombrepais'];
+                $id=$_GET['id'];
                 
                
-                header("Location: index.php?action=listarClases&controller=Clases&centro_id=$centro_id&centronombre=$centronombre");
+                header("Location: index.php?action=listarConflictos&controller=Conflictos&nivel_id=$id&nombreconflicto=$nombreconflicto&id=$id&nombrepais=$nombrepais");
             }
         }
     }

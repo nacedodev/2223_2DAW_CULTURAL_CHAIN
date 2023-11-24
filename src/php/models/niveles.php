@@ -27,7 +27,6 @@ class Nivel {
         $imagen = $this->conexion->real_escape_string($imagen);
     
         $query = "INSERT INTO Nivel (nombrepais, imagen) VALUES ('$nombrepais','$imagen')";
-        echo $query;
         try {
             $resultado = $this->conexion->query($query);
         } catch (mysqli_sql_exception $e) {

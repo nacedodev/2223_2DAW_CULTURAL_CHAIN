@@ -1,5 +1,5 @@
 <div id="vistaForm">
-    <form id="form-end" enctype="multipart/form-data" name="formularioCentro" action="index.php?action=aniadirConflictos&controller=Conflictos&id=<?php echo $_GET['id'];?>&nombrepais=<?php echo $_GET['nombrepais'];?>" method="post">
+    <form id="form-end" enctype="multipart/form-data" name="formularioCentro" action="index.php?action=aniadirConflictos&controller=Conflictos&nivel_id=<?php echo $_GET['nivel_id'];?>&nombrepais=<?php echo $_GET['nombrepais'];?>" method="post">
 
         <label for="nombreConficto">Nombre del conflicto:</label>
         <input type="text" id="nombreConflicto" name="nombreConficto">
