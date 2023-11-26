@@ -90,7 +90,7 @@ class Conflicto {
         } else {
             if ($resultado->num_rows === 0) {
                 // No se encontraron filas en la tabla "nombre"
-                echo '<p style="color:#6F7789;position:absolute;font-size:30px;left:290px;top:280px;z-index:99">No se han encontrado conflictos asociadas a este nivel</p>';
+                echo '<p id="error">No se han encontrado conflictos asociadas a este nivel</p>';
             } else {
                 foreach ($resultado as $row) {
                     $conflictos[] = $row;

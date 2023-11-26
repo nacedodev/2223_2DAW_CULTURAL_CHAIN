@@ -86,7 +86,7 @@ class Centro {
         } else {
             if ($resultado->num_rows === 0) {
                 // No se encontraron filas en la tabla "nombre"
-                echo '<p style="color:#6F7789;position:absolute;font-size:30px;left:490px;top:370px;z-index:99">No hay centros registrados </p>';
+                echo '<p id="error">No hay centros registrados </p>';
             } else {
                 foreach ($resultado as $row) {
                     $centros[] = $row;

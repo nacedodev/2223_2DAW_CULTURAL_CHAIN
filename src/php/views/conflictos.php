@@ -1,4 +1,3 @@
-<p class="tituloranking" style="margin-top:30px">Conflicto</p>
 <div id="panelCentro">
     <div>
         <p> <?php echo $_GET['nombrepais']; ?> </p>
@@ -20,4 +19,3 @@
         ?>
     </div>
 </div>
-<p id="botonatras"><a href="index.php?controller=Niveles&action=listarNiveles">ATRAS</a></p>

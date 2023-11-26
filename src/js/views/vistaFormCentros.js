@@ -102,10 +102,6 @@ const validarForm = (e) => {
     form.style.animation = 'okAnimation 0.8s forwards'
 
     setTimeout(function () {
-      form.style.animation = 'sendTop 0.6s forwards'
-    }, 600)
-
-    setTimeout(function () {
       form.submit()
     }, 1000)
   } else if (todosLosCamposLlenos && !todosLosMensajesVacios) {

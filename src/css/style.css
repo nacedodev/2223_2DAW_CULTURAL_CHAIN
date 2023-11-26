@@ -61,7 +61,7 @@ button {
     float: right;
 }
 
-#hora,
+#vistaPrincipal #hora,
 #construccion{
     display: none;
 }
@@ -195,6 +195,10 @@ button {
     background: var(--terciary);
 }
 
+ul > li > img:not(:first-child){
+    display:none;
+}
+
 #restart>p,#restart>img{
     transform: rotate(-90deg);
     position: relative;
@@ -258,7 +262,7 @@ button {
 
 #nombreapp{
     color: var(--terciary);
-    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    text-shadow: 0px 4px 4px var(--shadow);
     font-weight: 900;
     font-size: 20px;
     margin-top: 10px;
@@ -553,11 +557,6 @@ button {
     height: 90%;
 }
 
-a{
-    text-decoration: none;
-    color: var();
-}
-
 /*Ajustes*/
 #vistaSettings{
     height: 100%;
@@ -612,14 +611,19 @@ a{
 }
 
 #vistaForm {
-    position: absolute;
     z-index: 99;
     width:100%;
     display: flex;
     justify-content: center; 
     align-items: center;
-    height: 100vh;
     font-family: Arial, sans-serif;
+}
+
+#form-end{
+    position:absolute;
+    top: 50%;
+    left: 50%;
+
 }
 
 #status {
@@ -637,7 +641,85 @@ a{
     margin-bottom: 13px;
 }
 
+nav{
+    width: 98%;
+    height: 10%;
+    border-radius: 15px;
+    background-color: var(--secondary);
+    margin: 10px auto;
+    margin-bottom: 100px;
+    box-shadow: 4px 4px 4px 0px var(--shadow);
+}
+
+nav ul {
+list-style-type: none;
+padding: 0;
+margin: 0;
+display: flex;
+height: 100%;
+align-items: center;
+}
+
+nav li {
+    border-radius: 10px;
+    margin: 10px;
+    height: 80%;
+    flex-grow: 1;
+    display: flex;
+  align-items: center;
+  background-color: var(--terciary);
+  transition: filter 0.3s ease;
+}
+
+nav li:hover:not(:first-child) {
+    filter: drop-shadow(0 0 0.4em var(--contrast));
+  }
+
+nav a {
+    width: 100%;
+display: block;
+text-align: center;
+text-decoration: none;
+color: var(--secondary);
+font-size: 1.5vw;
+}
+
+nav #logo{
+    width: 5vw;
+    margin:0;
+}
+
+nav li:first-child{
+    margin:0;
+    background-color: transparent;
+    margin-left: 20px;
+    margin-right: 10px;
+    flex-grow:0;
+}
+
+body > #hora{
+    font-size: 2.5vw;
+    position:absolute;
+    top:12%;
+    left: 50%;
+    transform: translate(-50%,0);
+    color: var(--terciary);
+    text-shadow: 2px 2px 4px var(--shadow);
+}
+
 /*Administracion*/
+
+#error{
+    text-align: center;
+    width: 90%;
+    color: var(--terciary);
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+    font-size: 3vw;
+    z-index: 99;
+}
 #panelAdmin{
     width: 40%;
     height: 450px;
@@ -650,6 +732,35 @@ a{
     bottom:50px;
     overflow: scroll;
     scrollbar-width: none;
+}
+
+#admin{
+    text-align: center;
+    width: 90%;
+    font-size: 3vw;
+    color: var(--terciary);
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+
+#informacion{
+    text-align: center;
+    width: 90%;
+    font-size: 1vw;
+    color: var(--terciary);
+    position: absolute;
+    top: 52%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+
+body > #nombreapp{
+    position:fixed;
+    left:50%;
+    bottom: 10px;
+    transform: translate(-50%,0);
 }
 
 #panelAdmin::-webkit-scrollbar{
@@ -673,15 +784,16 @@ a{
 
 /*Centro*/
 #panelCentro{
-    width: 80%;
-    height: 450px;
+    position:absolute;
+    top:50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 90%;
+    height: 60%;
     border-radius: 15px;
     background: var(--secondary);
     padding-top: 0px;
-    margin: auto;
     margin-top: 35px;
-    position: relative;
-    bottom:50px;
     overflow: scroll;
     scrollbar-width: none;
 }
@@ -716,16 +828,16 @@ a{
 }
 
 #panelCentro>div:nth-child(2){
-    margin-top: 80px;
+    margin-top: 65px;
     width: 100%;
 }
 
 #panelCentro>div:nth-child(2)>div{
-    border-radius: 14px;
+    border-radius: 5px;
     background: var(--terciary);
     height: 20px;
     padding-bottom: 30px;
-    margin: 5px 5px;
+    margin: 7px 7px;
 }
 
 #panelCentro>div:nth-child(2)>div p{
@@ -740,7 +852,7 @@ a{
 }
 
 #panelCentro>div:nth-child(2)>div>a>img{
-    width: 40px;
+    width: 3vw;
     float:right;
     margin-top: 5px;
 }
@@ -769,11 +881,15 @@ a{
 
 /*Form inicio*/
 #vistaForm>form {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
     background: var(--secondary);
     width:30%;
     padding: 20px;
     border-radius: 5px;
-    filter: drop-shadow(0 0 0.7em #000000);
+    filter: drop-shadow(0 0 0.7em var(--shadow));
 }
 
 #vistaForm label {
@@ -1116,7 +1232,8 @@ input:-webkit-autofill {
         transform: translate(-50%,-50%);
         margin: 0;
         font-size: 6vw;
-        text-shadow: .03em .03em 0 var(--primary);
+        text-shadow: .03em .03em 0 var(--primary
+        );
     }
 
     #divizquierda #nombreapp:after {
@@ -1180,7 +1297,7 @@ input:-webkit-autofill {
         transform: translate(-50%,-50%);
     }
 
-    #hora{
+    #vistaPrincipal #hora{
         font-family: 'Press Start 2P', sans-serif;
         margin: 0;
         display: block;
@@ -1241,6 +1358,10 @@ input:-webkit-autofill {
 
     #botonatras{
         margin-bottom: 7%;
+    }
+
+    ul > li > img{
+        display: block;
     }
 }
 

@@ -1,7 +1,6 @@
-        <p class="tituloranking" style="margin-top:30px">NIVEL</p>
         <div id="panelCentro">
            <div>
-                <p>NIVEL</p>
+                <p>NIVELES</p>
                 <a href="index.php?action=aniadirNivel&controller=Niveles"><button id="aniadirnivel"><p>+</p></button></a>
            </div>
            <div>
@@ -19,4 +18,3 @@
     ?>
            </div>
         </div>
-        <p id="botonatras"><a href="index.php">ATRAS</a></p>

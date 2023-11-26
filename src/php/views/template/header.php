@@ -6,8 +6,14 @@
         <title>CulturalChain</title>
         <link rel="stylesheet" href="../css/style.css">
     </head>
-    <body id="vistaCentro">
-    <img id="logo" src="../img/iconos/logo.jpeg">
-        <button class="boton">
-            <img src="../img/iconos/sol.png">
-        </button>
+    <body>
+        <nav>
+            <ul>
+                <li><img id="logo" src="../img/iconos/logo.jpeg"></li>
+                <li> <a href="">PERSONAJES</a><img src="../img/iconos/basura.png"></li>
+                <li><a href="">REFLEXIONES</a></li>
+                <li><a href="index.php?controller=Centros&action=listarCentros">CENTROS</a></li>
+                <li><a href="index.php?controller=Niveles&action=listarNiveles">NIVELES</a></li>
+                <li><a href="">PUNTUACIONES</a></li>
+            </ul>
+        </nav>

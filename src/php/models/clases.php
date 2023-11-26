@@ -86,7 +86,7 @@ class Clase {
         } else {
             if ($resultado->num_rows === 0) {
                 // No se encontraron filas en la tabla "nombre"
-                echo '<p style="color:#6F7789;position:absolute;font-size:30px;left:290px;top:280px;z-index:99">No se han encontrado clases asociadas a este centro</p>';
+                echo '<p id="error">No se han encontrado clases asociadas a este centro</p>';
             } else {
                 foreach ($resultado as $row) {
                     $centros[] = $row;

@@ -1,4 +1,3 @@
-<p class="tituloranking" style="margin-top:30px">Clase</p>
 <div id="panelCentro">
     <div>
         <p> <?php echo $_GET['centronombre']; ?> </p>
@@ -21,4 +20,3 @@
         ?>
     </div>
 </div>
-<p id="botonatras"><a href="index.php?controller=Centros&action=listarCentros">ATRAS</a></p>

@@ -1,7 +1,6 @@
-        <p class="tituloranking" style="margin-top:30px">CENTRO</p>
         <div id="panelCentro">
            <div>
-                <p>CENTRO</p>
+                <p>CENTROS</p>
                 <a href="index.php?action=aniadirCentro&controller=Centros"><button id="aniadircentro"><p>+</p></button></a>
            </div>
            <div>
@@ -20,4 +19,3 @@
     ?>
            </div>
         </div>
-        <p id="botonatras"><a href="index.php">ATRAS</a></p>
