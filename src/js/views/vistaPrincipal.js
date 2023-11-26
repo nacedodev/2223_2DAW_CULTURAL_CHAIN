@@ -16,17 +16,24 @@ export class VistaPrincipal extends Vista {
     const btnRestart = document.getElementById('restart')
     const btnRanking = this.base.querySelectorAll('button')[3]
     const btnSettings = this.base.querySelectorAll('button')[4]
+    this.hora = document.getElementById('hora')
+    this.puntuacion = document.getElementById('puntuacion')
     this.btnTheme = this.base.querySelector('#theme')
     this.tablero = document.getElementById('divtablero')
     this.divIzq = document.getElementById('divizquierda')
     this.gameStarted = false
+    this.clickerMode = false
     const personajes = this.base.querySelectorAll('.personaje')
     this.divPersonajes = document.getElementById('divderecha')
     this.titulo = document.getElementById('titulo')
     this.info = this.base.querySelector('#info')
     this.end = this.base.querySelector('#end')
     this.form = document.getElementById('form-end')
+    this.logo = this.base.querySelector('#logo')
     this.showForm = false
+
+    this.score = 0
+    this.puntuacion.textContent = '0' + this.score
 
     // habilitamos la capacidad de hacer drag & drop a los personajes
     personajes.forEach(personaje => {
@@ -44,27 +51,38 @@ export class VistaPrincipal extends Vista {
     btnSettings.onclick = this.irSettings
     this.btnTheme.onclick = this.changeTheme
     btnRestart.onclick = this.restartGame
+    this.logo.onclick = this.clickerButtonActions
     window.onkeydown = this.mostrarFormulario
 
-    const confetti = new Confetti("logo")
-    confetti.setCount(800)
-    confetti.setSize(1.6)
-    confetti.setPower(40)
-    confetti.setFade(false)
-    confetti.destroyTarget(true)
+    window.getComputedStyle(this.hora).display === 'none' ? this.clickerMode = false : this.clickerMode = true
 
-    function removeButton(t) {
-      (t.target.style.opacity = 0),
-      setTimeout(() => {
-      (t.target.style.visibility = ""), (t.target.style.opacity = 1);
-      }, 5e3);
+    this.setConfetti(this.clickerMode)
+    setInterval(this.mostrarHora, 1000)
+  }
+
+  setConfetti = (clicker) => {
+    console.log(clicker)
+    if (clicker) {
+      const confetti = new Confetti('logo')
+      confetti.setCount(100)
+      confetti.setSize(1)
+      confetti.setPower(5)
+      confetti.setFade(true)
+      confetti.destroyTarget(false)
+    } else {
+      const confetti = new Confetti('logo')
+      confetti.setCount(1200)
+      confetti.setSize(1.6)
+      confetti.setPower(50)
+      confetti.setFade(false)
+      confetti.destroyTarget(true)
     }
   }
 
   /**
-         * Realiza la navegación a la vista de configuración.
-         * @method
-         */
+   * Realiza la navegación a la vista de configuración.
+   * @method
+  */
   irSettings = () => {
     this.controlador.irAVista(this.controlador.vistaSettings)
     this.divIzq.style.animation = 'none'
@@ -74,9 +92,9 @@ export class VistaPrincipal extends Vista {
   }
 
   /**
-         * Realiza la navegación al ranking.
-         * @method
-         */
+   * Realiza la navegación al ranking.
+   * @method
+  */
   irRanking = () => {
     this.controlador.irAVista(this.controlador.vistaRanking)
     this.divIzq.style.animation = 'none'
@@ -86,10 +104,10 @@ export class VistaPrincipal extends Vista {
   }
 
   /**
-         * Controla la visualización del formulario cuando se presiona la tecla Enter.
-         * @method
-         * @param {Event} evento - El evento del teclado que activa la acción.
-         */
+   * Controla la visualización del formulario cuando se presiona la tecla Enter.
+   * @method
+   * @param {Event} evento - El evento del teclado que activa la acción.
+  */
   mostrarFormulario = evento => {
     if (evento.keyCode === 13 && this.showForm) {
       this.controlador.overlayForm(this.form)
@@ -110,10 +128,51 @@ export class VistaPrincipal extends Vista {
     }
   }
 
+  mostrarHora () {
+    const fecha = new Date()
+    let hora = fecha.getHours()
+    let minutos = fecha.getMinutes()
+
+    // Asegúrate de que los números siempre tengan dos dígitos
+    if (hora < 10) hora = '0' + hora
+    if (minutos < 10) minutos = '0' + minutos
+
+    const horaActual = hora + ':' + minutos
+
+    // Actualiza el contenido del elemento HTML con la hora actual
+    this.hora.innerHTML = horaActual
+  }
+
+  clickerButtonActions = (e) => {
+    const target = e.target
+    if (!this.clickerMode) {
+      // Aplicar transición de opacidad
+      target.style.transition = 'opacity 2s ease'
+      target.style.opacity = 0
+
+      setTimeout(() => {
+        target.style.visibility = ''
+        target.style.opacity = 1
+      }, 5000)
+    } else {
+      clearTimeout(this.timeout)
+
+      target.style.animation = 'clickerOpacityIn 1s forwards'
+      this.score += 10
+      this.puntuacion.textContent = this.score.toString().padStart(2, '0')
+
+      this.timeout = setTimeout(() => {
+        target.style.animation = 'clickerOpacityOut 4s forwards'
+        this.score = 0
+        this.puntuacion.textContent = '00'
+      }, 3000)
+    }
+  }
+
   /**
-     * Reinicia el juego, eliminando todos los personajes del tablero y restableciendo los elementos de animación y visualización.
-     * @method
-     */
+   * Reinicia el juego, eliminando todos los personajes del tablero y restableciendo los elementos de animación y visualización.
+   * @method
+  */
   restartGame = () => {
     // Remove all the characters from the tablero
     if (this.gameStarted) {

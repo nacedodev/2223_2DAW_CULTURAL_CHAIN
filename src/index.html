@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, user-scalable=no" />
     <title>Cultural Chain</title>
     <link
       rel="shortcut icon"
@@ -13,22 +13,23 @@
 </head>
 <body>
     <div id="vistaPrincipal" style="display: none;">
-        <canvas width="1672" height="1768" style="position: fixed; top: 0px; left: 0px; width: calc(100%); height: calc(100%); margin: 0px; padding: 0px; z-index: 999999999; pointer-events: none;"></canvas>
-        <img id="logo" src="img/iconos/logo.jpeg" onclick="removeButton(event)">
+        <canvas style="position: fixed; top: 0px; left: 0px; width: 100vw; height: 100vh; margin: 0px; padding: 0px; z-index: 999999999; pointer-events: none;"></canvas>
+        <p id="hora" data-shadow = 'TIME'></p>
+        <img id="logo" src="img/iconos/logo.jpeg">
         <div id="divizquierda">
             <p id="titulo">LISTO?</p>
             <div id="divtablero">
                 <p id="info">Arrastra un personaje para comenzar</p>
                 <p id="end">Pulsa ENTER para finalizar la partida</p>
             </div>
-            <p id="nombreapp">CULTURAL CHAIN</p>
-            <button id="restart">
-                <p>RESTART</p>
-                <img src="img/iconos/play.png">
-            </button>
+            <p data-shadow = 'CULTURAL CHAIN' id="nombreapp">CULTURAL CHAIN</p>
+                <button id="restart">
+                    <p>RESTART</p>
+                    <img src="img/iconos/play.png">
+                </button>
             <div id="score">
                 <p>SCORE</p>
-                <p>00</p>
+                <p id="puntuacion"></p>
             </div>
         </div>
         <div id="vistaForm" style="visibility: hidden;">
@@ -86,7 +87,7 @@
                         <img id="kai" src="img/personajes/astronaut 1.png" class="personaje">
                         <figcaption></figcaption>
                     </figure>
-                    <figure>
+                     <figure>
                         <img id="Jake" src="img/personajes/person001.png" class="personaje">
                         <figcaption></figcaption>
                     </figure>
@@ -289,7 +290,12 @@
             <img src="img/iconos/back.png" alt="atras" id="back">
         </button>
     </div>
+    <div id="construccion">
+        <p>🚧</p>
+        <p>EN CONSTRUCCIÓN</p>
+    </div>
     <script type="module" src="js/game.js"></script>
+    <!-- LIBRERÍA QUE ME PERMITE CREAR Y GESTIONAR EL CONFETTI Y SUS PROPIEDADES -->
     <script src="js/services/confetti.min.js"></script>
 </body>
 </html>
