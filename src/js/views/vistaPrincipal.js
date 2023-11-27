@@ -224,7 +224,7 @@ export class VistaPrincipal extends Vista {
       this.posY
       this.dir = null
       this.distanciapaso = 1
-      this.temp = null
+      this.temp = 1
       this.reload = 25
 
       this.fila = 0
@@ -335,7 +335,7 @@ export class VistaPrincipal extends Vista {
     this.gameStarted = true
     window.addEventListener('keydown', this.direccion)
     window.addEventListener('touchstart', this.direccion)
-    this.intervalo = setInterval(() => this.moverObjeto(), this.reload)
+    this.intervalo = setInterval(() => this.update(), this.reload)
     this.temp = 1
   }
 
@@ -398,7 +398,7 @@ export class VistaPrincipal extends Vista {
    * Mueve el objeto (imagen) en el juego y realiza diversas acciones según el estado del juego.
    * @method
    */
-  moverObjeto = () => {
+  update = () => {
     for (let i = this.fila; i > 0; i--) {
       // Mover cada parte de la serpiente a la posición de la parte anterior
       this.part[i].style.left = this.part[i - 1].style.left
@@ -414,7 +414,8 @@ export class VistaPrincipal extends Vista {
     this.hueco()
     this.recogerPersona()
     this.generacionBanderas()
-    this.temp++
+    if(this.dir !== null)
+      this.temp++
   }
 
   /**
@@ -476,8 +477,10 @@ export class VistaPrincipal extends Vista {
 
       // Establecer la posición absoluta de la nueva imagen dentro del tablero
       nuevaImagen.style.position = 'absolute'
+
       nuevaImagen.style.left = posX + 'px'
       nuevaImagen.style.top = posY + 'px'
+      nuevaImagen.style.width = '2.5%'
       nuevaImagen.classList.add('generado')
 
       // Añadir la nueva imagen al elemento con el id 'tablero'
@@ -526,8 +529,8 @@ export class VistaPrincipal extends Vista {
   recogerPersona = () => {
   // Detectar el objeto (imagen) en las coordenadas actuales del this.part[0]
     const objetoEnPunto = document.elementFromPoint(
-      this.part[0].getBoundingClientRect().left + this.part[0].offsetWidth / 2,
-      this.part[0].getBoundingClientRect().top + this.part[0].offsetHeight / 2
+      this.part[0].getBoundingClientRect().left + this.part[0].offsetWidth/2,
+      this.part[0].getBoundingClientRect().top + this.part[0].offsetHeight/2
     )
 
     if (objetoEnPunto && objetoEnPunto.className === 'generado') {
