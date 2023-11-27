@@ -2,8 +2,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@900&family=Press+Start+2P&display=swap');
   
 /* COLORES */
+/* Estas variables de css me permiten modificar el color de la web en función si está activado el modo claro o oscuro */
 :root{
-
+/* :root significa que puedo acceder a estas variables de manera global , en todo el documento */
 --primary: #252638;
 --secondary: #171726;
 --terciary: #6F7789;
@@ -35,6 +36,7 @@ body{
     width: 100%;
     height: 100vh; 
     margin: 0px; 
+/*   así es como asigno los distintos colores a la web , con var() y haciendo referencia al color que quiero usar */
     background-color: var(--primary);
     font-family: 'Poppins', sans-serif;
     user-select: none;
@@ -99,8 +101,11 @@ button {
     overflow: auto;
     margin: 0 auto;
     display: flex;
+/*   flex-wrap: wrap me permite que cuando los elementos no puedan caber en una sola línea, se coloquen en lineas adicionales. */
     flex-wrap: wrap;
-    flex-grow: 1; /* Agrega esta línea */
+/*   flex-grow me permite que los distintos contenedores crezcan verticalmente para ocupar todo el espacio disponible y evitar así grandes huecos vacíos */
+    flex-grow: 1;
+/*   justify-content: space-between me permite crear un espacio entre columnas para asegurarme de que se usa todo el ancho disponible en el div */
     justify-content: space-between;
 }
 
@@ -112,7 +117,9 @@ button {
 
 #divderecha > div > div:first-child{
     display: flex;
+  /*   justify-content: space-between me permite crear un espacio entre columnas para asegurarme de que se usa todo el ancho disponible en el div */
     justify-content: space-between;
+  /*   flex-wrap: wrap me permite que cuando los elementos no puedan caber en una sola línea, se coloquen en lineas adicionales. */
     flex-wrap: wrap;
     padding: 0 7%;
 
@@ -124,10 +131,14 @@ button {
 
 #divderecha > div > div > figure {
     display: flex;
+/*   flex-direction column indica la dirección en la que organizar el contenido , en este caso en columnas */
    flex-direction: column;
+/*   align-items center , permite centrar verticalmente el contenido */
    align-items: center;
+/*   justify-content center , permite que el contenido quede centrado horizontalmente */
    justify-content: center;
    text-align: center;
+  /*   flex-grow me permite que los distintos contenedores crezcan verticalmente para ocupar todo el espacio disponible y evitar así grandes huecos vacíos */
     flex-grow: 1;
     border-radius: 7px;
     background: var(--personajes);
@@ -153,6 +164,7 @@ button {
     width: 80%;
     height: 100vh;
     float: left;
+  /*   flex-direction column indica la dirección en la que organizar el contenido , en este caso en columnas */
     flex-direction: column;
 }
 
@@ -185,6 +197,7 @@ button {
 }
 
 #restart{
+/*   habilita los eventos de cursor a un elemento */
     pointer-events: auto;
     width: 48px;
     height: 158px;
@@ -225,6 +238,7 @@ ul > li > img:not(:first-child){
 }
 
 #restart:hover img{
+/*   rota la imagen a su posición original */
     transform: rotate(0deg);
     top:4px;
     left: 1px
@@ -236,9 +250,12 @@ ul > li > img:not(:first-child){
 
 #score{
     display: flex;
+/*   flex-direction column indica la dirección en la que organizar el contenido , en este caso en columnas */
     flex-direction: column;
+/*   permite centrar verticalmente el contenido */
     align-items: center;
     width: 48px;
+/*   el alto se adapta en función del tamaño que ocupa el contenido */
     height: fit-content;
     position: absolute;
     left: 81%;
@@ -335,6 +352,7 @@ ul > li > img:not(:first-child){
     margin-right: 20px;
 }
 .boton{
+/*   aspect -ratio 1/1 mantiene la proporcion del elemento , es decir solo le damos el ancho y el alto se ajusta automaticamente para mantener la relación de aspecto 1/1 */
     aspect-ratio: 1/1;
     width: 65px;
     border-radius: 7px;
@@ -374,32 +392,6 @@ ul > li > img:not(:first-child){
     bottom:35px;
     text-shadow: .03em .03em 0 var(--primary);
 }
-
-.tituloranking:after {
-    content: attr(data-shadow);
-    position: absolute;
-    top: .06em; left: .06em;
-    z-index: -1;
-    text-shadow: none;
-    background-image:
-      linear-gradient(
-        45deg,
-        transparent 45%,
-        var(--terciary) 45%,
-        var(--terciary) 55%,
-        transparent 0
-        );
-    background-size: .05em .05em;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  
-    animation: shad-anim 50s linear infinite;
-    }
-
-@keyframes shad-anim {
-  0% {background-position: 0 0}
-  0% {background-position: 100% -100%}
-  }
 
 #tablonranking{
     width: 70%;
@@ -503,6 +495,7 @@ ul > li > img:not(:first-child){
     position: relative;
     right: 80px;  
     text-transform: uppercase;
+/*   gradiente para el texto del score */
     background: linear-gradient(to left, var(--secondary) 0%, var(--primary) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -512,12 +505,6 @@ ul > li > img:not(:first-child){
     width: 30px;
     position: relative; 
     right: 40px;
-}
-
-.medalla{
-    position: fixed;
-    left: 15px;
-    bottom:65px;
 }
 
 #vistaRanking>#score{
@@ -659,12 +646,12 @@ nav{
 }
 
 nav ul {
-list-style-type: none;
-padding: 0;
-margin: 0;
-display: flex;
-height: 100%;
-align-items: center;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    height: 100%;
+    align-items: center;
 }
 
 nav li {
@@ -749,6 +736,7 @@ body > #hora{
     position: absolute;
     top: 45%;
     left: 50%;
+    /* me permite centrar el panel admin tanto vertical como horizontalmente */
     transform: translate(-50%,-50%);
 }
 
@@ -806,6 +794,7 @@ body > #nombreapp{
 }
 
 #panelCentro::-webkit-scrollbar{
+    /* oculta la barra de scroll */
     display: none;
 }
 
@@ -925,6 +914,7 @@ input:focus, select:focus {
     filter: drop-shadow(0 0 0.2em var(--terciary));
 }
 
+/* estilos para los inputs del formulario , al coger valores por defecto de las cookies se cambiaban los estilos */
 input:-webkit-autofill {
     -webkit-box-shadow: 0 0 0 1000px var(--terciary) inset !important;
     -webkit-text-fill-color: var(--primary) !important;
@@ -960,6 +950,7 @@ input:-webkit-autofill {
         font-size: 12px;
 }
 
+/* media query que detecta si en las preferencias de usuario tiene el modo oscuro */
 @media (prefers-color-scheme: dark)  {
    /* dark mode */
    :root{
@@ -1147,6 +1138,7 @@ input:-webkit-autofill {
     }
   }
 
+/* media query que detecta si en las preferencias de usuario tiene el modo oscuro */
 @media (prefers-color-scheme: light) {
     /* light mode */
     :root{
@@ -1240,8 +1232,7 @@ input:-webkit-autofill {
         transform: translate(-50%,-50%);
         margin: 0;
         font-size: 6vw;
-        text-shadow: .03em .03em 0 var(--primary
-        );
+        text-shadow: .03em .03em 0 var(--primary);
     }
 
     #divizquierda #nombreapp:after {
