@@ -41,7 +41,7 @@ class ControladorNiveles {
     
                 $this->objNiveles->aniadir($nombrepais, $imagenBinaria);
     
-                header("Location: index.php?action=listarNiveles&controller=Niveles");
+                header("Location: index.php?action=listarNiveles&controller=niveles");
             }
         }
     }
@@ -54,7 +54,7 @@ class ControladorNiveles {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
              if (isset($_GET['id'])) {
             $this->objNiveles->borrar($_GET['id']);
-            header("Location: index.php?action=listarNiveles&controller=Niveles");
+            header("Location: index.php?action=listarNiveles&controller=niveles&");
             }
         }
     }
@@ -72,7 +72,7 @@ class ControladorNiveles {
         } else
         $imagenBinaria = 0;
         $this->objNiveles->modificar($_POST['id'], $_POST['nombrepais'],$imagenBinaria);
-        header("Location: index.php?action=listarNiveles&controller=Niveles");
+        header("Location: index.php?action=listarNiveles&controller=niveles");
     }
        
     }

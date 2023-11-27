@@ -75,15 +75,11 @@ const validarForm = (e) => {
 
   if (todosLosCamposLlenos && todosLosMensajesVacios) {
     statusSpan.textContent = ''
-    form.style.animation = 'okAnimation 3s forwards'
-
-    setTimeout(() => {
-      form.style.animation = 'sendTop 1.8s forwards'
-    }, 3000)
+    form.style.animation = 'okAnimation 0.8s forwards'
 
     setTimeout(() => {
       form.submit()
-    }, 4500)
+    }, 1000)
   } else if (todosLosCamposLlenos && !todosLosMensajesVacios) {
     statusSpan.textContent = 'Algún campo es incorrecto'
   } else if (todosLosCamposVacios) {

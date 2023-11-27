@@ -1,5 +1,5 @@
 <div id="vistaForm">
-    <form id="form-end" name="formularioCentro" action="index.php?action=aniadirClases&controller=Clases&centro_id=<?php echo $_GET['centro_id']; ?>&centronombre=<?php echo $_GET['centronombre']; ?>" method="post">
+    <form id="form-end" name="formularioCentro" action="index.php?action=aniadirClases&controller=clases&centro_id=<?php echo $_GET['centro_id']; ?>&centronombre=<?php echo $_GET['centronombre']; ?>" method="post">
 
 
     <label for="etapa">etapa</label>

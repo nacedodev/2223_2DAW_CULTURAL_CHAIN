@@ -1,5 +1,5 @@
 <div id="vistaForm">
-    <form id="formularioCentro" name="formularioCentro" action="index.php?action=modificarCentro&controller=Centros" method="post">
+    <form id="formularioCentro" name="formularioCentro" action="index.php?action=modificarCentro&controller=centros" method="post">
 
     <label for="nombre">Nombre del Centro:</label>
     <input type="text" id="nombre" name="nombre" value="<?php echo isset($_GET['nombre']) ? $_GET['nombre'] : ''; ?>" required>

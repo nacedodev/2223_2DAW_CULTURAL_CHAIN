@@ -1,8 +1,8 @@
 <div id="vistaForm">
-    <form id="form-end" enctype="multipart/form-data" name="formularioCentro" action="index.php?action=modificarNivel&controller=Niveles" method="post">
+    <form id="form-end" enctype="multipart/form-data" name="formularioCentro" action="index.php?action=modificarNivel&controller=niveles" method="post">
     <label for="nombre">Nombre del Nivel:</label>
     <input type="text" id="nombrepais" name="nombrepais" value="<?php echo isset($_GET['nombrepais']) ? $_GET['nombrepais'] : ''; ?>" required>
-    <img id="imagenmodificar" src="data:image/png;base64,<?php $nivel = new Nivel(); echo $nivel->obtenerImagenPorId($_GET['id']);?>">
+    <img id="imagenmodificar" style="width: 100%;" src="data:image/png;base64,<?php $nivel = new Nivel(); echo $nivel->obtenerImagenPorId($_GET['id']);?>">
     <span id="centro-error" class="error-message"></span><br><br>
 
     <label for="imagen">Nueva imagen de fondo:</label>

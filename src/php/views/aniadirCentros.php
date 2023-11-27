@@ -1,5 +1,5 @@
 <div id="vistaForm">
-    <form id="form-end" name="formularioCentro" action="index.php?action=aniadirCentro&controller=Centros" method="post">
+    <form id="form-end" name="formularioCentro" action="index.php?action=aniadirCentro&controller=centros" method="post">
 
     <label for="nombre">Nombre del Centro:</label>
     <input type="text" id="nombre" name="nombre" >

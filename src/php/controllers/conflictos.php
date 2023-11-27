@@ -50,7 +50,7 @@ class ControladorConflictos{
                 $nivel_id
             );
             // Redirección después de añadir el conflicto
-            header("Location: index.php?action=listarConflictos&controller=Conflictos&nivel_id=$nivel_id&nombrepais=$nombrepais");
+            header("Location: index.php?action=listarConflictos&controller=conflictos&nivel_id=$nivel_id&nombrepais=$nombrepais");
             exit();  // Añadí esta línea para evitar ejecución adicional después de la redirección
         }
     }
@@ -69,7 +69,7 @@ class ControladorConflictos{
                 $id=$_GET['id'];
                 
                
-                header("Location: index.php?action=listarConflictos&controller=Conflictos&nivel_id=$id&nombreconflicto=$nombreconflicto&id=$id&nombrepais=$nombrepais");
+                header("Location: index.php?action=listarConflictos&controller=conflictos&nivel_id=$nivel_id&nombreconflicto=$nombreconflicto&id=$id&nombrepais=$nombrepais");
             }
         }
     }
@@ -86,7 +86,7 @@ class ControladorConflictos{
             $id=$_POST['id'];
             // Lógica para actualizar el centro en la base de datos
             $this->objConflictos->modificar($_POST['id'], $_POST['nombreconflicto'], $_POST['estadoconflicto'], $_POST['ejeX'], $_POST['ejeY']);
-            header("Location: index.php?action=listarConflictos&controller=Conflictos&nivel_id=$nivel_id&id=$id&nombrepais=$nombrepais");
+            header("Location: index.php?action=listarConflictos&controller=conflictos&nivel_id=$nivel_id&id=$id&nombrepais=$nombrepais");
         }
            
         }

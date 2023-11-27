@@ -12,9 +12,10 @@ export class VistaSettings extends Vista {
   constructor (controlador, base) {
     super(controlador, base)
 
-    const btnBack = this.base.querySelectorAll('button')[9]
+    const btnBack = this.base.querySelectorAll('button')[10]
     const btnGET = this.base.querySelectorAll('button')[7]
     const btnPOST = this.base.querySelectorAll('button')[8]
+    const btonGETJSON = this.base.querySelectorAll('button')[9]
     const btnTheme = this.base.querySelector('#vistaSettings #theme')
 
     /**
@@ -38,6 +39,7 @@ export class VistaSettings extends Vista {
     // Asignar evento para realizar la petición POST al hacer clic en el botón correspondiente.
     btnPOST.onclick = this.llamarPOST
     btnTheme.onclick = this.changeTheme
+    btonGETJSON.onclick = this.llamarGETJSON
   }
 
   /**
@@ -56,6 +58,15 @@ export class VistaSettings extends Vista {
          */
   llamarGET = () => {
     Rest.get('http://00.2daw.esvirgua.com/DWEC/peticionGet.php', { param1: 42, param2: 'Nacho' }, this.resultadoGET)
+  }
+
+  llamarGETJSON = () => {
+    Rest.getJSON('https://jsonplaceholder.typicode.com/todos/1', { }, this.resultadoJSON)
+  }
+
+  resultadoJSON = (status, texto, method) => {
+    this.textStatus.innerHTML = `● ${status}`
+    this.textRespuesta.innerHTML = `(<span style='color:#00FF00;'>${method}</span>) ${JSON.stringify(texto)}`
   }
 
   /**

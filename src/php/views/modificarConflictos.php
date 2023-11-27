@@ -1,12 +1,13 @@
 <div id="vistaForm">
-    <form id="form-end" enctype="multipart/form-data" name="formularioCentro" action="index.php?action=modificarConflictos&controller=Conflictos&nivel_id=<?php echo $_GET['nivel_id'];?>&nombrepais=<?php echo $_GET['nombrepais'];?>" method="post">
+    <form id="form-end" enctype="multipart/form-data" name="formularioCentro" action="index.php?action=modificarConflictos&controller=conflictos&nivel_id=<?php echo $_GET['nivel_id'];?>&nombrepais=<?php echo $_GET['nombrepais'];?>" method="post" style="position:static; transform: translate(0)">
 
         <label for="nombreConficto">Nombre del conflicto:</label>
-        <input type="text" id="nombreconflicto" name="nombreconflicto" value="<?php echo isset($_GET['nombreconflicto']) ? $_GET['nombreconflicto'] : ''; ?>">
+        <input type="text" id="nombreConflicto" name="nombreconflicto" value="<?php echo isset($_GET['nombreconflicto']) ? $_GET['nombreconflicto'] : ''; ?>">
         <span id="nombreConflicto-error" class="error-message"></span><br><br>
 
         <label for="estadoconflicto">Estado:</label>
         <input type="text" id="estadoconflicto" name="estadoconflicto" value="<?php echo isset($_GET['estadoconflicto']) ? $_GET['estadoconflicto'] : ''; ?>">
+        <span id="estadoConflicto-error" class="error-message"></span><br><br> <!-- Corregido el ID -->
 
         <label for="ejeX">Eje X:</label>
         <input type="text" id="ejeX" name="ejeX" value="<?php echo isset($_GET['posx']) ? $_GET['posx'] : ''; ?>">
@@ -25,4 +26,5 @@
         <div id="divrojo" style="background-color:red;width: 25px;height:25px; position:relative;left:<?php echo isset($_GET['posx']) ? $_GET['posx'] : ''; ?>%;top:<?php echo isset($_GET['posy']) ? $_GET['posy'] : ''; ?>%;"></div>
     </div>
 </div>
+<script type="module" src="../js/views/vistaFormConflictosEdit.js"></script>
 

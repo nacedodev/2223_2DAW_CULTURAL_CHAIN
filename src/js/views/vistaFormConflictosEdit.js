@@ -46,6 +46,8 @@ const inicio = () => {
   whiteDiv.appendChild(redDiv)
   whiteDiv.addEventListener('click', (evento) => {
     const coordenadas = obtenerCoordenadasRaton(evento)
+    const rojoBorrar = document.getElementById('divrojo')
+    if (rojoBorrar) rojoBorrar.remove()
 
     redDiv.className = 'redDiv' // Asigna una clase para el estilo CSS
 

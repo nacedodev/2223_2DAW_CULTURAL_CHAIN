@@ -1,5 +1,5 @@
 <div id="vistaForm">
-    <form id="form-end" enctype="multipart/form-data" name="formularioCentro" action="index.php?action=aniadirNivel&controller=Niveles" method="post">
+    <form id="form-end" enctype="multipart/form-data" name="formularioCentro" action="index.php?action=aniadirNivel&controller=niveles" method="post">
     <label for="nombrepais">Nombre del País:</label>
     <input type="text" id="nombrepais" name="nombrepais" >
     <span id="centro-error" class="error-message"></span><br><br>

@@ -40,7 +40,7 @@ class ControladorClases{
           $this->objClases->aniadir($_POST['etapa'], $_POST['clase'], $centro_id);
         
        
-          header("Location: index.php?action=listarClases&controller=Clases&centro_id=$centro_id&centronombre=$centronombre");
+          header("Location: index.php?action=listarClases&controller=clases&centro_id=$centro_id&centronombre=$centronombre");
          
         
     }
@@ -58,7 +58,7 @@ class ControladorClases{
                 $centronombre=$_GET['centronombre'];
                 
                
-                header("Location: index.php?action=listarClases&controller=Clases&centro_id=$centro_id&centronombre=$centronombre");
+                header("Location: index.php?action=listarClases&controller=clases&centro_id=$centro_id&centronombre=$centronombre");
             }
         }
     }
@@ -74,7 +74,7 @@ class ControladorClases{
             $centro_id = $_POST['centro_id'];
             // Lógica para actualizar el centro en la base de datos
             $this->objClases->modificar($_POST['id'], $_POST['etapa'], $_POST['clase']);
-            header("Location: index.php?action=listarClases&controller=Clases&centro_id=$centro_id&centronombre=$centronombre");
+            header("Location: index.php?action=listarClases&controller=clases&centro_id=$centro_id&centronombre=$centronombre");
         }
            
         }
