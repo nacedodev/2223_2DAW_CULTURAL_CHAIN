@@ -43,3 +43,13 @@ config_db.php
 /src/php/config/config_db.php
 src/php/config/
 Icon
+.xml
+.iml
+/.idea/.gitignore
+/.idea/codeStyles/codeStyleConfig.xml
+/.idea/culturalChain.iml
+/.idea/modules.xml
+/.idea/php.xml
+/.idea/codeStyles/Project.xml
+/.idea/inspectionProfiles/Project_Default.xml
+/.idea/vcs.xml
