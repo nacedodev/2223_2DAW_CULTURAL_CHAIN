@@ -659,12 +659,12 @@ nav{
 }
 
 nav ul {
-list-style-type: none;
-padding: 0;
-margin: 0;
-display: flex;
-height: 100%;
-align-items: center;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    height: 100%;
+    align-items: center;
 }
 
 nav li {
@@ -749,6 +749,7 @@ body > #hora{
     position: absolute;
     top: 45%;
     left: 50%;
+    /* me permite centrar el panel admin tanto vertical como horizontalmente */
     transform: translate(-50%,-50%);
 }
 
@@ -806,6 +807,7 @@ body > #nombreapp{
 }
 
 #panelCentro::-webkit-scrollbar{
+    /* oculta la barra de scroll */
     display: none;
 }
 
@@ -925,6 +927,7 @@ input:focus, select:focus {
     filter: drop-shadow(0 0 0.2em var(--terciary));
 }
 
+/* estilos para los inputs del formulario , al coger valores por defecto de las cookies se cambiaban los estilos */
 input:-webkit-autofill {
     -webkit-box-shadow: 0 0 0 1000px var(--terciary) inset !important;
     -webkit-text-fill-color: var(--primary) !important;
@@ -960,6 +963,7 @@ input:-webkit-autofill {
         font-size: 12px;
 }
 
+/* media query que detecta si en las preferencias de usuario tiene el modo oscuro */
 @media (prefers-color-scheme: dark)  {
    /* dark mode */
    :root{
@@ -1147,6 +1151,7 @@ input:-webkit-autofill {
     }
   }
 
+/* media query que detecta si en las preferencias de usuario tiene el modo oscuro */
 @media (prefers-color-scheme: light) {
     /* light mode */
     :root{
@@ -1240,8 +1245,7 @@ input:-webkit-autofill {
         transform: translate(-50%,-50%);
         margin: 0;
         font-size: 6vw;
-        text-shadow: .03em .03em 0 var(--primary
-        );
+        text-shadow: .03em .03em 0 var(--primary);
     }
 
     #divizquierda #nombreapp:after {
