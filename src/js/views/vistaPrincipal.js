@@ -49,7 +49,7 @@ export class VistaPrincipal extends Vista {
     this.dir = null
     this.distanciapaso = 1
     this.temp = 0
-    this.reload = 25
+    this.reload = 10
     this.part = []
     this.fila = 0
     this.score = 0
@@ -453,9 +453,9 @@ export class VistaPrincipal extends Vista {
  * Genera personas de manera aleatoria en el tablero.
  */
   generacionPersonas = () => {
-    if (this.temp % 100 === 0) {
-      const tableroAncho = this.tablero.clientWidth
-      const tableroAlto = this.tablero.clientHeight
+    if (this.temp % 10 === 0) {
+      const tableroAncho = this.tablero.clientWidth-this.part[0].offsetWidth*2
+      const tableroAlto = this.tablero.clientHeight-this.part[0].offsetHeight*2
 
       // Crear un nuevo elemento img en lugar de div
       const nuevaImagen = document.createElement('img')
@@ -476,8 +476,8 @@ export class VistaPrincipal extends Vista {
 
       // Establecer la posición absoluta de la nueva imagen dentro del tablero
       nuevaImagen.style.position = 'absolute'
-      nuevaImagen.style.left = posX + 'px'
-      nuevaImagen.style.top = posY + 'px'
+      nuevaImagen.style.left = posX+this.part[0].offsetWidth + 'px'
+      nuevaImagen.style.top = posY+this.part[0].offsetHeight+ 'px'
       nuevaImagen.classList.add('generado')
 
       // Añadir la nueva imagen al elemento con el id 'tablero'
