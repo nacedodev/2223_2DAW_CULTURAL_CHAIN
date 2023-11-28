@@ -222,9 +222,9 @@ export class VistaPrincipal extends Vista {
       this.gameStarted = false
       this.posX
       this.posY
-      this.dir = null
+      this.dir = -1
       this.distanciapaso = 1
-      this.temp = null
+      this.temp = 1
       this.reload = 25
 
       this.fila = 0
@@ -335,7 +335,7 @@ export class VistaPrincipal extends Vista {
     this.gameStarted = true
     window.addEventListener('keydown', this.direccion)
     window.addEventListener('touchstart', this.direccion)
-    this.intervalo = setInterval(() => this.moverObjeto(), this.reload)
+    this.intervalo = setInterval(() => this.update(), this.reload)
     this.temp = 1
   }
 
@@ -398,25 +398,25 @@ export class VistaPrincipal extends Vista {
    * Mueve el objeto (imagen) en el juego y realiza diversas acciones según el estado del juego.
    * @method
    */
-  moverObjeto = () => {
-    for (let i = this.fila; i > 0; i--) {
-      // Mover cada parte de la serpiente a la posición de la parte anterior
-      this.part[i].style.left = this.part[i - 1].style.left
-      this.part[i].style.top = this.part[i - 1].style.top
+  update = () => {
+    if(this.dir>0){
+      for (let i = this.fila; i > 0; i--) {
+        // Mover cada parte de la serpiente a la posición de la parte anterior
+        this.part[i].style.left = this.part[i - 1].style.left
+        this.part[i].style.top = this.part[i - 1].style.top
+      }
+      for (let i = 1; i < this.fila; i++) {
+        if (this.part[0].style.left == this.part[i + 1].style.left && this.part[0].style.top == this.part[i + 1].style.top) { this.restartGame() }
+      }
+      this.avanzar() // Mover la this.part[0]
+      this.limites()
+      this.generacionPersonas()
+      this.hueco()
+      this.recogerPersona()
+      this.generacionBanderas()
+      this.temp++
     }
-    for (let i = 1; i < this.fila; i++) {
-      if (this.part[0].style.left == this.part[i + 1].style.left && this.part[0].style.top == this.part[i + 1].style.top) { this.restartGame() }
-    }
-
-    this.avanzar() // Mover la this.part[0]
-    this.limites()
-    this.generacionPersonas()
-    this.hueco()
-    this.recogerPersona()
-    this.generacionBanderas()
-    this.temp++
   }
-
   /**
    * Aplica límites al objeto (imagen) en el juego para que no salga del tablero.
    * @method
