@@ -93,7 +93,6 @@ export class VistaPrincipal extends Vista {
     this.reload=this.dificultad
   }
   setConfetti = (clicker) => {
-    console.log(clicker)
     if (clicker) {
       const confetti = new Confetti('logo')
       confetti.setCount(100)
@@ -426,7 +425,6 @@ export class VistaPrincipal extends Vista {
       this.recogerPersona()
       this.generacionBanderas()
       this.temp++
-      console.log(this.reload)
     }
   }
   /**
@@ -501,34 +499,31 @@ export class VistaPrincipal extends Vista {
  * Genera banderas de manera aleatoria en el tablero.
  */
   generacionBanderas = () => {
-    if (this.temp % 500 === 0) {
-      var tableroAncho = this.tablero.clientWidth;
-      var tableroAlto = this.tablero.clientHeight;
+    let numero = (50-this.reload)*20
+    if (this.temp % numero === 0) {
+      var tableroAncho = this.tablero.clientWidth-this.part[0].offsetWidth*2
+      var tableroAlto = this.tablero.clientHeight-this.part[0].offsetHeight*2
   
       // Crear un nuevo elemento img en lugar de div
-      var nuevaBandera = document.createElement('img');
+      var nuevaBandera = document.createElement('img')
   
       // Crear la URL de la imagen utilizando el número formateado
-      nuevaBandera.src = 'img/objetos/bandera.png';
+      nuevaBandera.src = 'img/objetos/bandera.png'
   
       // Calcular posiciones aleatorias como porcentaje del tamaño del tablero
-      var posXPercentage = Math.random() * 100;
-      var posYPercentage = Math.random() * 100;
-  
-      // Convertir porcentajes a píxeles utilizando el tamaño del tablero
-      var posX = (posXPercentage / 100) * tableroAncho - 10;
-      var posY = (posYPercentage / 100) * tableroAlto - 10;
+      var posX = Math.floor(Math.random() * tableroAncho - 10)
+      var posY = Math.floor(Math.random() * tableroAlto - 10)
   
       // Establecer la posición y tamaño de la nueva bandera en porcentajes
-      nuevaBandera.style.position = 'absolute';
-      nuevaBandera.style.height = '4%';  // Cambia este valor según tus preferencias
-      nuevaBandera.style.width = '4%';   // Cambia este valor según tus preferencias
-      nuevaBandera.style.left = posXPercentage + '%';
-      nuevaBandera.style.top = posYPercentage + '%';
-      nuevaBandera.classList.add('bandera');
+      nuevaBandera.style.position = 'absolute'
+      nuevaBandera.style.height = '4%' // Cambia este valor según tus preferencias
+      nuevaBandera.style.width = '4%'  // Cambia este valor según tus preferencias
+      nuevaBandera.style.left = posX+this.part[0].offsetWidth + 'px'
+      nuevaBandera.style.top = posY+this.part[0].offsetHeight + 'px'
+      nuevaBandera.classList.add('bandera')
   
       // Añadir la nueva bandera al elemento con el id 'tablero'
-      this.tablero.appendChild(nuevaBandera);
+      this.tablero.appendChild(nuevaBandera)
     }
   }
 
@@ -611,8 +606,12 @@ export class VistaPrincipal extends Vista {
         this.part[0].getBoundingClientRect().left,
         this.part[0].getBoundingClientRect().top
     );
+    punto[4] = document.elementFromPoint(
+      this.part[0].getBoundingClientRect().left + this.part[0].offsetWidth/2,
+        this.part[0].getBoundingClientRect().top + this.part[0].offsetHeight/2
+  );
 
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < 5; i++) {
         if (punto[i] && punto[i].classList.contains('generado') || punto[i].classList.contains('bandera')) {
             return punto[i];
         }
