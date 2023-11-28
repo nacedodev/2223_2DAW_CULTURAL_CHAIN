@@ -22,6 +22,9 @@ export class VistaPrincipal extends Vista {
     const btnRestart = document.getElementById('restart')
     const btnRanking = this.base.querySelectorAll('button')[3]
     const btnSettings = this.base.querySelectorAll('button')[4]
+    const btnFacil = document.getElementById('facil')
+    const btnMedio = document.getElementById('medio')
+    const btnDificil = document.getElementById('dificil')
     this.hora = document.getElementById('hora')
     this.puntuacion = document.getElementById('puntuacion')
     this.btnTheme = this.base.querySelector('#theme')
@@ -37,6 +40,7 @@ export class VistaPrincipal extends Vista {
     this.form = document.getElementById('form-end')
     this.logo = this.base.querySelector('#logo')
     this.showForm = false
+    this.dificultad = 40
 
     this.tablero.style.position = 'relative'
 
@@ -49,7 +53,7 @@ export class VistaPrincipal extends Vista {
     this.dir = null
     this.distanciapaso = 1
     this.temp = 0
-    this.reload = 10
+    this.reload = this.dificultad
     this.part = []
     this.fila = 0
     this.score = 0
@@ -68,6 +72,10 @@ export class VistaPrincipal extends Vista {
     this.tablero.addEventListener('dragleave', this.dragLeave)
     this.tablero.addEventListener('drop', this.drop)
 
+    //Eventos de los botones de dificultad
+    btnFacil.onclick = () => this.cambiodificultad(40);
+    btnMedio.onclick = () => this.cambiodificultad(30);
+    btnDificil.onclick = () => this.cambiodificultad(20);
     btnRanking.onclick = this.irRanking
     btnSettings.onclick = this.irSettings
     this.btnTheme.onclick = this.changeTheme
@@ -80,7 +88,10 @@ export class VistaPrincipal extends Vista {
     this.setConfetti(this.clickerMode)
     setInterval(this.mostrarHora, 1000)
   }
-
+  cambiodificultad(valor) {
+    this.dificultad = valor
+    this.reload=this.dificultad
+  }
   setConfetti = (clicker) => {
     console.log(clicker)
     if (clicker) {
@@ -225,7 +236,7 @@ export class VistaPrincipal extends Vista {
       this.dir = -1
       this.distanciapaso = 1
       this.temp = 1
-      this.reload = 25
+      this.reload = this.dificultad
 
       this.fila = 0
       this.score = 0
@@ -415,6 +426,7 @@ export class VistaPrincipal extends Vista {
       this.recogerPersona()
       this.generacionBanderas()
       this.temp++
+      console.log(this.reload)
     }
   }
   /**
@@ -453,7 +465,7 @@ export class VistaPrincipal extends Vista {
  * Genera personas de manera aleatoria en el tablero.
  */
   generacionPersonas = () => {
-    if (this.temp % 10 === 0) {
+    if (this.temp % 50-this.reload === 0) {
       const tableroAncho = this.tablero.clientWidth-this.part[0].offsetWidth*2
       const tableroAlto = this.tablero.clientHeight-this.part[0].offsetHeight*2
 
