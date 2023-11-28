@@ -21,6 +21,6 @@
         <span id="status-message" style="margin-left: 100px;"></span>
     </form>
 
-    <div id="whiteDiv" style="width: 600px; height: 600px; background-color: white; margin-left: 10%; border-radius:5px"></div>
+    <div id="whiteDiv" style="width: 50vh; height: 50vh; background-color: white; margin-left: 10%; border-radius:5px"></div>
 </div>
 <script type="module" src="../js/views/vistaFormConflictos.js"></script>
