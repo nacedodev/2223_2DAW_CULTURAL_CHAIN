@@ -525,10 +525,7 @@ export class VistaPrincipal extends Vista {
  */
   recogerPersona = () => {
   // Detectar el objeto (imagen) en las coordenadas actuales del this.part[0]
-    const objetoEnPunto = document.elementFromPoint(
-      this.part[0].getBoundingClientRect().left + this.part[0].offsetWidth / 2,
-      this.part[0].getBoundingClientRect().top + this.part[0].offsetHeight / 2
-    )
+    const objetoEnPunto = this.detectarcolision()
 
     if (objetoEnPunto && objetoEnPunto.className === 'generado') {
       this.score = this.score + 10
@@ -583,4 +580,32 @@ export class VistaPrincipal extends Vista {
       this.unir(this.personita)
     }
   }
+  detectarcolision = () => {
+    var punto = [];
+
+    punto[0] = document.elementFromPoint(
+        this.part[0].getBoundingClientRect().left + this.part[0].offsetWidth,
+        this.part[0].getBoundingClientRect().top + this.part[0].offsetHeight
+    );
+    punto[1] = document.elementFromPoint(
+        this.part[0].getBoundingClientRect().left + this.part[0].offsetWidth,
+        this.part[0].getBoundingClientRect().top
+    );
+    punto[2] = document.elementFromPoint(
+        this.part[0].getBoundingClientRect().left,
+        this.part[0].getBoundingClientRect().top + this.part[0].offsetHeight
+    );
+    punto[3] = document.elementFromPoint(
+        this.part[0].getBoundingClientRect().left,
+        this.part[0].getBoundingClientRect().top
+    );
+
+    for (let i = 0; i < 4; i++) {
+        if (punto[i] && punto[i].classList.contains('generado')) {
+            return punto[i];
+        }
+    }
+
+    return false;
+}
 }
