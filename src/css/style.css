@@ -840,6 +840,10 @@ body > #hora{
     color: var(--terciary);
     text-shadow: 2px 2px 4px var(--shadow);
 }
+#barras{
+    display: none;
+}
+
 
 /*Administracion*/
 
@@ -1499,7 +1503,7 @@ input:-webkit-autofill {
     #informacion{
         font-size: 2vw;
     }
-
+   
     @media screen and (width <= 600px){
         #panelCentro p{
             font-size: 3vw;
@@ -1524,17 +1528,50 @@ input:-webkit-autofill {
             width: 5.6vw;
         }
     }
-    @media screen and (width <= 850px){
-       ul>li>a>span{
-        display: none;
-       }
-       ul > li > a > img:not(:first-child){
-        display: flex;
-        width: 30px;
-        
-       }
+    @media screen and (max-width: 850px) {
+        ul > li > a > span {
+          display: none;
+        }
+        ul > li > a > img:not(:first-child) {
+          display: flex;
+          width: 30px;
+        }
+      }
       
-    }
+      @media screen and (max-width: 600px) {
+        #submenu {
+          display: none; /* Ocultar el submenú por defecto en pantallas pequeñas */
+          position: relative; /* Cambiar a posición absoluta para corregir errores de posición */
+          top: 100%; /* Colocar el submenú debajo del elemento padre */
+          left: 0; /* Alinear el submenú a la izquierda */
+        }
+      
+        #barras {
+          display: block;
+          flex-grow: 0;
+          cursor: pointer; /* Cambiar el cursor al hacer hover */
+        }
+      
+        #menu > li > a > span {
+          display: none; /* Mostrar el texto dentro de <span> */
+        }
+      
+        #menu > li:not(:last-child) {
+          display: none;
+        }
+      
+        #submenu {
+          display: none; /* Cambiar a bloque para que aparezcan en una columna */
+          width: 100%; /* Ocupar todo el ancho del submenú */
+          position: relative;
+        }
+      
+        #barras:hover #submenu {
+          display: flex;
+          flex-direction: column;
+        }
+      }
+    
 }
 
   
