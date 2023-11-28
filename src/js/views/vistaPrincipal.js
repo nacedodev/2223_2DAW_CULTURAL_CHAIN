@@ -613,7 +613,7 @@ export class VistaPrincipal extends Vista {
     );
 
     for (let i = 0; i < 4; i++) {
-        if (punto[i] && punto[i].classList.contains('generado')) {
+        if (punto[i] && punto[i].classList.contains('generado') || punto[i].classList.contains('bandera')) {
             return punto[i];
         }
     }
