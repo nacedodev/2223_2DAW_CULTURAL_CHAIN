@@ -749,6 +749,8 @@ text-align: center;
 text-decoration: none;
 color: var(--secondary);
 font-size: 1.5vw;
+display:flex;
+justify-content: center;
 }
 
 nav #logo{
@@ -1435,6 +1437,7 @@ input:-webkit-autofill {
     ul > li > img{
         display: block;
     }
+
 
     @media screen and (width <= 600px){
         #panelCentro p{
