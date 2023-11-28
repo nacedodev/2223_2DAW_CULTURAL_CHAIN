@@ -195,7 +195,7 @@ button {
     background: var(--terciary);
 }
 
-ul > li > img:not(:first-child){
+ul > li > a> img:not(:first-child){
     display:none;
 }
 
@@ -1470,11 +1470,6 @@ input:-webkit-autofill {
         font-size: 2vw;
     }
 
-    ul > li > img{
-        display: block;
-    }
-
-
     @media screen and (width <= 600px){
         #panelCentro p{
             font-size: 3vw;
@@ -1487,7 +1482,29 @@ input:-webkit-autofill {
             width: 5.6vw;
         }
     }
+ @media screen and (width <= 600px){
+        #panelCentro p{
+            font-size: 3vw;
+        }
 
+        #panelCentro>div:nth-child(2)>div p{
+            font-size: 3vw;
+        }
+        #panelCentro>div:nth-child(2)>div>a>img {
+            width: 5.6vw;
+        }
+    }
+    @media screen and (width <= 850px){
+       ul>li>a>span{
+        display: none;
+       }
+       ul > li > a > img:not(:first-child){
+        display: flex;
+        width: 30px;
+        
+       }
+      
+    }
 }
 
   
