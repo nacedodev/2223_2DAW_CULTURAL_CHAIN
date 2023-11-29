@@ -40,12 +40,24 @@ export class VistaPrincipal extends Vista {
     this.form = document.getElementById('form-end')
     this.logo = this.base.querySelector('#logo')
     this.showForm = false
-    this.dificultad = 40
+
+    //Dificultades
+    this.velocidadFacil = 40
+    this.velocidadMedio = 30
+    this.velocidadDificil =20
+    this.cantidadPersonasFacil=5
+    this.cantidadPersonasMedio=50
+    this.cantidadPersonasDificil=100
+    this.dificultad = this.velocidadFacil
+    this.cantidadPersonasNivel=this.cantidadPersonasFacil
 
     this.tablero.style.position = 'relative'
-
     this.score = 0
     this.puntuacion.textContent = '0' + this.score
+
+    //Gestión Niveles
+    this.nivelActual = 0
+    this.personaRecogidas=0
 
     this.puntuacion = document.getElementById('puntuacion')
     this.posX
@@ -73,9 +85,9 @@ export class VistaPrincipal extends Vista {
     this.tablero.addEventListener('drop', this.drop)
 
     //Eventos de los botones de dificultad
-    btnFacil.onclick = () => this.cambiodificultad(40);
-    btnMedio.onclick = () => this.cambiodificultad(30);
-    btnDificil.onclick = () => this.cambiodificultad(20);
+    btnFacil.onclick = () => this.cambioDificultad(this.velocidadFacil);
+    btnMedio.onclick = () => this.cambioDificultad(this.velocidadMedio);
+    btnDificil.onclick = () => this.cambioDificultad(this.velocidadDificil);
     btnRanking.onclick = this.irRanking
     btnSettings.onclick = this.irSettings
     this.btnTheme.onclick = this.changeTheme
@@ -88,9 +100,18 @@ export class VistaPrincipal extends Vista {
     this.setConfetti(this.clickerMode)
     setInterval(this.mostrarHora, 1000)
   }
-  cambiodificultad(valor) {
+  cambioDificultad(valor) {
     this.dificultad = valor
     this.reload=this.dificultad
+    this.cantidadPersonasRecoger()
+  }
+  cantidadPersonasRecoger(){
+    if(this.dificultad==this.velocidadFacil)
+      this.cantidadPersonasNivel=this.cantidadPersonasFacil
+    if(this.dificultad==this.velocidadMedio)
+    this.cantidadPersonasNivel=this.cantidadPersonasMedio
+    if(this.dificultad==this.velocidadDificil)
+    this.cantidadPersonasNivel=this.cantidadPersonasDificil
   }
   setConfetti = (clicker) => {
     if (clicker) {
@@ -370,7 +391,7 @@ export class VistaPrincipal extends Vista {
       this.part[0].style.left = this.posX - this.distanciapaso + '%'
       this.posX = this.posX - this.distanciapaso
     }
-  // animacion();  // Actualizar la animación de la this.part[0]
+    this.part[0].style.animation = 'personaAndando 0.2s infinite'
   }
 
   /**
@@ -418,14 +439,31 @@ export class VistaPrincipal extends Vista {
       for (let i = 1; i < this.fila; i++) {
         if (this.part[0].style.left == this.part[i + 1].style.left && this.part[0].style.top == this.part[i + 1].style.top) { this.restartGame() }
       }
+      this.gestionNivel()
       this.avanzar() // Mover la this.part[0]
       this.limites()
       this.generacionPersonas()
       this.hueco()
-      this.recogerPersona()
+      this.recoger()
       this.generacionBanderas()
       this.temp++
     }
+  }
+  gestionNivel(){
+    if(this.personaRecogidas==this.cantidadPersonasNivel)
+      this.pasarnivel()
+  }
+  pasarnivel(){
+    this.nivelActual++
+    var elementosGenerados = this.tablero.querySelectorAll('.generado');
+    elementosGenerados.forEach(elemento => {
+      this.tablero.removeChild(elemento);
+    });
+    elementosGenerados = this.tablero.querySelectorAll('.bandera');
+    elementosGenerados.forEach(elemento => {
+      this.tablero.removeChild(elemento);
+    });
+    this.personaRecogidas=0
   }
   /**
    * Aplica límites al objeto (imagen) en el juego para que no salga del tablero.
@@ -470,6 +508,7 @@ export class VistaPrincipal extends Vista {
       // Crear un nuevo elemento img en lugar de div
       const nuevaImagen = document.createElement('img')
       nuevaImagen.style.width = '2.3%'
+      nuevaImagen.style.animation = 'personaQuieta 3s infinite'
 
       const numeroAleatorio = Math.floor(Math.random() * 15) + 1
       const numeroFormateado = ('00' + numeroAleatorio).slice(-3)
@@ -530,31 +569,45 @@ export class VistaPrincipal extends Vista {
   /**
  * Recoge la persona en la posición actual y actualiza la puntuación.
  */
-  recogerPersona = () => {
-  // Detectar el objeto (imagen) en las coordenadas actuales del this.part[0]
-    const objetoEnPunto = this.detectarcolision()
-
+  recoger = () => {
+    // Detectar el objeto (imagen) en las coordenadas actuales del this.part[0]
+    const objetoEnPunto = this.detectarColision();
+  
     if (objetoEnPunto && objetoEnPunto.className === 'generado') {
-      this.score = this.score + 10
-      this.puntuacion.textContent = '' + this.score
-      const imagenRecogida = new Image()
-      imagenRecogida.style.width = '2.3%'
-
-      imagenRecogida.src = objetoEnPunto.src
-      this.personita = imagenRecogida
-      this.tiempo = this.temp
+      this.score = this.score + 10;
+      this.puntuacion.textContent = '' + this.score;
+      const imagenRecogida = new Image();
+      imagenRecogida.style.width = '2.3%';
+  
+      imagenRecogida.src = objetoEnPunto.src;
+      this.personita = imagenRecogida;
+      this.tiempo = this.temp;
+  
+      // Almacenamos una referencia a "this" para usar dentro de la función de temporización
+      const self = this;
+  
+      // Animación al recoger a una persona
+      this.tablero.style.animation = 'recogerPersona 0.3s';
+  
+      // Luego, después de un breve momento (por ejemplo, 300 milisegundos), eliminamos la animación
+      setTimeout(function() {
+        // Usamos la referencia almacenada ("self") para acceder a "this.tablero"
+        self.tablero.style.animation = 'none';
+      }, 300);
+  
       // Remove de la imagen cogida
-      objetoEnPunto.remove()
-
-    // Añadir la imange recogida al final de la cola de la serpiente
-    };
-
-    if (objetoEnPunto && objetoEnPunto.className === 'bandera') {
-      this.score += 50
-      this.puntuacion.textContent = '' + this.score
-      objetoEnPunto.remove()
+      objetoEnPunto.remove();
+      this.personaRecogidas++;
+  
+      // Añadir la imagen recogida al final de la cola de la serpiente
     }
-  }
+  
+    if (objetoEnPunto && objetoEnPunto.className === 'bandera') {
+      this.score += 50;
+      this.puntuacion.textContent = '' + this.score;
+      objetoEnPunto.remove();
+    }
+  };
 
   /**
  * Une una imagen al final de la fila en el tablero.
@@ -564,7 +617,6 @@ export class VistaPrincipal extends Vista {
     this.fila++
     this.part.push(imagen)
     this.tablero.appendChild(this.part[this.fila])
-
     // Calcular la posición con un espacio entre cada imagen (ajusta el valor según sea necesario)
     const nuevaPosicionLeft = parseInt(this.part[this.fila - 1].style.left, 10) + this.part[0].offsetWidth
 
@@ -572,6 +624,7 @@ export class VistaPrincipal extends Vista {
     this.part[this.fila].style.position = 'absolute'
     this.part[this.fila].style.left = nuevaPosicionLeft + 'px'
     this.part[this.fila].style.top = this.part[0].style.top
+    this.part[this.fila].style.animation = 'personaAndando 0.2s infinite'
 
     this.tablero.appendChild(this.part[this.fila])
   }
@@ -587,7 +640,7 @@ export class VistaPrincipal extends Vista {
       this.unir(this.personita)
     }
   }
-  detectarcolision = () => {
+  detectarColision = () => {
     var punto = [];
 
     punto[0] = document.elementFromPoint(
