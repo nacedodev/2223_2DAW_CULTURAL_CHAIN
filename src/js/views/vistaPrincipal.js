@@ -455,7 +455,7 @@ export class VistaPrincipal extends Vista {
   }
   pasarnivel(){
     this.nivelActual++
-    var elementosGenerados = this.tablero.querySelectorAll('.generado');
+    let elementosGenerados = this.tablero.querySelectorAll('.generado');
     elementosGenerados.forEach(elemento => {
       this.tablero.removeChild(elemento);
     });
@@ -540,18 +540,18 @@ export class VistaPrincipal extends Vista {
   generacionBanderas = () => {
     let numero = (50-this.reload)*20
     if (this.temp % numero === 0) {
-      var tableroAncho = this.tablero.clientWidth-this.part[0].offsetWidth*2
-      var tableroAlto = this.tablero.clientHeight-this.part[0].offsetHeight*2
+      let tableroAncho = this.tablero.clientWidth-this.part[0].offsetWidth*2
+      let tableroAlto = this.tablero.clientHeight-this.part[0].offsetHeight*2
   
       // Crear un nuevo elemento img en lugar de div
-      var nuevaBandera = document.createElement('img')
+      let nuevaBandera = document.createElement('img')
   
       // Crear la URL de la imagen utilizando el número formateado
       nuevaBandera.src = 'img/objetos/bandera.png'
   
       // Calcular posiciones aleatorias como porcentaje del tamaño del tablero
-      var posX = Math.floor(Math.random() * tableroAncho - 10)
-      var posY = Math.floor(Math.random() * tableroAlto - 10)
+      let posX = Math.floor(Math.random() * tableroAncho - 10)
+      let posY = Math.floor(Math.random() * tableroAlto - 10)
   
       // Establecer la posición y tamaño de la nueva bandera en porcentajes
       nuevaBandera.style.position = 'absolute'
@@ -641,7 +641,7 @@ export class VistaPrincipal extends Vista {
     }
   }
   detectarColision = () => {
-    var punto = [];
+    let punto = [];
 
     punto[0] = document.elementFromPoint(
         this.part[0].getBoundingClientRect().left + this.part[0].offsetWidth,
