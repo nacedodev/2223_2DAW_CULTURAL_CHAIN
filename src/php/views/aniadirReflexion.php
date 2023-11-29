@@ -19,7 +19,7 @@
 </div>
 <button class="boton" style=" height: 65px; margin-top: 20px;margin-bottom:5%;position:relative; top:50px;left:48%"><img src="../img/iconos/anadir.png" alt="+"></button>
 
-    <!-- Tu resto de contenido y scripts aquí -->
+
 
        
 

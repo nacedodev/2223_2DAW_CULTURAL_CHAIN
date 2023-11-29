@@ -15,7 +15,7 @@
                 <li><a href="index.php?controller=centros&action=listarCentros"><span>CENTROS</span><img src="../img/iconos/colegio.png"></a></li>
                 <li><a href="index.php?controller=niveles&action=listarNiveles"><span>NIVELES</span><img src="../img/iconos/mapa-del-mundo.png"></a></li>
                 <li><a href=""><span>PUNTUACIONES</span><img src="../img/iconos/opinion-del-cliente.png"></a></li>
-                <li id="barras"> - - - </li>
+                <li id="barras"><img src="../img/iconos/menu.png"></li>
             </ul>
                  <ul id="submenu">
                         <li><a href=""><span>PERSONAJES</span><img src="../img/iconos/diseno-de-personaje.png"></a></li>

@@ -1553,27 +1553,46 @@ input:-webkit-autofill {
         #menu > li:not(:last-child) {
           display: none;
         }
-      
+        #menu > li img {
+            width: 50px;
+            height: auto;
+          }
+          #menu > li {
+            background-color: transparent;
+          }
         #submenu {
            /* Cambiar a bloque para que aparezcan en una columna */
             height: 50%;
             list-style: none; /* Quitar los estilos de la lista */
             padding: 0; /* Quitar el relleno predeterminado de la lista */
-            display: block;
+           
         }
-        
+        #menu{
+            width: fit-content;
+        }
         #submenu li {
             width: 20%; /* Establecer el ancho al 10% */
             position: relative;
             margin: 0;
-            background-color: #6F7789;
+            background-color: #575b65;
             box-sizing: border-box; /* Incluir el relleno y el borde en el ancho y alto */
-            display: block;
+            display: flex;
             border-radius: 0;
+            height: auto;
+            z-index: 2;
         }
 
-       #menu #barras:hover + #submenu{
-        display: block;
-       }
+        #menu:hover + #submenu {
+            display: block;
+         
+        }
+        #submenu:hover {
+            display: block;
+            
+        }
+        #panelCentro{
+            margin-top: 0;
+        }
+        
       }
 }
