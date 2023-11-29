@@ -589,11 +589,11 @@ export class VistaPrincipal extends Vista {
       // Animación al recoger a una persona
       this.tablero.style.animation = 'recogerPersona 0.3s';
   
-      // Luego, después de un breve momento (por ejemplo, 300 milisegundos), eliminamos la animación
+      // Luego, después de un breve momento, eliminamos la animación
       setTimeout(function() {
         // Usamos la referencia almacenada ("self") para acceder a "this.tablero"
         self.tablero.style.animation = 'none';
-      }, 300);
+      }, 30);
   
       // Remove de la imagen cogida
       objetoEnPunto.remove();
