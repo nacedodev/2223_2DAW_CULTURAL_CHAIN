@@ -1,5 +1,4 @@
-</head>
-<body>
+
        
 <div id="vistaForm" style=" flex-direction: column;">
     <form id="form-end" name="formularioCentro" action="index.php?action=aniadirCentro&controller=centros" method="post" style="width:95% ;position:static ;transform:none ;margin-top:15px; display:flex; align-content: center;align-items: center;">
