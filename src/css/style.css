@@ -830,6 +830,9 @@ nav li:first-child{
     margin-right: 10px;
     flex-grow:0;
 }
+#submenu{
+    display: none;
+}
 
 body > #hora{
     font-size: 2.5vw;
@@ -1537,23 +1540,14 @@ input:-webkit-autofill {
           width: 30px;
         }
       }
-      
       @media screen and (max-width: 600px) {
-        #submenu {
-          display: none; /* Ocultar el submenú por defecto en pantallas pequeñas */
-          position: relative; /* Cambiar a posición absoluta para corregir errores de posición */
-          top: 100%; /* Colocar el submenú debajo del elemento padre */
-          left: 0; /* Alinear el submenú a la izquierda */
-        }
+      
       
         #barras {
-          display: block;
+          display: flex;
           flex-grow: 0;
           cursor: pointer; /* Cambiar el cursor al hacer hover */
-        }
-      
-        #menu > li > a > span {
-          display: none; /* Mostrar el texto dentro de <span> */
+
         }
       
         #menu > li:not(:last-child) {
@@ -1561,17 +1555,25 @@ input:-webkit-autofill {
         }
       
         #submenu {
-          display: none; /* Cambiar a bloque para que aparezcan en una columna */
-          width: 100%; /* Ocupar todo el ancho del submenú */
-          position: relative;
+           /* Cambiar a bloque para que aparezcan en una columna */
+            height: 50%;
+            list-style: none; /* Quitar los estilos de la lista */
+            padding: 0; /* Quitar el relleno predeterminado de la lista */
+            display: block;
         }
-      
-        #barras:hover #submenu {
-          display: flex;
-          flex-direction: column;
+        
+        #submenu li {
+            width: 20%; /* Establecer el ancho al 10% */
+            position: relative;
+            margin: 0;
+            background-color: #6F7789;
+            box-sizing: border-box; /* Incluir el relleno y el borde en el ancho y alto */
+            display: block;
+            border-radius: 0;
         }
-      }
-    
-}
 
-  
+       #menu #barras:hover + #submenu{
+        display: block;
+       }
+      }
+}

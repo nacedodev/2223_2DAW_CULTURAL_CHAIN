@@ -1,9 +1,8 @@
 </head>
 <body>
-        <button class="boton" style="margin-left:35%;  width:30%; height: 65px " onclick="agregarFormulario()"><img src="../img/iconos/anadir.png" alt="+"></button>
        
-<div id="vistaForm">
-    <form id="form-end" name="formularioCentro" action="index.php?action=aniadirCentro&controller=centros" method="post">
+<div id="vistaForm" style="overflow:auto; flex-direction: column">
+    <form id="form-end" name="formularioCentro" action="index.php?action=aniadirCentro&controller=centros" method="post" style="position:static ;transform:none ;margin-top:5%">
 
         <label for="titulo">Título:</label>
         <input style="height: 80px" type="text" id="titulo" name="titulo">
@@ -15,8 +14,13 @@
 
         <button id="send" type="submit">Enviar</button>
         <span id="status-message" style="margin-left: 100px;"></span>
-        <button class="boton" style="float: right"><img src="../img/iconos/x.png" alt="-"></button>
+        <button class="boton" style="float: right; position:relative; bottom:100px; left:27%"><img src="../img/iconos/x.png" alt="-"></button>
     </form>
 </div>
+<button class="boton" style=" height: 65px; margin-top: 20px;margin-bottom:5%;position:relative; top:50px;left:48%"><img src="../img/iconos/anadir.png" alt="+"></button>
+
+    <!-- Tu resto de contenido y scripts aquí -->
+
+       
 
 
