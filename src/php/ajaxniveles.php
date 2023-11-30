@@ -24,9 +24,11 @@ while ($fila = $resultado->fetch_assoc()) {
     // Obtener los conflictos asociados al nivel
     $nivelId = $fila['id']; // Reemplaza 'id' con el nombre correcto de tu columna de ID
     $conflictos = obtenerConflictos($conexion, $nivelId);
+    $reflexiones = obtenerReflexiones($conexion, $nivelId);
 
     // Agregar los conflictos al array $otherData
     $otherData['conflictos'] = $conflictos;
+    $otherData['reflexiones'] = $reflexiones;
 
     // Crear un array con todos los datos que deseas devolver
     $responseData = array(
@@ -56,10 +58,29 @@ function obtenerConflictos($conexion, $nivelId) {
             'nombre' => $conflicto['nombreconflicto'],
             'x' => $conflicto['posx'],
             'y' => $conflicto['posy'],
-            // Agrega más campos según sea necesario
         );
     }
 
     return $conflictos;
 }
-?>
+
+// Función para obtener reflexiones asociadas a un nivel específico
+function obtenerReflexiones($conexion, $nivelId) {
+    $query = "SELECT * FROM Reflexion WHERE nivel_id = $nivelId"; // Reemplaza 'nivel_id' con el nombre correcto de tu columna de ID de nivel en la tabla Reflexiones
+    $resultado = $conexion->query($query);
+
+    if (!$resultado) {
+        die('Error en la consulta SQL: ' . $conexion->error);
+    }
+
+    $reflexiones = array();
+    while ($reflexion = $resultado->fetch_assoc()) {
+        // Procesa los datos de la reflexion según tus necesidades
+        $reflexiones[] = array(
+            'titulo' => $reflexion['titulo'],
+            'contenido' => $reflexion['contenido'],
+        );
+    }
+
+    return $reflexiones;
+}

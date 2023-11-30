@@ -18,6 +18,7 @@ export class VistaPrincipal extends Vista {
     super(controlador, base)
 
     this.cargarNiveles()
+    
     this.asignarNames()
 
     const btnRestart = document.getElementById('restart')
@@ -107,7 +108,6 @@ export class VistaPrincipal extends Vista {
     window.onkeydown = this.mostrarFormulario
 
     window.getComputedStyle(this.hora).display === 'none' ? this.clickerMode = false : this.clickerMode = true
-
     this.setConfetti(this.clickerMode)
     setInterval(this.mostrarHora, 1000)
   }
@@ -127,6 +127,7 @@ export class VistaPrincipal extends Vista {
                     nombre: otherData.nombrepais,
                     imagen: otherData.imagen,
                     conflictos:otherData.conflictos,
+                    reflexiones:otherData.reflexiones,
                 };
 
                 // Agregar el elemento al arrayResultado
@@ -135,6 +136,7 @@ export class VistaPrincipal extends Vista {
             // Ahora, arrayResultado contiene la estructura deseada
             this.niveles=arrayResultado
             this.cantidadBanderas=this.niveles[this.nivelActual].conflictos.length
+            console.log(this.niveles)
         },
         error: function(xhr, status, error){
             console.error("Error en la solicitud AJAX: " + status + " - " + error);
@@ -283,6 +285,8 @@ export class VistaPrincipal extends Vista {
       while (this.part[0].firstChild) {
         this.part[0].removeChild(this.part[0].firstChild)
       }
+      this.tablero.appendChild(this.reflexion)
+      console.log(this.reflexion)
       // Reset the animations and display elements
       this.divIzq.style.animation = 'shortBoard 1s forwards'
       this.divPersonajes.style.animation = 'appearRight 1s forwards'
@@ -421,6 +425,10 @@ export class VistaPrincipal extends Vista {
     this.end.style.animation = 'mostrarTexto 4s forwards'
     this.gameStarted = true
 
+    let info = document.getElementById("info")
+    this.tablero.removeChild(info)
+      
+
     //Cargar niveles y conflictos
     this.cargarFondo(this.niveles[this.nivelActual].imagen)
     this.generarConflictos()
@@ -499,7 +507,7 @@ export class VistaPrincipal extends Vista {
       }
       //Detectar colision con uno mismo
       for (let i = 1; i < this.fila; i++) {
-        if (this.part[0].style.left == this.part[i + 1].style.left && this.part[0].style.top == this.part[i + 1].style.top) { this.restartGame() }
+        if (this.part[0].style.left == this.part[i + 1].style.left && this.part[0].style.top == this.part[i + 1].style.top) { this.terminarPartida() }
       }
       this.gestionNivel()
       this.avanzar() // Mover la this.part[0]
@@ -510,6 +518,24 @@ export class VistaPrincipal extends Vista {
       this.generacionBanderas()
       this.temp++
     }
+  }
+  terminarPartida(){
+    let numReflexiones = this.niveles[this.nivelActual].reflexiones.length
+    let numRandom = Math.floor(Math.random() * numReflexiones)
+    let titulo
+    let contenido
+    var parrafo = document.createElement("p")
+
+    if(numReflexiones)
+    {
+      titulo=this.niveles[this.nivelActual].reflexiones[numRandom].titulo
+      contenido=this.niveles[this.nivelActual].reflexiones[numRandom].contenido
+      parrafo.id ="info"
+      parrafo.innerHTML= titulo+"<br>"+contenido
+      this.reflexion = parrafo
+    }
+
+    this.restartGame()
   }
   gestionNivel(){
     if(this.personasRecogidas>=this.cantidadPersonasNivel && this.banderasRecogidas>=this.cantidadBanderas)
