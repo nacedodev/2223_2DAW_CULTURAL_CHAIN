@@ -1,11 +1,11 @@
 <?php
- 
+
 require_once '../php/models/niveles.php';
 /**
  * Controlador para la gestión de niveles.
  */
 class ControladorNiveles {
-   
+
     /** @var Nivel Objeto para la manipulación de niveles. */
     public $objNiveles;
      /** @var string Página actual del controlador. */
@@ -24,9 +24,16 @@ class ControladorNiveles {
      *
      * @return array Datos de los centros.
      */
+
+    public function listarNivelesReflexiones(): array
+    {
+        $this->view='nivelesReflexiones';
+        return $this->objNiveles->listar();
+    }
+
     public function listarNiveles() {
         $this->view='niveles';
-        return $this->objNiveles->listar();   
+        return $this->objNiveles->listar();
     }
     /**
      * Añade un nuevo centro.
@@ -38,18 +45,18 @@ class ControladorNiveles {
                 $nombrepais = $_POST['nombrepais'];
                 $imagenTmp = $_FILES['imagen']['tmp_name'];
                 $imagenBinaria = file_get_contents($imagenTmp);
-    
+
                 $this->objNiveles->aniadir($nombrepais, $imagenBinaria);
-    
+
                 header("Location: index.php?action=listarNiveles&controller=niveles");
             }
         }
     }
-    
+
      /**
      * Borra un centro existente.
      */
-    public function borrarNivel() { 
+    public function borrarNivel() {
         $this->view='borradoNiveles';
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
              if (isset($_GET['id'])) {
@@ -61,7 +68,7 @@ class ControladorNiveles {
     /**
      * Modifica un centro existente.
      */
-    public function modificarNivel() { 
+    public function modificarNivel() {
         $this->view='modificarNiveles';
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Lógica para actualizar el centro en la base de datos
@@ -74,7 +81,7 @@ class ControladorNiveles {
         $this->objNiveles->modificar($_POST['id'], $_POST['nombrepais'],$imagenBinaria);
         header("Location: index.php?action=listarNiveles&controller=niveles");
     }
-       
+
     }
-    
+
 }

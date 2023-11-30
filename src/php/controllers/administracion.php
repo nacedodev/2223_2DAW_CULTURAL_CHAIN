@@ -3,7 +3,7 @@
  * Controlador para la gestión de centros.
  */
 class ControladorAdministracion {
-   
+
     /** @var Centro Objeto para la manipulación de centros. */
     public $objCentros;
      /** @var string Página actual del controlador. */
@@ -15,7 +15,6 @@ class ControladorAdministracion {
      */
     public function __construct() {
         $this->pagina = '';
-        $this->objCentros = new Centro();
     }
     public function mostrarPanel(){
          $this->view='admin';

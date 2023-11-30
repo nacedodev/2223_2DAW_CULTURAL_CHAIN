@@ -3,9 +3,10 @@
 /**
  * Clase para la manipulación de datos relacionados con los centros.
  */
-class Centro {
+class Reflexion {
 
     private $conexion;
+    public $mensaje;
 
 //    public function __construct($host, $user, $password, $database) {
 //        $dsn = "sqlsrv:Server=$host;Database=$database";
@@ -30,17 +31,30 @@ class Centro {
      * @param string $localidad  Localidad del centro.
      */
 
-    public function aniadir($nombre, $localidad)
+    public function aniadir(array $titulos, array $contenidos, int $nivel_id)
     {
         try {
-            $sql = 'INSERT INTO Centro (nombre, localidad) VALUES (?, ?)';
+            $sql = 'INSERT INTO Reflexion (titulo, contenido, nivel_id) VALUES (?, ?, ?)';
             $consulta = $this->conexion->prepare($sql);
 
-            $consulta->bindParam(1, $nombre, PDO::PARAM_STR);
-            $consulta->bindParam(2, $localidad, PDO::PARAM_STR);
+            // Preparar los statement placeholders una vez fuera del bucle
+            $consulta->bindParam(1, $titulo, PDO::PARAM_STR);
+            $consulta->bindParam(2, $contenido, PDO::PARAM_STR);
+            $consulta->bindParam(3, $nivel_id, PDO::PARAM_INT);
 
-            $consulta->execute();
-            // Opcionalmente, se puede  devolver el ID de la fila insertada
+            // Iterar sobre los títulos y contenidos para insertar cada reflexión
+            $index = 0;
+            while ($index < count($titulos)) {
+                $titulo = $titulos[$index];
+                $contenido = $contenidos[$index];
+
+                // Ejecutar la consulta preparada para cada reflexión
+                $consulta->execute();
+
+                // Incrementar el índice
+                $index++;
+            }
+            // Opcionalmente, se puede devolver el ID de la última fila insertada
             // return $this->conexion->lastInsertId();
         } catch (PDOException $e) {
             if ($e->getCode() === '23000') {
@@ -52,6 +66,7 @@ class Centro {
             }
         }
     }
+
 
     /**
      * Modifica un centro existente en la base de datos.
@@ -83,19 +98,17 @@ class Centro {
      *
      * @param int $id ID del centro a borrar.
      */
-    public function borrar(int $id)
+    public function borrar(int $nivel_id)
     {
         try {
-            $sql = 'DELETE FROM Centro WHERE id = ?';
+            $sql = "DELETE FROM Reflexion WHERE $nivel_id = ?";
             $consulta = $this->conexion->prepare($sql);
-            $consulta->bindParam(1, $id, PDO::PARAM_INT);
+            $consulta->bindParam(1, $nivel_id, PDO::PARAM_INT);
             $consulta->execute();
 
             // Verificar si se eliminó alguna fila
             if ($consulta->rowCount() === 0) {
                 echo 'No se encontró ningún centro con el ID proporcionado';
-            } else {
-                echo 'Centro eliminado exitosamente';
             }
         } catch (PDOException $e) {
             if ($e->getCode() === '23000') {
@@ -111,26 +124,20 @@ class Centro {
      *
      * @return array Arreglo asociativo con los datos de los centros.
      */
-    public function listar(): array
+    public function listar($nivel_id): array
     {
         try {
-            $sql = 'SELECT * FROM Centro';
+            $sql = 'SELECT titulo, contenido FROM Reflexion WHERE nivel_id = ' . $nivel_id;
             $consulta = $this->conexion->query($sql);
 
             if ($consulta === false) {
-                // La consulta SELECT falló
-                echo 'Error al consultar la base de datos';
+                $this->mensaje = 'Error al consultar la base de datos';
                 return [];
             }
 
-            $centros = $consulta->fetchAll(PDO::FETCH_ASSOC);
+            $reflexiones = $consulta->fetchAll(PDO::FETCH_ASSOC);
 
-            if (empty($centros)) {
-                // No se encontraron filas en la tabla "Centro"
-                echo '<p id="error">No hay centros registrados</p>';
-            }
-
-            return $centros;
+            return $reflexiones; // Devolver los datos de las reflexiones
         } catch (PDOException $e) {
             echo 'Error al listar los centros: ' . $e->getMessage();
             return [];

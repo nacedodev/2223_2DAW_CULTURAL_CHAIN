@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Oswald&family=Poppins:wght@900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@900&family=Press+Start+2P&display=swap');
-  
+
 /* COLORES */
 :root{
 
@@ -19,6 +19,8 @@
     transition: background-color 0.8s ease , color 0.8s ease, box-shadow 0.8s ease,text-shadow 0.8s ease;
 }
 
+
+
 #vistaPrincipal{
     width: 100%;
     height: 100vh;
@@ -33,8 +35,8 @@ html{
 
 body{
     width: 100%;
-    height: 100vh; 
-    margin: 0px; 
+    height: 100vh;
+    margin: 0px;
     background-color: var(--primary);
     font-family: 'Poppins', sans-serif;
     user-select: none;
@@ -51,7 +53,7 @@ button {
 }
 
 #titulo,#restart>p,#score>p,#nombreapp,#divderecha>div>p,#panelajustes>p,#divderecha>div>div>figure>figcaption,.tituloranking{
-    text-align: center;  
+    text-align: center;
 }
 
 #vistaRanking>.boton,
@@ -392,7 +394,7 @@ ul > li > img:not(:first-child){
     background-size: .05em .05em;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-  
+
     animation: shad-anim 50s linear infinite;
     }
 
@@ -501,7 +503,7 @@ ul > li > img:not(:first-child){
 #tablonranking>div>p:nth-child(6){
     font-size: 3vw;
     position: relative;
-    right: 80px;  
+    right: 80px;
     text-transform: uppercase;
     background: linear-gradient(to left, var(--secondary) 0%, var(--primary) 100%);
     -webkit-background-clip: text;
@@ -510,7 +512,7 @@ ul > li > img:not(:first-child){
 
 #tablonranking>div>img{
     width: 30px;
-    position: relative; 
+    position: relative;
     right: 40px;
 }
 
@@ -617,11 +619,11 @@ ul > li > img:not(:first-child){
     padding:0px;
 }
 
-#vistaForm {
+#vistaForm ,#vistaFormReflexiones{
     z-index: 99;
     width:100%;
     display: flex;
-    justify-content: center; 
+    justify-content: center;
     align-items: center;
     font-family: Arial, sans-serif;
 }
@@ -654,7 +656,7 @@ nav{
     border-radius: 15px;
     background-color: var(--secondary);
     margin: 10px auto;
-    margin-bottom: 100px;
+    margin-bottom: 30px;
     box-shadow: 4px 4px 4px 0px var(--shadow);
 }
 
@@ -673,9 +675,9 @@ nav li {
     height: 80%;
     flex-grow: 1;
     display: flex;
-  align-items: center;
-  background-color: var(--terciary);
-  transition: filter 0.3s ease;
+    align-items: center;
+    background-color: var(--terciary);
+    transition: filter 0.3s ease;
 }
 
 nav li:hover:not(:first-child) {
@@ -684,11 +686,12 @@ nav li:hover:not(:first-child) {
 
 nav a {
     width: 100%;
-display: block;
-text-align: center;
-text-decoration: none;
-color: var(--secondary);
-font-size: 1.5vw;
+    text-align: center;
+    text-decoration: none;
+    color: var(--secondary);
+    font-size: 1.5vw;
+    display: flex;
+    justify-content: center ;
 }
 
 nav #logo{
@@ -887,8 +890,18 @@ body > #nombreapp{
     width: 30px;
 }
 
+.reflection {
+    background-color: var(--secondary);
+    padding: 15px;
+    width: 96%;
+    border-radius: 10px;
+    margin: 0 auto 30px;
+}
+
+
 /*Form inicio*/
-#vistaForm>form {
+#vistaForm>form ,
+#vistaFormReflexiones > form{
     position: absolute;
     top: 50%;
     left: 50%;
@@ -900,19 +913,22 @@ body > #nombreapp{
     filter: drop-shadow(0 0 0.7em var(--shadow));
 }
 
-#vistaForm label {
+#vistaForm label ,
+#vistaFormReflexiones label{
     margin-bottom: 5px;
     font-weight: bold;
     color: var(--terciary);
 }
 
 #vistaForm input,
-#vistaForm select {
+#vistaFormReflexiones input,
+#vistaForm select ,
+#vistaFormReflexiones select{
     color:var(--primary);
     width: 100%;
     padding: 10px;
     border-radius: 4px;
-    margin-top: 6px; 
+    margin-top: 6px;
     margin-bottom: 15px;
     box-sizing: border-box;
     background-color: var(--terciary);
@@ -930,7 +946,8 @@ input:-webkit-autofill {
     -webkit-text-fill-color: var(--primary) !important;
 }
 
-#vistaForm form button{
+#vistaForm form button,
+#vistaFormReflexiones form button{
         background-color: var(--terciary);
         color: var(--primary);
         font-weight: bold;
@@ -942,7 +959,8 @@ input:-webkit-autofill {
         margin: 0 auto;
 }
 
-#vistaForm form button:hover {
+#vistaForm form button:hover ,
+#vistaFormReflexiones form button:hover{
     background-color: var(--terciary);
 }
 
@@ -1044,7 +1062,7 @@ input:-webkit-autofill {
     100% {
         filter: none;
     }
-} 
+}
 
 @keyframes mostrarTexto {
     0% {
@@ -1106,7 +1124,7 @@ input:-webkit-autofill {
     75% { transform: translateX(-3px); }
     100% { transform: translateX(0); }
   }
-  
+
   @keyframes blurBG {
     0% {
         visibility: hidden;
@@ -1154,16 +1172,16 @@ input:-webkit-autofill {
      --secondary: #FCC34D;
      --terciary: #CCAC92;
      --personajes: #3E0900;
-     --contrast: #42547A;  
-     --shadow: #ffffff40; 
+     --contrast: #42547A;
+     --shadow: #ffffff40;
      --theme-img: url('../img/iconos/sol.png ');
      --theme-color: #fff;
-    } 
- 
+    }
+
      #divderecha > div > p{
          color: var(--primary);
      }
-       
+
    }
 
 @media screen and (width > 2600px){
@@ -1190,21 +1208,21 @@ input:-webkit-autofill {
         display: none;
     }
 }
- 
+
  @media  screen and (width < 1400px) {
      #divderecha > div > div > figure{
          max-width: none;
      }
-     
+
  }
- 
+
  @media screen and (max-width: 950px) {
      #tablonranking > div > p:nth-child(5),
      #tablonranking > div > p:nth-child(4),
      #tablonranking > div > p:nth-child(3) {
        display: none;
      }
- 
+
      #tablonranking > div > p:nth-child(6){
          margin-left: 35%;
      }
@@ -1261,7 +1279,7 @@ input:-webkit-autofill {
         background-size: .05em .05em;
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
-      
+
         animation: shad-anim 100s linear infinite;
         }
 
@@ -1391,4 +1409,3 @@ input:-webkit-autofill {
 
 }
 
-  
