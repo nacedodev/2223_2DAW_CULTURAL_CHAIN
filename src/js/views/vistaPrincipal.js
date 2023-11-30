@@ -535,13 +535,25 @@ export class VistaPrincipal extends Vista {
       let x=this.niveles[this.nivelActual].conflictos[i].x
       let y=this.niveles[this.nivelActual].conflictos[i].y
       let conflicto = document.createElement('div')
+      let nombre= document.createElement('p')
+      
       conflicto.className = "conflictos"
-      conflicto.style.width='2%'
-      conflicto.style.height='2%'
-      conflicto.style.position='relative'
+      conflicto.style.width='3%'
+      conflicto.style.height='3%'
+      conflicto.style.position='absolute'
       conflicto.style.left=x+'%'
       conflicto.style.top=y+'%'
       conflicto.style.backgroundColor='red'
+      
+      nombre.className = "conflictos"
+      nombre.style.left=x-1+'%'
+      nombre.style.top=y+'%'
+      nombre.style.color='black'
+      nombre.style.position='absolute'
+      var nombreConflicto = this.niveles[this.nivelActual].conflictos[i].nombre
+      nombre.textContent= nombreConflicto
+
+      this.tablero.appendChild(nombre)
       this.tablero.appendChild(conflicto)
     }
   }
