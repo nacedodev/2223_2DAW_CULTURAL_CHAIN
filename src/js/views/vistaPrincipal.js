@@ -62,8 +62,13 @@ export class VistaPrincipal extends Vista {
 
     //Gestión Niveles
     this.nivelActual = 0
-    this.personaRecogidas=0
+    this.personasRecogidas=0
 
+    //Gestion Banderas
+    this.banderasGeneradas=0
+    this.banderasRecogidas=0
+    this.cantidadBanderas=0
+    this.conflictoActual=1
 
     this.puntuacion = document.getElementById('puntuacion')
     this.posX
@@ -127,10 +132,9 @@ export class VistaPrincipal extends Vista {
                 // Agregar el elemento al arrayResultado
                 arrayResultado.push(elemento);
             }
-
             // Ahora, arrayResultado contiene la estructura deseada
             this.niveles=arrayResultado
-            console.log(this.niveles)
+            this.cantidadBanderas=this.niveles[this.nivelActual].conflictos.length
         },
         error: function(xhr, status, error){
             console.error("Error en la solicitud AJAX: " + status + " - " + error);
@@ -304,8 +308,11 @@ export class VistaPrincipal extends Vista {
 
       //Reinicio del nivel
       this.nivelActual = 0
-      this.personaRecogidas=0
+      this.personasRecogidas=0
+      this.banderasGeneradas=0
+      this.banderasRecogidas=0
       this.fila = 0
+      this.conflictoActual=1
       this.score = 0
       this.puntuacion.textContent = '0' + this.score
       clearInterval(this.intervalo)
@@ -385,6 +392,7 @@ export class VistaPrincipal extends Vista {
 
     //Establecer el nombre del nivel
     this.nombreapp.textContent = this.niveles[this.nivelActual].nombre
+
     // Obtener las coordenadas del evento de soltar en relación con el tablero
 
     const boardRect = this.tablero.getBoundingClientRect()
@@ -504,21 +512,21 @@ export class VistaPrincipal extends Vista {
     }
   }
   gestionNivel(){
-    if(this.personaRecogidas==this.cantidadPersonasNivel)
+    if(this.personasRecogidas>=this.cantidadPersonasNivel && this.banderasRecogidas>=this.cantidadBanderas)
       this.pasarnivel()
   }
   pasarnivel(){
     if(this.nivelActual===this.niveles.length-1)
       this.nivelActual=-1
     this.nivelActual++
-    console.log(this.nivelActual)
     this.nombreapp.textContent = this.niveles[this.nivelActual].nombre
     this.cargarFondo(this.niveles[this.nivelActual].imagen)
+
     let elementosGenerados = this.tablero.querySelectorAll('.generado');
     elementosGenerados.forEach(elemento => {
       this.tablero.removeChild(elemento);
     });
-    elementosGenerados = this.tablero.querySelectorAll('.bandera');
+    elementosGenerados = this.tablero.querySelectorAll('.nobandera');
     elementosGenerados.forEach(elemento => {
       this.tablero.removeChild(elemento);
     });
@@ -526,7 +534,12 @@ export class VistaPrincipal extends Vista {
     elementosGenerados.forEach(elemento => {
       this.tablero.removeChild(elemento);
     });
-    this.personaRecogidas=0
+
+    this.banderasGeneradas=0
+    this.banderasRecogidas=0
+    this.conflictoActual=1
+    this.cantidadBanderas=this.niveles[this.nivelActual].conflictos.length
+    this.personasRecogidas=0
     this.generarConflictos()
   }
   generarConflictos(){
@@ -538,16 +551,16 @@ export class VistaPrincipal extends Vista {
       let nombre= document.createElement('p')
       
       conflicto.className = "conflictos"
-      conflicto.style.width='3%'
-      conflicto.style.height='3%'
+      conflicto.style.width='6%'
+      conflicto.style.height='6%'
       conflicto.style.position='absolute'
       conflicto.style.left=x+'%'
       conflicto.style.top=y+'%'
-      conflicto.style.backgroundColor='red'
-      
+      conflicto.style.backgroundImage='url("../src/img/nivel/conflicto.jpg")'
+      conflicto.style.backgroundSize='cover'
       nombre.className = "conflictos"
       nombre.style.left=x-1+'%'
-      nombre.style.top=y+'%'
+      nombre.style.top=(parseFloat(y) + 3)+'%'
       nombre.style.color='black'
       nombre.style.position='absolute'
       var nombreConflicto = this.niveles[this.nivelActual].conflictos[i].nombre
@@ -630,33 +643,36 @@ export class VistaPrincipal extends Vista {
  * Genera banderas de manera aleatoria en el tablero.
  */
   generacionBanderas = () => {
-    let numero = (50-this.reload)*20
-    if (this.temp % numero === 0) {
-      let tableroAncho = this.tablero.clientWidth-this.part[0].offsetWidth*2
-      let tableroAlto = this.tablero.clientHeight-this.part[0].offsetHeight*2
-  
-      // Crear un nuevo elemento img en lugar de div
-      let nuevaBandera = document.createElement('img')
-  
-      // Crear la URL de la imagen utilizando el número formateado
-      nuevaBandera.src = 'img/objetos/bandera.png'
-  
-      // Calcular posiciones aleatorias como porcentaje del tamaño del tablero
-      let posX = Math.floor(Math.random() * tableroAncho - 10)
-      let posY = Math.floor(Math.random() * tableroAlto - 10)
-  
-      // Establecer la posición y tamaño de la nueva bandera en porcentajes
-      nuevaBandera.style.position = 'absolute'
-      nuevaBandera.style.height = '4%' // Cambia este valor según tus preferencias
-      nuevaBandera.style.width = '4%'  // Cambia este valor según tus preferencias
-      nuevaBandera.style.left = posX+this.part[0].offsetWidth + 'px'
-      nuevaBandera.style.top = posY+this.part[0].offsetHeight + 'px'
-      nuevaBandera.classList.add('bandera')
-  
-      // Añadir la nueva bandera al elemento con el id 'tablero'
-      this.tablero.appendChild(nuevaBandera)
+    if(this.banderasGeneradas<this.cantidadBanderas){
+      let numero = (50-this.reload)*20
+      if (this.temp % numero === 0) {
+        let tableroAncho = this.tablero.clientWidth-this.part[0].offsetWidth*2
+        let tableroAlto = this.tablero.clientHeight-this.part[0].offsetHeight*2
+    
+        // Crear un nuevo elemento img en lugar de div
+        let nuevaBandera = document.createElement('img')
+    
+        // Crear la URL de la imagen utilizando el número formateado
+        nuevaBandera.src = 'img/objetos/bandera.png'
+    
+        // Calcular posiciones aleatorias como porcentaje del tamaño del tablero
+        let posX = Math.floor(Math.random() * tableroAncho - 10)
+        let posY = Math.floor(Math.random() * tableroAlto - 10)
+    
+        // Establecer la posición y tamaño de la nueva bandera en porcentajes
+        nuevaBandera.style.position = 'absolute'
+        nuevaBandera.style.height = '4%' // Cambia este valor según tus preferencias
+        nuevaBandera.style.width = '4%'  // Cambia este valor según tus preferencias
+        nuevaBandera.style.left = posX+this.part[0].offsetWidth + 'px'
+        nuevaBandera.style.top = posY+this.part[0].offsetHeight + 'px'
+        nuevaBandera.classList.add('bandera')
+    
+        // Añadir la nueva bandera al elemento con el id 'tablero'
+        this.tablero.appendChild(nuevaBandera)
+        this.banderasGeneradas++
+      }
     }
-  }
+}
 
   /**
  * Recoge la persona en la posición actual y actualiza la puntuación.
@@ -689,18 +705,75 @@ export class VistaPrincipal extends Vista {
   
       // Remove de la imagen cogida
       objetoEnPunto.remove();
-      this.personaRecogidas++;
+      this.personasRecogidas++;
   
       // Añadir la imagen recogida al final de la cola de la serpiente
     }
   
     if (objetoEnPunto && objetoEnPunto.className === 'bandera') {
-      this.score += 50;
+      let conflictos = this.tablero.querySelectorAll('.conflictos');
+      let conflicto=conflictos[this.conflictoActual]
+      this.conflictoActual++
+      console.log(this.conflictoActual)
+      this.score += 50
       this.puntuacion.textContent = '' + this.score;
-      objetoEnPunto.remove();
+    
+      // Obtén las coordenadas x e y del conflicto en porcentaje
+      let xConflict = parseFloat(conflicto.style.left);
+      let yConflict = parseFloat(conflicto.style.top);
+    
+      // Verifica si las coordenadas son números válidos
+      if (!isNaN(xConflict) && !isNaN(yConflict)) {
+        // Mueve el objetoEnPunto hacia las coordenadas del conflicto con animación
+        this.moverElementoConAnimacion(objetoEnPunto, xConflict, yConflict, 1000);
+      } else {
+        console.error('Las coordenadas del conflicto no son válidas.');
+      }
     }
   };
+  moverElementoConAnimacion(objeto, destinoX, destinoY, duracion) {
+    let inicioX = parseFloat(objeto.style.left) || 0;
+    let inicioY = parseFloat(objeto.style.top) || 0;
+    let startTime;
 
+    // Convierte destinoX y destinoY de porcentajes a píxeles
+    let contenedorAncho = objeto.parentElement.clientWidth;
+    let contenedorAlto = objeto.parentElement.clientHeight;
+    let destinoXEnPixeles = (destinoX / 100) * contenedorAncho;
+    let destinoYEnPixeles = (destinoY / 100) * contenedorAlto;
+
+    objeto.classList.remove('bandera');
+
+    const animar = (timestamp) => {
+      if (!startTime) startTime = timestamp;
+
+      let tiempoTranscurrido = timestamp - startTime;
+      let progreso = tiempoTranscurrido / duracion;
+
+      if (progreso < 1) {
+        let nuevaX = inicioX + (destinoXEnPixeles - inicioX) * progreso;
+        let nuevaY = inicioY + (destinoYEnPixeles - inicioY) * progreso;
+
+        objeto.style.left = nuevaX + 'px';
+        objeto.style.top = nuevaY + 'px';
+
+        requestAnimationFrame(animar);
+      } else {
+        objeto.style.left = destinoXEnPixeles + 'px';
+        objeto.style.top = destinoYEnPixeles + 'px';
+
+        objeto.classList.add('nobandera');
+
+        // Aumenta this.banderasrecogidas al finalizar la animación
+        this.banderasrecogidas++;
+
+        // Puedes hacer más acciones aquí después de recoger la bandera
+      }
+    };
+
+    requestAnimationFrame(animar);
+  }
+  
   /**
  * Une una imagen al final de la fila en el tablero.
  * @param {Image} imagen - La imagen que se va a unir.
