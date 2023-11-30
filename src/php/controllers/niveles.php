@@ -25,16 +25,32 @@ class ControladorNiveles {
      * @return array Datos de los centros.
      */
 
-    public function listarNivelesReflexiones(): array
-    {
-        $this->view='nivelesReflexiones';
-        return $this->objNiveles->listar();
-    }
+     public function listarNivelesReflexiones()
+     {
+         $this->view = 'nivelesReflexiones';
+         return $this->objNiveles->listar(); // Obtener los niveles
+     
+         // Obtener la información de las reflexiones para cada nivel
+        
+     }
+     
 
-    public function listarNiveles() {
-        $this->view='niveles';
-        return $this->objNiveles->listar();
+     public function listarNiveles() {
+        $this->view = 'niveles';
+        $niveles = $this->objNiveles->listar();
+    
+        foreach ($niveles as &$nivel) {
+            try {
+                $nivel['tieneReflexiones'] = $this->objNiveles->tieneReflexiones($nivel['id']);
+            } catch (Exception $e) {
+                // Manejar el error aquí o simplemente asignar false en caso de error
+                $nivel['tieneReflexiones'] = false;
+            }
+        }
+        return $niveles;
+
     }
+    
     /**
      * Añade un nuevo centro.
      */

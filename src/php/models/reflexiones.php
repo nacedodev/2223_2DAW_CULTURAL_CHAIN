@@ -34,6 +34,7 @@ class Reflexion {
     public function aniadir(array $titulos, array $contenidos, int $nivel_id)
     {
         try {
+            $this->conexion->beginTransaction();
             $sql = 'INSERT INTO Reflexion (titulo, contenido, nivel_id) VALUES (?, ?, ?)';
             $consulta = $this->conexion->prepare($sql);
 
@@ -54,9 +55,11 @@ class Reflexion {
                 // Incrementar el índice
                 $index++;
             }
-            // Opcionalmente, se puede devolver el ID de la última fila insertada
-            // return $this->conexion->lastInsertId();
+            // Confirmar la transacción si todo salió bien
+            $this->conexion->commit();
         } catch (PDOException $e) {
+            // Si ocurre un error, revertir la transacción y manejar la excepción
+            $this->conexion->rollBack();
             if ($e->getCode() === '23000') {
                 // Código de error para violación de clave única
                 echo 'Nombre duplicado: ya existe un registro con ese nombre';
