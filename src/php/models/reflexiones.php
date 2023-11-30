@@ -101,15 +101,15 @@ class Reflexion {
     public function borrar(int $nivel_id)
     {
         try {
-            $sql = "DELETE FROM Reflexion WHERE $nivel_id = ?";
+            $sql = "DELETE FROM Reflexion WHERE nivel_id = ?";
             $consulta = $this->conexion->prepare($sql);
             $consulta->bindParam(1, $nivel_id, PDO::PARAM_INT);
             $consulta->execute();
 
-            // Verificar si se eliminó alguna fila
-            if ($consulta->rowCount() === 0) {
-                echo 'No se encontró ningún centro con el ID proporcionado';
-            }
+            // // Verificar si se eliminó alguna fila
+            // if ($consulta->rowCount() === 0) {
+            //     echo 'No se encontró ningún centro con el ID proporcionado';
+            // }
         } catch (PDOException $e) {
             if ($e->getCode() === '23000') {
                 // Código de error para violación de clave foránea
