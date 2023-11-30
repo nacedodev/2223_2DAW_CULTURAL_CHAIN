@@ -17,6 +17,7 @@ export class VistaPrincipal extends Vista {
   constructor (controlador, base) {
     super(controlador, base)
 
+    this.cargarNiveles()
     this.asignarNames()
 
     const btnRestart = document.getElementById('restart')
@@ -40,6 +41,7 @@ export class VistaPrincipal extends Vista {
     this.form = document.getElementById('form-end')
     this.logo = this.base.querySelector('#logo')
     this.showForm = false
+    this.nombreapp = document.getElementById('nombreapp')
 
     //Dificultades
     this.velocidadFacil = 40
@@ -52,6 +54,9 @@ export class VistaPrincipal extends Vista {
     this.cantidadPersonasNivel=this.cantidadPersonasFacil
 
     this.tablero.style.position = 'relative'
+    this.tablero.style.backgroundRepeat ='no-repeat'
+    this.tablero.style.backgroundSize ='cover'
+
     this.score = 0
     this.puntuacion.textContent = '0' + this.score
 
@@ -99,6 +104,39 @@ export class VistaPrincipal extends Vista {
 
     this.setConfetti(this.clickerMode)
     setInterval(this.mostrarHora, 1000)
+  }
+  cargarNiveles(){
+    var arrayResultado = []; // Array para almacenar la información estructurada
+    $.ajax({
+        url: "http://localhost/2324_2DAW_CULTURAL_CHAIN/src/php/ajaxniveles.php",
+        type: "GET",
+        dataType: "json",
+        success:(data)=>{
+          // Iterar sobre los datos recibidos
+            for (var i = 0; i < data.length; i++) {
+                var otherData = data[i].otherData;
+
+                // Estructurar los datos
+                var elemento = {
+                    nombre: otherData.nombrepais,
+                    imagen: otherData.imagen,
+                };
+
+                // Agregar el elemento al arrayResultado
+                arrayResultado.push(elemento);
+            }
+
+            // Ahora, arrayResultado contiene la estructura deseada
+            this.niveles=arrayResultado
+            console.log(this.niveles)
+        },
+        error: function(xhr, status, error){
+            console.error("Error en la solicitud AJAX: " + status + " - " + error);
+        }
+    });
+  }
+  cargarFondo(imagen){
+    this.tablero.style.backgroundImage = "url('data:image/png;base64,"+imagen+"')"
   }
   cambioDificultad(valor) {
     this.dificultad = valor
@@ -229,6 +267,7 @@ export class VistaPrincipal extends Vista {
     // Remove all the characters from the tablero
     if (this.gameStarted) {
       const personajes = this.tablero.querySelectorAll('.personaje')
+      this.tablero.style.backgroundImage= "none"
       personajes.forEach(personaje => {
         personaje.remove()
       })
@@ -258,11 +297,16 @@ export class VistaPrincipal extends Vista {
       this.temp = 1
       this.reload = this.dificultad
 
+      //Reniciar el nombre de la app
+      this.nombreapp.textContent = 'CULTURAL CHAIN'
+
+      //Reinicio del nivel
+      this.nivelActual = 0
+      this.personaRecogidas=0
       this.fila = 0
       this.score = 0
       this.puntuacion.textContent = '0' + this.score
       clearInterval(this.intervalo)
-      // Reset the showForm variable
 
       this.gameStarted = false
     } else {
@@ -337,6 +381,8 @@ export class VistaPrincipal extends Vista {
 
     const personajeSelected = personaje.cloneNode(true)
 
+    //Establecer el nombre del nivel
+    this.nombreapp.textContent = this.niveles[this.nivelActual].nombre
     // Obtener las coordenadas del evento de soltar en relación con el tablero
 
     const boardRect = this.tablero.getBoundingClientRect()
@@ -364,6 +410,7 @@ export class VistaPrincipal extends Vista {
     this.info.style.animation = 'ocultarTexto 1.5s forwards'
     this.end.style.animation = 'mostrarTexto 4s forwards'
     this.gameStarted = true
+    this.cargarFondo(this.niveles[this.nivelActual].imagen)
     window.addEventListener('keydown', this.direccion)
     window.addEventListener('touchstart', this.direccion)
     this.intervalo = setInterval(() => this.update(), this.reload)
@@ -436,6 +483,7 @@ export class VistaPrincipal extends Vista {
         this.part[i].style.left = this.part[i - 1].style.left
         this.part[i].style.top = this.part[i - 1].style.top
       }
+      //Detectar colision con uno mismo
       for (let i = 1; i < this.fila; i++) {
         if (this.part[0].style.left == this.part[i + 1].style.left && this.part[0].style.top == this.part[i + 1].style.top) { this.restartGame() }
       }
@@ -454,7 +502,12 @@ export class VistaPrincipal extends Vista {
       this.pasarnivel()
   }
   pasarnivel(){
+    if(this.nivelActual===this.niveles.length-1)
+      this.nivelActual=-1
     this.nivelActual++
+    console.log(this.nivelActual)
+    this.nombreapp.textContent = this.niveles[this.nivelActual].nombre
+    this.cargarFondo(this.niveles[this.nivelActual].imagen)
     let elementosGenerados = this.tablero.querySelectorAll('.generado');
     elementosGenerados.forEach(elemento => {
       this.tablero.removeChild(elemento);
@@ -464,6 +517,7 @@ export class VistaPrincipal extends Vista {
       this.tablero.removeChild(elemento);
     });
     this.personaRecogidas=0
+
   }
   /**
    * Aplica límites al objeto (imagen) en el juego para que no salga del tablero.
