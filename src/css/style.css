@@ -1005,6 +1005,11 @@ input:-webkit-autofill {
     }
 }
 
+#vistaFormReflexiones input{
+    margin-top: 0;
+    margin-bottom:0;
+}
+
 @keyframes appearRight {
     0% {
         transform: translateX(100%);

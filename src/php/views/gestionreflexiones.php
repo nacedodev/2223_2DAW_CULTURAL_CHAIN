@@ -1,7 +1,7 @@
-<div id='vistaForm' style='flex-direction: column;'>
+<div id='vistaFormReflexiones' style='flex-direction: column;'>
     <p style="margin:0;color: var(--terciary);font-size: 2vw;font-family: 'Poppins', sans-serif"> <?php echo $_GET['nombrepais']; ?> </p>
     <form id='form-reflexion' name='formularioCentro'
-          action='index.php?action=gestionarReflexiones&controller=reflexiones&nivel_id=<?php echo $_GET['nivel_id']; ?>'
+          action='index.php?action=gestionarReflexiones&controller=reflexiones&nivel_id=<?php echo $_GET['nivel_id']; ?>&nombrepais=<?php echo $_GET['nombrepais'];?>'
           method='post'
           style='width:100%; position:static; transform:none; margin-top:15px;background-color: transparent;'>
         <div id='reflections-container'>
@@ -24,7 +24,7 @@
 
         <button style='display: block;margin: 20px auto' id='add-reflection' type='button'>+</button>
 
-        <button id='send' type='submit'>ENVIAR</button>
+        <button style="position:relative;bottom: 60px;left:20px;" id='send' type='submit'>ENVIAR</button>
     </form>
 </div>
 
@@ -43,6 +43,7 @@
         `;
 
     reflectionsContainer.appendChild(reflectionTemplate);
+    reflectionTemplate.scrollIntoView({ behavior: "smooth" });
   });
 
   document.getElementById('reflections-container').addEventListener('click', function (event) {
