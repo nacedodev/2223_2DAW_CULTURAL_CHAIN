@@ -21,6 +21,13 @@ while ($fila = $resultado->fetch_assoc()) {
         'imagen' => $base64Image,
     );
 
+    // Obtener los conflictos asociados al nivel
+    $nivelId = $fila['id']; // Reemplaza 'id' con el nombre correcto de tu columna de ID
+    $conflictos = obtenerConflictos($conexion, $nivelId);
+
+    // Agregar los conflictos al array $otherData
+    $otherData['conflictos'] = $conflictos;
+
     // Crear un array con todos los datos que deseas devolver
     $responseData = array(
         'otherData' => $otherData,
@@ -36,4 +43,23 @@ $conexion->close();
 // Devuelve los datos en formato JSON
 header('Content-Type: application/json');
 echo json_encode($data);
+
+// Función para obtener conflictos asociados a un nivel específico
+function obtenerConflictos($conexion, $nivelId) {
+    $query = "SELECT * FROM Conflicto WHERE nivel_id = $nivelId"; // Reemplaza 'nivel_id' con el nombre correcto de tu columna de ID de nivel en la tabla Conflictos
+    $resultado = $conexion->query($query);
+
+    $conflictos = array();
+    while ($conflicto = $resultado->fetch_assoc()) {
+        // Procesa los datos del conflicto según tus necesidades
+        $conflictos[] = array(
+            'nombre' => $conflicto['nombreconflicto'],
+            'x' => $conflicto['posx'],
+            'y' => $conflicto['posy'],
+            // Agrega más campos según sea necesario
+        );
+    }
+
+    return $conflictos;
+}
 ?>

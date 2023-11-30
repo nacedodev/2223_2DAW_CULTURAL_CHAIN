@@ -49,7 +49,7 @@ export class VistaPrincipal extends Vista {
     this.velocidadDificil =20
     this.cantidadPersonasFacil=5
     this.cantidadPersonasMedio=50
-    this.cantidadPersonasDificil=100
+    this.cantidadPersonasDificil=20
     this.dificultad = this.velocidadFacil
     this.cantidadPersonasNivel=this.cantidadPersonasFacil
 
@@ -63,6 +63,7 @@ export class VistaPrincipal extends Vista {
     //Gestión Niveles
     this.nivelActual = 0
     this.personaRecogidas=0
+
 
     this.puntuacion = document.getElementById('puntuacion')
     this.posX
@@ -120,6 +121,7 @@ export class VistaPrincipal extends Vista {
                 var elemento = {
                     nombre: otherData.nombrepais,
                     imagen: otherData.imagen,
+                    conflictos:otherData.conflictos,
                 };
 
                 // Agregar el elemento al arrayResultado
@@ -410,7 +412,11 @@ export class VistaPrincipal extends Vista {
     this.info.style.animation = 'ocultarTexto 1.5s forwards'
     this.end.style.animation = 'mostrarTexto 4s forwards'
     this.gameStarted = true
+
+    //Cargar niveles y conflictos
     this.cargarFondo(this.niveles[this.nivelActual].imagen)
+    this.generarConflictos()
+
     window.addEventListener('keydown', this.direccion)
     window.addEventListener('touchstart', this.direccion)
     this.intervalo = setInterval(() => this.update(), this.reload)
@@ -516,8 +522,28 @@ export class VistaPrincipal extends Vista {
     elementosGenerados.forEach(elemento => {
       this.tablero.removeChild(elemento);
     });
+    elementosGenerados = this.tablero.querySelectorAll('.conflictos');
+    elementosGenerados.forEach(elemento => {
+      this.tablero.removeChild(elemento);
+    });
     this.personaRecogidas=0
-
+    this.generarConflictos()
+  }
+  generarConflictos(){
+    for(let i =0;i<this.niveles[this.nivelActual].conflictos.length;i++)
+    {
+      let x=this.niveles[this.nivelActual].conflictos[i].x
+      let y=this.niveles[this.nivelActual].conflictos[i].y
+      let conflicto = document.createElement('div')
+      conflicto.className = "conflictos"
+      conflicto.style.width='2%'
+      conflicto.style.height='2%'
+      conflicto.style.position='relative'
+      conflicto.style.left=x+'%'
+      conflicto.style.top=y+'%'
+      conflicto.style.backgroundColor='red'
+      this.tablero.appendChild(conflicto)
+    }
   }
   /**
    * Aplica límites al objeto (imagen) en el juego para que no salga del tablero.
