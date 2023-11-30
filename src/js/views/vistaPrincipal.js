@@ -714,7 +714,6 @@ export class VistaPrincipal extends Vista {
       let conflictos = this.tablero.querySelectorAll('.conflictos');
       let conflicto=conflictos[this.conflictoActual]
       this.conflictoActual++
-      console.log(this.conflictoActual)
       this.score += 50
       this.puntuacion.textContent = '' + this.score;
     
@@ -765,8 +764,7 @@ export class VistaPrincipal extends Vista {
         objeto.classList.add('nobandera');
 
         // Aumenta this.banderasrecogidas al finalizar la animación
-        this.banderasrecogidas++;
-
+        this.banderasRecogidas++;
         // Puedes hacer más acciones aquí después de recoger la bandera
       }
     };
