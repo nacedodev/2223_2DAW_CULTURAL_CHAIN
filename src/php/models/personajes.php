@@ -8,13 +8,11 @@ class Personaje {
     private $conexion;
     public $mensaje;
 
-//    public function __construct($host, $user, $password, $database) {
-//        $dsn = "sqlsrv:Server=$host;Database=$database";
-
+    
     public function __construct($host, $user, $password, $database , $charset)
     {
-        // Normalmente a esta variable se le llama $dsn (Data Source Name / Nombre de origen de datos)
-//        acceder sin seleccionar bd
+      // Normalmente a esta variable se le llama $dsn (Data Source Name / Nombre de origen de datos)
+      //$dsn = "sqlsrv:Server=$host;Database=$database";
         $dsn = "mysql:host=$host;dbname=$database;charset=$charset";
         try {
             // Establecemos la conexión mediante PDO

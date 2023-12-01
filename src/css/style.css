@@ -804,6 +804,18 @@ textarea::placeholder {
     transform: translate(-50%,-50%);
 }
 
+#verificar{
+    text-align: center;
+    position:absolute;
+    bottom:15%;
+    left: 50%;
+    transform: translate(-50%,0);
+    border-radius: 15px;
+    background-color: var(--terciary);
+    padding: 15px;
+    color: var(--primary);
+}
+
 #informacion{
     text-align: center;
     width: 90%;
@@ -944,11 +956,12 @@ body > #nombreapp{
     padding: 15px;
     width: 96%;
     border-radius: 10px;
-    margin: 0 auto 25px;
+    margin: 0 auto 15px;
 }
 
 #add-reflection{
     transition: filter 0.5s ease !important;
+    font-size: 1vw;
 }
 
 #add-reflection:hover{
@@ -1017,12 +1030,23 @@ input:-webkit-autofill {
         border-radius: 5px;
         cursor: pointer;
         transition: background-color 0.3s;
-        margin: 0 auto;
+        margin-left: 20px;
 }
 
 #vistaForm form button:hover ,
 #vistaFormReflexiones form button:hover{
     background-color: var(--terciary);
+}
+
+.remove-reflection{
+    aspect-ratio: 1/1;
+    width: 3%;
+    font-size: 1vw;
+}
+
+#add-reflection{
+    aspect-ratio: 1/1;
+    width: 2.6%;
 }
 
 #over{
