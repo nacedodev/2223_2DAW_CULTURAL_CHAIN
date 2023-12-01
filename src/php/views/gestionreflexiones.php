@@ -1,6 +1,6 @@
 <div id='vistaFormReflexiones' style='flex-direction: column;'>
     <p style="margin:0;color: var(--terciary);font-size: 2vw;font-family: 'Poppins', sans-serif"> <?php echo $_GET['nombrepais']; ?> </p>
-    <div id="cabecera">
+    <div id="cabecera" style>
       <p>Título</p>
       <p>Reflexión</p>
     </div>
@@ -43,6 +43,7 @@
 `;
 
     reflectionsContainer.appendChild(reflectionTemplate);
+
     reflectionTemplate.scrollIntoView({ behavior: "smooth" });
   });
 

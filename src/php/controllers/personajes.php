@@ -39,8 +39,6 @@ class ControladorPersonajes {
                 $imagenTmp = $_FILES['imagenPersonaje']['tmp_name'];
                 $imagenPersonaje = file_get_contents($imagenTmp);
 
-                var_dump($imagenTmp);
-
                 $this->objPersonajes->aniadir($nombre,$pais,$imagenPersonaje);
 
                 header("Location: index.php?action=listarPersonajes&controller=personajes");
@@ -56,6 +54,26 @@ class ControladorPersonajes {
             header("Location: index.php?action=listarPersonajes&controller=personajes&");
             }
         }
+    }
+
+    public function modificarPersonajes() {
+        $this->view='modificarPersonajes';
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        // Lógica para actualizar el centro en la base de datos
+        if ($_FILES['imagenPersonaje']['error'] !== UPLOAD_ERR_NO_FILE) {
+            // Se ha seleccionado un archivo
+            $id = $_POST['id'];
+            $nombre = $_POST['nombre'];
+            $pais = $_POST['pais'];
+            $imagenTmp = $_FILES['imagenPersonaje']['tmp_name'];
+            $imagenPersonaje = file_get_contents($imagenTmp);
+        } else
+        $imagenPersonaje = 0;
+        $this->objPersonajes->modificar($id,$nombre,$pais,$imagenPersonaje);
+
+        header("Location: index.php?action=listarPersonajes&controller=personajes");
+    }
+
     }
 
 }
