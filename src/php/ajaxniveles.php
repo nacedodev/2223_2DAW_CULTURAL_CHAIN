@@ -1,8 +1,9 @@
 <?php 
 require_once 'config/config_db.php';
 $conexion = new mysqli(HOST, USER, PASSWORD, DATABASE);
+$conexion->set_charset("utf8mb4");
 
-// Realiza la consulta a la base de datos (reemplaza con tu consulta)
+// Realiza la consulta a la base de datos (reemplaza con tu consulta
 $query = "SELECT * FROM Nivel";
 $resultado = $conexion->query($query);
 
@@ -43,8 +44,8 @@ while ($fila = $resultado->fetch_assoc()) {
 $conexion->close();
 
 // Devuelve los datos en formato JSON
-header('Content-Type: application/json');
-echo json_encode($data);
+header('Content-Type: application/json; charset=utf-8');
+echo json_encode($data, JSON_UNESCAPED_UNICODE);
 
 // Función para obtener conflictos asociados a un nivel específico
 function obtenerConflictos($conexion, $nivelId) {
@@ -55,7 +56,7 @@ function obtenerConflictos($conexion, $nivelId) {
     while ($conflicto = $resultado->fetch_assoc()) {
         // Procesa los datos del conflicto según tus necesidades
         $conflictos[] = array(
-            'nombre' => $conflicto['nombreconflicto'],
+            'nombre' => utf8_encode($conflicto['nombreconflicto']),
             'x' => $conflicto['posx'],
             'y' => $conflicto['posy'],
         );
@@ -81,6 +82,5 @@ function obtenerReflexiones($conexion, $nivelId) {
             'contenido' => $reflexion['contenido'],
         );
     }
-
     return $reflexiones;
 }

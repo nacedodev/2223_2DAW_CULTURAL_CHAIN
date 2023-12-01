@@ -111,34 +111,38 @@ export class VistaPrincipal extends Vista {
     this.setConfetti(this.clickerMode)
     setInterval(this.mostrarHora, 1000)
   }
-  cargarNiveles(){
+  cargarNiveles() {
     var arrayResultado = []; // Array para almacenar la información estructurada
     $.ajax({
         url: "http://localhost/2324_2DAW_CULTURAL_CHAIN/src/php/ajaxniveles.php",
         type: "GET",
         dataType: "json",
-        success:(data)=>{
-          // Iterar sobre los datos recibidos
+        contentType: "application/json; charset=utf-8",
+        success: (data) => {
+            // Iterar sobre los datos recibidos
             for (var i = 0; i < data.length; i++) {
                 var otherData = data[i].otherData;
+
+                // Parsear el campo imagen con JSON.parse
+                var imagenDecodificada = otherData.imagen;
 
                 // Estructurar los datos
                 var elemento = {
                     nombre: otherData.nombrepais,
-                    imagen: otherData.imagen,
-                    conflictos:otherData.conflictos,
-                    reflexiones:otherData.reflexiones,
+                    imagen: imagenDecodificada,
+                    conflictos: otherData.conflictos,
+                    reflexiones: otherData.reflexiones,
                 };
 
                 // Agregar el elemento al arrayResultado
                 arrayResultado.push(elemento);
             }
             // Ahora, arrayResultado contiene la estructura deseada
-            this.niveles=arrayResultado
-            this.cantidadBanderas=this.niveles[this.nivelActual].conflictos.length
-            console.log(this.niveles)
+            this.niveles = arrayResultado;
+            this.cantidadBanderas = this.niveles[this.nivelActual].conflictos.length;
+            console.log(this.niveles);
         },
-        error: function(xhr, status, error){
+        error: function (status, error) {
             console.error("Error en la solicitud AJAX: " + status + " - " + error);
         }
     });
