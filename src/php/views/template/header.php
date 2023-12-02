@@ -7,7 +7,7 @@
         <link rel="stylesheet" href="../css/style.css">
     </head>
     <body>
-        <nav>
+        <nav id="navbar">
             <ul>
                 <li><a href="index.php"><img id="logo" src="../img/iconos/logo.jpeg"></a></li>
                 <li> <a href="index.php?controller=personajes&action=listarPersonajes">PERSONAJES</a><img src="../img/iconos/basura.png"></li>
@@ -16,3 +16,16 @@
                 <li><a href="index.php?controller=niveles&action=listarNiveles">NIVELES</a></li>
             </ul>
         </nav>
+<script>
+    window.addEventListener('scroll', function() {
+    const navbar = document.getElementById('navbar');
+    const scrolled = window.scrollY > 40; // Cambiar el valor según la posición del scroll
+
+    if (scrolled) {
+        navbar.classList.add('translucent');
+    } else {
+        navbar.classList.remove('translucent');
+    }
+});
+
+</script>

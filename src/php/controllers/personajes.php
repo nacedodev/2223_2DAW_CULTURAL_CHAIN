@@ -26,25 +26,44 @@ class ControladorPersonajes {
      
 
      public function listarPersonajes() {
-        $this->view = 'personajes';
+        $this->view = 'personajesv2';
         return $this->objPersonajes->listar();
     }
 
     public function aniadirPersonajes() {
         $this->view = 'aniadirPersonajes';
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            if (isset($_POST['nombre']) && isset($_FILES['imagenPersonaje']['tmp_name']) && isset($_POST['pais'])) {
+            if (
+                isset($_POST['nombre']) &&
+                isset($_FILES['imagenPersonaje']['tmp_name']) &&
+                isset($_POST['pais'])
+            ) {
                 $nombre = $_POST['nombre'];
                 $pais = $_POST['pais'];
                 $imagenTmp = $_FILES['imagenPersonaje']['tmp_name'];
-                $imagenPersonaje = file_get_contents($imagenTmp);
-
-                $this->objPersonajes->aniadir($nombre,$pais,$imagenPersonaje);
-
-                header("Location: index.php?action=listarPersonajes&controller=personajes");
+    
+                // Limitar el tamaño máximo a 1MB
+                $maxFileSize = 0.5 * 1024 * 1024; // 5 MB en bytes
+    
+                $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif','webp']; // Extensiones permitidas
+    
+                $fileExtension = strtolower(pathinfo($_FILES['imagenPersonaje']['name'], PATHINFO_EXTENSION));
+    
+                if (
+                    $_FILES['imagenPersonaje']['size'] <= $maxFileSize &&
+                    in_array($fileExtension, $allowedExtensions)
+                ) {
+                    $imagenPersonaje = file_get_contents($imagenTmp);
+                    $this->objPersonajes->aniadir($nombre, $pais, $imagenPersonaje);
+                    header("Location: index.php?action=listarPersonajes&controller=personajes");
+                } else {
+                    // Mostrar un mensaje de error si el archivo excede el tamaño permitido o tiene una extensión no permitida
+                    echo "El archivo no es una imagen válida o excede el tamaño permitido";
+                }
             }
         }
     }
+    
 
     public function borrarPersonaje() {
         $this->view='borradoPersonajes';

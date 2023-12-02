@@ -21,8 +21,8 @@
     ?>
            </div>
         </div>
-        <div style="display: flex; align-items: center; position:absolute; bottom:7%;left:50%;transform:translate(-50%,0);filter:drop-shadow(0 0 10px black)">
+        <div style="display: flex; align-items: center; position:absolute; bottom:7%;left:50%;transform:translate(-50%,0);">
             <p style="color: var(--terciary)">LOS NIVELES SIN REFLEXIONES ASIGNADAS APARECERÁN CON EL ICONO</p>
-            <img width='40px' style="margin-left: 15px; filter: drop-shadow(0 0 10px red)" src="../img/iconos/libro-error.png" alt="">
+            <img width='40px' style="margin-left: 15px; filter: drop-shadow(0 0 10px red);filter:drop-shadow(0 0 10px #FF99B0)" src="../img/iconos/libro-error.png" alt="">
         </div>
 
