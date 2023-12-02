@@ -44,6 +44,7 @@ figure > img {
     border-radius: 10px;
     margin: auto;
     display: block;
+    filter: drop-shadow(0 0 6px var(--terciary))
 }
  
 input[type='text'] {
@@ -210,7 +211,7 @@ figure:hover .add-button {
     <div id="dropzone"></div>
         <img  class="personaje" src="" class="personaje" style="display: none;">
     <input type="file" class="file-input">
-    <input id='newname' type="text" value="" class="personaje-input" style="border: 1px dashed var(--terciary);">
+    <input id='newname' type="text" value="" class="personaje-input" style="border: 1px dashed var(--terciary); filter: drop-shadow(0 0 5px var(--terciary))">
     <button class="remove-button" type="button">-</button>
   `;
 
@@ -221,6 +222,7 @@ figure:hover .add-button {
   const newName = document.getElementById('newname')
   newName.addEventListener('blur', function() {
   newName.style.border = '1px dashed #2e2e4b9c';
+  newName.style.filter = 'none'
 });
 
   figureTemplate.scrollIntoView({ behavior: 'smooth' });

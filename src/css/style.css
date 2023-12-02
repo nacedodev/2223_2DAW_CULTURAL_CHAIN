@@ -1210,7 +1210,7 @@ input:-webkit-autofill {
       opacity: 1;
     }
     100% {
-      transform: translateX(-90px) rotate(-50deg) scale(0);
+      transform: translateX(-100px) rotate(-50deg) scale(0);
       opacity: 0;
     }
   }
