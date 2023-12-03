@@ -27,9 +27,6 @@ class Game {
     this.modelNames = new ModeloNames()
     this.ModelConfig = new ModeloConfig()
 
-    // Almacenar nombres iniciales de personajes
-    const nombres = ['Kai', 'Jake', 'Baku', 'Pauline', 'Ayara', 'Logan', 'Manu', 'Eva', 'Nalani', 'Michael']
-    this.almacenarNames(nombres)
 
     // Almacenar configuraciones iniciales
     const configs = ['fácil', 'muted']

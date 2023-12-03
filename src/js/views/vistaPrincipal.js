@@ -17,10 +17,10 @@ export class VistaPrincipal extends Vista {
   constructor (controlador, base) {
     super(controlador, base)
 
+    this.personajes
+    this.cargarPersonajes()
     this.cargarNiveles()
-    
-    this.asignarNames()
-
+  
     const btnRestart = document.getElementById('restart')
     const btnRanking = this.base.querySelectorAll('button')[3]
     const btnSettings = this.base.querySelectorAll('button')[4]
@@ -36,6 +36,7 @@ export class VistaPrincipal extends Vista {
     this.clickerMode = false
     const personajes = this.base.querySelectorAll('.personaje')
     this.divPersonajes = document.getElementById('divderecha')
+    this.divImagenesPersonjanes = document.getElementById('divpersonajes')
     this.titulo = document.getElementById('titulo')
     this.info = this.base.querySelector('#info')
     this.end = this.base.querySelector('#end')
@@ -111,58 +112,19 @@ export class VistaPrincipal extends Vista {
     this.setConfetti(this.clickerMode)
     setInterval(this.mostrarHora, 1000)
   }
-  cargarNiveles() {
-    var arrayResultado = []; // Array para almacenar la información estructurada
-    $.ajax({
-        url: "http://localhost/2324_2DAW_CULTURAL_CHAIN/src/php/ajaxniveles.php",
-        type: "GET",
-        dataType: "json",
-        contentType: "application/json; charset=utf-8",
-        success: (data) => {
-            // Iterar sobre los datos recibidos
-            for (var i = 0; i < data.length; i++) {
-                var otherData = data[i].otherData;
+  asignarNames () {
+    const figcaptions = document.querySelectorAll('figcaption')
 
-                // Parsear el campo imagen con JSON.parse
-                var imagenDecodificada = otherData.imagen;
+    const names = this.controlador.devolverNames()
+    for (let i = 0; i < figcaptions.length; i++) {
+      if (i < names.length) {
+        figcaptions[i].innerText = names[i]
+      } else {
+        figcaptions[i].innerText = ''
+      }
+    }
+  }
 
-                // Estructurar los datos
-                var elemento = {
-                    nombre: otherData.nombrepais,
-                    imagen: imagenDecodificada,
-                    conflictos: otherData.conflictos,
-                    reflexiones: otherData.reflexiones,
-                };
-
-                // Agregar el elemento al arrayResultado
-                arrayResultado.push(elemento);
-            }
-            // Ahora, arrayResultado contiene la estructura deseada
-            this.niveles = arrayResultado;
-            this.cantidadBanderas = this.niveles[this.nivelActual].conflictos.length;
-            console.log(this.niveles);
-        },
-        error: function (status, error) {
-            console.error("Error en la solicitud AJAX: " + status + " - " + error);
-        }
-    });
-  }
-  cargarFondo(imagen){
-    this.tablero.style.backgroundImage = "url('data:image/png;base64,"+imagen+"')"
-  }
-  cambioDificultad(valor) {
-    this.dificultad = valor
-    this.reload=this.dificultad
-    this.cantidadPersonasRecoger()
-  }
-  cantidadPersonasRecoger(){
-    if(this.dificultad==this.velocidadFacil)
-      this.cantidadPersonasNivel=this.cantidadPersonasFacil
-    if(this.dificultad==this.velocidadMedio)
-    this.cantidadPersonasNivel=this.cantidadPersonasMedio
-    if(this.dificultad==this.velocidadDificil)
-    this.cantidadPersonasNivel=this.cantidadPersonasDificil
-  }
   setConfetti = (clicker) => {
     if (clicker) {
       const confetti = new Confetti('logo')
@@ -211,22 +173,9 @@ export class VistaPrincipal extends Vista {
    * @param {Event} evento - El evento del teclado que activa la acción.
   */
   mostrarFormulario = evento => {
-    if (evento.keyCode === 13 && this.showForm) {
+    if (evento.keyCode === 13 && !this.showForm && this.partidaTerminada) {
       this.controlador.overlayForm(this.form)
       this.showForm = false
-    }
-  }
-
-  asignarNames () {
-    const figcaptions = document.querySelectorAll('figcaption')
-
-    const names = this.controlador.devolverNames()
-    for (let i = 0; i < figcaptions.length; i++) {
-      if (i < names.length) {
-        figcaptions[i].innerText = names[i]
-      } else {
-        figcaptions[i].innerText = ''
-      }
     }
   }
 
@@ -289,8 +238,11 @@ export class VistaPrincipal extends Vista {
       while (this.part[0].firstChild) {
         this.part[0].removeChild(this.part[0].firstChild)
       }
-      this.tablero.appendChild(this.reflexion)
-      console.log(this.reflexion)
+      
+      if(this.reflexion)
+        this.tablero.appendChild(this.reflexion)
+      
+
       // Reset the animations and display elements
       this.divIzq.style.animation = 'shortBoard 1s forwards'
       this.divPersonajes.style.animation = 'appearRight 1s forwards'
@@ -430,7 +382,8 @@ export class VistaPrincipal extends Vista {
     this.gameStarted = true
 
     let info = document.getElementById("info")
-    this.tablero.removeChild(info)
+    if(info)
+      this.tablero.removeChild(info)
       
 
     //Cargar niveles y conflictos
@@ -521,83 +474,6 @@ export class VistaPrincipal extends Vista {
       this.recoger()
       this.generacionBanderas()
       this.temp++
-    }
-  }
-  terminarPartida(){
-    let numReflexiones = this.niveles[this.nivelActual].reflexiones.length
-    let numRandom = Math.floor(Math.random() * numReflexiones)
-    let titulo
-    let contenido
-    var parrafo = document.createElement("p")
-
-    if(numReflexiones)
-    {
-      titulo=this.niveles[this.nivelActual].reflexiones[numRandom].titulo
-      contenido=this.niveles[this.nivelActual].reflexiones[numRandom].contenido
-      parrafo.id ="info"
-      parrafo.innerHTML= titulo+"<br>"+contenido
-      this.reflexion = parrafo
-    }
-
-    this.restartGame()
-  }
-  gestionNivel(){
-    if(this.personasRecogidas>=this.cantidadPersonasNivel && this.banderasRecogidas>=this.cantidadBanderas)
-      this.pasarnivel()
-  }
-  pasarnivel(){
-    if(this.nivelActual===this.niveles.length-1)
-      this.nivelActual=-1
-    this.nivelActual++
-    this.nombreapp.textContent = this.niveles[this.nivelActual].nombre
-    this.cargarFondo(this.niveles[this.nivelActual].imagen)
-
-    let elementosGenerados = this.tablero.querySelectorAll('.generado');
-    elementosGenerados.forEach(elemento => {
-      this.tablero.removeChild(elemento);
-    });
-    elementosGenerados = this.tablero.querySelectorAll('.nobandera');
-    elementosGenerados.forEach(elemento => {
-      this.tablero.removeChild(elemento);
-    });
-    elementosGenerados = this.tablero.querySelectorAll('.conflictos');
-    elementosGenerados.forEach(elemento => {
-      this.tablero.removeChild(elemento);
-    });
-
-    this.banderasGeneradas=0
-    this.banderasRecogidas=0
-    this.conflictoActual=1
-    this.cantidadBanderas=this.niveles[this.nivelActual].conflictos.length
-    this.personasRecogidas=0
-    this.generarConflictos()
-  }
-  generarConflictos(){
-    for(let i =0;i<this.niveles[this.nivelActual].conflictos.length;i++)
-    {
-      let x=this.niveles[this.nivelActual].conflictos[i].x
-      let y=this.niveles[this.nivelActual].conflictos[i].y
-      let conflicto = document.createElement('div')
-      let nombre= document.createElement('p')
-      
-      conflicto.className = "conflictos"
-      conflicto.style.width='6%'
-      conflicto.style.height='6%'
-      conflicto.style.position='absolute'
-      conflicto.style.left=x+'%'
-      conflicto.style.top=y+'%'
-      conflicto.style.backgroundImage='url("../src/img/nivel/conflicto.jpg")'
-      conflicto.style.backgroundSize='cover'
-      nombre.className = "conflictos"
-      nombre.style.left=x-1+'%'
-      nombre.style.top=(parseFloat(y) + 3)+'%'
-      nombre.style.color='black'
-      nombre.style.position='absolute'
-      var nombreConflicto = this.niveles[this.nivelActual].conflictos[i].nombre
-      nombre.textContent= nombreConflicto
-
-      this.tablero.appendChild(nombre)
-      this.tablero.appendChild(conflicto)
     }
   }
   /**
@@ -760,7 +636,177 @@ export class VistaPrincipal extends Vista {
       }
     }
   };
-  moverElementoConAnimacion(objeto, destinoX, destinoY, duracion) {
+  /**
+ * Une una imagen al final de la fila en el tablero.
+ * @param {Image} imagen - La imagen que se va a unir.
+ */
+  unir = (imagen) => {
+    this.fila++
+    this.part.push(imagen)
+    this.tablero.appendChild(this.part[this.fila])
+    // Calcular la posición con un espacio entre cada imagen (ajusta el valor según sea necesario)
+    const nuevaPosicionLeft = parseInt(this.part[this.fila - 1].style.left, 10) + this.part[0].offsetWidth
+
+    // Ajustar la posición de la nueva imagen en relación con la imagen anterior
+    this.part[this.fila].style.position = 'absolute'
+    this.part[this.fila].style.left = nuevaPosicionLeft + 'px'
+    this.part[this.fila].style.top = this.part[0].style.top
+    this.part[this.fila].style.animation = 'personaAndando 0.2s infinite'
+
+    this.tablero.appendChild(this.part[this.fila])
+  }
+
+  /**
+ * Crea un hueco en la fila después de un tiempo determinado.
+ */
+  hueco = () => {
+    if (this.temp == this.tiempo + 1) {
+      this.unir(new Image())
+    }
+    if (this.temp == this.tiempo + 2) {
+      this.unir(this.personita)
+    }
+  }
+  cargarNiveles() {
+    var arrayResultado = []; // Array para almacenar la información estructurada
+    $.ajax({
+        url: "http://localhost/2324_2DAW_CULTURAL_CHAIN/src/php/ajaxniveles.php",
+        type: "GET",
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        success: (data) => {
+            // Iterar sobre los datos recibidos
+            for (var i = 0; i < data.length; i++) {
+                var otherData = data[i].otherData;
+
+                // Parsear el campo imagen con JSON.parse
+                var imagenDecodificada = otherData.imagen;
+
+                // Estructurar los datos
+                var elemento = {
+                    nombre: otherData.nombrepais,
+                    imagen: imagenDecodificada,
+                    conflictos: otherData.conflictos,
+                    reflexiones: otherData.reflexiones,
+                };
+
+                // Agregar el elemento al arrayResultado
+                arrayResultado.push(elemento);
+            }
+            // Ahora, arrayResultado contiene la estructura deseada
+            this.niveles = arrayResultado;
+            this.cantidadBanderas = this.niveles[this.nivelActual].conflictos.length;
+        },
+        error: function (status, error) {
+            console.error("Error en la solicitud AJAX: " + status + " - " + error);
+        }
+    });
+  }
+  cargarPersonajes(){
+    var arrayResultado = []; // Array para almacenar la información estructurada
+    $.ajax({
+        url: "http://localhost/2324_2DAW_CULTURAL_CHAIN/src/php/ajaxpersonajes.php",
+        type: "GET",
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        success: (data) => {
+            // Iterar sobre los datos recibidos
+            for (var i = 0; i < data.length; i++) {
+                var otherData = data[i].otherData;
+
+                // Estructurar los datos
+                var elemento = {
+                    nombre: otherData.nombre,
+                    imagen: otherData.imagen,
+                };
+
+                // Agregar el elemento al arrayResultado
+                arrayResultado.push(elemento);
+            }
+            // Ahora, arrayResultado contiene la estructura deseada
+            this.personajes = arrayResultado;
+            this.controlador.almacenarNames(this.cargarNombres())
+            this.aniadirPersonajes()
+            this.asignarNames()
+        },
+        error: function (status, error) {
+            console.error("Error en la solicitud AJAX: " + status + " - " + error);
+        }
+    });
+  }
+  aniadirPersonajes() {
+    this.personajes.forEach((personaje) => {
+        var figure = document.createElement("figure");
+        var img = document.createElement("img");
+        var figcaption = document.createElement("figcaption");
+        
+        img.src = "data:image/png;base64," + personaje.imagen;
+        img.className = "personaje";
+        
+        figure.appendChild(img);
+        figure.appendChild(figcaption);
+        
+        this.divImagenesPersonjanes.appendChild(figure);
+    });
+}
+  cargarNombres(){
+    let resultado = []
+    for(let i = 0 ;i<this.personajes.length;i++)
+    {
+      resultado.push(this.personajes[i].nombre)
+    }
+    return resultado
+  }
+
+  cargarFondo(imagen){
+    this.tablero.style.backgroundImage = "url('data:image/png;base64,"+imagen+"')"
+  }
+  cambioDificultad(valor) {
+    this.dificultad = valor
+    this.reload=this.dificultad
+    this.cantidadPersonasRecoger()
+  }
+  cantidadPersonasRecoger(){
+    if(this.dificultad==this.velocidadFacil)
+      this.cantidadPersonasNivel=this.cantidadPersonasFacil
+    if(this.dificultad==this.velocidadMedio)
+    this.cantidadPersonasNivel=this.cantidadPersonasMedio
+    if(this.dificultad==this.velocidadDificil)
+    this.cantidadPersonasNivel=this.cantidadPersonasDificil
+  }
+  detectarColision = () => {
+    let punto = [];
+
+    punto[0] = document.elementFromPoint(
+        this.part[0].getBoundingClientRect().left + this.part[0].offsetWidth,
+        this.part[0].getBoundingClientRect().top + this.part[0].offsetHeight
+    );
+    punto[1] = document.elementFromPoint(
+        this.part[0].getBoundingClientRect().left + this.part[0].offsetWidth,
+        this.part[0].getBoundingClientRect().top
+    );
+    punto[2] = document.elementFromPoint(
+        this.part[0].getBoundingClientRect().left,
+        this.part[0].getBoundingClientRect().top + this.part[0].offsetHeight
+    );
+    punto[3] = document.elementFromPoint(
+        this.part[0].getBoundingClientRect().left,
+        this.part[0].getBoundingClientRect().top
+    );
+    punto[4] = document.elementFromPoint(
+      this.part[0].getBoundingClientRect().left + this.part[0].offsetWidth/2,
+        this.part[0].getBoundingClientRect().top + this.part[0].offsetHeight/2
+  );
+
+    for (let i = 0; i < 5; i++) {
+        if (punto[i] && punto[i].classList.contains('generado') || punto[i].classList.contains('bandera')) {
+            return punto[i];
+        }
+    }
+
+    return false;
+}
+moverElementoConAnimacion(objeto, destinoX, destinoY, duracion) {
     let inicioX = parseFloat(objeto.style.left) || 0;
     let inicioY = parseFloat(objeto.style.top) || 0;
     let startTime;
@@ -801,68 +847,82 @@ export class VistaPrincipal extends Vista {
 
     requestAnimationFrame(animar);
   }
-  
-  /**
- * Une una imagen al final de la fila en el tablero.
- * @param {Image} imagen - La imagen que se va a unir.
- */
-  unir = (imagen) => {
-    this.fila++
-    this.part.push(imagen)
-    this.tablero.appendChild(this.part[this.fila])
-    // Calcular la posición con un espacio entre cada imagen (ajusta el valor según sea necesario)
-    const nuevaPosicionLeft = parseInt(this.part[this.fila - 1].style.left, 10) + this.part[0].offsetWidth
+terminarPartida(){
+  let numReflexiones = this.niveles[this.nivelActual].reflexiones.length
+  let numRandom = Math.floor(Math.random() * numReflexiones)
+  let titulo
+  let contenido
+  var parrafo = document.createElement("p")
 
-    // Ajustar la posición de la nueva imagen en relación con la imagen anterior
-    this.part[this.fila].style.position = 'absolute'
-    this.part[this.fila].style.left = nuevaPosicionLeft + 'px'
-    this.part[this.fila].style.top = this.part[0].style.top
-    this.part[this.fila].style.animation = 'personaAndando 0.2s infinite'
-
-    this.tablero.appendChild(this.part[this.fila])
+  if(numReflexiones)
+  {
+    titulo=this.niveles[this.nivelActual].reflexiones[numRandom].titulo
+    contenido=this.niveles[this.nivelActual].reflexiones[numRandom].contenido
+    parrafo.id ="info"
+    parrafo.innerHTML= titulo+"<br>"+contenido
+    this.reflexion = parrafo
   }
 
-  /**
- * Crea un hueco en la fila después de un tiempo determinado.
- */
-  hueco = () => {
-    if (this.temp == this.tiempo + 1) {
-      this.unir(new Image())
-    }
-    if (this.temp == this.tiempo + 2) {
-      this.unir(this.personita)
-    }
+  this.partidaTerminada = true
+  this.restartGame()
+}
+gestionNivel(){
+  if(this.personasRecogidas>=this.cantidadPersonasNivel && this.banderasRecogidas>=this.cantidadBanderas)
+    this.pasarnivel()
+}
+pasarnivel(){
+  if(this.nivelActual===this.niveles.length-1)
+    this.nivelActual=-1
+  this.nivelActual++
+  this.nombreapp.textContent = this.niveles[this.nivelActual].nombre
+  this.cargarFondo(this.niveles[this.nivelActual].imagen)
+
+  let elementosGenerados = this.tablero.querySelectorAll('.generado');
+  elementosGenerados.forEach(elemento => {
+    this.tablero.removeChild(elemento);
+  });
+  elementosGenerados = this.tablero.querySelectorAll('.nobandera');
+  elementosGenerados.forEach(elemento => {
+    this.tablero.removeChild(elemento);
+  });
+  elementosGenerados = this.tablero.querySelectorAll('.conflictos');
+  elementosGenerados.forEach(elemento => {
+    this.tablero.removeChild(elemento);
+  });
+
+  this.banderasGeneradas=0
+  this.banderasRecogidas=0
+  this.conflictoActual=1
+  this.cantidadBanderas=this.niveles[this.nivelActual].conflictos.length
+  this.personasRecogidas=0
+  this.generarConflictos()
+}
+generarConflictos(){
+  for(let i =0;i<this.niveles[this.nivelActual].conflictos.length;i++)
+  {
+    let x=this.niveles[this.nivelActual].conflictos[i].x
+    let y=this.niveles[this.nivelActual].conflictos[i].y
+    let conflicto = document.createElement('div')
+    let nombre= document.createElement('p')
+    
+    conflicto.className = "conflictos"
+    conflicto.style.width='6%'
+    conflicto.style.height='6%'
+    conflicto.style.position='absolute'
+    conflicto.style.left=x+'%'
+    conflicto.style.top=y+'%'
+    conflicto.style.backgroundImage='url("../src/img/nivel/conflicto.jpg")'
+    conflicto.style.backgroundSize='cover'
+    nombre.className = "conflictos"
+    nombre.style.left=x-1+'%'
+    nombre.style.top=(parseFloat(y) + 3)+'%'
+    nombre.style.color='black'
+    nombre.style.position='absolute'
+    var nombreConflicto = this.niveles[this.nivelActual].conflictos[i].nombre
+    nombre.textContent= nombreConflicto
+
+    this.tablero.appendChild(nombre)
+    this.tablero.appendChild(conflicto)
   }
-  detectarColision = () => {
-    let punto = [];
-
-    punto[0] = document.elementFromPoint(
-        this.part[0].getBoundingClientRect().left + this.part[0].offsetWidth,
-        this.part[0].getBoundingClientRect().top + this.part[0].offsetHeight
-    );
-    punto[1] = document.elementFromPoint(
-        this.part[0].getBoundingClientRect().left + this.part[0].offsetWidth,
-        this.part[0].getBoundingClientRect().top
-    );
-    punto[2] = document.elementFromPoint(
-        this.part[0].getBoundingClientRect().left,
-        this.part[0].getBoundingClientRect().top + this.part[0].offsetHeight
-    );
-    punto[3] = document.elementFromPoint(
-        this.part[0].getBoundingClientRect().left,
-        this.part[0].getBoundingClientRect().top
-    );
-    punto[4] = document.elementFromPoint(
-      this.part[0].getBoundingClientRect().left + this.part[0].offsetWidth/2,
-        this.part[0].getBoundingClientRect().top + this.part[0].offsetHeight/2
-  );
-
-    for (let i = 0; i < 5; i++) {
-        if (punto[i] && punto[i].classList.contains('generado') || punto[i].classList.contains('bandera')) {
-            return punto[i];
-        }
-    }
-
-    return false;
 }
 }
