@@ -26,8 +26,38 @@ class ControladorPersonajes {
      
 
      public function listarPersonajes() {
-        $this->view = 'personajesv2';
+        $this->view = 'gestionpersonajes';
         return $this->objPersonajes->listar();
+    }
+
+    public function gestionarPersonajes()
+    {
+        $this->view = 'gestionpersonajes';
+    
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if (isset($_FILES['imagenPersonajes']) && isset($_POST['nombres'])) {
+                $imagenes = $_FILES['imagenPersonajes'];
+                $nombres = $_POST['nombres'];
+
+                $imagenes = array_filter($imagenes);
+                $nombres = array_filter($nombres);
+    
+                if (!empty($imagenes) && !empty($nombres)) {
+                    // Si hay elementos después de la filtración, se añaden las nuevas reflexiones>borrar();
+                    $this->objPersonajes->aniadir($imagenes, $nombres);
+                } else {
+                    // Si ambos arrays están vacíos, se borran todas las reflexiones asociadas al nivel
+                    $this->objPersonajes->borrar();
+                }
+            } else {
+                // Si no se envían los arrays 'titulos' y 'contenidos', se borran todas las reflexiones asociadas al nivel
+                $this->objPersonajes->borrar();
+            }
+        }
+
+        $personajes = $this->objPersonajes->listar();
+    
+        return $personajes;
     }
 
     public function aniadirPersonajes() {

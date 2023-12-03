@@ -57,12 +57,4 @@ class ControladorReflexiones {
     return $reflexiones;
 }
 
-     
-
-
-    public function borrarReflexiones()
-    {
-        $this->view = 'reflexiones';
-        $this->objReflexiones->borrar($_GET['nivel_id']);
-            }
 }

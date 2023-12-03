@@ -1,5 +1,6 @@
 <?php
-
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 /**
  * Clase para la manipulación de datos relacionados con los centros.
  */
@@ -30,21 +31,28 @@ class Personaje {
      * @param string $imagenPersonaje 
      */
 
-    public function aniadir($nombre, $pais, $imagenPersonaje)
+    public function aniadir(array $imagenes, array $nombres)
     {
-        try {
-            $sql = 'INSERT INTO Personaje (nombre, pais, imagenPersonaje) VALUES (?, ?, ?)';
-            $consulta = $this->conexion->prepare($sql);
-
-            // Preparar los statement placeholders una vez fuera del bucle
-            $consulta->bindParam(1, $nombre, PDO::PARAM_STR);
-            $consulta->bindParam(2, $pais, PDO::PARAM_STR);
-            $consulta->bindParam(3, $imagenPersonaje, PDO::PARAM_LOB);
-            
-            $consulta->execute();
-           
+            try {
+                $this->conexion->beginTransaction();
+                $sql = 'INSERT INTO Personaje (nombre, imagenPersonaje) VALUES (?, ?)';
+                $consulta = $this->conexion->prepare($sql);
+                $consulta->bindParam(1, $nombre, PDO::PARAM_STR);
+                $consulta->bindParam(2, $imagenBinaria, PDO::PARAM_LOB);
+                
+                // Iterar sobre los nombres e imágenes para insertar cada personaje
+                foreach ($nombres as $index => $nombre) {
+                    // Obtener el contenido binario de la imagen
+                    $imagenTmp = $imagenes['tmp_name'][$index];
+                    $imagenBinaria = file_get_contents($imagenTmp);
+                    // Vincular los parámetros y ejecutar la consulta preparada
+                    $consulta->execute();
+                }
+            // Confirmar la transacción si todo salió bien
+            $this->conexion->commit();
         } catch (PDOException $e) {
             // Si ocurre un error, revertir la transacción y manejar la excepción
+            $this->conexion->rollBack();
             if ($e->getCode() === '23000') {
                 // Código de error para violación de clave única
                 echo 'Nombre duplicado: ya existe un registro con ese nombre';
@@ -53,20 +61,14 @@ class Personaje {
                 echo 'Error al añadir el centro: ' . $e->getMessage();
             }
         }
-    }
-
-    public function borrar(int $id)
+}
+    public function borrar()
     {
         try {
-            $sql = "DELETE FROM Personaje WHERE id = ?";
+            $sql = "DELETE FROM Personaje";
             $consulta = $this->conexion->prepare($sql);
-            $consulta->bindParam(1, $id, PDO::PARAM_INT);
             $consulta->execute();
 
-            // // Verificar si se eliminó alguna fila
-            // if ($consulta->rowCount() === 0) {
-            //     echo 'No se encontró ningún personaje con el ID proporcionado';
-            // }
         } catch (PDOException $e) {
             if ($e->getCode() === '23000') {
                 // Código de error para violación de clave foránea
@@ -92,9 +94,9 @@ class Personaje {
                 return [];
             }
 
-            $reflexiones = $consulta->fetchAll(PDO::FETCH_ASSOC);
+            $personajes = $consulta->fetchAll(PDO::FETCH_ASSOC);
 
-            return $reflexiones; // Devolver los datos de los personajes
+            return $personajes; // Devolver los datos de los personajes
         } catch (PDOException $e) {
             echo 'Error al listar los centros: ' . $e->getMessage();
             return [];

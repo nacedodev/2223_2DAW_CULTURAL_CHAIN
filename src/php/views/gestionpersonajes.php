@@ -8,6 +8,10 @@ div {
   justify-content: flex-start; /* Alineación a la izquierda */
 }
 
+input:-webkit-autofill {
+    -webkit-text-fill-color: var(--secondary) !important;
+}
+
 /* Estilos para cada figura */
 figure {
     position: relative;
@@ -46,6 +50,17 @@ figure > img {
     display: block;
     filter: drop-shadow(0 0 6px var(--terciary))
 }
+
+#dropzone p{
+  width: 95%;
+  color: var(--terciary);
+  font-size: 0.6vw;
+  text-align: center;
+  position: absolute;
+  top:45%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+}
  
 input[type='text'] {
   background-color: transparent; /* O puedes usar 'initial' */
@@ -78,11 +93,26 @@ figcaption {
     box-shadow: none;
 }
 
-#add-btn button{
+#addButton{
     background-color: var(--terciary);
     padding:4%;
     border-radius: 10px;
     aspect-ratio: 1/1;
+}
+
+#sendButton{
+  background-color: var(--secondary);
+  color: var(--terciary);
+  padding: 3% 6%;
+  border-radius: 10px;
+  margin-top: 25px;
+  font-size: 1.1vw;
+}
+
+#sendButton:hover{
+  background-color: var(--terciary);
+  filter: drop-shadow(0 0 5px var(--terciary));
+  color: var(--secondary);
 }
 
 /* Estilos para el botón '+' */
@@ -119,59 +149,20 @@ figure:hover .add-button {
 
 
 </style>
-<form style="background: transparent;">
+<form enctype="multipart/form-data" style="background: transparent;" action="index.php?action=gestionarPersonajes&controller=personajes" method="post">
 <div id="figures-container">
                     
-                    <figure class="figure-container" data-image="">
-                        <img id="Baku" src="../img/personajes/person002.png" class="personaje">
-                        <input type="file" class="file-input">
-                        <input type="text" value="Baku" class="personaje-input">
-                        <button class="remove-button" type="button">-</button>
-                    </figure>
-                    <figure class="figure-container" data-image="">
-                        <img id="Pauline" src="../img/personajes/person003.png" class="personaje">
-                        <input type="file" class="file-input">
-                        <input type="text" value="Baku" class="personaje-input">
-                        <button class="remove-button" type="button">-</button>
-                    </figure>
-                    <figure class="figure-container" data-image="">
-                        <img id="Ayara" src="../img/personajes/person004.png" class="personaje">
-                        <input type="file" class="file-input">
-                        <input type="text" value="Baku" class="personaje-input">
-                        <button class="remove-button" type="button">-</button>
-                    </figure>
-                    <figure class="figure-container" data-image="">
-                        <img id="Logan" src="../img/personajes/person005.png" class="personaje">
-                        <input type="file" class="file-input">
-                        <input type="text" value="Baku" class="personaje-input">
-                        <button class="remove-button" type="button">-</button>
-                    </figure>
-                    <figure class="figure-container" data-image="">
-                        <img id="Manu" src="../img/personajes/person006.png" class="personaje">
-                        <input type="file" class="file-input">
-                        <input type="text" value="Baku" class="personaje-input">
-                        <button class="remove-button" type="button">-</button>
-                    </figure>
-                    <figure class="figure-container" data-image="">
-                        <img id="Eva" src="../img/personajes/person007.png" class="personaje">
-                        <input type="file" class="file-input">
-                        <input type="text" value="Baku" class="personaje-input">
-                        <button class="remove-button" type="button">-</button>
-                    </figure>
-                    <figure class="figure-container" data-image="">
-                        <img id="Nalani" src="../img/personajes/person008.png" class="personaje">
-                        <input type="file" class="file-input">
-                        <input type="text" value="Baku" class="personaje-input">
-                        <button class="remove-button" type="button">-</button>
-                    </figure>
-                    <figure class="figure-container" data-image="">
-                        <img id="Paul" src="../img/personajes/person009.png" class="personaje">
-                        <input type="file" class="file-input">
-                        <input type="text" value="Baku" class="personaje-input">
-                        <button class="remove-button" type="button">-</button>
-                    </figure>
+                      <?php foreach ($dataToView['data'] as $personaje) :?>
+                          <figure class="figure-container" data-image="">
+                              <img src="data:image/png;base64,<?php $imagen = new Personaje(HOST,USER,PASSWORD,DATABASE, CHARSET); echo $imagen->obtenerImagenPorId($personaje['id']);?>" class="personaje">
+                              <input type="file" class="file-input" id="imagenPersonajes" name="imagenPersonajes[]">
+                              <input type="text" value="<?php echo $personaje['nombre']; ?>" class="personaje-input" name="nombres[]">
+                              <button class="remove-button" type="button">-</button>
+                          </figure>
+                      <?php endforeach; ?>
                     <figure id="add-btn">
                         <button id="addButton"type='button'>+</button>
+                        <button id="sendButton" type="submit">Enviar</button>
                     </figure>
   </div>
 </form>
@@ -208,10 +199,12 @@ figure:hover .add-button {
   figureTemplate.classList.add('figure-container');
 
   figureTemplate.innerHTML = `
-    <div id="dropzone"></div>
+    <div id="dropzone">
+      <p>Arrastra o haz click</p>
+    </div>
         <img  class="personaje" src="" class="personaje" style="display: none;">
-    <input type="file" class="file-input">
-    <input id='newname' type="text" value="" class="personaje-input" style="border: 1px dashed var(--terciary); filter: drop-shadow(0 0 5px var(--terciary))">
+    <input type="file" class="file-input" name="imagenPersonajes[]">
+    <input id='newname' type="text" value="" class="personaje-input" name="nombres[]" style="border: 1px dashed var(--terciary); filter: drop-shadow(0 0 5px var(--terciary))">
     <button class="remove-button" type="button">-</button>
   `;
 
@@ -219,10 +212,13 @@ figure:hover .add-button {
   const addButton = figuresContainer.querySelector('#add-btn');
   figuresContainer.insertBefore(figureTemplate, addButton);
 
-  const newName = document.getElementById('newname')
+  const newNameInputs = document.querySelectorAll('.personaje-input');
+
+newNameInputs.forEach(newName => {
   newName.addEventListener('blur', function() {
-  newName.style.border = '1px dashed #2e2e4b9c';
-  newName.style.filter = 'none'
+    newName.style.border = '1px dashed #2e2e4b9c';
+    newName.style.filter = 'none';
+  });
 });
 
   figureTemplate.scrollIntoView({ behavior: 'smooth' });
@@ -231,24 +227,30 @@ figure:hover .add-button {
   const newImageContainer = figureTemplate;
 
   newFileInput.addEventListener('change', function (e) {
-    const file = e.target.files[0];
-    const dropdiv =document.getElementById('dropzone')
+  const file = e.target.files[0];
+  const dropdivs = document.querySelectorAll('#dropzone'); // Selecciona todos los dropzone
 
-    if (file) {
-      const reader = new FileReader();
+  if (file) {
+    const reader = new FileReader();
 
-      reader.onload = function (event) {
-        const imageURL = event.target.result;
-        const img = newImageContainer.querySelector('.personaje');
-        img.src = imageURL;
-        dropdiv.style.display = 'none'
-        img.style.display = 'block'
-        newImageContainer.setAttribute('data-image', imageURL);
-      };
+    reader.onload = function (event) {
+      const imageURL = event.target.result;
+      const img = newImageContainer.querySelector('.personaje');
+      img.src = imageURL;
 
-      reader.readAsDataURL(file);
-    }
-  });
+      // Oculta todos los dropzone encontrados
+      dropdivs.forEach(dropdiv => {
+        dropdiv.style.display = 'none';
+      });
+
+      img.style.display = 'block';
+      img.style.pointerEvents = 'none';
+      newImageContainer.setAttribute('data-image', imageURL);
+    };
+
+    reader.readAsDataURL(file);
+  }
+});
 });
 
 document.getElementById('figures-container').addEventListener('click', function(event) {
