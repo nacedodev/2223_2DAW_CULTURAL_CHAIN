@@ -5,7 +5,7 @@ require_once '../php/models/administracion.php';
  */
 class ControladorAdministracion {
 
-    /** @var Centro Objeto para la manipulación de centros. */
+    /** @var Administracion Objeto para la manipulación de centros. */
     public $objAdministracion;
      /** @var string Página actual del controlador. */
     public $pagina;

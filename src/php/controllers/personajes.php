@@ -33,59 +33,54 @@ class ControladorPersonajes {
     public function gestionarPersonajes()
     {
         $this->view = 'gestionpersonajes';
+        
+        // Definir el tamaño máximo en bytes (por ejemplo, 2MB = 2 * 1024 * 1024 bytes)
+        $tamanioMaximo = 0.5 * 1024 * 1024; // Cambiar este valor según tu necesidad
+        $extensionesValidas = array("jpg", "jpeg", "png", "gif","webp"); // Extensiones permitidas
     
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (isset($_FILES['imagenPersonajes']) && isset($_POST['nombres'])) {
                 $imagenes = $_FILES['imagenPersonajes'];
                 $nombres = $_POST['nombres'];
-
+    
+                $imagenes = array_filter($imagenes);
+                $nombres = array_filter($nombres);
+    
                 if (!empty($imagenes) && !empty($nombres)) {
-
-                    $this->objPersonajes->aniadir($imagenes, $nombres);
-                }
-        }
-
-    }
-    $personajes = $this->objPersonajes->listar();
-
-    return $personajes;
-    }
-
-    public function aniadirPersonajes() {
-        $this->view = 'aniadirPersonajes';
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            if (
-                isset($_POST['nombre']) &&
-                isset($_FILES['imagenPersonaje']['tmp_name']) &&
-                isset($_POST['pais'])
-            ) {
-                $nombre = $_POST['nombre'];
-                $pais = $_POST['pais'];
-                $imagenTmp = $_FILES['imagenPersonaje']['tmp_name'];
+                    foreach ($imagenes['size'] as $indice => $tamanio) {
+                        $nombreArchivo = $imagenes['name'][$indice];
+                        $extension = strtolower(pathinfo($nombreArchivo, PATHINFO_EXTENSION)); // Obtener la extensión del archivo
     
-                // Limitar el tamaño máximo a 1MB
-                $maxFileSize = 0.5 * 1024 * 1024; // 5 MB en bytes
-    
-                $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif','webp']; // Extensiones permitidas
-    
-                $fileExtension = strtolower(pathinfo($_FILES['imagenPersonaje']['name'], PATHINFO_EXTENSION));
-    
-                if (
-                    $_FILES['imagenPersonaje']['size'] <= $maxFileSize &&
-                    in_array($fileExtension, $allowedExtensions)
-                ) {
-                    $imagenPersonaje = file_get_contents($imagenTmp);
-                    $this->objPersonajes->aniadir($nombre, $pais, $imagenPersonaje);
-                    header("Location: index.php?action=listarPersonajes&controller=personajes");
-                } else {
-                    // Mostrar un mensaje de error si el archivo excede el tamaño permitido o tiene una extensión no permitida
-                    echo "El archivo no es una imagen válida o excede el tamaño permitido";
+                        // Verificar si la extensión es válida y el tamaño no excede el límite
+                        if (in_array($extension, $extensionesValidas) && $tamanio <= $tamanioMaximo) {
+                            $this->objPersonajes->aniadir($imagenes, $nombres);
+                        } elseif (!in_array($extension, $extensionesValidas) && $tamanio > $tamanioMaximo) {
+                            // Mensaje para archivo que no cumple ni tamaño ni extensión
+                            $mensaje = "La imagen $nombreArchivo no es válida , excede el tamaño permitido y no tiene una extensión válida ( ". implode(", ", $extensionesValidas).").";
+                            header("Location: index.php?controller=personajes&action=gestionarPersonajes&mensaje=$mensaje");
+                            exit;
+                        } elseif (!in_array($extension, $extensionesValidas)) {
+                            // Mensaje de error para extensión no válida
+                            $mensaje = "La imagen $nombreArchivo tiene una extensión no válida. Asegúrate de subir archivos de imagen con extensiones: " . implode(", ", $extensionesValidas);
+                            header("Location: index.php?controller=personajes&action=gestionarPersonajes&mensaje=$mensaje");
+                            exit;
+                        } elseif ($tamanio > $tamanioMaximo) {
+                            // Mensaje de error para tamaño excedido
+                            $mensaje = "La imagen $nombreArchivo excede el tamaño permitido.";
+                            header("Location: index.php?controller=personajes&action=gestionarPersonajes&mensaje=$mensaje");
+                            exit;
+                        }
+                    }
                 }
             }
         }
+    
+        $personajes = $this->objPersonajes->listar();
+    
+        return $personajes;
     }
     
-
+        
     public function borrarPersonaje() {
         $this->view='gestionpersonajes';
              if (isset($_GET['id'])) {
@@ -94,51 +89,53 @@ class ControladorPersonajes {
             }
         }
 
+        public function modificarPersonajes()
+        {
+            $this->view = 'modificarPersonajes';
+        
+            // Definir el tamaño máximo en bytes (por ejemplo, 2MB = 2 * 1024 * 1024 bytes)
+            $tamanioMaximo = 0.5 * 1024 * 1024; // Cambiar este valor según tu necesidad
+            $extensionesValidas = array("jpg", "jpeg", "png", "gif","webp"); // Extensiones permitidas
+        
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                // Lógica para actualizar el personaje en la base de datos
+                $id = $_POST['id'];
+                $nombre = $_POST['nombre'];
+                
+                if ($_FILES['imagenPersonaje']['error'] !== UPLOAD_ERR_NO_FILE) {
+                    // Se ha seleccionado un archivo
+                    $imagenTmp = $_FILES['imagenPersonaje']['tmp_name'];
+                    $tamanioImagen = $_FILES['imagenPersonaje']['size'];
+                    $extensionImagen = strtolower(pathinfo($_FILES['imagenPersonaje']['name'], PATHINFO_EXTENSION));
+        
+                    // Verificar si la extensión es válida y el tamaño no excede el límite
+                    if (in_array($extensionImagen, $extensionesValidas) && $tamanioImagen <= $tamanioMaximo) {
+                        $imagenPersonaje = file_get_contents($imagenTmp);
+                        $this->objPersonajes->modificar($id, $nombre, $imagenPersonaje);
+                        header("Location: index.php?action=gestionarPersonajes&controller=personajes");
+                    } elseif (!in_array($extensionImagen, $extensionesValidas) && $tamanioImagen > $tamanioMaximo) {
+                        // Mensaje para imagen que no cumple ni tamaño ni extensión
+                        $mensaje = "La imagen ".$_FILES['imagenPersonaje']['name']." no es válida , excede el tamaño permitido y no tiene una extensión válida ( ". implode(", ", $extensionesValidas).").";
+                        header("Location: index.php?action=modificarPersonajes&controller=personajes&id=$id&nombre=$nombre&mensaje=$mensaje");
+                        exit();
 
-    // public function modificarPersonajes() {
-    //     $this->view='gestionPersonajes';
-    //     // Lógica para actualizar el centro en la base de datos
-    //     var_dump($_FILES);
-    //     if(isset($_FILES['imagenNueva'])){
-    //     if ($_FILES['imagenPersonaje']['error'] !== UPLOAD_ERR_NO_FILE) {
-    //         // Se ha seleccionado un archivo
-    //         $id = $_POST['id'];
-    //         $imagenTmp = $_FILES['imagenPersonaje']['tmp_name'];
-    //         $imagenPersonaje = file_get_contents($imagenTmp);
-    //     } else
-    //     $imagenPersonaje = 0;
-    //     $this->objPersonajes->modificarImagen($id,$imagenPersonaje);
 
-    //     header("Location: index.php?action=gestinarPersonajes&controller=personajes");
-    // }
-    // if(isset($_GET['nombre'])){
-    //     $id = $_GET['id'];
-    //     $nombre = $_GET['nombre'];
-
-    //     $this->objPersonajes->modificarNombre($id,$nombre);
-    //     header("Location: index.php?action=gestionarPersonajes&controller=personajes");
-    // }
-    // }
-    public function modificarPersonajes() {
-        $this->view='modificarPersonajes';
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        // Lógica para actualizar el centro en la base de datos
-        $id = $_POST['id'];
-        $nombre = $_POST['nombre'];
-        if ($_FILES['imagenPersonaje']['error'] !== UPLOAD_ERR_NO_FILE) {
-            // Se ha seleccionado un archivo
-            $imagenTmp = $_FILES['imagenPersonaje']['tmp_name'];
-            $imagenPersonaje = file_get_contents($imagenTmp);
-        } else {
-        $imagenPersonaje = 0;
+                    } elseif (!in_array($extensionImagen, $extensionesValidas)) {
+                        // Mensaje de error para extensión no válida
+                        $mensaje = "La imagen seleccionada tiene una extensión no válida. Asegúrate de subir archivos de imagen con extensiones: " . implode(", ", $extensionesValidas);
+                    } elseif ($tamanioImagen > $tamanioMaximo) {
+                        // Mensaje de error para tamaño excedido
+                        $mensaje = "La imagen seleccionada excede el tamaño permitido.";
+                    }
+                } else {
+                    // No se ha seleccionado una nueva imagen, modificar solo el nombre
+                    $imagenPersonaje = 0;
+                    $this->objPersonajes->modificar($id, $nombre, $imagenPersonaje);
+                    header("Location: index.php?action=gestionarPersonajes&controller=personajes");
+                }
+            }
         }
-
-        $this->objPersonajes->modificar($id,$nombre,$imagenPersonaje);
-
-        header("Location: index.php?action=gestionarPersonajes&controller=personajes");
-    }
-
-    }
+        
 
     }
 

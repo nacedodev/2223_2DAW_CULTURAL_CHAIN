@@ -1,6 +1,4 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
 /**
  * Clase para la manipulación de datos relacionados con los centros.
  */
@@ -34,10 +32,10 @@ class Personaje {
      public function aniadir(array $imagenes, array $nombres)
      {
          try {
-     
              // Obtener todos los personajes existentes
              $personajesExistentes = $this->listar();
-     
+             
+             $this->conexion->beginTransaction(); 
              // Iterar sobre los nombres e imágenes para insertar cada personaje
              foreach ($nombres as $index => $nombre) {
                  $imagenTmp = $imagenes['tmp_name'][$index];
@@ -64,10 +62,10 @@ class Personaje {
                      $consulta->execute();
                  }
              }
-     
+             $this->conexion->commit(); 
              // Confirmar la transacción si todo salió bien
          } catch (PDOException $e) {
-             // Manejar excepciones
+            $this->conexion->rollBack();
          }
      }
      

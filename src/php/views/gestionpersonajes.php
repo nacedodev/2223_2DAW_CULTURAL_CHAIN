@@ -158,25 +158,32 @@ figure:hover .add-button {
     transform: translate(-50%, -50%);
     cursor: pointer;
   }
-
-
-
+  #error-edit{
+  text-align: center;
+  color: var(--terciary);
+  font-size: 1vw;
+  margin-top:40px;
+  filter: drop-shadow(0 0 3px black);
+}
 </style>
+<?php if(isset($_GET['mensaje'])): ?>
+        <p id="error-edit"><?php echo $_GET['mensaje']; ?></p>
+    <?php endif; ?>
 <form enctype="multipart/form-data" style="background: transparent;" action="index.php?action=gestionarPersonajes&controller=personajes" method="post">
 <div id="figures-container">
-                      <?php foreach ($dataToView['data'] as $personaje) : ?>
-                          <figure class="figure-container" data-image="">
-                              <img src="data:image/png;base64,<?php $imagen = new Personaje(HOST,USER,PASSWORD,DATABASE, CHARSET); echo $imagen->obtenerImagenPorId($personaje['id']);?>" class="personaje" name="imagenPersonajes[]">
-                              <input type="hidden" name="imagenExistentes[]" value="<?php echo $imagen->obtenerImagenPorId($personaje['id']); ?>">
-                              <input type="text" value="<?php echo $personaje['nombre']; ?>" class="personaje-input" readonly>
-                              <button class="remove-button" type="button" onclick="window.location.href = 'index.php?controller=personajes&action=borrarPersonaje&id=<?php echo $personaje['id']?>&nombre=<?php echo $personaje['nombre']?>'">-</button>
-                              <button class="edit-button" type="button" onclick="window.location.href = 'index.php?controller=personajes&action=modificarPersonajes&id=<?php echo $personaje['id']?>&nombre=<?php echo $personaje['nombre'] ?>'"><img width="85%"src="../img/iconos/edit.png" style="pointer-events:none" alt="/"></button>
-                          </figure>
-                      <?php endforeach; ?>
-                    <figure id="add-btn">
-                        <button id="addButton"type='button'>+</button>
-                        <button id="sendButton" type="submit">Enviar</button>
-                    </figure>
+          <?php foreach ($dataToView['data'] as $personaje) : ?>
+              <figure class="figure-container" data-image="">
+                  <img src="data:image/png;base64,<?php $imagen = new Personaje(HOST,USER,PASSWORD,DATABASE, CHARSET); echo $imagen->obtenerImagenPorId($personaje['id']);?>" class="personaje" name="imagenPersonajes[]">
+                  <input type="hidden" name="imagenExistentes[]" value="<?php echo $imagen->obtenerImagenPorId($personaje['id']); ?>">
+                  <input type="text" value="<?php echo $personaje['nombre']; ?>" class="personaje-input" readonly>
+                  <button class="remove-button" type="button" onclick="window.location.href = 'index.php?controller=personajes&action=borrarPersonaje&id=<?php echo $personaje['id']?>&nombre=<?php echo $personaje['nombre']?>'">-</button>
+                  <button class="edit-button" type="button" onclick="window.location.href = 'index.php?controller=personajes&action=modificarPersonajes&id=<?php echo $personaje['id']?>&nombre=<?php echo $personaje['nombre'] ?>'"><img width="85%"src="../img/iconos/edit.png" style="pointer-events:none" alt="/"></button>
+              </figure>
+          <?php endforeach; ?>
+        <figure id="add-btn">
+            <button id="addButton"type='button'>+</button>
+            <button id="sendButton" type="submit">Enviar</button>
+        </figure>
   </div>
 </form>
 <script>
@@ -195,6 +202,7 @@ figure:hover .add-button {
         reader.onload = function(event) {
           const imageURL = event.target.result;
           const img = imageContainer.querySelector('.personaje');
+          
           img.src = imageURL;
           imageContainer.setAttribute('data-image', imageURL);
         }
@@ -243,28 +251,38 @@ newNameInputs.forEach(newName => {
   newFileInput.addEventListener('change', function (e) {
   const file = e.target.files[0];
   const dropdivs = document.querySelectorAll('#dropzone'); // Selecciona todos los dropzone
-
+  
   if (file) {
     const reader = new FileReader();
-
+    
     reader.onload = function (event) {
       const imageURL = event.target.result;
       const img = newImageContainer.querySelector('.personaje');
-      img.src = imageURL;
-
+      
+      if (!file.type.startsWith('image/')) {
+        // Ruta de la imagen por defecto
+        const defaultImageURL = '../img/iconos/doc.png';
+        img.style.objectFit = 'contain';
+        img.src = defaultImageURL;
+        newImageContainer.setAttribute('data-image', defaultImageURL);
+      } else {
+        img.src = imageURL;
+        newImageContainer.setAttribute('data-image', imageURL);
+      }
+      
       // Oculta todos los dropzone encontrados
       dropdivs.forEach(dropdiv => {
         dropdiv.style.display = 'none';
       });
-
+      
       img.style.display = 'block';
       img.style.pointerEvents = 'none';
-      newImageContainer.setAttribute('data-image', imageURL);
     };
-
+    
     reader.readAsDataURL(file);
   }
 });
+
 });
 
 document.getElementById('figures-container').addEventListener('click', function(event) {
