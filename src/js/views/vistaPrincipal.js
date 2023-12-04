@@ -42,6 +42,7 @@ export class VistaPrincipal extends Vista {
     this.divIzq = document.getElementById('divizquierda')
     this.gameStarted = false
     this.clickerMode = false
+    const personajes = this.base.querySelectorAll('.personaje')
     this.divPersonajes = document.getElementById('divderecha')
     this.divImagenesPersonjanes = document.getElementById('divpersonajes')
     this.titulo = document.getElementById('titulo')
@@ -778,12 +779,9 @@ cargarPersonajes() {
 
             // Ahora, arrayResultado contiene la estructura deseada
             this.personajes = arrayResultado;
-
-            // Almacenar nombres y realizar acciones relacionadas con la carga de personajes
-            this.controlador.almacenarNames(this.cargarNombres());
-            this.aniadirPersonajes();
-            this.listapersonajes = this.base.querySelectorAll('.personaje');
-            this.asignarNames();
+            this.controlador.almacenarNames(this.cargarNombres())
+            this.aniadirPersonajes()
+            this.asignarNames()
         },
         error: function (status, error) {
             console.error("Error en la solicitud AJAX: " + status + " - " + error);
