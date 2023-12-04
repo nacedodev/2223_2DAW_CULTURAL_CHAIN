@@ -24,7 +24,7 @@ class Administracion {
             // Configuración para que PDO lance excepciones en errores
             $this->conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $e) {
-            echo 'Error de conexión: ' . $e->getMessage();
+            $this->mensajes = 'Error de conexión: ' . $e->getMessage();
         }
     }
      /* Añade nuevas reflexiones a la base de datos.
