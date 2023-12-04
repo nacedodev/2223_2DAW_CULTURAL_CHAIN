@@ -37,9 +37,6 @@ export class VistaPrincipal extends Vista {
     this.gameStarted = false
     this.clickerMode = false
     
-    this.selectCentros = document.getElementById('centro')
-    this.selectLocalidades = document.getElementById('localidad')
-
     this.divPersonajes = document.getElementById('divderecha')
     this.divImagenesPersonjanes = document.getElementById('divpersonajes')
     this.titulo = document.getElementById('titulo')
@@ -356,6 +353,7 @@ export class VistaPrincipal extends Vista {
 
     //Establecer el nombre del nivel
     this.nombreapp.textContent = this.niveles[this.nivelActual].nombre.toUpperCase()
+    this.nombreapp.textContent = this.niveles[this.nivelActual].nombre.toUpperCase()
 
     // Obtener las coordenadas del evento de soltar en relación con el tablero
 
@@ -436,6 +434,10 @@ export class VistaPrincipal extends Vista {
     if (event.key == 'a' && this.dir != 2) this.dir = 4
 
     // Verifica si el evento es táctil
+    if(event.touches && !this.showForm && this.partidaTerminada) {
+      this.controlador.overlayForm(this.form)
+      this.showForm = false
+    }
     if(event.touches && !this.showForm && this.partidaTerminada) {
       this.controlador.overlayForm(this.form)
       this.showForm = false
@@ -530,15 +532,23 @@ export class VistaPrincipal extends Vista {
       // Convierte la colección de imágenes en un array
       var arrayDeImagenes = Array.from(imagenes);
 
+       // Obtén todos los elementos img dentro del div
+      var imagenes = this.divImagenesPersonjanes.getElementsByTagName('img');
+
+      // Convierte la colección de imágenes en un array
+      var arrayDeImagenes = Array.from(imagenes);
+
       // Crear un nuevo elemento img en lugar de div
       const nuevaImagen = document.createElement('img')
       nuevaImagen.style.width = '2.3%'
       nuevaImagen.style.animation = 'personaQuieta 3s infinite'
 
       const numeroAleatorio = Math.floor(Math.random() * arrayDeImagenes.length)
+      const numeroAleatorio = Math.floor(Math.random() * arrayDeImagenes.length)
 
       // Crear la URL de la imagen utilizando el número formateado
 
+      nuevaImagen.src = arrayDeImagenes[numeroAleatorio].src
       nuevaImagen.src = arrayDeImagenes[numeroAleatorio].src
 
       // Establecer el estilo del borde de la nueva imagen
@@ -713,6 +723,10 @@ export class VistaPrincipal extends Vista {
               personaje.addEventListener('dragstart', this.dragStart)
               personaje.addEventListener('dragend', this.dragEnd)
             })
+            this.listapersonajes.forEach(personaje => {
+              personaje.addEventListener('dragstart', this.dragStart)
+              personaje.addEventListener('dragend', this.dragEnd)
+            })
         },
         error: function (status, error) {
             console.error("Error en la solicitud AJAX: " + status + " - " + error);
@@ -747,6 +761,9 @@ export class VistaPrincipal extends Vista {
 
             this.listapersonajes = this.base.querySelectorAll('.personaje')
             
+
+            this.listapersonajes = this.base.querySelectorAll('.personaje')
+            
             this.asignarNames()
         },
         error: function (status, error) {
@@ -754,71 +771,21 @@ export class VistaPrincipal extends Vista {
         }
     });
   }
-  cargarCentros() {
-    var arrayResultado = []; // Array para almacenar la información estructurada
-
-    $.ajax({
-        url: "http://localhost/2324_2DAW_CULTURAL_CHAIN/src/php/ajaxcentros.php",
-        type: "GET",
-        dataType: "json",
-        contentType: "application/json; charset=utf-8",
-        success: (data) => {
-            // Iterar sobre los datos recibidos
-            for (var i = 0; i < data.length; i++) {
-                var otherData = data[i].otherData;
-
-                // Estructurar los datos
-                var elemento = {
-                    nombre: otherData.nombre,
-                    localidad: otherData.localidad,
-                };
-
-                // Agregar el elemento al arrayResultado
-                arrayResultado.push(elemento);
-
-                // Verificar si la localidad ya está en el arrayLocalidades
-                if (!this.arrayLocalidades.includes(elemento.localidad)) {
-                    // Si no está, agregarla al arrayLocalidades
-                    this.arrayLocalidades.push(elemento.localidad);
-                }
-            }
-
-            // Filtrar arrayResultado para obtener solo los centros
-            this.arrayCentros = arrayResultado.map((elemento) => elemento.nombre);
-            this.aniadirOptions()
-        },
-        error: function (status, error) {
-            console.error("Error en la solicitud AJAX: " + status + " - " + error);
-        }
+  aniadirPersonajes() {
+    this.personajes.forEach((personaje,i) => {
+        var figure = document.createElement("figure");
+        var img = document.createElement("img");
+        var figcaption = document.createElement("figcaption");
+        
+        img.src = "data:image/png;base64," + personaje.imagen;
+        img.className = "personaje";
+        img.id = this.personajes[i].nombre
+        
+        figure.appendChild(img);
+        figure.appendChild(figcaption);
+        
+        this.divImagenesPersonjanes.appendChild(figure);
     });
-}
-aniadirOptions(){
-  // Añadir opciones al select de centros
-  for (var i = 0; i < this.arrayCentros.length; i++) {
-    this.selectCentros.innerHTML += "<option>"+this.arrayCentros[i]+"</option>"
-    console.log("hola")
-  }
-
-  // Añadir opciones al select de localidades
-  for (var i = 0; i < this.arrayLocalidades.length; i++) {
-    this.selectLocalidades.innerHTML += "<option>"+this.arrayLocalidades[i]+"</option>"
-}
-}
-aniadirPersonajes() {
-  this.personajes.forEach((personaje,i) => {
-      var figure = document.createElement("figure");
-      var img = document.createElement("img");
-      var figcaption = document.createElement("figcaption");
-      
-      img.src = "data:image/png;base64," + personaje.imagen;
-      img.className = "personaje";
-      img.id = this.personajes[i].nombre
-      
-      figure.appendChild(img);
-      figure.appendChild(figcaption);
-      
-      this.divImagenesPersonjanes.appendChild(figure);
-  });
 }
   cargarNombres(){
     let resultado = []
