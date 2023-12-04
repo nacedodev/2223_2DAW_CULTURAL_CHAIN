@@ -19,6 +19,7 @@ export class VistaPrincipal extends Vista {
 
     this.personajes
     this.cargarPersonajes()
+    this.cargarCentros()
     this.cargarNiveles()
 
     const btnRestart = document.getElementById('restart')
@@ -36,6 +37,9 @@ export class VistaPrincipal extends Vista {
     this.gameStarted = false
     this.clickerMode = false
     
+    this.selectCentros = document.getElementById('centro')
+    this.selectLocalidades = document.getElementById('localidad')
+
     this.divPersonajes = document.getElementById('divderecha')
     this.divImagenesPersonjanes = document.getElementById('divpersonajes')
     this.titulo = document.getElementById('titulo')
@@ -72,6 +76,10 @@ export class VistaPrincipal extends Vista {
     this.banderasRecogidas=0
     this.cantidadBanderas=0
     this.conflictoActual=1
+
+    //Centros
+    this.arrayCentros = []
+    this.arrayLocalidades = []
 
     this.puntuacion = document.getElementById('puntuacion')
     this.posX
@@ -746,21 +754,71 @@ export class VistaPrincipal extends Vista {
         }
     });
   }
-  aniadirPersonajes() {
-    this.personajes.forEach((personaje,i) => {
-        var figure = document.createElement("figure");
-        var img = document.createElement("img");
-        var figcaption = document.createElement("figcaption");
-        
-        img.src = "data:image/png;base64," + personaje.imagen;
-        img.className = "personaje";
-        img.id = this.personajes[i].nombre
-        
-        figure.appendChild(img);
-        figure.appendChild(figcaption);
-        
-        this.divImagenesPersonjanes.appendChild(figure);
+  cargarCentros() {
+    var arrayResultado = []; // Array para almacenar la información estructurada
+
+    $.ajax({
+        url: "http://localhost/2324_2DAW_CULTURAL_CHAIN/src/php/ajaxcentros.php",
+        type: "GET",
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        success: (data) => {
+            // Iterar sobre los datos recibidos
+            for (var i = 0; i < data.length; i++) {
+                var otherData = data[i].otherData;
+
+                // Estructurar los datos
+                var elemento = {
+                    nombre: otherData.nombre,
+                    localidad: otherData.localidad,
+                };
+
+                // Agregar el elemento al arrayResultado
+                arrayResultado.push(elemento);
+
+                // Verificar si la localidad ya está en el arrayLocalidades
+                if (!this.arrayLocalidades.includes(elemento.localidad)) {
+                    // Si no está, agregarla al arrayLocalidades
+                    this.arrayLocalidades.push(elemento.localidad);
+                }
+            }
+
+            // Filtrar arrayResultado para obtener solo los centros
+            this.arrayCentros = arrayResultado.map((elemento) => elemento.nombre);
+            this.aniadirOptions()
+        },
+        error: function (status, error) {
+            console.error("Error en la solicitud AJAX: " + status + " - " + error);
+        }
     });
+}
+aniadirOptions(){
+  // Añadir opciones al select de centros
+  for (var i = 0; i < this.arrayCentros.length; i++) {
+    this.selectCentros.innerHTML += "<option>"+this.arrayCentros[i]+"</option>"
+    console.log("hola")
+  }
+
+  // Añadir opciones al select de localidades
+  for (var i = 0; i < this.arrayLocalidades.length; i++) {
+    this.selectLocalidades.innerHTML += "<option>"+this.arrayLocalidades[i]+"</option>"
+}
+}
+aniadirPersonajes() {
+  this.personajes.forEach((personaje,i) => {
+      var figure = document.createElement("figure");
+      var img = document.createElement("img");
+      var figcaption = document.createElement("figcaption");
+      
+      img.src = "data:image/png;base64," + personaje.imagen;
+      img.className = "personaje";
+      img.id = this.personajes[i].nombre
+      
+      figure.appendChild(img);
+      figure.appendChild(figcaption);
+      
+      this.divImagenesPersonjanes.appendChild(figure);
+  });
 }
   cargarNombres(){
     let resultado = []
