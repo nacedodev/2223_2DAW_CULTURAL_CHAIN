@@ -804,7 +804,11 @@ nav li {
   transition: filter 0.3s ease;
 }
 
-nav li:hover:not(:first-child) {
+ #menu li:hover:not(:first-child) {
+    filter: drop-shadow(0 0 0.4em var(--terciary));
+  }
+  
+ #submenu li:hover {
     filter: drop-shadow(0 0 0.4em var(--terciary));
   }
 
@@ -823,7 +827,7 @@ nav #logo{
     margin:0;
 }
 
-nav li:first-child{
+#menu li:first-child{
     margin:0;
     background-color: transparent;
     margin-left: 20px;
@@ -832,6 +836,17 @@ nav li:first-child{
 }
 #submenu{
     display: none;
+    animation: appearAnimation 1s ease-out forwards;
+}
+@keyframes appearAnimation {
+    from {
+        opacity: 0;
+        transform: translateY(-100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 body > #hora{
@@ -1584,6 +1599,7 @@ input:-webkit-autofill {
 
         #menu:hover + #submenu {
             display: block;
+
          
         }
         #submenu:hover {
