@@ -1043,12 +1043,11 @@ input:-webkit-autofill {
         border: none;
         border-radius: 5px;
         cursor: pointer;
-        transition: background-color 0.3s;
         margin-left: 20px;
 }
 
-#vistaForm form button:hover ,
-#vistaFormReflexiones form button:hover{
+#vistaForm form button:hover 
+{
     background-color: var(--terciary);
 }
 
@@ -1200,7 +1199,15 @@ input:-webkit-autofill {
         filter: drop-shadow(0 0 0.7em #000000);
     }
     100% {
-        filter: drop-shadow(0 0 0.8em lightgreen);
+        filter: drop-shadow(0 0 0.7em lightgreen);
+    }
+} 
+@keyframes deleteIndicator {
+    0% {
+        filter: none;
+    }
+    100% {
+        filter: drop-shadow(0 0 0.8em #f44d4d);
     }
 } 
 
@@ -1210,6 +1217,18 @@ input:-webkit-autofill {
     }
     50%{
         filter:drop-shadow(0 0 0.8em var(--terciary));
+    }
+    100%{
+        filter:none;
+    }
+}
+
+@keyframes warningAnimationRef{
+    0%{
+        filter: none;
+    }
+    50%{
+        filter:drop-shadow(0 0 0.5em var(--terciary));
     }
     100%{
         filter:none;

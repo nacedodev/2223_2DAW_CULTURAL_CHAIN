@@ -74,7 +74,7 @@ input[type='text'] {
   margin-bottom: 20px;
   border: 1px dashed rgba(46, 46, 75, 0.84);
   font-family: 'Poppins', sans-serif;
-  font-size: 16px;
+  font-size: 1.2vw;
   /* Otros estilos para el texto del nombre del personaje */
 }
 

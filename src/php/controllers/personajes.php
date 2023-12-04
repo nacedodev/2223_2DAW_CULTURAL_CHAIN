@@ -74,13 +74,20 @@ class ControladorPersonajes {
     }
     
         
-    public function borrarPersonaje() {
-        $this->view='gestionpersonajes';
-             if (isset($_GET['id'])) {
-            $this->objPersonajes->borrar($_GET['id']);
+    public function borrarPersonajes()
+    {
+        $this->view = 'gestionpersonajes';
+        
+        if (isset($_GET['ids'])) {
+            $idsString = $_GET['ids']; // Obtener los IDs como una cadena desde la URL
+            $ids = explode(',', $idsString);
+            // Llamar al método borrar del modelo y pasarle la cadena de IDs
+            $this->objPersonajes->borrar($ids);
+    
             header("Location: index.php?action=gestionarPersonajes&controller=personajes");
-            }
         }
+    }
+    
 
         public function modificarPersonajes()
         {

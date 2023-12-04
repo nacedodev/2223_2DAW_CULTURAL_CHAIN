@@ -72,7 +72,7 @@ input[type='text'] {
   margin-bottom: 20px;
   border: 1px dashed rgba(46, 46, 75, 0.84);
   font-family: 'Poppins', sans-serif;
-  font-size: 16px;
+  font-size: 1.2vw;
   /* Otros estilos para el texto del nombre del personaje */
 }
 
@@ -93,7 +93,8 @@ figcaption {
     box-shadow: none;
 }
 
-#addButton{
+#addButton,
+#revertFigures{
   display: flex;
   align-items: center;
   justify-content: center;
@@ -104,12 +105,14 @@ figcaption {
     aspect-ratio: 1/1;
 }
 
-#addButton img{
+#addButton img,
+#revertFigures img{
   aspect-ratio: 1/1;
   width:70%;
 }
 
-#sendButton{
+#sendButton,
+#deleteFigures{
   background-color: var(--secondary);
   color: var(--terciary);
   padding: 3% 6%;
@@ -118,7 +121,8 @@ figcaption {
   font-size: 1.1vw;
 }
 
-#sendButton:hover{
+#sendButton:hover,
+#deleteFigures:hover{
   background-color: var(--terciary);
   filter: drop-shadow(0 0 5px var(--terciary));
   color: var(--secondary);
@@ -131,7 +135,8 @@ figure:hover .add-button {
   display: block;
 }
 
-.remove-button {
+.remove-button,
+.delete-button{
     position: absolute;
     top: 10px; /* Ajusta la distancia desde la parte superior */
     right: 10px; /* Ajusta la distancia desde la parte derecha */
@@ -183,22 +188,56 @@ figure:hover .add-button {
           <?php foreach ($dataToView['data'] as $personaje) : ?>
               <figure class="figure-container" data-image="">
                   <img src="data:image/png;base64,<?php $imagen = new Personaje(HOST,USER,PASSWORD,DATABASE, CHARSET); echo $imagen->obtenerImagenPorId($personaje['id']);?>" class="personaje" name="imagenPersonajes[]">
-                  <input type="hidden" name="imagenExistentes[]" value="<?php echo $imagen->obtenerImagenPorId($personaje['id']); ?>">
                   <input type="text" value="<?php echo $personaje['nombre']; ?>" class="personaje-input" readonly>
-                  <button class="remove-button" type="button" onclick="window.location.href = 'index.php?controller=personajes&action=borrarPersonaje&id=<?php echo $personaje['id']?>&nombre=<?php echo $personaje['nombre']?>'">-</button>
+                  <input type="hidden" value="<?php echo $personaje['id'] ?>">
+                  <button class="delete-button" type="button">-</button>
                   <button class="edit-button" type="button" onclick="window.location.href = 'index.php?controller=personajes&action=modificarPersonajes&id=<?php echo $personaje['id']?>&nombre=<?php echo $personaje['nombre'] ?>'"><img width="85%"src="../img/iconos/edit.png" style="pointer-events:none" alt="/"></button>
               </figure>
           <?php endforeach; ?>
         <figure id="add-btn">
             <button id="addButton"type='button'><img src="../img/iconos/aniadir.png" alt="+"></button>
-            <button id="sendButton" type="submit">Enviar</button>
+            <button id="sendButton" type="submit">ENVIAR</button>
+            <button id="revertFigures" type="button" style="display:none;" onclick="window.location.href = 'index.php?controller=personajes&action=gestionarPersonajes'"><img src="../img/iconos/undo.png" alt="<-"></button>
+            <button id="deleteFigures" type="button" style="display:none;">BORRAR</button>
         </figure>
   </div>
 </form>
 <script>
   const fileInputs = document.querySelectorAll('.file-input');
   const imageContainers = document.querySelectorAll('.figure-container');
+  const sendBtn = document.getElementById('sendButton')
+  const addBtn = document.getElementById('addButton')
+  const deleteBtn = document.getElementById('deleteFigures')
+  const revertBtn = document.getElementById('revertFigures')
 
+  document.getElementById('figures-container').addEventListener('click', function(event) {
+  if (event.target.classList.contains('delete-button')) {
+    const figureContainer = event.target.closest('figure');
+    figureContainer.classList.add('marked-for-deletion'); // Marcar para borrar
+    figureContainer.style.animation = 'deleteIndicator 0.8s forwards';
+    sendBtn.style.display = 'none'
+    addBtn.style.display = 'none'
+    deleteBtn.style.display = 'block'
+    revertBtn.style.display = 'flex'
+  }
+});
+
+document.getElementById('deleteFigures').addEventListener('click', function() {
+  const figuresToDelete = document.querySelectorAll('.marked-for-deletion');
+
+  const idsParaBorrar = [];
+
+  figuresToDelete.forEach(figure => {
+    const id = figure.querySelector('input[type="hidden"]').value;
+    idsParaBorrar.push(id);
+  });
+
+  // Construir la URL con los IDs como parámetros
+  const url = `index.php?controller=personajes&action=borrarPersonajes&ids=${idsParaBorrar}`;
+
+  // Redirigir a la página de borrado con los IDs en la URL
+  window.location.href = url;
+});
 
   fileInputs.forEach((input, index) => {
     input.addEventListener('change', function(e) {

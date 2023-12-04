@@ -59,24 +59,35 @@ class Personaje {
      }
      
      
-     public function borrar(int $id)
-    {
-        try {
-            $sql = "DELETE FROM Personaje WHERE id = ?";
-            $consulta = $this->conexion->prepare($sql);
-            $consulta->bindParam(1, $id, PDO::PARAM_INT);
-            $consulta->execute();
-
+     public function borrar(array $ids)
+     {
+         try {
+             $this->conexion->beginTransaction();
      
-        } catch (PDOException $e) {
-            if ($e->getCode() === '23000') {
-                // Código de error para violación de clave foránea
-                echo 'El centro tiene valores asociados en otras tablas';
-            } else {
-                echo 'Error al eliminar el centro: ' . $e->getMessage();
-            }
-        }
-    }
+             $sql = "DELETE FROM Personaje WHERE id = ?";
+             $consulta = $this->conexion->prepare($sql);
+             $consulta->bindParam(1, $id, PDO::PARAM_INT);
+     
+             $index = 0;
+             $totalIDs = count($ids);
+     
+             while ($index < $totalIDs) {
+                 $id = $ids[$index];
+                 $consulta->execute();
+                 $index++;
+             }
+     
+             $this->conexion->commit();
+         } catch (PDOException $e) {
+             $this->conexion->rollBack();
+             if ($e->getCode() === '23000') {
+                 echo 'Error al eliminar el personaje: tiene valores asociados en otras tablas';
+             } else {
+                 echo 'Error al eliminar el personaje: ' . $e->getMessage();
+             }
+         }
+     }
+     
      /**
      * Lista todos los personajes registrados en la base de datos.
      *
