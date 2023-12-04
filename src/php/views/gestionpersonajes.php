@@ -135,6 +135,19 @@ figure:hover .add-button {
     cursor: pointer;
   }
 
+  .edit-button{
+    position: absolute;
+    top: 10px; /* Ajusta la distancia desde la parte superior */
+    left: 10px; /* Ajusta la distancia desde la parte derecha */
+    background-color: var(--terciary);
+    padding:2%;
+    width: 8%;
+    border-radius: 5px;
+    aspect-ratio: 1/1;
+    font-size: 0.4vw;
+    cursor: pointer; 
+  }
+
   .file-input {
     position: absolute;
     opacity: 0;
@@ -151,13 +164,13 @@ figure:hover .add-button {
 </style>
 <form enctype="multipart/form-data" style="background: transparent;" action="index.php?action=gestionarPersonajes&controller=personajes" method="post">
 <div id="figures-container">
-                    
-                      <?php foreach ($dataToView['data'] as $personaje) :?>
+                      <?php foreach ($dataToView['data'] as $personaje) : ?>
                           <figure class="figure-container" data-image="">
-                              <img src="data:image/png;base64,<?php $imagen = new Personaje(HOST,USER,PASSWORD,DATABASE, CHARSET); echo $imagen->obtenerImagenPorId($personaje['id']);?>" class="personaje">
-                              <input type="file" class="file-input" id="imagenPersonajes" name="imagenPersonajes[]">
-                              <input type="text" value="<?php echo $personaje['nombre']; ?>" class="personaje-input" name="nombres[]">
-                              <button class="remove-button" type="button">-</button>
+                              <img src="data:image/png;base64,<?php $imagen = new Personaje(HOST,USER,PASSWORD,DATABASE, CHARSET); echo $imagen->obtenerImagenPorId($personaje['id']);?>" class="personaje" name="imagenPersonajes[]">
+                              <input type="hidden" name="imagenExistentes[]" value="<?php echo $imagen->obtenerImagenPorId($personaje['id']); ?>">
+                              <input type="text" value="<?php echo $personaje['nombre']; ?>" class="personaje-input" readonly>
+                              <button class="remove-button" type="button" onclick="window.location.href = 'index.php?controller=personajes&action=borrarPersonaje&id=<?php echo $personaje['id']?>&nombre=<?php echo $personaje['nombre']?>'">-</button>
+                              <button class="edit-button" type="button" onclick="window.location.href = 'index.php?controller=personajes&action=modificarPersonajes&id=<?php echo $personaje['id']?>&nombre=<?php echo $personaje['nombre'] ?>'"><img width="85%"src="../img/iconos/edit.png" style="pointer-events:none" alt="/"></button>
                           </figure>
                       <?php endforeach; ?>
                     <figure id="add-btn">
@@ -169,6 +182,7 @@ figure:hover .add-button {
 <script>
   const fileInputs = document.querySelectorAll('.file-input');
   const imageContainers = document.querySelectorAll('.figure-container');
+
 
   fileInputs.forEach((input, index) => {
     input.addEventListener('change', function(e) {
@@ -263,4 +277,10 @@ document.getElementById('figures-container').addEventListener('click', function(
   }
 });
 
+document.getElementById('figures-container').addEventListener('click', function(event) {
+  if (event.target.classList.contains('edit-button')) {
+   const figureContainer = event.target.closest('figure');
+    figureContainer.style.animation = 'editAnimation 0.3s forwards';
+  }
+});
 </script>

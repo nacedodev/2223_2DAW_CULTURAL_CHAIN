@@ -31,44 +31,58 @@ class Personaje {
      * @param string $imagenPersonaje 
      */
 
-    public function aniadir(array $imagenes, array $nombres)
-    {
-            try {
-                $this->conexion->beginTransaction();
-                $sql = 'INSERT INTO Personaje (nombre, imagenPersonaje) VALUES (?, ?)';
-                $consulta = $this->conexion->prepare($sql);
-                $consulta->bindParam(1, $nombre, PDO::PARAM_STR);
-                $consulta->bindParam(2, $imagenBinaria, PDO::PARAM_LOB);
-                
-                // Iterar sobre los nombres e imágenes para insertar cada personaje
-                foreach ($nombres as $index => $nombre) {
-                    // Obtener el contenido binario de la imagen
-                    $imagenTmp = $imagenes['tmp_name'][$index];
-                    $imagenBinaria = file_get_contents($imagenTmp);
-                    // Vincular los parámetros y ejecutar la consulta preparada
-                    $consulta->execute();
-                }
-            // Confirmar la transacción si todo salió bien
-            $this->conexion->commit();
-        } catch (PDOException $e) {
-            // Si ocurre un error, revertir la transacción y manejar la excepción
-            $this->conexion->rollBack();
-            if ($e->getCode() === '23000') {
-                // Código de error para violación de clave única
-                echo 'Nombre duplicado: ya existe un registro con ese nombre';
-            } else {
-                // Otro tipo de error
-                echo 'Error al añadir el centro: ' . $e->getMessage();
-            }
-        }
-}
-    public function borrar()
+     public function aniadir(array $imagenes, array $nombres)
+     {
+         try {
+     
+             // Obtener todos los personajes existentes
+             $personajesExistentes = $this->listar();
+     
+             // Iterar sobre los nombres e imágenes para insertar cada personaje
+             foreach ($nombres as $index => $nombre) {
+                 $imagenTmp = $imagenes['tmp_name'][$index];
+                 $imagenBinaria = file_get_contents($imagenTmp);
+                 $existeEnBD = false;
+     
+                 // Verificar si el personaje existe en la base de datos
+                 foreach ($personajesExistentes as $personaje) {
+                     if ($personaje['nombre'] === $nombre) {
+                         $existeEnBD = true;
+                         break;
+                     }
+                 }
+     
+                 // Si el personaje existe en la base de datos, actualizar su información
+                 if ($existeEnBD) {
+                     
+                 } else {
+                     // Si el personaje no existe en la base de datos, añadirlo
+                     $sql = 'INSERT INTO Personaje (nombre, imagenPersonaje) VALUES (?, ?)';
+                     $consulta = $this->conexion->prepare($sql);
+                     $consulta->bindParam(1, $nombre, PDO::PARAM_STR);
+                     $consulta->bindParam(2, $imagenBinaria, PDO::PARAM_LOB);
+                     $consulta->execute();
+                 }
+             }
+     
+             // Confirmar la transacción si todo salió bien
+         } catch (PDOException $e) {
+             // Manejar excepciones
+         }
+     }
+     
+     public function borrar(int $id)
     {
         try {
-            $sql = "DELETE FROM Personaje";
+            $sql = "DELETE FROM Personaje WHERE id = ?";
             $consulta = $this->conexion->prepare($sql);
+            $consulta->bindParam(1, $id, PDO::PARAM_INT);
             $consulta->execute();
 
+            // // Verificar si se eliminó alguna fila
+            // if ($consulta->rowCount() === 0) {
+            //     echo 'No se encontró ningún personaje con el ID proporcionado';
+            // }
         } catch (PDOException $e) {
             if ($e->getCode() === '23000') {
                 // Código de error para violación de clave foránea
@@ -119,18 +133,16 @@ class Personaje {
         }
     }
 
-    public function modificar($id, $nombre, $pais, $imagen) {
+    public function modificar($id, $nombre, $imagen) {
         if (!empty($imagen)) {
-            $query = "UPDATE Personaje SET nombre = :nombre, pais = :pais, imagenPersonaje = :imagen WHERE id = :id";
+            $query = "UPDATE Personaje SET nombre = :nombre, imagenPersonaje = :imagen WHERE id = :id";
             $statement = $this->conexion->prepare($query);
             $statement->bindParam(':nombre', $nombre);
-            $statement->bindParam(':pais', $pais);
             $statement->bindParam(':imagen', $imagen);
         } else {
-            $query = "UPDATE Personaje SET nombre = :nombre, pais = :pais WHERE id = :id";
+            $query = "UPDATE Personaje SET nombre = :nombre WHERE id = :id";
             $statement = $this->conexion->prepare($query);
             $statement->bindParam(':nombre', $nombre);
-            $statement->bindParam(':pais', $pais);
         }
         
         $statement->bindParam(':id', $id);
@@ -138,6 +150,7 @@ class Personaje {
         
         return $resultado;
     }
+    
     
     
     

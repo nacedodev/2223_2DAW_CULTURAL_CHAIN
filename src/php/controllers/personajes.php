@@ -39,25 +39,16 @@ class ControladorPersonajes {
                 $imagenes = $_FILES['imagenPersonajes'];
                 $nombres = $_POST['nombres'];
 
-                $imagenes = array_filter($imagenes);
-                $nombres = array_filter($nombres);
-    
                 if (!empty($imagenes) && !empty($nombres)) {
-                    // Si hay elementos después de la filtración, se añaden las nuevas reflexiones>borrar();
+
                     $this->objPersonajes->aniadir($imagenes, $nombres);
-                } else {
-                    // Si ambos arrays están vacíos, se borran todas las reflexiones asociadas al nivel
-                    $this->objPersonajes->borrar();
                 }
-            } else {
-                // Si no se envían los arrays 'titulos' y 'contenidos', se borran todas las reflexiones asociadas al nivel
-                $this->objPersonajes->borrar();
-            }
         }
 
-        $personajes = $this->objPersonajes->listar();
-    
-        return $personajes;
+    }
+    $personajes = $this->objPersonajes->listar();
+
+    return $personajes;
     }
 
     public function aniadirPersonajes() {
@@ -96,33 +87,58 @@ class ControladorPersonajes {
     
 
     public function borrarPersonaje() {
-        $this->view='borradoPersonajes';
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $this->view='gestionpersonajes';
              if (isset($_GET['id'])) {
             $this->objPersonajes->borrar($_GET['id']);
-            header("Location: index.php?action=listarPersonajes&controller=personajes&");
+            header("Location: index.php?action=gestionarPersonajes&controller=personajes");
             }
         }
-    }
 
+
+    // public function modificarPersonajes() {
+    //     $this->view='gestionPersonajes';
+    //     // Lógica para actualizar el centro en la base de datos
+    //     var_dump($_FILES);
+    //     if(isset($_FILES['imagenNueva'])){
+    //     if ($_FILES['imagenPersonaje']['error'] !== UPLOAD_ERR_NO_FILE) {
+    //         // Se ha seleccionado un archivo
+    //         $id = $_POST['id'];
+    //         $imagenTmp = $_FILES['imagenPersonaje']['tmp_name'];
+    //         $imagenPersonaje = file_get_contents($imagenTmp);
+    //     } else
+    //     $imagenPersonaje = 0;
+    //     $this->objPersonajes->modificarImagen($id,$imagenPersonaje);
+
+    //     header("Location: index.php?action=gestinarPersonajes&controller=personajes");
+    // }
+    // if(isset($_GET['nombre'])){
+    //     $id = $_GET['id'];
+    //     $nombre = $_GET['nombre'];
+
+    //     $this->objPersonajes->modificarNombre($id,$nombre);
+    //     header("Location: index.php?action=gestionarPersonajes&controller=personajes");
+    // }
+    // }
     public function modificarPersonajes() {
         $this->view='modificarPersonajes';
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Lógica para actualizar el centro en la base de datos
+        $id = $_POST['id'];
+        $nombre = $_POST['nombre'];
         if ($_FILES['imagenPersonaje']['error'] !== UPLOAD_ERR_NO_FILE) {
             // Se ha seleccionado un archivo
-            $id = $_POST['id'];
-            $nombre = $_POST['nombre'];
-            $pais = $_POST['pais'];
             $imagenTmp = $_FILES['imagenPersonaje']['tmp_name'];
             $imagenPersonaje = file_get_contents($imagenTmp);
-        } else
+        } else {
         $imagenPersonaje = 0;
-        $this->objPersonajes->modificar($id,$nombre,$pais,$imagenPersonaje);
+        }
 
-        header("Location: index.php?action=listarPersonajes&controller=personajes");
+        $this->objPersonajes->modificar($id,$nombre,$imagenPersonaje);
+
+        header("Location: index.php?action=gestionarPersonajes&controller=personajes");
     }
 
     }
 
-}
+    }
+
