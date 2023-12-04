@@ -248,7 +248,7 @@ newNameInputs.forEach(newName => {
   const newFileInput = figureTemplate.querySelector('.file-input');
   const newImageContainer = figureTemplate;
 
-  newFileInput.addEventListener('change', function (e) {
+newFileInput.addEventListener('change', function (e) {
   const file = e.target.files[0];
   const dropdivs = document.querySelectorAll('#dropzone'); // Selecciona todos los dropzone
   

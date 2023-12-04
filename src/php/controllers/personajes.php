@@ -31,6 +31,7 @@ class ControladorPersonajes {
             if (isset($_FILES['imagenPersonajes']) && isset($_POST['nombres'])) {
                 $imagenes = $_FILES['imagenPersonajes'];
                 $nombres = $_POST['nombres'];
+                $errores = true;
     
                 $imagenes = array_filter($imagenes);
                 $nombres = array_filter($nombres);
@@ -42,7 +43,7 @@ class ControladorPersonajes {
     
                         // Verificar si la extensión es válida y el tamaño no excede el límite
                         if (in_array($extension, $extensionesValidas) && $tamanio <= $tamanioMaximo) {
-                            $this->objPersonajes->aniadir($imagenes, $nombres);
+                            $errores = false;
                         } elseif (!in_array($extension, $extensionesValidas) && $tamanio > $tamanioMaximo) {
                             // Mensaje para archivo que no cumple ni tamaño ni extensión
                             $mensaje = "La imagen $nombreArchivo no es válida , excede el tamaño permitido y no tiene una extensión válida ( ". implode(", ", $extensionesValidas).").";
@@ -59,6 +60,9 @@ class ControladorPersonajes {
                             header("Location: index.php?controller=personajes&action=gestionarPersonajes&mensaje=$mensaje");
                             exit;
                         }
+                    }
+                    if($errores == false){
+                        $this->objPersonajes->aniadir($imagenes,$nombres);
                     }
                 }
             }

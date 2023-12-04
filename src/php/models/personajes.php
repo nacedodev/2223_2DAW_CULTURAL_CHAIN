@@ -31,42 +31,33 @@ class Personaje {
      public function aniadir(array $imagenes, array $nombres)
      {
          try {
-             // Obtener todos los personajes existentes
-             $personajesExistentes = $this->listar();
+             $this->conexion->beginTransaction();
+             $sql = 'INSERT INTO Personaje (nombre, imagenPersonaje) VALUES (?, ?)';
+             $consulta = $this->conexion->prepare($sql);
+             $consulta->bindParam(1, $nombre, PDO::PARAM_STR);
+             $consulta->bindParam(2, $imagenBinaria, PDO::PARAM_LOB);
+
+             $index = 0;
+             $totalPersonajes = count($nombres);
+             var_dump(count($nombres));
              
-             $this->conexion->beginTransaction(); 
-             // Iterar sobre los nombres e imágenes para insertar cada personaje
-             foreach ($nombres as $index => $nombre) {
+             while ($index < $totalPersonajes) {
+                 $nombre = $nombres[$index];
                  $imagenTmp = $imagenes['tmp_name'][$index];
                  $imagenBinaria = file_get_contents($imagenTmp);
-                 $existeEnBD = false;
-     
-                 // Verificar si el personaje existe en la base de datos
-                 foreach ($personajesExistentes as $personaje) {
-                     if ($personaje['nombre'] === $nombre) {
-                         $existeEnBD = true;
-                         break;
-                     }
-                 }
-     
-                 // Si el personaje existe en la base de datos, actualizar su información
-                 if ($existeEnBD) {
-                     
-                 } else {
-                     // Si el personaje no existe en la base de datos, añadirlo
-                     $sql = 'INSERT INTO Personaje (nombre, imagenPersonaje) VALUES (?, ?)';
-                     $consulta = $this->conexion->prepare($sql);
-                     $consulta->bindParam(1, $nombre, PDO::PARAM_STR);
-                     $consulta->bindParam(2, $imagenBinaria, PDO::PARAM_LOB);
-                     $consulta->execute();
-                 }
+                 
+                 $consulta->execute();
+                 
+                 $index++;
              }
+             
              $this->conexion->commit(); 
-             // Confirmar la transacción si todo salió bien
          } catch (PDOException $e) {
-            $this->conexion->rollBack();
+             $this->conexion->rollBack();
+             // Manejar la excepción si ocurre algún error al insertar en la base de datos
          }
      }
+     
      
      public function borrar(int $id)
     {
