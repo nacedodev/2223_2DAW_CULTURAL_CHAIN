@@ -1,4 +1,32 @@
-import { Vista } from './vista.js'
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: vistaprincipal.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: vistaprincipal.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { Vista } from './vista.js'
 /**
  * Clase que representa la vista principal del juego, que extiende de la clase `Vista`.
  * @extends Vista
@@ -120,26 +148,26 @@ export class VistaPrincipal extends Vista {
     setInterval(this.mostrarHora, 1000)
   }
   /**
- * Asigna nombres a elementos <figcaption> en el documento.
+ * Asigna nombres a elementos &lt;figcaption> en el documento.
  * Utiliza el controlador para obtener la lista de nombres y asignarlos a los elementos correspondientes.
- * Si no hay suficientes nombres, establece el texto del <figcaption> como vacío.
+ * Si no hay suficientes nombres, establece el texto del &lt;figcaption> como vacío.
  * @method
  */
   asignarNames() {
-    // Selecciona todos los elementos <figcaption> en el documento
+    // Selecciona todos los elementos &lt;figcaption> en el documento
     const figcaptions = document.querySelectorAll('figcaption');
 
     // Obtiene la lista de nombres desde el controlador
     const names = this.controlador.devolverNames();
 
-    // Itera sobre los elementos <figcaption>
-    for (let i = 0; i < figcaptions.length; i++) {
+    // Itera sobre los elementos &lt;figcaption>
+    for (let i = 0; i &lt; figcaptions.length; i++) {
       // Verifica si hay un nombre disponible para asignar
-      if (i < names.length) {
-        // Asigna el nombre correspondiente al texto del <figcaption>
+      if (i &lt; names.length) {
+        // Asigna el nombre correspondiente al texto del &lt;figcaption>
         figcaptions[i].innerText = names[i];
       } else {
-        // Si no hay más nombres disponibles, establece el texto del <figcaption> como vacío
+        // Si no hay más nombres disponibles, establece el texto del &lt;figcaption> como vacío
         figcaptions[i].innerText = '';
       }
     }
@@ -199,7 +227,7 @@ export class VistaPrincipal extends Vista {
    * @param {Event} evento - El evento del teclado que activa la acción.
   */
   mostrarFormulario = evento => {
-    if (evento.keyCode === 13 && !this.showForm && this.partidaTerminada) {
+    if (evento.keyCode === 13 &amp;&amp; !this.showForm &amp;&amp; this.partidaTerminada) {
       this.controlador.overlayForm(this.form)
       this.showForm = false
     }
@@ -217,8 +245,8 @@ export class VistaPrincipal extends Vista {
     let minutos = fecha.getMinutes();
 
     // Asegúrate de que los números siempre tengan dos dígitos
-    if (hora < 10) hora = '0' + hora;
-    if (minutos < 10) minutos = '0' + minutos;
+    if (hora &lt; 10) hora = '0' + hora;
+    if (minutos &lt; 10) minutos = '0' + minutos;
 
     // Construye la cadena de la hora actual en formato HH:mm
     const horaActual = hora + ':' + minutos;
@@ -462,17 +490,17 @@ export class VistaPrincipal extends Vista {
    * @param {Event} event - El evento de teclado o táctil que activa la acción.
    */
   direccion = (event) => {
-    if (event.key == 'w' && this.dir != 3) this.dir = 1
-    if (event.key == 'd' && this.dir != 4) this.dir = 2
-    if (event.key == 's' && this.dir != 1) this.dir = 3
-    if (event.key == 'a' && this.dir != 2) this.dir = 4
+    if (event.key == 'w' &amp;&amp; this.dir != 3) this.dir = 1
+    if (event.key == 'd' &amp;&amp; this.dir != 4) this.dir = 2
+    if (event.key == 's' &amp;&amp; this.dir != 1) this.dir = 3
+    if (event.key == 'a' &amp;&amp; this.dir != 2) this.dir = 4
 
     // Verifica si el evento es táctil
-    if(event.touches && !this.showForm && this.partidaTerminada) {
+    if(event.touches &amp;&amp; !this.showForm &amp;&amp; this.partidaTerminada) {
       this.controlador.overlayForm(this.form)
       this.showForm = false
     }
-    if (event.touches && event.touches.length > 0) {
+    if (event.touches &amp;&amp; event.touches.length > 0) {
     // Obtén las coordenadas x del toque
       const touchX = event.touches[0].clientX
 
@@ -480,12 +508,12 @@ export class VistaPrincipal extends Vista {
       const screenWidth = window.innerWidth
 
       // Si el toque fue en la mitad izquierda, resta 1 a dir; si fue en la mitad derecha, suma 1 a dir
-      this.dir = touchX < screenWidth / 2 ? (this.dir === 1 ? 4 : this.dir - 1) : this.dir === 4 ? 1 : this.dir + 1
+      this.dir = touchX &lt; screenWidth / 2 ? (this.dir === 1 ? 4 : this.dir - 1) : this.dir === 4 ? 1 : this.dir + 1
 
       // Asegura que dir esté en el rango de 1 a 4
       if (this.dir > 4) {
         this.dir = 1
-      } else if (this.dir < 1) {
+      } else if (this.dir &lt; 1) {
         this.dir = 4
       }
     }
@@ -502,8 +530,8 @@ export class VistaPrincipal extends Vista {
         this.part[i].style.top = this.part[i - 1].style.top
       }
       //Detectar colision con uno mismo
-      for (let i = 1; i < this.fila; i++) {
-        if (this.part[0].style.left == this.part[i + 1].style.left && this.part[0].style.top == this.part[i + 1].style.top) { this.terminarPartida() }
+      for (let i = 1; i &lt; this.fila; i++) {
+        if (this.part[0].style.left == this.part[i + 1].style.left &amp;&amp; this.part[0].style.top == this.part[i + 1].style.top) { this.terminarPartida() }
       }
       this.gestionNivel()
       this.avanzar() // Mover la this.part[0]
@@ -532,7 +560,7 @@ export class VistaPrincipal extends Vista {
     if (posXPixels > tableroAncho - 15) {
       this.posX = 0
     }
-    if (posXPixels < 0) {
+    if (posXPixels &lt; 0) {
       this.posX = 99
     }
 
@@ -542,7 +570,7 @@ export class VistaPrincipal extends Vista {
     }
 
     // Establecer límite superior
-    if (posYPixels < 0) {
+    if (posYPixels &lt; 0) {
       this.posY = 95
     }
   }
@@ -591,7 +619,7 @@ export class VistaPrincipal extends Vista {
    * Genera banderas de manera aleatoria en el tablero.
    */
   generacionBanderas = () => {
-    if(this.banderasGeneradas<this.cantidadBanderas){
+    if(this.banderasGeneradas&lt;this.cantidadBanderas){
       let numero = (50-this.reload)*20
       if (this.temp % numero === 0) {
         let tableroAncho = this.tablero.clientWidth-this.part[0].offsetWidth*2
@@ -628,7 +656,7 @@ export class VistaPrincipal extends Vista {
     // Detectar el objeto (imagen) en las coordenadas actuales del this.part[0]
     const objetoEnPunto = this.detectarColision();
   
-    if (objetoEnPunto && objetoEnPunto.className === 'generado') {
+    if (objetoEnPunto &amp;&amp; objetoEnPunto.className === 'generado') {
       this.score = this.score + 10;
       this.puntuacion.textContent = '' + this.score;
       const imagenRecogida = new Image();
@@ -654,7 +682,7 @@ export class VistaPrincipal extends Vista {
       objetoEnPunto.remove();
       this.personasRecogidas++;
     }
-    if (objetoEnPunto && objetoEnPunto.className === 'bandera') {
+    if (objetoEnPunto &amp;&amp; objetoEnPunto.className === 'bandera') {
       let conflictos = this.tablero.querySelectorAll('.conflictos');
       let conflicto=conflictos[this.conflictoActual]
       this.conflictoActual++
@@ -666,7 +694,7 @@ export class VistaPrincipal extends Vista {
       let yConflict = parseFloat(conflicto.style.top);
     
       // Verifica si las coordenadas son números válidos
-      if (!isNaN(xConflict) && !isNaN(yConflict)) {
+      if (!isNaN(xConflict) &amp;&amp; !isNaN(yConflict)) {
         // Mueve el objetoEnPunto hacia las coordenadas del conflicto con animación
         this.moverElementoConAnimacion(objetoEnPunto, xConflict, yConflict, 1000);
       } else {
@@ -715,7 +743,7 @@ export class VistaPrincipal extends Vista {
         contentType: "application/json; charset=utf-8",
         success: (data) => {
             // Iterar sobre los datos recibidos
-            for (var i = 0; i < data.length; i++) {
+            for (var i = 0; i &lt; data.length; i++) {
                 var otherData = data[i].otherData;
 
                 // Parsear el campo imagen con JSON.parse
@@ -762,7 +790,7 @@ cargarPersonajes() {
         contentType: "application/json; charset=utf-8",
         success: (data) => {
             // Iterar sobre los datos recibidos
-            for (var i = 0; i < data.length; i++) {
+            for (var i = 0; i &lt; data.length; i++) {
                 // Extraer otros datos específicos de la estructura recibida
                 var otherData = data[i].otherData;
 
@@ -805,7 +833,7 @@ cargarCentros() {
       contentType: "application/json; charset=utf-8",
       success: (data) => {
           // Iterar sobre los datos recibidos
-          for (var i = 0; i < data.length; i++) {
+          for (var i = 0; i &lt; data.length; i++) {
               var otherData = data[i].otherData;
 
               // Estructurar los datos
@@ -834,19 +862,19 @@ cargarCentros() {
   });
 }
 /**
- * Añade opciones a los elementos <select> de centros y localidades.
+ * Añade opciones a los elementos &lt;select> de centros y localidades.
  * Utiliza los arrays 'arrayCentros' y 'arrayLocalidades' para generar las opciones dinámicamente.
  * @method
  */
 aniadirOptions() {
-  // Añadir opciones al elemento <select> de centros
-  for (var i = 0; i < this.arrayCentros.length; i++) {
-    this.selectCentros.innerHTML += "<option>" + this.arrayCentros[i] + "</option>";
+  // Añadir opciones al elemento &lt;select> de centros
+  for (var i = 0; i &lt; this.arrayCentros.length; i++) {
+    this.selectCentros.innerHTML += "&lt;option>" + this.arrayCentros[i] + "&lt;/option>";
   }
 
-  // Añadir opciones al elemento <select> de localidades
-  for (var i = 0; i < this.arrayLocalidades.length; i++) {
-    this.selectLocalidades.innerHTML += "<option>" + this.arrayLocalidades[i] + "</option>";
+  // Añadir opciones al elemento &lt;select> de localidades
+  for (var i = 0; i &lt; this.arrayLocalidades.length; i++) {
+    this.selectLocalidades.innerHTML += "&lt;option>" + this.arrayLocalidades[i] + "&lt;/option>";
   }
 }
 /**
@@ -883,7 +911,7 @@ cargarNombres() {
   let resultado = [];
   
   // Itera sobre cada personaje y agrega su nombre al array 'resultado'
-  for (let i = 0; i < this.personajes.length; i++) {
+  for (let i = 0; i &lt; this.personajes.length; i++) {
     resultado.push(this.personajes[i].nombre);
   }
   
@@ -946,8 +974,8 @@ detectarColision = () => {
       this.part[0].getBoundingClientRect().top + this.part[0].offsetHeight/2
 );
 
-  for (let i = 0; i < 5; i++) {
-      if (punto[i] && punto[i].classList.contains('generado') || punto[i].classList.contains('bandera')) {
+  for (let i = 0; i &lt; 5; i++) {
+      if (punto[i] &amp;&amp; punto[i].classList.contains('generado') || punto[i].classList.contains('bandera')) {
           return punto[i];
       }
   }
@@ -980,7 +1008,7 @@ moverElementoConAnimacion(objeto, destinoX, destinoY, duracion) {
       let tiempoTranscurrido = timestamp - startTime;
       let progreso = tiempoTranscurrido / duracion;
 
-      if (progreso < 1) {
+      if (progreso &lt; 1) {
         let nuevaX = inicioX + (destinoXEnPixeles - inicioX) * progreso;
         let nuevaY = inicioY + (destinoYEnPixeles - inicioY) * progreso;
 
@@ -1017,7 +1045,7 @@ terminarPartida(){
     titulo=this.niveles[this.nivelActual].reflexiones[numRandom].titulo
     contenido=this.niveles[this.nivelActual].reflexiones[numRandom].contenido
     parrafo.id ="info"
-    parrafo.innerHTML= titulo+"<br>"+contenido
+    parrafo.innerHTML= titulo+"&lt;br>"+contenido
     this.reflexion = parrafo
   }
 
@@ -1029,7 +1057,7 @@ terminarPartida(){
    * y banderas necesarias para avanzar al siguiente nivel.
    */
 gestionNivel(){
-  if(this.personasRecogidas>=this.cantidadPersonasNivel && this.banderasRecogidas>=this.cantidadBanderas)
+  if(this.personasRecogidas>=this.cantidadPersonasNivel &amp;&amp; this.banderasRecogidas>=this.cantidadBanderas)
     this.pasarnivel()
 }
  /**
@@ -1066,7 +1094,7 @@ pasarnivel(){
    * Genera elementos de conflicto en el tablero en posiciones específicas.
    */
 generarConflictos(){
-  for(let i =0;i<this.niveles[this.nivelActual].conflictos.length;i++)
+  for(let i =0;i&lt;this.niveles[this.nivelActual].conflictos.length;i++)
   {
     let x=this.niveles[this.nivelActual].conflictos[i].x
     let y=this.niveles[this.nivelActual].conflictos[i].y
@@ -1093,4 +1121,26 @@ generarConflictos(){
     this.tablero.appendChild(conflicto)
   }
 }
-}
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Vista.html">Vista</a></li><li><a href="VistaForm.html">VistaForm</a></li><li><a href="VistaPrincipal.html">VistaPrincipal</a></li><li><a href="VistaRanking.html">VistaRanking</a></li><li><a href="VistaSettings.html">VistaSettings</a></li><li><a href="inicio.html">inicio</a></li></ul><h3>Global</h3><ul><li><a href="global.html#validarCentro">validarCentro</a></li><li><a href="global.html#validarClase">validarClase</a></li><li><a href="global.html#validarEtapa">validarEtapa</a></li><li><a href="global.html#validarForm">validarForm</a></li><li><a href="global.html#validarLocalidad">validarLocalidad</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Mon Dec 04 2023 19:42:35 GMT+0100 (hora estándar de Europa central)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: Game</title>
+    <title>JSDoc: Global</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: Game</h1>
+    <h1 class="page-title">Global</h1>
 
     
 
@@ -28,9 +28,7 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>Game<span class="signature">()</span><span class="type-signature"></span></h2>
-        
-            <div class="class-description">Clase controlador que gestiona las vistas y la lógica del juego.</div>
+        <h2></h2>
         
     
 </header>
@@ -40,32 +38,7 @@
     
         
 
-    
-    <h2>Constructor</h2>
-    
-
-    
-    <h4 class="name" id="Game"><span class="type-signature"></span>new Game<span class="signature">()</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    Constructor de la clase.Crea instancias de los modelos y vistas, y almacena configuraciones iniciales.
-</div>
-
-
-
-
-
-
-
-
-
-
-
+        
 
 
 <dl class="details">
@@ -95,11 +68,6 @@
     
 
     
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="game.js.html">game.js</a>, <a href="game.js.html#line12">line 12</a>
-    </li></ul></dd>
-    
 
     
 
@@ -109,24 +77,7 @@
 </dl>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        
     
     </div>
 
@@ -153,7 +104,7 @@
     
 
     
-    <h4 class="name" id="almacenarConfig"><span class="type-signature"></span>almacenarConfig<span class="signature">(configs)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="validarCentro"><span class="type-signature"></span>validarCentro<span class="signature">(evento)</span><span class="type-signature"></span></h4>
     
 
     
@@ -161,7 +112,7 @@
 
 
 <div class="description">
-    Almacena las configuraciones en el modelo de configuración.
+    Realiza la validación del campo de `nickname` en un formulario.
 </div>
 
 
@@ -197,13 +148,13 @@
 
         <tr>
             
-                <td class="name"><code>configs</code></td>
+                <td class="name"><code>evento</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Array.&lt;string></span>
+<span class="param-type">Event</span>
 
 
             
@@ -213,7 +164,7 @@
 
             
 
-            <td class="description last">Las configuraciones a almacenar.</td>
+            <td class="description last">El evento `blur` que activa la validación.</td>
         </tr>
 
     
@@ -254,7 +205,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="game.js.html">game.js</a>, <a href="game.js.html#line81">line 81</a>
+        <a href="vistaformcentros.js.html">vistaformcentros.js</a>, <a href="vistaformcentros.js.html#line25">line 25</a>
     </li></ul></dd>
     
 
@@ -290,7 +241,7 @@
     
 
     
-    <h4 class="name" id="almacenarNames"><span class="type-signature"></span>almacenarNames<span class="signature">(nombres)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="validarClase"><span class="type-signature"></span>validarClase<span class="signature">(evento)</span><span class="type-signature"></span></h4>
     
 
     
@@ -298,7 +249,7 @@
 
 
 <div class="description">
-    Almacena los nombres en el modelo de nombres.
+    Realiza la validación del campo de `Email` en un formulario.
 </div>
 
 
@@ -334,13 +285,13 @@
 
         <tr>
             
-                <td class="name"><code>nombres</code></td>
+                <td class="name"><code>evento</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Array.&lt;string></span>
+<span class="param-type">Event</span>
 
 
             
@@ -350,7 +301,7 @@
 
             
 
-            <td class="description last">Los nombres a almacenar.</td>
+            <td class="description last">El evento `blur` que activa la validación.</td>
         </tr>
 
     
@@ -391,7 +342,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="game.js.html">game.js</a>, <a href="game.js.html#line70">line 70</a>
+        <a href="vistaformclases.js.html">vistaformclases.js</a>, <a href="vistaformclases.js.html#line44">line 44</a>
     </li></ul></dd>
     
 
@@ -427,7 +378,7 @@
     
 
     
-    <h4 class="name" id="devolverNames"><span class="type-signature"></span>devolverNames<span class="signature">()</span><span class="type-signature"> &rarr; {Array.&lt;string>}</span></h4>
+    <h4 class="name" id="validarEtapa"><span class="type-signature"></span>validarEtapa<span class="signature">(evento)</span><span class="type-signature"></span></h4>
     
 
     
@@ -435,117 +386,7 @@
 
 
 <div class="description">
-    Devuelve los nombres almacenados en el modelo de nombres.
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="game.js.html">game.js</a>, <a href="game.js.html#line92">line 92</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    - Los nombres almacenados.
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Array.&lt;string></span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-
-
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id="irAVista"><span class="type-signature"></span>irAVista<span class="signature">(vista)</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    Muestra una vista específica.
+    Realiza la validación del campo de `nickname` en un formulario.
 </div>
 
 
@@ -581,13 +422,13 @@
 
         <tr>
             
-                <td class="name"><code>vista</code></td>
+                <td class="name"><code>evento</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Object</span>
+<span class="param-type">Event</span>
 
 
             
@@ -597,7 +438,7 @@
 
             
 
-            <td class="description last">La vista a mostrar.</td>
+            <td class="description last">El evento `blur` que activa la validación.</td>
         </tr>
 
     
@@ -638,7 +479,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="game.js.html">game.js</a>, <a href="game.js.html#line60">line 60</a>
+        <a href="vistaformclases.js.html">vistaformclases.js</a>, <a href="vistaformclases.js.html#line25">line 25</a>
     </li></ul></dd>
     
 
@@ -674,7 +515,7 @@
     
 
     
-    <h4 class="name" id="ocultarVistas"><span class="type-signature"></span>ocultarVistas<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="validarForm"><span class="type-signature"></span>validarForm<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
@@ -682,7 +523,7 @@
 
 
 <div class="description">
-    Oculta todas las vistas.
+    Realiza la validación de un formulario completo y maneja su estado resultante.
 </div>
 
 
@@ -726,7 +567,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="game.js.html">game.js</a>, <a href="game.js.html#line49">line 49</a>
+        <a href="vistaformcentros.js.html">vistaformcentros.js</a>, <a href="vistaformcentros.js.html#line62">line 62</a>
     </li></ul></dd>
     
 
@@ -762,7 +603,7 @@
     
 
     
-    <h4 class="name" id="overlayForm"><span class="type-signature"></span>overlayForm<span class="signature">(form)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="validarForm"><span class="type-signature"></span>validarForm<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
@@ -770,7 +611,95 @@
 
 
 <div class="description">
-    Muestra un formulario en la vista actual.
+    Realiza la validación de un formulario completo y maneja su estado resultante.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="vistaformclases.js.html">vistaformclases.js</a>, <a href="vistaformclases.js.html#line62">line 62</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="validarLocalidad"><span class="type-signature"></span>validarLocalidad<span class="signature">(evento)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Realiza la validación del campo de `Email` en un formulario.
 </div>
 
 
@@ -806,13 +735,13 @@
 
         <tr>
             
-                <td class="name"><code>form</code></td>
+                <td class="name"><code>evento</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">HTMLElement</span>
+<span class="param-type">Event</span>
 
 
             
@@ -822,7 +751,7 @@
 
             
 
-            <td class="description last">El formulario a mostrar.</td>
+            <td class="description last">El evento `blur` que activa la validación.</td>
         </tr>
 
     
@@ -863,7 +792,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="game.js.html">game.js</a>, <a href="game.js.html#line108">line 108</a>
+        <a href="vistaformcentros.js.html">vistaformcentros.js</a>, <a href="vistaformcentros.js.html#line44">line 44</a>
     </li></ul></dd>
     
 
@@ -909,13 +838,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Game.html">Game</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Vista.html">Vista</a></li><li><a href="VistaForm.html">VistaForm</a></li><li><a href="VistaPrincipal.html">VistaPrincipal</a></li><li><a href="VistaRanking.html">VistaRanking</a></li><li><a href="VistaSettings.html">VistaSettings</a></li><li><a href="inicio.html">inicio</a></li></ul><h3>Global</h3><ul><li><a href="global.html#validarCentro">validarCentro</a></li><li><a href="global.html#validarClase">validarClase</a></li><li><a href="global.html#validarEtapa">validarEtapa</a></li><li><a href="global.html#validarForm">validarForm</a></li><li><a href="global.html#validarLocalidad">validarLocalidad</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Mon Dec 04 2023 19:42:20 GMT+0100 (hora estándar de Europa central)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Mon Dec 04 2023 19:42:35 GMT+0100 (hora estándar de Europa central)
 </footer>
 
 <script> prettyPrint(); </script>
