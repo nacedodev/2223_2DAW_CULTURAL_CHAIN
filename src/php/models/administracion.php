@@ -6,7 +6,9 @@
 class Administracion {
 
     private $conexion;
-    public $mensaje;
+    public $mensajes;
+    public $estado;
+    public $estado_reflexiones;
 
 //    public function __construct($host, $user, $password, $database) {
 //        $dsn = "sqlsrv:Server=$host;Database=$database";
@@ -46,7 +48,7 @@ class Administracion {
                 $rowCount = $consulta->fetchColumn();
                 if ($rowCount === 0) {
                     $allTablesHaveData = false;
-                    echo "La tabla '$table' no tiene filas.<br>";
+                    $this->mensajes = "La tabla '$table' no tiene filas.<br>";
                 }
             }
     
@@ -55,14 +57,14 @@ class Administracion {
             $nivelesSinReflexiones = $consultaReflexiones->fetchAll(PDO::FETCH_COLUMN);
             if (!empty($nivelesSinReflexiones)) {
                 $allTablesHaveData = false;
-                echo "Los siguientes niveles no tienen al menos una reflexión asociada: " . implode(', ', $nivelesSinReflexiones) . "<br>";
+                $this->estado_reflexiones = "Los siguientes niveles no tienen al menos una reflexión asociada: " . implode(', ', $nivelesSinReflexiones) . "<br>";
             }
     
             // Mostrar el resultado final
             if ($allTablesHaveData) {
-                echo "¡Todas las tablas tienen al menos una fila y cada nivel tiene al menos una reflexión!";
+                $this->estado = "La web está lista para salir a producción!";
             } else {
-                echo "Algunas tablas no tienen filas o algunos niveles no tienen reflexiones, verifica tus datos antes de salir a producción.";
+                $this->estado = "La web no está lista para salir a producción.";
             }
         } catch(PDOException $e) {
             echo "Error de conexión: " . $e->getMessage();

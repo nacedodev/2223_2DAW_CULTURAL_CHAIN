@@ -83,6 +83,7 @@
 
     const lastReflection = reflectionsContainer.lastElementChild; // Obtener el último figure // Obtener el anterior al último figure
 
+    if(lastReflection != null){
   const tituloInput = lastReflection.querySelector('#title');
   const reflexionInput = lastReflection.querySelector('#content');
 
@@ -106,6 +107,7 @@
       return
     }
   }
+}
 
     reflectionTemplate.innerHTML = `
     <input id="title" style='height: 50px; width:30%; display:inline-block;font-size:1vw; font-family: "Poppins", sans-serif' type='text' name='titulos[]' placeholder='Título'>

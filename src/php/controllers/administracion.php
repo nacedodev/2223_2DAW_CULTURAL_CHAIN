@@ -23,7 +23,17 @@ class ControladorAdministracion {
     }
 
     public function verificarWeb(){
-        $this->view='admin';
+        $this->view = 'admin';
         $this->objAdministracion->verificarTablas();
+        
+        // Obtener los mensajes
+        $estado = $this->objAdministracion->estado;
+        $estado_reflexiones = $this->objAdministracion->estado_reflexiones;
+        $mensajes = $this->objAdministracion->mensajes;
+    
+        // Redireccionar a la vista con los mensajes como parámetros GET
+        header("Location: index.php?controller=administracion&action=mostrarPanel&estado=$estado&reflexiones=$estado_reflexiones&mensajes=$mensajes");
+        exit();
     }
+    
 }
