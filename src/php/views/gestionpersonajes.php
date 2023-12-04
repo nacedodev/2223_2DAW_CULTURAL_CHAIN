@@ -2,7 +2,7 @@
 /* Estilos para el contenedor */
 div {
   width: 100%;
-  margin: 30px auto;
+  margin: 30px 0;
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start; /* Alineación a la izquierda */
@@ -25,7 +25,7 @@ figure {
     background: var(--secondary);
     box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.25);
     width: 17.778%;
-    margin: 10px 20px;
+    margin: 1% 1%;
     aspect-ratio: 1/1.3;
 }
 
@@ -94,10 +94,19 @@ figcaption {
 }
 
 #addButton{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5vw;
     background-color: var(--terciary);
-    padding:4%;
+    padding:0;
     border-radius: 10px;
     aspect-ratio: 1/1;
+}
+
+#addButton img{
+  aspect-ratio: 1/1;
+  width:70%;
 }
 
 #sendButton{
@@ -181,7 +190,7 @@ figure:hover .add-button {
               </figure>
           <?php endforeach; ?>
         <figure id="add-btn">
-            <button id="addButton"type='button'>+</button>
+            <button id="addButton"type='button'><img src="../img/iconos/aniadir.png" alt="+"></button>
             <button id="sendButton" type="submit">Enviar</button>
         </figure>
   </div>
@@ -217,6 +226,31 @@ figure:hover .add-button {
   event.preventDefault(); // Evita que el formulario se envíe
 
   const figuresContainer = document.getElementById('figures-container');
+  const lastFigure = figuresContainer.lastElementChild; // Obtener el último figure
+  const previousFigure = lastFigure.previousElementSibling; // Obtener el anterior al último figure
+
+  const imageInput = previousFigure.querySelector('.file-input');
+  const nameInput = previousFigure.querySelector('.personaje-input');
+
+  if (imageInput != null) {
+    const imageValue = imageInput.value;
+    const nameValue = nameInput.value;
+
+    // Verificar si el último figure no está vacío (tanto la imagen como el nombre)
+    if ((!imageValue || imageValue === '') && (!nameValue || nameValue === '')) {
+      const addImg = document.querySelector('#addButton > img')
+      addImg.style.animation = 'shakeAnimation 0.3s ease-in-out'
+      setTimeout(() => {
+        addImg.style.animation = 'none'
+      }, 300)
+      previousFigure.style.animation = 'warningAnimation 0.8s linear'
+      setTimeout(() => {
+        previousFigure.style.animation = 'none'
+      }, 800)
+      return
+    }
+  }
+
   const figureTemplate = document.createElement('figure');
   figureTemplate.classList.add('figure-container');
 
