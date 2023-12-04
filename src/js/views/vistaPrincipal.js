@@ -22,8 +22,7 @@ export class VistaPrincipal extends Vista {
     this.cargarPersonajes()
     this.cargarCentros()
     this.cargarNiveles()
-
-    //Botones de dificultad
+  
     const btnRestart = document.getElementById('restart')
     const btnRanking = this.base.querySelectorAll('button')[3]
     const btnSettings = this.base.querySelectorAll('button')[4]
@@ -473,6 +472,10 @@ export class VistaPrincipal extends Vista {
       this.controlador.overlayForm(this.form)
       this.showForm = false
     }
+    if(event.touches && !this.showForm && this.partidaTerminada) {
+      this.controlador.overlayForm(this.form)
+      this.showForm = false
+    }
     if (event.touches && event.touches.length > 0) {
     // Obtén las coordenadas x del toque
       const touchX = event.touches[0].clientX
@@ -554,6 +557,12 @@ export class VistaPrincipal extends Vista {
     if (this.temp % 50-this.reload === 0) {
       const tableroAncho = this.tablero.clientWidth-this.part[0].offsetWidth*2
       const tableroAlto = this.tablero.clientHeight-this.part[0].offsetHeight*2
+
+       // Obtén todos los elementos img dentro del div
+      var imagenes = this.divImagenesPersonjanes.getElementsByTagName('img');
+
+      // Convierte la colección de imágenes en un array
+      var arrayDeImagenes = Array.from(imagenes);
 
        // Obtén todos los elementos img dentro del div
       var imagenes = this.divImagenesPersonjanes.getElementsByTagName('img');
@@ -740,6 +749,10 @@ export class VistaPrincipal extends Vista {
               personaje.addEventListener('dragstart', this.dragStart)
               personaje.addEventListener('dragend', this.dragEnd)
             })
+            this.listapersonajes.forEach(personaje => {
+              personaje.addEventListener('dragstart', this.dragStart)
+              personaje.addEventListener('dragend', this.dragEnd)
+            })
         },
         error: function (status, error) {
             console.error("Error en la solicitud AJAX: " + status + " - " + error);
@@ -779,9 +792,12 @@ cargarPersonajes() {
 
             // Ahora, arrayResultado contiene la estructura deseada
             this.personajes = arrayResultado;
-            this.controlador.almacenarNames(this.cargarNombres())
-            this.aniadirPersonajes()
-            this.asignarNames()
+
+            // Almacenar nombres y realizar acciones relacionadas con la carga de personajes
+            this.controlador.almacenarNames(this.cargarNombres());
+            this.aniadirPersonajes();
+            this.listapersonajes = this.base.querySelectorAll('.personaje');
+            this.asignarNames();
         },
         error: function (status, error) {
             console.error("Error en la solicitud AJAX: " + status + " - " + error);
@@ -1037,6 +1053,7 @@ pasarnivel(){
   if(this.nivelActual===this.niveles.length-1)
     this.nivelActual=-1
   this.nivelActual++
+  this.nombreapp.textContent = this.niveles[this.nivelActual].nombre.toUpperCase()
   this.nombreapp.textContent = this.niveles[this.nivelActual].nombre.toUpperCase()
   this.cargarFondo(this.niveles[this.nivelActual].imagen)
 
