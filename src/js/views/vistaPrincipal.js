@@ -938,4 +938,4 @@ generarConflictos(){
     this.tablero.appendChild(conflicto)
   }
 }
-}d
+}
