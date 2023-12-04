@@ -175,7 +175,6 @@ button {
     top: 0px;
     left: 0px;
 }
-
 #titulo{
     color: var(--contrast);
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
@@ -183,6 +182,7 @@ button {
     margin-top: 0;
     font-family: 'Press Start 2P', sans-serif;
 }
+<<<<<<< HEAD
     #reflexion {
             display: none;
             position: fixed;
@@ -213,7 +213,38 @@ button {
             color: grey;
             text-align: center;
         }
+=======
+#reflexion {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 40%;
+    height: 40%;
+    background-color: var(--secondary);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    padding: 20px;
+    text-align: center;
+    z-index: 1000;
+}
+>>>>>>> DWECIII
 
+#tituloreflexion {
+    
+    color: var(--contrast);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    font-size: 20px;
+    margin-top: 0;
+    font-family: 'Press Start 2P', sans-serif;
+}
+
+#textoreflexion {
+    margin-top: 20%;
+    font-size: 1.5vw;
+    color: grey;
+    text-align: center;
+}
 #restart{
     pointer-events: auto;
     width: 48px;
@@ -1295,6 +1326,53 @@ input:-webkit-autofill {
         opacity: 1;
     }
   }
+  @keyframes personaQuieta{
+    0%{
+        transform:rotate(10deg);
+    }
+    10%{
+        transform:rotate(-10deg);
+    }
+    20%{
+        transform:rotate(0deg);
+    }
+    30%{
+        transform:rotate(10deg);
+    }
+    40%{
+        transform:scaleX(-1);
+    }
+    50%{
+        transform:rotate(10deg);
+    }
+    60%{
+        transform:rotate(-10deg);
+    }
+    80%{
+        transform:rotate(0deg);
+    }
+    100%{
+        transform:rotate(-360deg);
+    }
+  }
+  @keyframes personaAndando{
+    0%{
+        transform:translateY(-2px);
+    }
+    100%{
+        transform:translateY(+2px);
+    }
+  }
+  @keyframes recogerPersona {
+    0%{
+        scale: 0.99;
+        border: 1px solid white;
+    }
+    100%{
+        scale: 1;
+    }
+  }
+  
 
 @media (prefers-color-scheme: light) {
     /* light mode */

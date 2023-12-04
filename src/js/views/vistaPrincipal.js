@@ -17,11 +17,17 @@ export class VistaPrincipal extends Vista {
   constructor (controlador, base) {
     super(controlador, base)
 
-    this.asignarNames()
+    this.personajes
+    this.cargarPersonajes()
+    this.cargarNiveles()
 
     const btnRestart = document.getElementById('restart')
     const btnRanking = this.base.querySelectorAll('button')[3]
     const btnSettings = this.base.querySelectorAll('button')[4]
+    const btnFacil = document.getElementById('facil')
+    const btnMedio = document.getElementById('medio')
+    const btnDificil = document.getElementById('dificil')
+
     this.hora = document.getElementById('hora')
     this.puntuacion = document.getElementById('puntuacion')
     this.btnTheme = this.base.querySelector('#theme')
@@ -29,19 +35,43 @@ export class VistaPrincipal extends Vista {
     this.divIzq = document.getElementById('divizquierda')
     this.gameStarted = false
     this.clickerMode = false
-    const personajes = this.base.querySelectorAll('.personaje')
+    
     this.divPersonajes = document.getElementById('divderecha')
+    this.divImagenesPersonjanes = document.getElementById('divpersonajes')
     this.titulo = document.getElementById('titulo')
     this.info = this.base.querySelector('#info')
     this.end = this.base.querySelector('#end')
     this.form = document.getElementById('form-end')
     this.logo = this.base.querySelector('#logo')
     this.showForm = false
+    this.nombreapp = document.getElementById('nombreapp')
+
+    //Dificultades
+    this.velocidadFacil = 40
+    this.velocidadMedio = 30
+    this.velocidadDificil =20
+    this.cantidadPersonasFacil=5
+    this.cantidadPersonasMedio=50
+    this.cantidadPersonasDificil=20
+    this.dificultad = this.velocidadFacil
+    this.cantidadPersonasNivel=this.cantidadPersonasFacil
 
     this.tablero.style.position = 'relative'
+    this.tablero.style.backgroundRepeat ='no-repeat'
+    this.tablero.style.backgroundSize ='cover'
 
     this.score = 0
     this.puntuacion.textContent = '0' + this.score
+
+    //Gestión Niveles
+    this.nivelActual = 0
+    this.personasRecogidas=0
+
+    //Gestion Banderas
+    this.banderasGeneradas=0
+    this.banderasRecogidas=0
+    this.cantidadBanderas=0
+    this.conflictoActual=1
 
     this.puntuacion = document.getElementById('puntuacion')
     this.posX
@@ -49,18 +79,13 @@ export class VistaPrincipal extends Vista {
     this.dir = null
     this.distanciapaso = 1
     this.temp = 0
-    this.reload = 25
+    this.reload = this.dificultad
     this.part = []
     this.fila = 0
     this.score = 0
     this.personita
     this.tiempo
 
-    // habilitamos la capacidad de hacer drag & drop a los personajes
-    personajes.forEach(personaje => {
-      personaje.addEventListener('dragstart', this.dragStart)
-      personaje.addEventListener('dragend', this.dragEnd)
-    })
 
     // Agregar eventos de arrastrar y soltar al tablero
     this.tablero.addEventListener('dragover', this.dragOver)
@@ -68,6 +93,10 @@ export class VistaPrincipal extends Vista {
     this.tablero.addEventListener('dragleave', this.dragLeave)
     this.tablero.addEventListener('drop', this.drop)
 
+    //Eventos de los botones de dificultad
+    btnFacil.onclick = () => this.cambioDificultad(this.velocidadFacil);
+    btnMedio.onclick = () => this.cambioDificultad(this.velocidadMedio);
+    btnDificil.onclick = () => this.cambioDificultad(this.velocidadDificil);
     btnRanking.onclick = this.irRanking
     btnSettings.onclick = this.irSettings
     this.btnTheme.onclick = this.changeTheme
@@ -76,13 +105,23 @@ export class VistaPrincipal extends Vista {
     window.onkeydown = this.mostrarFormulario
 
     window.getComputedStyle(this.hora).display === 'none' ? this.clickerMode = false : this.clickerMode = true
-
     this.setConfetti(this.clickerMode)
     setInterval(this.mostrarHora, 1000)
   }
+  asignarNames () {
+    const figcaptions = document.querySelectorAll('figcaption')
+
+    const names = this.controlador.devolverNames()
+    for (let i = 0; i < figcaptions.length; i++) {
+      if (i < names.length) {
+        figcaptions[i].innerText = names[i]
+      } else {
+        figcaptions[i].innerText = ''
+      }
+    }
+  }
 
   setConfetti = (clicker) => {
-    console.log(clicker)
     if (clicker) {
       const confetti = new Confetti('logo')
       confetti.setCount(100)
@@ -130,22 +169,9 @@ export class VistaPrincipal extends Vista {
    * @param {Event} evento - El evento del teclado que activa la acción.
   */
   mostrarFormulario = evento => {
-    if (evento.keyCode === 13 && this.showForm) {
+    if (evento.keyCode === 13 && !this.showForm && this.partidaTerminada) {
       this.controlador.overlayForm(this.form)
       this.showForm = false
-    }
-  }
-
-  asignarNames () {
-    const figcaptions = document.querySelectorAll('figcaption')
-
-    const names = this.controlador.devolverNames()
-    for (let i = 0; i < figcaptions.length; i++) {
-      if (i < names.length) {
-        figcaptions[i].innerText = names[i]
-      } else {
-        figcaptions[i].innerText = ''
-      }
     }
   }
 
@@ -198,6 +224,7 @@ export class VistaPrincipal extends Vista {
     // Remove all the characters from the tablero
     if (this.gameStarted) {
       const personajes = this.tablero.querySelectorAll('.personaje')
+      this.tablero.style.backgroundImage= "none"
       personajes.forEach(personaje => {
         personaje.remove()
       })
@@ -207,6 +234,11 @@ export class VistaPrincipal extends Vista {
       while (this.part[0].firstChild) {
         this.part[0].removeChild(this.part[0].firstChild)
       }
+      
+      if(this.reflexion)
+        this.tablero.appendChild(this.reflexion)
+      
+
       // Reset the animations and display elements
       this.divIzq.style.animation = 'shortBoard 1s forwards'
       this.divPersonajes.style.animation = 'appearRight 1s forwards'
@@ -222,16 +254,24 @@ export class VistaPrincipal extends Vista {
       this.gameStarted = false
       this.posX
       this.posY
-      this.dir = null
+      this.dir = -1
       this.distanciapaso = 1
-      this.temp = null
-      this.reload = 25
+      this.temp = 1
+      this.reload = this.dificultad
 
+      //Reniciar el nombre de la app
+      this.nombreapp.textContent = 'CULTURAL CHAIN'
+
+      //Reinicio del nivel
+      this.nivelActual = 0
+      this.personasRecogidas=0
+      this.banderasGeneradas=0
+      this.banderasRecogidas=0
       this.fila = 0
+      this.conflictoActual=1
       this.score = 0
       this.puntuacion.textContent = '0' + this.score
       clearInterval(this.intervalo)
-      // Reset the showForm variable
 
       this.gameStarted = false
     } else {
@@ -306,6 +346,9 @@ export class VistaPrincipal extends Vista {
 
     const personajeSelected = personaje.cloneNode(true)
 
+    //Establecer el nombre del nivel
+    this.nombreapp.textContent = this.niveles[this.nivelActual].nombre.toUpperCase()
+
     // Obtener las coordenadas del evento de soltar en relación con el tablero
 
     const boardRect = this.tablero.getBoundingClientRect()
@@ -333,9 +376,19 @@ export class VistaPrincipal extends Vista {
     this.info.style.animation = 'ocultarTexto 1.5s forwards'
     this.end.style.animation = 'mostrarTexto 4s forwards'
     this.gameStarted = true
+
+    let info = document.getElementById("info")
+    if(info)
+      this.tablero.removeChild(info)
+      
+
+    //Cargar niveles y conflictos
+    this.cargarFondo(this.niveles[this.nivelActual].imagen)
+    this.generarConflictos()
+
     window.addEventListener('keydown', this.direccion)
     window.addEventListener('touchstart', this.direccion)
-    this.intervalo = setInterval(() => this.moverObjeto(), this.reload)
+    this.intervalo = setInterval(() => this.update(), this.reload)
     this.temp = 1
   }
 
@@ -360,7 +413,7 @@ export class VistaPrincipal extends Vista {
       this.part[0].style.left = this.posX - this.distanciapaso + '%'
       this.posX = this.posX - this.distanciapaso
     }
-  // animacion();  // Actualizar la animación de la this.part[0]
+    this.part[0].style.animation = 'personaAndando 0.2s infinite'
   }
 
   /**
@@ -375,6 +428,10 @@ export class VistaPrincipal extends Vista {
     if (event.key == 'a' && this.dir != 2) this.dir = 4
 
     // Verifica si el evento es táctil
+    if(event.touches && !this.showForm && this.partidaTerminada) {
+      this.controlador.overlayForm(this.form)
+      this.showForm = false
+    }
     if (event.touches && event.touches.length > 0) {
     // Obtén las coordenadas x del toque
       const touchX = event.touches[0].clientX
@@ -398,25 +455,27 @@ export class VistaPrincipal extends Vista {
    * Mueve el objeto (imagen) en el juego y realiza diversas acciones según el estado del juego.
    * @method
    */
-  moverObjeto = () => {
-    for (let i = this.fila; i > 0; i--) {
-      // Mover cada parte de la serpiente a la posición de la parte anterior
-      this.part[i].style.left = this.part[i - 1].style.left
-      this.part[i].style.top = this.part[i - 1].style.top
+  update = () => {
+    if(this.dir>0){
+      for (let i = this.fila; i > 0; i--) {
+        // Mover cada parte de la serpiente a la posición de la parte anterior
+        this.part[i].style.left = this.part[i - 1].style.left
+        this.part[i].style.top = this.part[i - 1].style.top
+      }
+      //Detectar colision con uno mismo
+      for (let i = 1; i < this.fila; i++) {
+        if (this.part[0].style.left == this.part[i + 1].style.left && this.part[0].style.top == this.part[i + 1].style.top) { this.terminarPartida() }
+      }
+      this.gestionNivel()
+      this.avanzar() // Mover la this.part[0]
+      this.limites()
+      this.generacionPersonas()
+      this.hueco()
+      this.recoger()
+      this.generacionBanderas()
+      this.temp++
     }
-    for (let i = 1; i < this.fila; i++) {
-      if (this.part[0].style.left == this.part[i + 1].style.left && this.part[0].style.top == this.part[i + 1].style.top) { this.restartGame() }
-    }
-
-    this.avanzar() // Mover la this.part[0]
-    this.limites()
-    this.generacionPersonas()
-    this.hueco()
-    this.recogerPersona()
-    this.generacionBanderas()
-    this.temp++
   }
-
   /**
    * Aplica límites al objeto (imagen) en el juego para que no salga del tablero.
    * @method
@@ -453,20 +512,26 @@ export class VistaPrincipal extends Vista {
  * Genera personas de manera aleatoria en el tablero.
  */
   generacionPersonas = () => {
-    if (this.temp % 100 === 0) {
-      const tableroAncho = this.tablero.clientWidth
-      const tableroAlto = this.tablero.clientHeight
+    if (this.temp % 50-this.reload === 0) {
+      const tableroAncho = this.tablero.clientWidth-this.part[0].offsetWidth*2
+      const tableroAlto = this.tablero.clientHeight-this.part[0].offsetHeight*2
+
+       // Obtén todos los elementos img dentro del div
+      var imagenes = this.divImagenesPersonjanes.getElementsByTagName('img');
+
+      // Convierte la colección de imágenes en un array
+      var arrayDeImagenes = Array.from(imagenes);
 
       // Crear un nuevo elemento img en lugar de div
       const nuevaImagen = document.createElement('img')
       nuevaImagen.style.width = '2.3%'
+      nuevaImagen.style.animation = 'personaQuieta 3s infinite'
 
-      const numeroAleatorio = Math.floor(Math.random() * 15) + 1
-      const numeroFormateado = ('00' + numeroAleatorio).slice(-3)
+      const numeroAleatorio = Math.floor(Math.random() * arrayDeImagenes.length)
 
       // Crear la URL de la imagen utilizando el número formateado
 
-      nuevaImagen.src = 'img/personajes/person' + numeroFormateado + '.png'
+      nuevaImagen.src = arrayDeImagenes[numeroAleatorio].src
 
       // Establecer el estilo del borde de la nueva imagen
 
@@ -476,8 +541,8 @@ export class VistaPrincipal extends Vista {
 
       // Establecer la posición absoluta de la nueva imagen dentro del tablero
       nuevaImagen.style.position = 'absolute'
-      nuevaImagen.style.left = posX + 'px'
-      nuevaImagen.style.top = posY + 'px'
+      nuevaImagen.style.left = posX+this.part[0].offsetWidth + 'px'
+      nuevaImagen.style.top = posY+this.part[0].offsetHeight+ 'px'
       nuevaImagen.classList.add('generado')
 
       // Añadir la nueva imagen al elemento con el id 'tablero'
@@ -489,69 +554,93 @@ export class VistaPrincipal extends Vista {
  * Genera banderas de manera aleatoria en el tablero.
  */
   generacionBanderas = () => {
-    if (this.temp % 500 === 0) {
-      var tableroAncho = this.tablero.clientWidth;
-      var tableroAlto = this.tablero.clientHeight;
-  
-      // Crear un nuevo elemento img en lugar de div
-      var nuevaBandera = document.createElement('img');
-  
-      // Crear la URL de la imagen utilizando el número formateado
-      nuevaBandera.src = 'img/objetos/bandera.png';
-  
-      // Calcular posiciones aleatorias como porcentaje del tamaño del tablero
-      var posXPercentage = Math.random() * 100;
-      var posYPercentage = Math.random() * 100;
-  
-      // Convertir porcentajes a píxeles utilizando el tamaño del tablero
-      var posX = (posXPercentage / 100) * tableroAncho - 10;
-      var posY = (posYPercentage / 100) * tableroAlto - 10;
-  
-      // Establecer la posición y tamaño de la nueva bandera en porcentajes
-      nuevaBandera.style.position = 'absolute';
-      nuevaBandera.style.height = '4%';  // Cambia este valor según tus preferencias
-      nuevaBandera.style.width = '4%';   // Cambia este valor según tus preferencias
-      nuevaBandera.style.left = posXPercentage + '%';
-      nuevaBandera.style.top = posYPercentage + '%';
-      nuevaBandera.classList.add('bandera');
-  
-      // Añadir la nueva bandera al elemento con el id 'tablero'
-      this.tablero.appendChild(nuevaBandera);
+    if(this.banderasGeneradas<this.cantidadBanderas){
+      let numero = (50-this.reload)*20
+      if (this.temp % numero === 0) {
+        let tableroAncho = this.tablero.clientWidth-this.part[0].offsetWidth*2
+        let tableroAlto = this.tablero.clientHeight-this.part[0].offsetHeight*2
+    
+        // Crear un nuevo elemento img en lugar de div
+        let nuevaBandera = document.createElement('img')
+    
+        // Crear la URL de la imagen utilizando el número formateado
+        nuevaBandera.src = 'img/objetos/bandera.png'
+    
+        // Calcular posiciones aleatorias como porcentaje del tamaño del tablero
+        let posX = Math.floor(Math.random() * tableroAncho - 10)
+        let posY = Math.floor(Math.random() * tableroAlto - 10)
+    
+        // Establecer la posición y tamaño de la nueva bandera en porcentajes
+        nuevaBandera.style.position = 'absolute'
+        nuevaBandera.style.height = '4%' // Cambia este valor según tus preferencias
+        nuevaBandera.style.width = '4%'  // Cambia este valor según tus preferencias
+        nuevaBandera.style.left = posX+this.part[0].offsetWidth + 'px'
+        nuevaBandera.style.top = posY+this.part[0].offsetHeight + 'px'
+        nuevaBandera.classList.add('bandera')
+    
+        // Añadir la nueva bandera al elemento con el id 'tablero'
+        this.tablero.appendChild(nuevaBandera)
+        this.banderasGeneradas++
+      }
     }
-  }
+}
 
   /**
  * Recoge la persona en la posición actual y actualiza la puntuación.
  */
-  recogerPersona = () => {
-  // Detectar el objeto (imagen) en las coordenadas actuales del this.part[0]
-    const objetoEnPunto = document.elementFromPoint(
-      this.part[0].getBoundingClientRect().left + this.part[0].offsetWidth / 2,
-      this.part[0].getBoundingClientRect().top + this.part[0].offsetHeight / 2
-    )
-
+  recoger = () => {
+    // Detectar el objeto (imagen) en las coordenadas actuales del this.part[0]
+    const objetoEnPunto = this.detectarColision();
+  
     if (objetoEnPunto && objetoEnPunto.className === 'generado') {
-      this.score = this.score + 10
-      this.puntuacion.textContent = '' + this.score
-      const imagenRecogida = new Image()
-      imagenRecogida.style.width = '2.3%'
-
-      imagenRecogida.src = objetoEnPunto.src
-      this.personita = imagenRecogida
-      this.tiempo = this.temp
+      this.score = this.score + 10;
+      this.puntuacion.textContent = '' + this.score;
+      const imagenRecogida = new Image();
+      imagenRecogida.style.width = '2.3%';
+  
+      imagenRecogida.src = objetoEnPunto.src;
+      this.personita = imagenRecogida;
+      this.tiempo = this.temp;
+  
+      // Almacenamos una referencia a "this" para usar dentro de la función de temporización
+      const self = this;
+  
+      // Animación al recoger a una persona
+      this.tablero.style.animation = 'recogerPersona 0.3s';
+  
+      // Luego, después de un breve momento, eliminamos la animación
+      setTimeout(function() {
+        // Usamos la referencia almacenada ("self") para acceder a "this.tablero"
+        self.tablero.style.animation = 'none';
+      }, 30);
+  
       // Remove de la imagen cogida
-      objetoEnPunto.remove()
-
-    // Añadir la imange recogida al final de la cola de la serpiente
-    };
-
-    if (objetoEnPunto && objetoEnPunto.className === 'bandera') {
-      this.score += 50
-      this.puntuacion.textContent = '' + this.score
-      objetoEnPunto.remove()
+      objetoEnPunto.remove();
+      this.personasRecogidas++;
+  
+      // Añadir la imagen recogida al final de la cola de la serpiente
     }
-  }
-
+  
+    if (objetoEnPunto && objetoEnPunto.className === 'bandera') {
+      let conflictos = this.tablero.querySelectorAll('.conflictos');
+      let conflicto=conflictos[this.conflictoActual]
+      this.conflictoActual++
+      this.score += 50
+      this.puntuacion.textContent = '' + this.score;
+    
+      // Obtén las coordenadas x e y del conflicto en porcentaje
+      let xConflict = parseFloat(conflicto.style.left);
+      let yConflict = parseFloat(conflicto.style.top);
+    
+      // Verifica si las coordenadas son números válidos
+      if (!isNaN(xConflict) && !isNaN(yConflict)) {
+        // Mueve el objetoEnPunto hacia las coordenadas del conflicto con animación
+        this.moverElementoConAnimacion(objetoEnPunto, xConflict, yConflict, 1000);
+      } else {
+        console.error('Las coordenadas del conflicto no son válidas.');
+      }
+    }
+  };
   /**
  * Une una imagen al final de la fila en el tablero.
  * @param {Image} imagen - La imagen que se va a unir.
@@ -560,7 +649,6 @@ export class VistaPrincipal extends Vista {
     this.fila++
     this.part.push(imagen)
     this.tablero.appendChild(this.part[this.fila])
-
     // Calcular la posición con un espacio entre cada imagen (ajusta el valor según sea necesario)
     const nuevaPosicionLeft = parseInt(this.part[this.fila - 1].style.left, 10) + this.part[0].offsetWidth
 
@@ -568,6 +656,7 @@ export class VistaPrincipal extends Vista {
     this.part[this.fila].style.position = 'absolute'
     this.part[this.fila].style.left = nuevaPosicionLeft + 'px'
     this.part[this.fila].style.top = this.part[0].style.top
+    this.part[this.fila].style.animation = 'personaAndando 0.2s infinite'
 
     this.tablero.appendChild(this.part[this.fila])
   }
@@ -583,4 +672,270 @@ export class VistaPrincipal extends Vista {
       this.unir(this.personita)
     }
   }
+  cargarNiveles() {
+    var arrayResultado = []; // Array para almacenar la información estructurada
+    $.ajax({
+        url: "http://localhost/2324_2DAW_CULTURAL_CHAIN/src/php/ajaxniveles.php",
+        type: "GET",
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        success: (data) => {
+            // Iterar sobre los datos recibidos
+            for (var i = 0; i < data.length; i++) {
+                var otherData = data[i].otherData;
+
+                // Parsear el campo imagen con JSON.parse
+                var imagenDecodificada = otherData.imagen;
+
+                // Estructurar los datos
+                var elemento = {
+                    nombre: otherData.nombrepais,
+                    imagen: imagenDecodificada,
+                    conflictos: otherData.conflictos,
+                    reflexiones: otherData.reflexiones,
+                };
+
+                // Agregar el elemento al arrayResultado
+                arrayResultado.push(elemento);
+            }
+            // Ahora, arrayResultado contiene la estructura deseada
+            this.niveles = arrayResultado;
+            this.cantidadBanderas = this.niveles[this.nivelActual].conflictos.length;
+            this.listapersonajes.forEach(personaje => {
+              personaje.addEventListener('dragstart', this.dragStart)
+              personaje.addEventListener('dragend', this.dragEnd)
+            })
+        },
+        error: function (status, error) {
+            console.error("Error en la solicitud AJAX: " + status + " - " + error);
+        }
+    });
+  }
+  cargarPersonajes(){
+    var arrayResultado = []; // Array para almacenar la información estructurada
+    $.ajax({
+        url: "http://localhost/2324_2DAW_CULTURAL_CHAIN/src/php/ajaxpersonajes.php",
+        type: "GET",
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        success: (data) => {
+            // Iterar sobre los datos recibidos
+            for (var i = 0; i < data.length; i++) {
+                var otherData = data[i].otherData;
+
+                // Estructurar los datos
+                var elemento = {
+                    nombre: otherData.nombre,
+                    imagen: otherData.imagen,
+                };
+
+                // Agregar el elemento al arrayResultado
+                arrayResultado.push(elemento);
+            }
+            // Ahora, arrayResultado contiene la estructura deseada
+            this.personajes = arrayResultado;
+            this.controlador.almacenarNames(this.cargarNombres())
+            this.aniadirPersonajes()
+
+            this.listapersonajes = this.base.querySelectorAll('.personaje')
+            
+            this.asignarNames()
+        },
+        error: function (status, error) {
+            console.error("Error en la solicitud AJAX: " + status + " - " + error);
+        }
+    });
+  }
+  aniadirPersonajes() {
+    this.personajes.forEach((personaje,i) => {
+        var figure = document.createElement("figure");
+        var img = document.createElement("img");
+        var figcaption = document.createElement("figcaption");
+        
+        img.src = "data:image/png;base64," + personaje.imagen;
+        img.className = "personaje";
+        img.id = this.personajes[i].nombre
+        
+        figure.appendChild(img);
+        figure.appendChild(figcaption);
+        
+        this.divImagenesPersonjanes.appendChild(figure);
+    });
+}
+  cargarNombres(){
+    let resultado = []
+    for(let i = 0 ;i<this.personajes.length;i++)
+    {
+      resultado.push(this.personajes[i].nombre)
+    }
+    return resultado
+  }
+
+  cargarFondo(imagen){
+    this.tablero.style.backgroundImage = "url('data:image/png;base64,"+imagen+"')"
+  }
+  cambioDificultad(valor) {
+    this.dificultad = valor
+    this.reload=this.dificultad
+    this.cantidadPersonasRecoger()
+  }
+  cantidadPersonasRecoger(){
+    if(this.dificultad==this.velocidadFacil)
+      this.cantidadPersonasNivel=this.cantidadPersonasFacil
+    if(this.dificultad==this.velocidadMedio)
+    this.cantidadPersonasNivel=this.cantidadPersonasMedio
+    if(this.dificultad==this.velocidadDificil)
+    this.cantidadPersonasNivel=this.cantidadPersonasDificil
+  }
+  detectarColision = () => {
+    let punto = [];
+
+    punto[0] = document.elementFromPoint(
+        this.part[0].getBoundingClientRect().left + this.part[0].offsetWidth,
+        this.part[0].getBoundingClientRect().top + this.part[0].offsetHeight
+    );
+    punto[1] = document.elementFromPoint(
+        this.part[0].getBoundingClientRect().left + this.part[0].offsetWidth,
+        this.part[0].getBoundingClientRect().top
+    );
+    punto[2] = document.elementFromPoint(
+        this.part[0].getBoundingClientRect().left,
+        this.part[0].getBoundingClientRect().top + this.part[0].offsetHeight
+    );
+    punto[3] = document.elementFromPoint(
+        this.part[0].getBoundingClientRect().left,
+        this.part[0].getBoundingClientRect().top
+    );
+    punto[4] = document.elementFromPoint(
+      this.part[0].getBoundingClientRect().left + this.part[0].offsetWidth/2,
+        this.part[0].getBoundingClientRect().top + this.part[0].offsetHeight/2
+  );
+
+    for (let i = 0; i < 5; i++) {
+        if (punto[i] && punto[i].classList.contains('generado') || punto[i].classList.contains('bandera')) {
+            return punto[i];
+        }
+    }
+
+    return false;
+}
+moverElementoConAnimacion(objeto, destinoX, destinoY, duracion) {
+    let inicioX = parseFloat(objeto.style.left) || 0;
+    let inicioY = parseFloat(objeto.style.top) || 0;
+    let startTime;
+
+    // Convierte destinoX y destinoY de porcentajes a píxeles
+    let contenedorAncho = objeto.parentElement.clientWidth;
+    let contenedorAlto = objeto.parentElement.clientHeight;
+    let destinoXEnPixeles = (destinoX / 100) * contenedorAncho;
+    let destinoYEnPixeles = (destinoY / 100) * contenedorAlto;
+
+    objeto.classList.remove('bandera');
+
+    const animar = (timestamp) => {
+      if (!startTime) startTime = timestamp;
+
+      let tiempoTranscurrido = timestamp - startTime;
+      let progreso = tiempoTranscurrido / duracion;
+
+      if (progreso < 1) {
+        let nuevaX = inicioX + (destinoXEnPixeles - inicioX) * progreso;
+        let nuevaY = inicioY + (destinoYEnPixeles - inicioY) * progreso;
+
+        objeto.style.left = nuevaX + 'px';
+        objeto.style.top = nuevaY + 'px';
+
+        requestAnimationFrame(animar);
+      } else {
+        objeto.style.left = destinoXEnPixeles + 'px';
+        objeto.style.top = destinoYEnPixeles + 'px';
+
+        objeto.classList.add('nobandera');
+
+        // Aumenta this.banderasrecogidas al finalizar la animación
+        this.banderasRecogidas++;
+        // Puedes hacer más acciones aquí después de recoger la bandera
+      }
+    };
+
+    requestAnimationFrame(animar);
+  }
+terminarPartida(){
+  let numReflexiones = this.niveles[this.nivelActual].reflexiones.length
+  let numRandom = Math.floor(Math.random() * numReflexiones)
+  let titulo
+  let contenido
+  var parrafo = document.createElement("p")
+
+  if(numReflexiones)
+  {
+    titulo=this.niveles[this.nivelActual].reflexiones[numRandom].titulo
+    contenido=this.niveles[this.nivelActual].reflexiones[numRandom].contenido
+    parrafo.id ="info"
+    parrafo.innerHTML= titulo+"<br>"+contenido
+    this.reflexion = parrafo
+  }
+
+  this.partidaTerminada = true
+  this.restartGame()
+}
+gestionNivel(){
+  if(this.personasRecogidas>=this.cantidadPersonasNivel && this.banderasRecogidas>=this.cantidadBanderas)
+    this.pasarnivel()
+}
+pasarnivel(){
+  if(this.nivelActual===this.niveles.length-1)
+    this.nivelActual=-1
+  this.nivelActual++
+  this.nombreapp.textContent = this.niveles[this.nivelActual].nombre.toUpperCase()
+  this.cargarFondo(this.niveles[this.nivelActual].imagen)
+
+  let elementosGenerados = this.tablero.querySelectorAll('.generado');
+  elementosGenerados.forEach(elemento => {
+    this.tablero.removeChild(elemento);
+  });
+  elementosGenerados = this.tablero.querySelectorAll('.nobandera');
+  elementosGenerados.forEach(elemento => {
+    this.tablero.removeChild(elemento);
+  });
+  elementosGenerados = this.tablero.querySelectorAll('.conflictos');
+  elementosGenerados.forEach(elemento => {
+    this.tablero.removeChild(elemento);
+  });
+
+  this.banderasGeneradas=0
+  this.banderasRecogidas=0
+  this.conflictoActual=1
+  this.cantidadBanderas=this.niveles[this.nivelActual].conflictos.length
+  this.personasRecogidas=0
+  this.generarConflictos()
+}
+generarConflictos(){
+  for(let i =0;i<this.niveles[this.nivelActual].conflictos.length;i++)
+  {
+    let x=this.niveles[this.nivelActual].conflictos[i].x
+    let y=this.niveles[this.nivelActual].conflictos[i].y
+    let conflicto = document.createElement('div')
+    let nombre= document.createElement('p')
+    
+    conflicto.className = "conflictos"
+    conflicto.style.width='6%'
+    conflicto.style.height='6%'
+    conflicto.style.position='absolute'
+    conflicto.style.left=x+'%'
+    conflicto.style.top=y+'%'
+    conflicto.style.backgroundImage='url("../src/img/nivel/conflicto.jpg")'
+    conflicto.style.backgroundSize='cover'
+    nombre.className = "conflictos"
+    nombre.style.left=x-1+'%'
+    nombre.style.top=(parseFloat(y) + 3)+'%'
+    nombre.style.color='black'
+    nombre.style.position='absolute'
+    var nombreConflicto = this.niveles[this.nivelActual].conflictos[i].nombre
+    nombre.textContent= nombreConflicto
+
+    this.tablero.appendChild(nombre)
+    this.tablero.appendChild(conflicto)
+  }
+}
 }

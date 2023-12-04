@@ -1,9 +1,9 @@
-import { VistaPrincipal } from './views/vistaPrincipal.js'
-import { VistaSettings } from './views/vistaSettings.js'
-import { VistaRanking } from './views/vistaRanking.js'
-import { VistaForm } from './views/vistaForm.js'
-import { ModeloNames } from './models/modeloNames.js'
-import { ModeloConfig } from './models/modeloConfig.js'
+import { VistaPrincipal } from './views/vistaprincipal.js'
+import { VistaSettings } from './views/vistasettings.js'
+import { VistaRanking } from './views/vistaranking.js'
+import { VistaForm } from './views/vistaform.js'
+import { ModeloNames } from './models/modelonames.js'
+import { ModeloConfig } from './models/modeloconfig.js'
 
 /**
 * Clase controlador que gestiona las vistas y la lógica del juego.
@@ -27,9 +27,6 @@ class Game {
     this.modelNames = new ModeloNames()
     this.ModelConfig = new ModeloConfig()
 
-    // Almacenar nombres iniciales de personajes
-    const nombres = ['Kai', 'Jake', 'Baku', 'Pauline', 'Ayara', 'Logan', 'Manu', 'Eva', 'Nalani', 'Michael']
-    this.almacenarNames(nombres)
 
     // Almacenar configuraciones iniciales
     const configs = ['fácil', 'muted']
