@@ -1,6 +1,6 @@
 <?php
 /**
- * Clase para la manipulación de datos relacionados con los centros.
+ * Clase para la manipulación de datos relacionados con los personajes.
  */
 class Personaje {
 
@@ -22,11 +22,10 @@ class Personaje {
             echo 'Error de conexión: ' . $e->getMessage();
         }
     }
-     /* Añade nuevos personajes a la base de datos.
+     /** Añade nuevos personajes a la base de datos.
      *
-     * @param string $nombre     Nombre del centro.
-     * @param string $pais  Localidad del centro.
-     * @param string $imagenPersonaje 
+     * @param array $nombre.
+     * @param array $imagenPersonaje 
      */
 
      public function aniadir(array $imagenes, array $nombres)
@@ -77,10 +76,7 @@ class Personaje {
             $consulta->bindParam(1, $id, PDO::PARAM_INT);
             $consulta->execute();
 
-            // // Verificar si se eliminó alguna fila
-            // if ($consulta->rowCount() === 0) {
-            //     echo 'No se encontró ningún personaje con el ID proporcionado';
-            // }
+     
         } catch (PDOException $e) {
             if ($e->getCode() === '23000') {
                 // Código de error para violación de clave foránea
@@ -93,7 +89,7 @@ class Personaje {
      /**
      * Lista todos los personajes registrados en la base de datos.
      *
-     * @return array Arreglo asociativo con los datos de los personajes.
+     * @return array Array con los datos de los personajes.
      */
     public function listar(): array
     {

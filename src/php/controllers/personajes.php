@@ -2,32 +2,21 @@
 
 require_once '../php/models/personajes.php';
 /**
- * Controlador para la gestión de niveles.
+ * Controlador para la gestión de personajes.
  */
 class ControladorPersonajes {
 
-    /** @var Nivel Objeto para la manipulación de niveles. */
+    /** @var Personaje Objeto para la manipulación de personajes. */
     public $objPersonajes;
      /** @var string Página actual del controlador. */
     public $pagina;
     /** @var string Vista por defecto del controlador. */
     public $view;
     /**
-     * Constructor del controlador de centros.
+     * Constructor del controlador de personajes.
      */
     public function __construct() {
         $this->objPersonajes = new Personaje(HOST,USER,PASSWORD,DATABASE, CHARSET);
-    }
-/**
-     * Lista los centros disponibles.
-     *
-     * @return array Datos de los centros.
-     */
-     
-
-     public function listarPersonajes() {
-        $this->view = 'gestionpersonajes';
-        return $this->objPersonajes->listar();
     }
 
     public function gestionarPersonajes()
@@ -35,8 +24,8 @@ class ControladorPersonajes {
         $this->view = 'gestionpersonajes';
         
         // Definir el tamaño máximo en bytes (por ejemplo, 2MB = 2 * 1024 * 1024 bytes)
-        $tamanioMaximo = 0.5 * 1024 * 1024; // Cambiar este valor según tu necesidad
-        $extensionesValidas = array("jpg", "jpeg", "png", "gif","webp"); // Extensiones permitidas
+        $tamanioMaximo = 0.5 * 1024 * 1024;
+        $extensionesValidas = array("jpg", "jpeg", "png", "gif", "webp"); // Extensiones permitidas
     
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (isset($_FILES['imagenPersonajes']) && isset($_POST['nombres'])) {
