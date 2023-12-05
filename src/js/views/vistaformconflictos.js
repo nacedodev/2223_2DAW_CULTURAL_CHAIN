@@ -46,15 +46,16 @@ const inicio = () => {
   whiteDiv.appendChild(redDiv)
   whiteDiv.addEventListener('click', (evento) => {
     const coordenadas = obtenerCoordenadasRaton(evento)
-    const rojoBorrar = document.getElementById('divrojo')
-    if (rojoBorrar) rojoBorrar.remove()
 
     redDiv.className = 'redDiv' // Asigna una clase para el estilo CSS
 
     redDiv.style.position = 'absolute'
     redDiv.style.display = 'block'
-    redDiv.style.left = coordenadas.x + '%'
-    redDiv.style.top = coordenadas.y + '%'
+    //Aqui esta la validacion nueva Miguel <--AQUI
+    if(coordenadas.x>0 && coordenadas.x<97 && coordenadas.y>0 && coordenadas.y<97){
+      redDiv.style.left = coordenadas.x + '%'
+      redDiv.style.top = coordenadas.y + '%'
+    }
     redDiv.style.transition = 'left 0.3s, top 0.3s' // Agregar transición
     redDiv.style.zIndex = '1'
     redDiv.style.width = '20px'
@@ -93,34 +94,36 @@ const validarNombreConflicto = (input) => {
 }
 
 const validarEjeX = (valor) => {
-  const ejeX = document.getElementById('ejeX')
-  const errorSpan = document.getElementById('ejeX-error')
+  const ejeX = document.getElementById('ejeX');
+  const errorSpan = document.getElementById('ejeX-error');
 
-  // Verificar si es un número de hasta 3 cifras
-  if (isNaN(valor) || !/^\d{1,3}$/.test(valor)) {
-    aplicarEstilo(ejeX, false)
-    errorSpan.textContent = 'Eje X debe ser un número de hasta 3 cifras.'
+  // Verificar si es un número entre 0 y 100
+  const numero = parseFloat(valor);
+  if (isNaN(numero) || numero < 0 || numero > 100) {
+    aplicarEstilo(ejeX, false);
+    errorSpan.textContent = 'Eje X debe ser un número entre 0 y 100.';
   } else {
-    ejeX.value = valor
-    aplicarEstilo(ejeX, true)
-    errorSpan.textContent = ''
+    ejeX.value = numero;
+    aplicarEstilo(ejeX, true);
+    errorSpan.textContent = '';
   }
-}
+};
 
 const validarEjeY = (valor) => {
-  const ejeY = document.getElementById('ejeY')
-  const errorSpan = document.getElementById('ejeY-error')
+  const ejeY = document.getElementById('ejeY');
+  const errorSpan = document.getElementById('ejeY-error');
 
-  // Verificar si es un número de hasta 3 cifras
-  if (isNaN(valor) || !/^\d{1,3}$/.test(valor)) {
-    aplicarEstilo(ejeY, false)
-    errorSpan.textContent = 'Eje Y debe ser un número de hasta 3 cifras.'
+  // Verificar si es un número entre 0 y 100
+  const numero = parseFloat(valor);
+  if (isNaN(numero) || numero < 0 || numero > 100) {
+    aplicarEstilo(ejeY, false);
+    errorSpan.textContent = 'Eje Y debe ser un número entre 0 y 100.';
   } else {
-    ejeY.value = valor
-    aplicarEstilo(ejeY, true)
-    errorSpan.textContent = ''
+    ejeY.value = numero;
+    aplicarEstilo(ejeY, true);
+    errorSpan.textContent = '';
   }
-}
+};
 
 // Agregada función para validar el estado del conflicto
 const validarEstadoConflicto = (input) => {

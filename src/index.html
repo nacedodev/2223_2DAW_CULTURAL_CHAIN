@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, user-scalable=no" />
     <title>Cultural Chain</title>
     <link
@@ -9,6 +9,7 @@
       href="./img/iconos/logo.jpeg"
       type="image/x-icon"
     />
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
@@ -41,10 +42,7 @@
             
                 <label for="centro">Centro:</label><br>
                 <select id="centro" name="centro" required>
-                <option value="">Selecciona un centro</option>
-                <option value="Virgen de Guadalupe">Virgen de Guadalupe</option>
-                <option value="Clase 2">I.E.S San Roque</option>
-                <option value="Clase 3">Enrique Iglesias</option>
+                    <option value="">Selecciona un centro</option>
                 </select>
             
                 <label for="correo">Email:</label><br>
@@ -54,10 +52,6 @@
                 <label for="localidad">Localidad:</label><br>
                 <select id="localidad" name="barlocalidadrio" required>
                     <option value="">Selecciona una localidad</option>
-                    <option value="Badajoz">Badajoz</option>
-                    <option value="Merida">Mérida</option>
-                    <option value="Caceres">Cáceres</option>
-                    <option value="Sevilla">Sevilla</option>
                 </select>
             
                 <label for="cp">Código Postal:</label><br>
@@ -82,47 +76,8 @@
                     </button>
                 </div>
                 <p>PERSONAJES</p>
-                <div>
-                    <figure>
-                        <img id="kai" src="img/personajes/astronaut 1.png" class="personaje">
-                        <figcaption></figcaption>
-                    </figure>
-                     <figure>
-                        <img id="Jake" src="img/personajes/person001.png" class="personaje">
-                        <figcaption></figcaption>
-                    </figure>
-                    <figure>
-                        <img id="Baku" src="img/personajes/person002.png" class="personaje">
-                        <figcaption></figcaption>
-                    </figure>
-                    <figure>
-                        <img id="Pauline" src="img/personajes/person003.png" class="personaje">
-                        <figcaption></figcaption>
-                    </figure>
-                    <figure>
-                        <img id="Ayara" src="img/personajes/person004.png" class="personaje">
-                        <figcaption></figcaption>
-                    </figure>
-                    <figure>
-                        <img id="Logan" src="img/personajes/person005.png" class="personaje">
-                        <figcaption></figcaption>
-                    </figure>
-                    <figure>
-                        <img id="Manu" src="img/personajes/person006.png" class="personaje">
-                        <figcaption></figcaption>
-                    </figure>
-                    <figure>
-                        <img id="Eva" src="img/personajes/person007.png" class="personaje">
-                        <figcaption></figcaption>
-                    </figure>
-                    <figure>
-                        <img id="Nalani" src="img/personajes/person008.png" class="personaje">
-                        <figcaption></figcaption>
-                    </figure>
-                    <figure>
-                        <img id="Paul" src="img/personajes/person009.png" class="personaje">
-                        <figcaption></figcaption>
-                    </figure>
+                <div id="divpersonajes">
+                    
                 </div>
             </div>
         </div>
@@ -272,10 +227,10 @@
                 </button>
             </div>
             <p class="tituloranking">DIFICULTAD</p>
-            <button class="botonsettings">FACIL</button>
-            <button class="botonsettings">MEDIO</button>
-            <button class="botonsettings">DIFICIL</button>
-            <button class="botonsettings" onclick="window.location.href ='../doc/home.html'">DOCUMENTACIÓN</button>
+            <button class="botonsettings" id="facil">FACIL</button>
+            <button class="botonsettings" id="medio">MEDIO</button>
+            <button class="botonsettings" id="dificil">DIFICIL</button>
+            <button class="botonsettings" onclick="window.location.href ='../doc/index.html'">DOCUMENTACIÓN</button>
             <p>AJAX</p>
             <div id="panelbotones">
                 <button class="boton">
@@ -292,6 +247,10 @@
         <button id="botonatras">
             <img src="img/iconos/back.png" alt="atras" id="back">
         </button>
+    </div>
+    <div id="reflexion">
+        <p id="tituloreflexion"></p>
+        <p id="textoreflexion"></p>
     </div>
     <div id="construccion">
         <p>🚧</p>
