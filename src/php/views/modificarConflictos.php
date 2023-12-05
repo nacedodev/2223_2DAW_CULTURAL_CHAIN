@@ -22,7 +22,7 @@
         <input type="hidden" name="id" value="<?php echo isset($_GET['id']) ? $_GET['id'] : ''; ?>">
     </form>
 
-    <div id="whiteDiv" style="width: 600px; height: 600px; background-color: white; margin-left: 10%; border-radius:5px">
+    <div id="whiteDiv" style="width: 50vh; height: 50vh; background-color: white; margin-left: 10%; border-radius:5px">
         <div id="divrojo" style="background-color:red;width: 25px;height:25px; position:relative;left:<?php echo isset($_GET['posx']) ? $_GET['posx'] : ''; ?>%;top:<?php echo isset($_GET['posy']) ? $_GET['posy'] : ''; ?>%;"></div>
     </div>
 </div>

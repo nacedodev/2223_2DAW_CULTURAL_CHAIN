@@ -1,0 +1,377 @@
+<style>
+/* Estilos para el contenedor */
+div {
+  width: 100%;
+  margin: 30px 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start; /* Alineación a la izquierda */
+}
+
+input:-webkit-autofill {
+    -webkit-text-fill-color: var(--secondary) !important;
+}
+
+/* Estilos para cada figura */
+figure {
+    position: relative;
+    display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+   text-align: center;
+    border-radius: 7px;
+    border: 1px solid var(--terciary);
+    background: var(--secondary);
+    box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    width: 17.778%;
+    margin: 1% 1%;
+    aspect-ratio: 1/1.3;
+}
+
+figure > img {
+    pointer-events: none;
+    aspect-ratio: 37/60;
+    width: 40%;
+    margin: auto;
+    display: block;
+    border: 1px dashed rgba(46, 46, 75, 0.84);
+    padding: 15px 40px;
+    border-radius: 10px;
+}
+
+#dropzone{
+    border:1px dashed var(--terciary);
+    width: 40%;
+    aspect-ratio: 37/60;
+    padding: 15px 40px;
+    border-radius: 10px;
+    margin: auto;
+    display: block;
+    filter: drop-shadow(0 0 6px var(--terciary))
+}
+
+#dropzone p{
+  width: 95%;
+  color: var(--terciary);
+  font-size: 0.6vw;
+  text-align: center;
+  position: absolute;
+  top:45%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+}
+ 
+input[type='text'] {
+  background-color: transparent; /* O puedes usar 'initial' */
+  text-align: center;
+  color: var(--terciary);
+  border-radius: 10px;
+  width: 40%;
+  padding: 3px 10px;
+  margin-bottom: 20px;
+  border: 1px dashed rgba(46, 46, 75, 0.84);
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.2vw;
+  /* Otros estilos para el texto del nombre del personaje */
+}
+
+
+figcaption {
+    color: var(--terciary);
+    border-radius: 10px;
+    min-width: 40%;
+    padding: 3px 10px;
+  margin-bottom: 20px;
+  border: 1px dashed var(--terciary);
+  /* Otros estilos para el texto del nombre del personaje */
+}
+
+#add-btn{
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+}
+
+#addButton,
+#revertFigures{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5vw;
+    background-color: var(--terciary);
+    padding:0;
+    border-radius: 10px;
+    aspect-ratio: 1/1;
+}
+
+#addButton img,
+#revertFigures img{
+  aspect-ratio: 1/1;
+  width:70%;
+}
+
+#sendButton,
+#deleteFigures{
+  background-color: var(--secondary);
+  color: var(--terciary);
+  padding: 3% 6%;
+  border-radius: 10px;
+  margin-top: 25px;
+  font-size: 1.1vw;
+}
+
+#sendButton:hover,
+#deleteFigures:hover{
+  background-color: var(--terciary);
+  filter: drop-shadow(0 0 5px var(--terciary));
+  color: var(--secondary);
+}
+
+/* Estilos para el botón '+' */
+
+/* Mostrar el botón solo cuando se coloque el cursor sobre el figure */
+figure:hover .add-button {
+  display: block;
+}
+
+.remove-button,
+.delete-button{
+    position: absolute;
+    top: 10px; /* Ajusta la distancia desde la parte superior */
+    right: 10px; /* Ajusta la distancia desde la parte derecha */
+    background-color: var(--terciary);
+    padding:2%;
+    width: 8%;
+    border-radius: 5px;
+    aspect-ratio: 1/1;
+    font-size: 0.4vw;
+    cursor: pointer;
+  }
+
+  .edit-button{
+    position: absolute;
+    top: 10px; /* Ajusta la distancia desde la parte superior */
+    left: 10px; /* Ajusta la distancia desde la parte derecha */
+    background-color: var(--terciary);
+    padding:2%;
+    width: 8%;
+    border-radius: 5px;
+    aspect-ratio: 1/1;
+    font-size: 0.4vw;
+    cursor: pointer; 
+  }
+
+  .file-input {
+    position: absolute;
+    opacity: 0;
+    width: 80%; /* Ancho del input, ajusta según tu diseño */
+    height: 65%; /* Alto del input, ajusta según tu diseño */
+    top: 44%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+  }
+  #error-edit{
+  text-align: center;
+  color: var(--terciary);
+  font-size: 1vw;
+  margin-top:40px;
+  filter: drop-shadow(0 0 3px black);
+}
+</style>
+<?php if(isset($_GET['mensaje'])): ?>
+        <p id="error-edit"><?php echo $_GET['mensaje']; ?></p>
+    <?php endif; ?>
+<form enctype="multipart/form-data" style="background: transparent;" action="index.php?action=gestionarPersonajes&controller=personajes" method="post">
+<div id="figures-container">
+          <?php foreach ($dataToView['data'] as $personaje) : ?>
+              <figure class="figure-container" data-image="">
+                  <img src="data:image/png;base64,<?php $imagen = new Personaje(HOST,USER,PASSWORD,DATABASE, CHARSET); echo $imagen->obtenerImagenPorId($personaje['id']);?>" class="personaje" name="imagenPersonajes[]">
+                  <input type="text" value="<?php echo $personaje['nombre']; ?>" class="personaje-input" readonly>
+                  <input type="hidden" value="<?php echo $personaje['id'] ?>">
+                  <button class="delete-button" type="button">-</button>
+                  <button class="edit-button" type="button" onclick="window.location.href = 'index.php?controller=personajes&action=modificarPersonajes&id=<?php echo $personaje['id']?>&nombre=<?php echo $personaje['nombre'] ?>'"><img width="85%"src="../img/iconos/edit.png" style="pointer-events:none" alt="/"></button>
+              </figure>
+          <?php endforeach; ?>
+        <figure id="add-btn">
+            <button id="addButton"type='button'><img src="../img/iconos/aniadir.png" alt="+"></button>
+            <button id="sendButton" type="submit">ENVIAR</button>
+            <button id="revertFigures" type="button" style="display:none;" onclick="window.location.href = 'index.php?controller=personajes&action=gestionarPersonajes'"><img src="../img/iconos/undo.png" alt="<-"></button>
+            <button id="deleteFigures" type="button" style="display:none;">BORRAR</button>
+        </figure>
+  </div>
+</form>
+<script>
+  const fileInputs = document.querySelectorAll('.file-input');
+  const imageContainers = document.querySelectorAll('.figure-container');
+  const sendBtn = document.getElementById('sendButton')
+  const addBtn = document.getElementById('addButton')
+  const deleteBtn = document.getElementById('deleteFigures')
+  const revertBtn = document.getElementById('revertFigures')
+
+  document.getElementById('figures-container').addEventListener('click', function(event) {
+  if (event.target.classList.contains('delete-button')) {
+    const figureContainer = event.target.closest('figure');
+    figureContainer.classList.add('marked-for-deletion'); // Marcar para borrar
+    figureContainer.style.animation = 'deleteIndicator 0.8s forwards';
+    sendBtn.style.display = 'none'
+    addBtn.style.display = 'none'
+    deleteBtn.style.display = 'block'
+    revertBtn.style.display = 'flex'
+  }
+});
+
+document.getElementById('deleteFigures').addEventListener('click', function() {
+  const figuresToDelete = document.querySelectorAll('.marked-for-deletion');
+
+  const idsParaBorrar = [];
+
+  figuresToDelete.forEach(figure => {
+    const id = figure.querySelector('input[type="hidden"]').value;
+    idsParaBorrar.push(id);
+  });
+
+  // Construir la URL con los IDs como parámetros
+  const url = `index.php?controller=personajes&action=borrarPersonajes&ids=${idsParaBorrar}`;
+
+  // Redirigir a la página de borrado con los IDs en la URL
+  window.location.href = url;
+});
+
+  fileInputs.forEach((input, index) => {
+    input.addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      const imageContainer = imageContainers[index];
+
+      if (file) {
+        const reader = new FileReader();
+
+        reader.onload = function(event) {
+          const imageURL = event.target.result;
+          const img = imageContainer.querySelector('.personaje');
+          
+          img.src = imageURL;
+          imageContainer.setAttribute('data-image', imageURL);
+        }
+
+        reader.readAsDataURL(file);
+      }
+    });
+  });
+
+
+  document.getElementById('addButton').addEventListener('click', function (event) {
+  event.preventDefault(); // Evita que el formulario se envíe
+
+  const figuresContainer = document.getElementById('figures-container');
+  const lastFigure = figuresContainer.lastElementChild; // Obtener el último figure
+  const previousFigure = lastFigure.previousElementSibling; // Obtener el anterior al último figure
+
+  const imageInput = previousFigure.querySelector('.file-input');
+  const nameInput = previousFigure.querySelector('.personaje-input');
+
+  if (imageInput != null) {
+    const imageValue = imageInput.value;
+    const nameValue = nameInput.value;
+
+    // Verificar si el último figure no está vacío (tanto la imagen como el nombre)
+    if ((!imageValue || imageValue === '') && (!nameValue || nameValue === '')) {
+      const addImg = document.querySelector('#addButton > img')
+      addImg.style.animation = 'shakeAnimation 0.3s ease-in-out'
+      setTimeout(() => {
+        addImg.style.animation = 'none'
+      }, 300)
+      previousFigure.style.animation = 'warningAnimation 0.8s linear'
+      setTimeout(() => {
+        previousFigure.style.animation = 'none'
+      }, 800)
+      return
+    }
+  }
+
+  const figureTemplate = document.createElement('figure');
+  figureTemplate.classList.add('figure-container');
+
+  figureTemplate.innerHTML = `
+    <div id="dropzone">
+      <p>Arrastra o haz click</p>
+    </div>
+        <img  class="personaje" src="" class="personaje" style="display: none;">
+    <input type="file" class="file-input" name="imagenPersonajes[]">
+    <input id='newname' type="text" value="" class="personaje-input" name="nombres[]" style="border: 1px dashed var(--terciary); filter: drop-shadow(0 0 5px var(--terciary))">
+    <button class="remove-button" type="button">-</button>
+  `;
+
+  // Encuentra el botón '+' en el contenedor y añade el nuevo figure justo antes de él
+  const addButton = figuresContainer.querySelector('#add-btn');
+  figuresContainer.insertBefore(figureTemplate, addButton);
+
+  const newNameInputs = document.querySelectorAll('.personaje-input');
+
+newNameInputs.forEach(newName => {
+  newName.addEventListener('blur', function() {
+    newName.style.border = '1px dashed #2e2e4b9c';
+    newName.style.filter = 'none';
+  });
+});
+
+  figureTemplate.scrollIntoView({ behavior: 'smooth' });
+
+  const newFileInput = figureTemplate.querySelector('.file-input');
+  const newImageContainer = figureTemplate;
+
+newFileInput.addEventListener('change', function (e) {
+  const file = e.target.files[0];
+  const dropdivs = document.querySelectorAll('#dropzone'); // Selecciona todos los dropzone
+  
+  if (file) {
+    const reader = new FileReader();
+    
+    reader.onload = function (event) {
+      const imageURL = event.target.result;
+      const img = newImageContainer.querySelector('.personaje');
+      
+      if (!file.type.startsWith('image/')) {
+        // Ruta de la imagen por defecto
+        const defaultImageURL = '../img/iconos/doc.png';
+        img.style.objectFit = 'contain';
+        img.src = defaultImageURL;
+        newImageContainer.setAttribute('data-image', defaultImageURL);
+      } else {
+        img.src = imageURL;
+        newImageContainer.setAttribute('data-image', imageURL);
+      }
+      
+      // Oculta todos los dropzone encontrados
+      dropdivs.forEach(dropdiv => {
+        dropdiv.style.display = 'none';
+      });
+      
+      img.style.display = 'block';
+      img.style.pointerEvents = 'none';
+    };
+    
+    reader.readAsDataURL(file);
+  }
+});
+
+});
+
+document.getElementById('figures-container').addEventListener('click', function(event) {
+  if (event.target.classList.contains('remove-button')) {
+    const figureContainer = event.target.closest('figure');
+    figureContainer.style.animation = 'slideOutAndRotate 0.3s forwards';
+    setTimeout(() => {
+      figureContainer.remove();
+    }, 300);
+  }
+});
+
+document.getElementById('figures-container').addEventListener('click', function(event) {
+  if (event.target.classList.contains('edit-button')) {
+   const figureContainer = event.target.closest('figure');
+    figureContainer.style.animation = 'editAnimation 0.3s forwards';
+  }
+});
+</script>

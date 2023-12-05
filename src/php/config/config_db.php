@@ -7,7 +7,8 @@ define('DATABASE', 'user2daw_ABP_GrupoB'); // Nombre de la base de datos
 define('HOST', '2daw.esvirgua.com');   // Dirección del servidor MySQL
 define('USER', 'user2daw_ABP');    // Nombre de usuario de MySQL
 define('PASSWORD', 'L.=K#2AM^F7T'); // Contraseña de MySQL
-define('DATABASE', 'user2daw_ABP_GrupoB'); // Nombre de la base de datos
+define('DATABASE', 'user2daw_ABP_GrupoB'); //Nombre de la base de datos
+define('CHARSET','utf8mb4');
 
 define('DEFAULT_CONTROLLER', 'administracion');
 define('DEFAULT_ACTION', 'mostrarPanel');

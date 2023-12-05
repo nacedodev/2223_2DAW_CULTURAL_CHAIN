@@ -1,11 +1,11 @@
 <?php
- 
+
 require_once '../php/models/niveles.php';
 /**
  * Controlador para la gestión de niveles.
  */
 class ControladorNiveles {
-   
+
     /** @var Nivel Objeto para la manipulación de niveles. */
     public $objNiveles;
      /** @var string Página actual del controlador. */
@@ -24,10 +24,33 @@ class ControladorNiveles {
      *
      * @return array Datos de los centros.
      */
-    public function listarNiveles() {
-        $this->view='niveles';
-        return $this->objNiveles->listar();   
+
+     public function listarNivelesReflexiones()
+     {
+         $this->view = 'nivelesReflexiones';
+         return $this->objNiveles->listar(); // Obtener los niveles
+     
+         // Obtener la información de las reflexiones para cada nivel
+        
+     }
+     
+
+     public function listarNiveles() {
+        $this->view = 'niveles';
+        $niveles = $this->objNiveles->listar();
+    
+        foreach ($niveles as &$nivel) {
+            try {
+                $nivel['tieneReflexiones'] = $this->objNiveles->tieneReflexiones($nivel['id']);
+            } catch (Exception $e) {
+                // Manejar el error aquí o simplemente asignar false en caso de error
+                $nivel['tieneReflexiones'] = false;
+            }
+        }
+        return $niveles;
+
     }
+    
     /**
      * Añade un nuevo centro.
      */
@@ -38,18 +61,18 @@ class ControladorNiveles {
                 $nombrepais = $_POST['nombrepais'];
                 $imagenTmp = $_FILES['imagen']['tmp_name'];
                 $imagenBinaria = file_get_contents($imagenTmp);
-    
+
                 $this->objNiveles->aniadir($nombrepais, $imagenBinaria);
-    
+
                 header("Location: index.php?action=listarNiveles&controller=niveles");
             }
         }
     }
-    
+
      /**
      * Borra un centro existente.
      */
-    public function borrarNivel() { 
+    public function borrarNivel() {
         $this->view='borradoNiveles';
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
              if (isset($_GET['id'])) {
@@ -61,7 +84,7 @@ class ControladorNiveles {
     /**
      * Modifica un centro existente.
      */
-    public function modificarNivel() { 
+    public function modificarNivel() {
         $this->view='modificarNiveles';
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Lógica para actualizar el centro en la base de datos
@@ -74,7 +97,7 @@ class ControladorNiveles {
         $this->objNiveles->modificar($_POST['id'], $_POST['nombrepais'],$imagenBinaria);
         header("Location: index.php?action=listarNiveles&controller=niveles");
     }
-       
+
     }
-    
+
 }
