@@ -3,3 +3,11 @@ CREATE TABLE Centro (
     nombre VARCHAR(100) NOT NULL,
     localidad VARCHAR(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE Reflexion (
+   id TINYINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+   titulo VARCHAR(50) NOT NULL,
+   contenido VARCHAR(255) NOT NULL,
+   nivel_id INT,
+   CONSTRAINT reflexion_nivel FOREIGN KEY (nivel_id) REFERENCES Nivel(id),
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

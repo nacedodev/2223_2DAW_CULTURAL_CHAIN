@@ -80,25 +80,26 @@ class Nivel {
      * @return array Arreglo asociativo con los datos de los niveles.
      */
     public function listar() {
-        $query= 'SELECT * FROM Nivel';
+        $query = 'SELECT * FROM Nivel';
         $resultado = $this->conexion->query($query); 
         $niveles = [];
-
+    
         if ($resultado === false) {
             // La consulta SELECT falló
             echo 'Error al consultar la base de datos';
         } else {
             if ($resultado->num_rows === 0) {
-                // No se encontraron filas en la tabla "nombre"
+                // No se encontraron filas en la tabla "Nivel"
                 echo '<p id="error">No hay Niveles registrados </p>';
             } else {
-                foreach ($resultado as $row) {
+                while ($row = $resultado->fetch_assoc()) {
                     $niveles[] = $row;
                 }
             }
         }
         return $niveles;
     }
+    
     /**
      * Obtiene la imagen de un nivel por su ID.
      *
@@ -116,6 +117,20 @@ class Nivel {
             return base64_encode($fila['imagen']); // Codifica la imagen en base64
         } else {
             return null; // o maneja el error de alguna manera
+        }
+    }
+
+    public function tieneReflexiones($nivelId) {
+        $nivelId = $this->conexion->real_escape_string($nivelId);
+    
+        $query = "SELECT COUNT(*) AS total_reflexiones FROM Reflexion WHERE nivel_id = '$nivelId'";
+        $resultado = $this->conexion->query($query);
+    
+        if ($resultado && $resultado->num_rows > 0) {
+            $fila = $resultado->fetch_assoc();
+            return $fila['total_reflexiones'] > 0; // Devuelve true si hay reflexiones asociadas
+        } else {
+            return false; // o maneja el error de alguna manera
         }
     }
 }
