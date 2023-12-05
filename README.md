@@ -1,10 +1,8 @@
 <p align="center">
-  <img src="src/img/preview.png" alt="preview Cultural Chain">
+  <img style="border-radius:10px;"src="src/img/preview.png" alt="preview Cultural Chain">
 </p>
 
 # Cultural Chain
-
-## Descripción
 
 Cultural Chain es un juego diseñado para transmitir conceptos fundamentales de la ciudadanía global, como la interculturalidad e inclusión. Utiliza tecnologías web como JavaScript, PHP, HTML y CSS, implementando el patrón de diseño Modelo Vista Controlador (MVC).
 
