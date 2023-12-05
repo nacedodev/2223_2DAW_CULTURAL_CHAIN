@@ -185,6 +185,38 @@ button {
     margin-top: 0;
     font-family: 'Press Start 2P', sans-serif;
 }
+<<<<<<< HEAD
+    #reflexion {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40%;
+            height: 40%;
+            background-color: var(--secondary);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            text-align: center;
+            z-index: 1000;
+        }
+
+        #tituloreflexion {
+            
+            color: var(--contrast);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+            font-size: 20px;
+            margin-top: 0;
+            font-family: 'Press Start 2P', sans-serif;
+        }
+
+        #textoreflexion {
+            margin-top: 20%;
+            font-size: 1.5vw;
+            color: grey;
+            text-align: center;
+        }
+=======
 #reflexion {
     display: none;
     position: fixed;
@@ -199,6 +231,7 @@ button {
     text-align: center;
     z-index: 1000;
 }
+>>>>>>> DWECIII
 
 #tituloreflexion {
     
@@ -226,7 +259,7 @@ button {
     background: var(--terciary);
 }
 
-ul > li > img:not(:first-child){
+ul > li > a> img:not(:first-child){
     display:none;
 }
 
@@ -621,6 +654,8 @@ ul > li > img:not(:first-child){
 #panelbotones{
     width: fit-content;
     margin: auto;
+    display: flex;
+
 }
 
 #panelbotones>.boton{
@@ -647,7 +682,100 @@ ul > li > img:not(:first-child){
     margin: 10px auto;
     padding:0px;
 }
+.botonsettings {
+    width: 165px;
+    height: 62px;
+    cursor: pointer;
+    color: #fff;
+    font-size: 17px;
+    border-radius: 1rem;
+    border: none;
+    position: relative;
+    background: #100720;
+    transition: background 0.5s, transform 0.5s;
+    margin: 10px; /* Añade espacio entre los botones si lo deseas */
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+#facil::after {
+    content: '';
+    width: 100%;
+    height: 100%;
+    background-image: radial-gradient(circle farthest-corner at 10% 20%,  rgba(82, 156, 82, 0.5)7.8%, rgba(50, 129, 40, 0.8) 100.2%);
+    filter: blur(5px); /* Ajusta el valor del desenfoque para reducir el brillo */
+    z-index: -1;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+#medio::after {
+    content: '';
+    width: 100%;
+    height: 100%;
+    background-image: radial-gradient(circle farthest-corner at 10% 20%,  rgba(208, 236, 47, 0.5)7.8%, rgba(243, 180, 8, 0.8) 100.2%);
+    filter: blur(5px); /* Ajusta el valor del desenfoque para reducir el brillo */
+    z-index: -1;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+#dificil::after {
+    content: '';
+    width: 100%;
+    height: 100%;
+    background-image: radial-gradient(circle farthest-corner at 10% 20%,  rgba(156, 82, 82, 0.5)7.8%, rgba(129, 40, 40, 0.8) 100.2%);
+    filter: blur(5px); /* Ajusta el valor del desenfoque para reducir el brillo */
+    z-index: -1;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
 
+.botonsettings:hover {
+    opacity: 1;
+    transform: translateY(-5px); /* Puedes ajustar la cantidad de desplazamiento según tus preferencias */
+}
+.botonsettings:active {
+    transform: scale(0.95) rotate(1deg);
+   
+}
+
+#panelbotones > .boton {
+    width: 165px;
+    height: 62px;
+    cursor: pointer;
+    color: var(--primary);
+    font-size: 17px;
+    border-radius: 1rem;
+    border: none;
+    position: relative;
+    background: #6F7789;
+    transition: background 0.5s, transform 0.5s;
+    margin: 10px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+#panelbotones > .boton::after {
+    content: '';
+    width: 100%;
+    height: 100%;
+    filter: blur(5px);
+    z-index: -1;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+#panelbotones > .boton:hover {
+    opacity: 1;
+    transform: translateY(-5px);
+}
+
+#panelbotones > .boton:active {
+    transform: scale(0.95) rotate(1deg);
+   
+}
+
+  
 #vistaForm ,#vistaFormReflexiones{
     z-index: 99;
     width:100%;
@@ -715,7 +843,11 @@ nav li {
     background-color: var(--terciary);
 }
 
-nav li:hover:not(:first-child) {
+ #menu li:hover:not(:first-child) {
+    filter: drop-shadow(0 0 0.4em var(--terciary));
+  }
+  
+ #submenu li:hover {
     filter: drop-shadow(0 0 0.4em var(--terciary));
   }
 
@@ -734,12 +866,26 @@ nav #logo{
     margin:0;
 }
 
-nav li:first-child{
+#menu li:first-child{
     margin:0;
     background-color: transparent;
     margin-left: 20px;
     margin-right: 10px;
     flex-grow:0;
+}
+#submenu{
+    display: none;
+    animation: appearAnimation 1s ease-out forwards;
+}
+@keyframes appearAnimation {
+    from {
+        opacity: 0;
+        transform: translateY(-100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 body > #hora{
@@ -751,6 +897,10 @@ body > #hora{
     color: var(--terciary);
     text-shadow: 2px 2px 4px var(--shadow);
 }
+#barras{
+    display: none;
+}
+
 
 input::placeholder,
 textarea::placeholder {
@@ -1541,7 +1691,7 @@ input:-webkit-autofill {
         top:0;
         opacity: 0.8;
     }
-
+ 
     #divderecha #theme{
         width: 15%;
         left: 12%;
@@ -1587,6 +1737,7 @@ input:-webkit-autofill {
     #vistaRanking #score{
         display: none;
     }
+   
 
     #tablonranking{
         width:90%;
@@ -1637,11 +1788,7 @@ input:-webkit-autofill {
     #informacion{
         font-size: 2vw;
     }
-
-    ul > li > img{
-        display: block;
-    }
-
+   
     @media screen and (width <= 600px){
         #panelCentro p{
             font-size: 3vw;
@@ -1654,6 +1801,81 @@ input:-webkit-autofill {
             width: 5.6vw;
         }
     }
+ @media screen and (width <= 600px){
+        #panelCentro p{
+            font-size: 3vw;
+        }
 
+        #panelCentro>div:nth-child(2)>div p{
+            font-size: 3vw;
+        }
+        #panelCentro>div:nth-child(2)>div>a>img {
+            width: 5.6vw;
+        }
+    }
+    @media screen and (max-width: 850px) {
+        ul > li > a > span {
+          display: none;
+        }
+        ul > li > a > img:not(:first-child) {
+          display: flex;
+          width: 30px;
+        }
+      }
+      @media screen and (max-width: 600px) {
+      
+      
+        #barras {
+          display: flex;
+          flex-grow: 0;
+          cursor: pointer; /* Cambiar el cursor al hacer hover */
+
+        }
+      
+        #menu > li:not(:last-child) {
+          display: none;
+        }
+        #menu > li img {
+            width: 50px;
+            height: auto;
+          }
+          #menu > li {
+            background-color: transparent;
+          }
+        #submenu {
+           /* Cambiar a bloque para que aparezcan en una columna */
+            height: 50%;
+            list-style: none; /* Quitar los estilos de la lista */
+            padding: 0; /* Quitar el relleno predeterminado de la lista */
+           
+        }
+        #menu{
+            width: fit-content;
+        }
+        #submenu li {
+            width: 20%; /* Establecer el ancho al 10% */
+            position: relative;
+            margin: 0;
+            background-color: #575b65;
+            box-sizing: border-box; /* Incluir el relleno y el borde en el ancho y alto */
+            display: flex;
+            border-radius: 0;
+            height: auto;
+            z-index: 2;
+        }
+
+        #menu:hover + #submenu {
+            display: block;
+
+         
+        }
+        #submenu:hover {
+            display: block;
+            
+        }
+        #panelCentro{
+            margin-top: 0;
+        }
+        
+      }
 }
-

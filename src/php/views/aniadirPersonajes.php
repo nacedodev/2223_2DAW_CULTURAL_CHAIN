@@ -1,15 +1,15 @@
 <div id="vistaForm">
-    <form id="form-end" enctype="multipart/form-data" name="formularioCentro" action="index.php?action=aniadirPersonajes&controller=personajes" method="post">
-    <label for="nombre">Nombre del personaje:</label>
-    <input type="text" id="nombre" name="nombre" >
+    <form id="form-end" enctype="multipart/form-data" name="formularioCentro" action="index.php?action=aniadirNivel&controller=niveles" method="post">
+    <label for="nombrepais">Nombre del personaje:</label>
+    <input type="text" id="nombrepais" name="nombrepais" >
     <span id="centro-error" class="error-message"></span><br><br>
 
-    <label for="pais">País:</label>
-    <input type="text" id="pais" name="pais" >
+    <label for="nombrepais">País:</label>
+    <input type="text" id="nombrepais" name="nombrepais" >
     <span id="centro-error" class="error-message"></span><br><br>
 
-    <label for="imagenPersonaje">Apariencia:</label>
-    <input type="file" id="imagenPersonaje" name="imagenPersonaje">
+    <label for="imagen">Apariencia:</label>
+    <input type="file" id="imagen" name="imagen">
     <span id="localidad-error" class="error-message"></span><br><br>
 
         <button id="send" type="submit">Enviar</button>
