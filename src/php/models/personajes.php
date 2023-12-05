@@ -39,7 +39,6 @@ class Personaje {
 
              $index = 0;
              $totalPersonajes = count($nombres);
-             var_dump(count($nombres));
              
              while ($index < $totalPersonajes) {
                  $nombre = $nombres[$index];
