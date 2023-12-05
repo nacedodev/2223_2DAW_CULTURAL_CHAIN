@@ -719,7 +719,7 @@ export class VistaPrincipal extends Vista {
   cargarNiveles() {
     var arrayResultado = []; // Array para almacenar la información estructurada
     $.ajax({
-        url: "http://localhost/2324_2DAW_CULTURAL_CHAIN/src/php/ajaxniveles.php",
+        url: "php/ajaxniveles.php",
         type: "GET",
         dataType: "json",
         contentType: "application/json; charset=utf-8",
@@ -770,7 +770,7 @@ cargarPersonajes() {
     var arrayResultado = [];
 
     $.ajax({
-        url: "http://localhost/2324_2DAW_CULTURAL_CHAIN/src/php/ajaxpersonajes.php",
+        url: "php/ajaxpersonajes.php",
         type: "GET",
         dataType: "json",
         contentType: "application/json; charset=utf-8",
@@ -813,7 +813,7 @@ cargarCentros() {
   var arrayResultado = []; // Array para almacenar la información estructurada
 
   $.ajax({
-      url: "http://localhost/2324_2DAW_CULTURAL_CHAIN/src/php/ajaxcentros.php",
+      url: "php/ajaxcentros.php",
       type: "GET",
       dataType: "json",
       contentType: "application/json; charset=utf-8",
