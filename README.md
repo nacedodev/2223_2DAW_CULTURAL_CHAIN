@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="src/img/preview.png" alt="preview Cultural Chain">
+  <img src="src/img/view.png" alt="preview Cultural Chain">
 </p>
 
 # Cultural Chain
