@@ -36,7 +36,7 @@ class ControladorPersonajes {
                 $imagenes = array_filter($imagenes);
                 $nombres = array_filter($nombres);
     
-                if (!empty($imagenes) && !empty($nombres)) {
+                if (!empty($imagenes) && !empty($nombres) && $imagenes['size'][0] !== 0) {
                     foreach ($imagenes['size'] as $indice => $tamanio) {
                         $nombreArchivo = $imagenes['name'][$indice];
                         $extension = strtolower(pathinfo($nombreArchivo, PATHINFO_EXTENSION)); // Obtener la extensión del archivo
@@ -63,7 +63,17 @@ class ControladorPersonajes {
                     }
                     if($errores == false){
                         $this->objPersonajes->aniadir($imagenes,$nombres);
+                        if(isset($this->objPersonajes->mensaje)){
+                            $mensaje = $this->objPersonajes->mensaje;
+                            header("Location: index.php?controller=personajes&action=gestionarPersonajes&mensaje=$mensaje");
+                            exit;
+                        }
                     }
+                }
+                else{
+                    $mensaje = "Imagen o Nombre Vacíos.";
+                    header("Location: index.php?controller=personajes&action=gestionarPersonajes&mensaje=$mensaje");
+                    exit;
                 }
             }
         }
@@ -83,8 +93,11 @@ class ControladorPersonajes {
             $ids = explode(',', $idsString);
             // Llamar al método borrar del modelo y pasarle la cadena de IDs
             $this->objPersonajes->borrar($ids);
-    
-            header("Location: index.php?action=gestionarPersonajes&controller=personajes");
+            if(isset($this->objPersonajes->mensaje)){
+                $mensaje = $this->objPersonajes->mensaje;
+                header("Location: index.php?action=gestionarPersonajes&controller=personajes&mensaje=$mensaje");
+                exit;
+            }
         }
     }
     

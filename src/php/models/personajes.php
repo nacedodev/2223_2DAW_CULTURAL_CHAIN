@@ -19,27 +19,30 @@ class Personaje {
             // Configuración para que PDO lance excepciones en errores
             $this->conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $e) {
-            echo 'Error de conexión: ' . $e->getMessage();
+            $this->mensaje = 'Error de conexión: ' . $e->getMessage();
         }
     }
      /** Añade nuevos personajes a la base de datos.
      *
-     * @param array $nombre.
-     * @param array $imagenPersonaje 
+     * @param array $nombres.
+     * @param array $imagenes 
      */
 
      public function aniadir(array $imagenes, array $nombres)
      {
          try {
-             $this->conexion->beginTransaction();
+             $this->conexion->beginTransaction();//Se inicia la transacción
              $sql = 'INSERT INTO Personaje (nombre, imagenPersonaje) VALUES (?, ?)';
+             //Se prepara la consulta una sola vez
              $consulta = $this->conexion->prepare($sql);
+             //Se asignan los parametros , con su tipo de dato
              $consulta->bindParam(1, $nombre, PDO::PARAM_STR);
              $consulta->bindParam(2, $imagenBinaria, PDO::PARAM_LOB);
 
              $index = 0;
              $totalPersonajes = count($nombres);
              
+             //Se van añadiendo todos los personajes en el while
              while ($index < $totalPersonajes) {
                  $nombre = $nombres[$index];
                  $imagenTmp = $imagenes['tmp_name'][$index];
@@ -48,10 +51,12 @@ class Personaje {
                  $consulta->execute();
                  $index++;
              }
-             
+             // Si todo salió bien , se hace commit
              $this->conexion->commit(); 
          } catch (PDOException $e) {
+            //Si algo salió mal se ahce rollback y se deshacen todos los cambios
              $this->conexion->rollBack();
+             $this->mensaje = 'Error al añadir el personaje: ' . $e->getMessage();
          }
      }
      
@@ -75,6 +80,7 @@ class Personaje {
              }
      
              $this->conexion->commit();
+             $this->mensaje = 'Los personajes han sido eliminados correctamente';
          } catch (PDOException $e) {
              $this->conexion->rollBack();
              if ($e->getCode() === '23000') {
@@ -105,7 +111,7 @@ class Personaje {
 
             return $personajes; // Devolver los datos de los personajes
         } catch (PDOException $e) {
-            echo 'Error al listar los centros: ' . $e->getMessage();
+            $this->mensaje = 'Error al listar los personajes: ' . $e->getMessage();
             return [];
         }
     }
@@ -113,11 +119,11 @@ class Personaje {
     public function obtenerImagenPorId($id) {
         $query = "SELECT imagenPersonaje FROM Personaje WHERE id = :id";
         
-        $statement = $this->conexion->prepare($query);
-        $statement->bindParam(':id', $id);
-        $statement->execute();
+        $consulta = $this->conexion->prepare($query);
+        $consulta->bindParam(':id', $id);
+        $consulta->execute();
         
-        $resultado = $statement->fetch(PDO::FETCH_ASSOC);
+        $resultado = $consulta->fetch(PDO::FETCH_ASSOC);
     
         if ($resultado) {
             return base64_encode($resultado['imagenPersonaje']);
@@ -127,25 +133,24 @@ class Personaje {
     }
 
     public function modificar($id, $nombre, $imagen) {
-        if (!empty($imagen)) {
-            $query = "UPDATE Personaje SET nombre = :nombre, imagenPersonaje = :imagen WHERE id = :id";
-            $statement = $this->conexion->prepare($query);
-            $statement->bindParam(':nombre', $nombre);
-            $statement->bindParam(':imagen', $imagen);
-        } else {
-            $query = "UPDATE Personaje SET nombre = :nombre WHERE id = :id";
-            $statement = $this->conexion->prepare($query);
-            $statement->bindParam(':nombre', $nombre);
+        try{
+            if (!empty($imagen)) {
+                $query = "UPDATE Personaje SET nombre = :nombre, imagenPersonaje = :imagen WHERE id = :id";
+                $consulta = $this->conexion->prepare($query);
+                $consulta->bindParam(':nombre', $nombre);
+                $consulta->bindParam(':imagen', $imagen);
+            } else {
+                $query = "UPDATE Personaje SET nombre = :nombre WHERE id = :id";
+                $consulta = $this->conexion->prepare($query);
+                $consulta->bindParam(':nombre', $nombre);
+            }
+            
+            $consulta->bindParam(':id', $id);
+            $resultado = $consulta->execute();
+            
+            return $resultado;
+        } catch(PDOException $e){
+            $this->mensaje = 'Error al modificar el personaje: '. $e->getMessage();
         }
-        
-        $statement->bindParam(':id', $id);
-        $resultado = $statement->execute();
-        
-        return $resultado;
     }
-    
-    
-    
-    
-    
 }

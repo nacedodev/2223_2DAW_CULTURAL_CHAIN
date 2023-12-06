@@ -123,7 +123,7 @@ button {
     justify-content: space-between;
   /*   flex-wrap: wrap me permite que cuando los elementos no puedan caber en una sola línea, se coloquen en lineas adicionales. */
     flex-wrap: wrap;
-    padding: 0 7%;
+    padding: 0 4%;
 
 }
 
@@ -146,7 +146,7 @@ button {
     background: var(--personajes);
     box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.25);
     width: 35%;
-    max-width: 196px;
+    max-width: 145px;
     margin: 10px 20px;
     aspect-ratio: 1/1;
 }
@@ -414,6 +414,7 @@ ul > li > a> img:not(:first-child){
 #rk{
     margin-right: 20px;
 }
+
 .boton{
 /*   aspect -ratio 1/1 mantiene la proporcion del elemento , es decir solo le damos el ancho y el alto se ajusta automaticamente para mantener la relación de aspecto 1/1 */
     aspect-ratio: 1/1;
@@ -422,7 +423,7 @@ ul > li > a> img:not(:first-child){
     background: var(--terciary);
     color: var(--primary);
     float:left;
-    margin-top: 15px;
+    margin-top: 4%;
     padding:0px;
 }
 
