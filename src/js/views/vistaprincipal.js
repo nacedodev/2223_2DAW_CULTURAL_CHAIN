@@ -16,21 +16,21 @@ export class VistaPrincipal extends Vista {
    */
   constructor (controlador, base) {
     super(controlador, base)
-    
-    //Cargar datos de ajax
+
+    // Cargar datos de ajax
     this.personajes
     this.cargarPersonajes()
     this.cargarCentros()
     this.cargarNiveles()
-  
+
     const btnRestart = document.getElementById('restart')
     const btnRanking = this.base.querySelectorAll('button')[3]
     const btnSettings = this.base.querySelectorAll('button')[4]
     const btnFacil = document.getElementById('facil')
     const btnMedio = document.getElementById('medio')
     const btnDificil = document.getElementById('dificil')
-    
-    //Select de centro y localidad
+
+    // Select de centro y localidad
     this.selectCentros = document.getElementById('centro')
     this.selectLocalidades = document.getElementById('localidad')
 
@@ -52,38 +52,38 @@ export class VistaPrincipal extends Vista {
     this.showForm = false
     this.nombreapp = document.getElementById('nombreapp')
 
-    //Dificultades
+    // Dificultades
     this.velocidadFacil = 40
     this.velocidadMedio = 30
-    this.velocidadDificil =20
-    this.cantidadPersonasFacil=5
-    this.cantidadPersonasMedio=50
-    this.cantidadPersonasDificil=20
+    this.velocidadDificil = 20
+    this.cantidadPersonasFacil = 5
+    this.cantidadPersonasMedio = 50
+    this.cantidadPersonasDificil = 20
     this.dificultad = this.velocidadFacil
-    this.cantidadPersonasNivel=this.cantidadPersonasFacil
+    this.cantidadPersonasNivel = this.cantidadPersonasFacil
 
     this.tablero.style.position = 'relative'
-    this.tablero.style.backgroundRepeat ='no-repeat'
-    this.tablero.style.backgroundSize ='cover'
+    this.tablero.style.backgroundRepeat = 'no-repeat'
+    this.tablero.style.backgroundSize = 'cover'
 
     this.score = 0
     this.puntuacion.textContent = '0' + this.score
 
-    //Gestión Niveles
+    // Gestión Niveles
     this.nivelActual = 0
-    this.personasRecogidas=0
+    this.personasRecogidas = 0
 
-    //Gestion Banderas
-    this.banderasGeneradas=0
-    this.banderasRecogidas=0
-    this.cantidadBanderas=0
-    this.conflictoActual=1
+    // Gestion Banderas
+    this.banderasGeneradas = 0
+    this.banderasRecogidas = 0
+    this.cantidadBanderas = 0
+    this.conflictoActual = 1
 
-    //Centros
+    // Centros
     this.arrayCentros = []
     this.arrayLocalidades = []
 
-    //Variables del juego
+    // Variables del juego
     this.puntuacion = document.getElementById('puntuacion')
     this.posX
     this.posY
@@ -97,17 +97,16 @@ export class VistaPrincipal extends Vista {
     this.personita
     this.tiempo
 
-
     // Agregar eventos de arrastrar y soltar al tablero
     this.tablero.addEventListener('dragover', this.dragOver)
     this.tablero.addEventListener('dragenter', this.dragEnter)
     this.tablero.addEventListener('dragleave', this.dragLeave)
     this.tablero.addEventListener('drop', this.drop)
 
-    //Eventos de los botones de dificultad
-    btnFacil.onclick = () => this.cambioDificultad(this.velocidadFacil);
-    btnMedio.onclick = () => this.cambioDificultad(this.velocidadMedio);
-    btnDificil.onclick = () => this.cambioDificultad(this.velocidadDificil);
+    // Eventos de los botones de dificultad
+    btnFacil.onclick = () => this.cambioDificultad(this.velocidadFacil)
+    btnMedio.onclick = () => this.cambioDificultad(this.velocidadMedio)
+    btnDificil.onclick = () => this.cambioDificultad(this.velocidadDificil)
     btnRanking.onclick = this.irRanking
     btnSettings.onclick = this.irSettings
     this.btnTheme.onclick = this.changeTheme
@@ -119,31 +118,33 @@ export class VistaPrincipal extends Vista {
     this.setConfetti(this.clickerMode)
     setInterval(this.mostrarHora, 1000)
   }
+
   /**
  * Asigna nombres a elementos <figcaption> en el documento.
  * Utiliza el controlador para obtener la lista de nombres y asignarlos a los elementos correspondientes.
  * Si no hay suficientes nombres, establece el texto del <figcaption> como vacío.
  * @method
  */
-  asignarNames() {
+  asignarNames () {
     // Selecciona todos los elementos <figcaption> en el documento
-    const figcaptions = document.querySelectorAll('figcaption');
+    const figcaptions = document.querySelectorAll('figcaption')
 
     // Obtiene la lista de nombres desde el controlador
-    const names = this.controlador.devolverNames();
+    const names = this.controlador.devolverNames()
 
     // Itera sobre los elementos <figcaption>
     for (let i = 0; i < figcaptions.length; i++) {
       // Verifica si hay un nombre disponible para asignar
       if (i < names.length) {
         // Asigna el nombre correspondiente al texto del <figcaption>
-        figcaptions[i].innerText = names[i];
+        figcaptions[i].innerText = names[i]
       } else {
         // Si no hay más nombres disponibles, establece el texto del <figcaption> como vacío
-        figcaptions[i].innerText = '';
+        figcaptions[i].innerText = ''
       }
     }
   }
+
   /**
    * Configura y muestra confeti en función del parámetro 'clicker'.
    * @param {boolean} clicker - Indica si el confeti se configura para un evento 'clicker' o no.
@@ -151,24 +152,25 @@ export class VistaPrincipal extends Vista {
    */
   setConfetti = (clicker) => {
     // Crea una instancia de Confetti asociada al elemento con id 'logo'
-    const confetti = new Confetti('logo');
+    const confetti = new Confetti('logo')
 
     if (clicker) {
       // Configura el confeti para un evento 'clicker'
-      confetti.setCount(100);
-      confetti.setSize(1);
-      confetti.setPower(5);
-      confetti.setFade(true);
-      confetti.destroyTarget(false);
+      confetti.setCount(100)
+      confetti.setSize(1)
+      confetti.setPower(5)
+      confetti.setFade(true)
+      confetti.destroyTarget(false)
     } else {
       // Configura el confeti para un evento diferente a 'clicker'
-      confetti.setCount(1200);
-      confetti.setSize(1.6);
-      confetti.setPower(50);
-      confetti.setFade(false);
-      confetti.destroyTarget(true);
+      confetti.setCount(1200)
+      confetti.setSize(1.6)
+      confetti.setPower(50)
+      confetti.setFade(false)
+      confetti.destroyTarget(true)
     }
   }
+
   /**
    * Realiza la navegación a la vista de configuración.
    * @method
@@ -204,27 +206,28 @@ export class VistaPrincipal extends Vista {
       this.showForm = false
     }
   }
+
   /**
    * Muestra la hora actual en un elemento HTML específico.
    * @method
    */
-  mostrarHora() {
+  mostrarHora () {
     // Obtiene la fecha actual
-    const fecha = new Date();
+    const fecha = new Date()
 
     // Extrae la hora y los minutos de la fecha
-    let hora = fecha.getHours();
-    let minutos = fecha.getMinutes();
+    let hora = fecha.getHours()
+    let minutos = fecha.getMinutes()
 
     // Asegúrate de que los números siempre tengan dos dígitos
-    if (hora < 10) hora = '0' + hora;
-    if (minutos < 10) minutos = '0' + minutos;
+    if (hora < 10) hora = '0' + hora
+    if (minutos < 10) minutos = '0' + minutos
 
     // Construye la cadena de la hora actual en formato HH:mm
-    const horaActual = hora + ':' + minutos;
+    const horaActual = hora + ':' + minutos
 
     // Actualiza el contenido del elemento HTML con la hora actual
-    this.hora.innerHTML = horaActual;
+    this.hora.innerHTML = horaActual
   }
 
   /**
@@ -233,37 +236,38 @@ export class VistaPrincipal extends Vista {
  * @method
  */
   clickerButtonActions = (e) => {
-    const target = e.target;
+    const target = e.target
 
     if (!this.clickerMode) {
       // Aplicar transición de opacidad para ocultar el botón temporalmente
-      target.style.transition = 'opacity 2s ease';
-      target.style.opacity = 0;
+      target.style.transition = 'opacity 2s ease'
+      target.style.opacity = 0
 
       // Restaura la visibilidad después de 5 segundos
       setTimeout(() => {
-        target.style.visibility = '';
-        target.style.opacity = 1;
-      }, 5000);
+        target.style.visibility = ''
+        target.style.opacity = 1
+      }, 5000)
     } else {
       // Si está en modo clicker
-      clearTimeout(this.timeout);
+      clearTimeout(this.timeout)
 
       // Aplica animación de entrada de opacidad al botón
-      target.style.animation = 'clickerOpacityIn 1s forwards';
+      target.style.animation = 'clickerOpacityIn 1s forwards'
 
       // Incrementa la puntuación y actualiza la pantalla de puntuación
-      this.score += 10;
-      this.puntuacion.textContent = this.score.toString().padStart(2, '0');
+      this.score += 10
+      this.puntuacion.textContent = this.score.toString().padStart(2, '0')
 
       // Establece un temporizador para la animación de salida de opacidad y reinicia la puntuación después de 3 segundos
       this.timeout = setTimeout(() => {
-        target.style.animation = 'clickerOpacityOut 4s forwards';
-        this.score = 0;
-        this.puntuacion.textContent = '00';
-      }, 3000);
+        target.style.animation = 'clickerOpacityOut 4s forwards'
+        this.score = 0
+        this.puntuacion.textContent = '00'
+      }, 3000)
     }
   }
+
   /**
    * Reinicia el juego, eliminando todos los personajes del tablero y restableciendo los elementos de animación y visualización.
    * @method
@@ -272,7 +276,7 @@ export class VistaPrincipal extends Vista {
     // Remove all the characters from the tablero
     if (this.gameStarted) {
       const personajes = this.tablero.querySelectorAll('.personaje')
-      this.tablero.style.backgroundImage= "none"
+      this.tablero.style.backgroundImage = 'none'
       personajes.forEach(personaje => {
         personaje.remove()
       })
@@ -282,10 +286,8 @@ export class VistaPrincipal extends Vista {
       while (this.part[0].firstChild) {
         this.part[0].removeChild(this.part[0].firstChild)
       }
-      
-      if(this.reflexion)
-        this.tablero.appendChild(this.reflexion)
-      
+
+      if (this.reflexion) { this.tablero.appendChild(this.reflexion) }
 
       // Reset the animations and display elements
       this.divIzq.style.animation = 'shortBoard 1s forwards'
@@ -307,16 +309,16 @@ export class VistaPrincipal extends Vista {
       this.temp = 1
       this.reload = this.dificultad
 
-      //Reniciar el nombre de la app
+      // Reniciar el nombre de la app
       this.nombreapp.textContent = 'CULTURAL CHAIN'
 
-      //Reinicio del nivel
+      // Reinicio del nivel
       this.nivelActual = 0
-      this.personasRecogidas=0
-      this.banderasGeneradas=0
-      this.banderasRecogidas=0
+      this.personasRecogidas = 0
+      this.banderasGeneradas = 0
+      this.banderasRecogidas = 0
       this.fila = 0
-      this.conflictoActual=1
+      this.conflictoActual = 1
       this.score = 0
       this.puntuacion.textContent = '0' + this.score
       clearInterval(this.intervalo)
@@ -330,6 +332,7 @@ export class VistaPrincipal extends Vista {
       }, 300)
     }
   }
+
   /**
      * Gestiona el evento dragStart para el personaje: cambia la opacidad y el filtro, y establece los datos de transferencia.
      * @method
@@ -340,6 +343,7 @@ export class VistaPrincipal extends Vista {
     this.style.filter = 'drop-shadow(0px 0px 15px #000)'
     e.dataTransfer.setData('text/plain', e.target.id)
   }
+
   /**
      * Gestiona el evento dragEnd para el personaje: restablece la opacidad y el filtro.
      * @method
@@ -349,6 +353,7 @@ export class VistaPrincipal extends Vista {
     this.style.opacity = '1'
     this.style.filter = 'none'
   }
+
   /**
      * Gestiona el evento dragOver para el tablero: previene el comportamiento predeterminado y aplica un filtro de sombra.
      * @method
@@ -358,6 +363,7 @@ export class VistaPrincipal extends Vista {
     e.preventDefault()
     this.style.filter = 'drop-shadow(0px 0px 8px rgba(0, 0, 0, 0.5))'
   }
+
   /**
      * Gestiona el evento dragEnter para el tablero: previene el comportamiento predeterminado y aplica un filtro de sombra.
      * @method
@@ -367,6 +373,7 @@ export class VistaPrincipal extends Vista {
     e.preventDefault()
     this.style.filter = 'drop-shadow(0px 0px 8px rgba(0, 0, 0, 0.5))'
   }
+
   /**
      * Gestiona el evento dragLeave para el tab ```javascript
      * Gestiona el evento dragLeave para el tablero: elimina el filtro de sombra.
@@ -375,6 +382,7 @@ export class VistaPrincipal extends Vista {
   dragLeave () {
     this.style.filter = 'none'
   }
+
   /**
      * Gestiona el evento drop para el tablero: previene el comportamiento predeterminado, obtiene el ID del personaje arrastrado y clonado, establece las coordenadas de posición y agrega el personaje al tablero.
      * @method
@@ -388,7 +396,7 @@ export class VistaPrincipal extends Vista {
 
     const personajeSelected = personaje.cloneNode(true)
 
-    //Establecer el nombre del nivel
+    // Establecer el nombre del nivel
     this.nombreapp.textContent = this.niveles[this.nivelActual].nombre.toUpperCase()
 
     // Obtener las coordenadas del evento de soltar en relación con el tablero
@@ -419,12 +427,10 @@ export class VistaPrincipal extends Vista {
     this.end.style.animation = 'mostrarTexto 4s forwards'
     this.gameStarted = true
 
-    let info = document.getElementById("info")
-    if(info)
-      this.tablero.removeChild(info)
-      
+    const info = document.getElementById('info')
+    if (info) { this.tablero.removeChild(info) }
 
-    //Cargar niveles y conflictos
+    // Cargar niveles y conflictos
     this.cargarFondo(this.niveles[this.nivelActual].imagen)
     this.generarConflictos()
 
@@ -433,6 +439,7 @@ export class VistaPrincipal extends Vista {
     this.intervalo = setInterval(() => this.update(), this.reload)
     this.temp = 1
   }
+
   /**
    * Mueve el objeto (imagen) en el juego hacia adelante según la dirección actual.
    * @method
@@ -456,6 +463,7 @@ export class VistaPrincipal extends Vista {
     }
     this.part[0].style.animation = 'personaAndando 0.2s infinite'
   }
+
   /**
    * Maneja la dirección del objeto (imagen) en el juego en función de la entrada del usuario.
    * @method
@@ -468,11 +476,11 @@ export class VistaPrincipal extends Vista {
     if (event.key == 'a' && this.dir != 2) this.dir = 4
 
     // Verifica si el evento es táctil
-    if(event.touches && !this.showForm && this.partidaTerminada) {
+    if (event.touches && !this.showForm && this.partidaTerminada) {
       this.controlador.overlayForm(this.form)
       this.showForm = false
     }
-    if(event.touches && !this.showForm && this.partidaTerminada) {
+    if (event.touches && !this.showForm && this.partidaTerminada) {
       this.controlador.overlayForm(this.form)
       this.showForm = false
     }
@@ -494,18 +502,19 @@ export class VistaPrincipal extends Vista {
       }
     }
   }
+
   /**
    * Mueve el objeto (imagen) en el juego y realiza diversas acciones según el estado del juego.
    * @method
    */
   update = () => {
-    if(this.dir>0){
+    if (this.dir > 0) {
       for (let i = this.fila; i > 0; i--) {
         // Mover cada parte de la serpiente a la posición de la parte anterior
         this.part[i].style.left = this.part[i - 1].style.left
         this.part[i].style.top = this.part[i - 1].style.top
       }
-      //Detectar colision con uno mismo
+      // Detectar colision con uno mismo
       for (let i = 1; i < this.fila; i++) {
         if (this.part[0].style.left == this.part[i + 1].style.left && this.part[0].style.top == this.part[i + 1].style.top) { this.terminarPartida() }
       }
@@ -519,6 +528,7 @@ export class VistaPrincipal extends Vista {
       this.temp++
     }
   }
+
   /**
    * Aplica límites al objeto (imagen) en el juego para que no salga del tablero.
    * @method
@@ -550,25 +560,26 @@ export class VistaPrincipal extends Vista {
       this.posY = 95
     }
   }
+
   /**
    * Genera personas de manera aleatoria en el tablero.
    */
   generacionPersonas = () => {
-    if (this.temp % 50-this.reload === 0) {
-      const tableroAncho = this.tablero.clientWidth-this.part[0].offsetWidth*2
-      const tableroAlto = this.tablero.clientHeight-this.part[0].offsetHeight*2
+    if (this.temp % 50 - this.reload === 0) {
+      const tableroAncho = this.tablero.clientWidth - this.part[0].offsetWidth * 2
+      const tableroAlto = this.tablero.clientHeight - this.part[0].offsetHeight * 2
 
-       // Obtén todos los elementos img dentro del div
-      var imagenes = this.divImagenesPersonjanes.getElementsByTagName('img');
-
-      // Convierte la colección de imágenes en un array
-      var arrayDeImagenes = Array.from(imagenes);
-
-       // Obtén todos los elementos img dentro del div
-      var imagenes = this.divImagenesPersonjanes.getElementsByTagName('img');
+      // Obtén todos los elementos img dentro del div
+      var imagenes = this.divImagenesPersonjanes.getElementsByTagName('img')
 
       // Convierte la colección de imágenes en un array
-      var arrayDeImagenes = Array.from(imagenes);
+      var arrayDeImagenes = Array.from(imagenes)
+
+      // Obtén todos los elementos img dentro del div
+      var imagenes = this.divImagenesPersonjanes.getElementsByTagName('img')
+
+      // Convierte la colección de imágenes en un array
+      var arrayDeImagenes = Array.from(imagenes)
 
       // Crear un nuevo elemento img en lugar de div
       const nuevaImagen = document.createElement('img')
@@ -589,101 +600,104 @@ export class VistaPrincipal extends Vista {
 
       // Establecer la posición absoluta de la nueva imagen dentro del tablero
       nuevaImagen.style.position = 'absolute'
-      nuevaImagen.style.left = posX+this.part[0].offsetWidth + 'px'
-      nuevaImagen.style.top = posY+this.part[0].offsetHeight+ 'px'
+      nuevaImagen.style.left = posX + this.part[0].offsetWidth + 'px'
+      nuevaImagen.style.top = posY + this.part[0].offsetHeight + 'px'
       nuevaImagen.classList.add('generado')
 
       // Añadir la nueva imagen al elemento con el id 'tablero'
       this.tablero.appendChild(nuevaImagen)
     }
   }
+
   /**
    * Genera banderas de manera aleatoria en el tablero.
    */
   generacionBanderas = () => {
-    if(this.banderasGeneradas<this.cantidadBanderas){
-      let numero = (50-this.reload)*20
+    if (this.banderasGeneradas < this.cantidadBanderas) {
+      const numero = (50 - this.reload) * 20
       if (this.temp % numero === 0) {
-        let tableroAncho = this.tablero.clientWidth-this.part[0].offsetWidth*2
-        let tableroAlto = this.tablero.clientHeight-this.part[0].offsetHeight*2
-    
+        const tableroAncho = this.tablero.clientWidth - this.part[0].offsetWidth * 2
+        const tableroAlto = this.tablero.clientHeight - this.part[0].offsetHeight * 2
+
         // Crear un nuevo elemento img en lugar de div
-        let nuevaBandera = document.createElement('img')
-    
+        const nuevaBandera = document.createElement('img')
+
         // Crear la URL de la imagen utilizando el número formateado
         nuevaBandera.src = 'img/objetos/bandera.png'
-    
+
         // Calcular posiciones aleatorias como porcentaje del tamaño del tablero
-        let posX = Math.floor(Math.random() * tableroAncho - 10)
-        let posY = Math.floor(Math.random() * tableroAlto - 10)
-    
+        const posX = Math.floor(Math.random() * tableroAncho - 10)
+        const posY = Math.floor(Math.random() * tableroAlto - 10)
+
         // Establecer la posición y tamaño de la nueva bandera en porcentajes
         nuevaBandera.style.position = 'absolute'
         nuevaBandera.style.height = '4%' // Cambia este valor según tus preferencias
-        nuevaBandera.style.width = '4%'  // Cambia este valor según tus preferencias
-        nuevaBandera.style.left = posX+this.part[0].offsetWidth + 'px'
-        nuevaBandera.style.top = posY+this.part[0].offsetHeight + 'px'
+        nuevaBandera.style.width = '4%' // Cambia este valor según tus preferencias
+        nuevaBandera.style.left = posX + this.part[0].offsetWidth + 'px'
+        nuevaBandera.style.top = posY + this.part[0].offsetHeight + 'px'
         nuevaBandera.classList.add('bandera')
-    
+
         // Añadir la nueva bandera al elemento con el id 'tablero'
         this.tablero.appendChild(nuevaBandera)
         this.banderasGeneradas++
       }
     }
   }
+
   /**
    * Recoge la persona en la posición actual y actualiza la puntuación.
    */
   recoger = () => {
     // Detectar el objeto (imagen) en las coordenadas actuales del this.part[0]
-    const objetoEnPunto = this.detectarColision();
-  
+    const objetoEnPunto = this.detectarColision()
+
     if (objetoEnPunto && objetoEnPunto.className === 'generado') {
-      this.score = this.score + 10;
-      this.puntuacion.textContent = '' + this.score;
-      const imagenRecogida = new Image();
-      imagenRecogida.style.width = '2.3%';
-  
-      imagenRecogida.src = objetoEnPunto.src;
-      this.personita = imagenRecogida;
-      this.tiempo = this.temp;
-  
+      this.score = this.score + 10
+      this.puntuacion.textContent = '' + this.score
+      const imagenRecogida = new Image()
+      imagenRecogida.style.width = '2.3%'
+
+      imagenRecogida.src = objetoEnPunto.src
+      this.personita = imagenRecogida
+      this.tiempo = this.temp
+
       // Almacenamos una referencia a "this" para usar dentro de la función de temporización
-      const self = this;
-  
+      const self = this
+
       // Animación al recoger a una persona
-      this.tablero.style.animation = 'recogerPersona 0.3s';
-  
+      this.tablero.style.animation = 'recogerPersona 0.3s'
+
       // Luego, después de un breve momento, eliminamos la animación
-      setTimeout(function() {
+      setTimeout(function () {
         // Usamos la referencia almacenada ("self") para acceder a "this.tablero"
-        self.tablero.style.animation = 'none';
-      }, 30);
-  
+        self.tablero.style.animation = 'none'
+      }, 30)
+
       // Remove de la imagen cogida
-      objetoEnPunto.remove();
-      this.personasRecogidas++;
+      objetoEnPunto.remove()
+      this.personasRecogidas++
     }
     if (objetoEnPunto && objetoEnPunto.className === 'bandera') {
-      let conflictos = this.tablero.querySelectorAll('.conflictos');
-      let conflicto=conflictos[this.conflictoActual]
+      const conflictos = this.tablero.querySelectorAll('.conflictos')
+      const conflicto = conflictos[this.conflictoActual]
       this.conflictoActual++
       this.score += 50
-      this.puntuacion.textContent = '' + this.score;
-    
+      this.puntuacion.textContent = '' + this.score
+
       // Obtén las coordenadas x e y del conflicto en porcentaje
-      let xConflict = parseFloat(conflicto.style.left);
-      let yConflict = parseFloat(conflicto.style.top);
-    
+      const xConflict = parseFloat(conflicto.style.left)
+      const yConflict = parseFloat(conflicto.style.top)
+
       // Verifica si las coordenadas son números válidos
       if (!isNaN(xConflict) && !isNaN(yConflict)) {
         // Mueve el objetoEnPunto hacia las coordenadas del conflicto con animación
-        this.moverElementoConAnimacion(objetoEnPunto, xConflict, yConflict, 1000);
+        this.moverElementoConAnimacion(objetoEnPunto, xConflict, yConflict, 1000)
       } else {
-        console.error('Las coordenadas del conflicto no son válidas.');
+        console.error('Las coordenadas del conflicto no son válidas.')
       }
     }
-  };
+  }
+
   /**
    * Une una imagen al final de la fila en el tablero.
    * @param {Image} imagen - La imagen que se va a unir.
@@ -716,396 +730,403 @@ export class VistaPrincipal extends Vista {
     }
   }
 
-  cargarNiveles() {
-    var arrayResultado = []; // Array para almacenar la información estructurada
+  cargarNiveles () {
+    const arrayResultado = [] // Array para almacenar la información estructurada
     $.ajax({
-        url: "php/ajaxniveles.php",
-        type: "GET",
-        dataType: "json",
-        contentType: "application/json; charset=utf-8",
-        success: (data) => {
-            // Iterar sobre los datos recibidos
-            for (var i = 0; i < data.length; i++) {
-                var otherData = data[i].otherData;
+      url: 'php/ajaxniveles.php',
+      type: 'GET',
+      dataType: 'json',
+      contentType: 'application/json; charset=utf-8',
+      success: (data) => {
+        // Iterar sobre los datos recibidos
+        for (let i = 0; i < data.length; i++) {
+          const otherData = data[i].otherData
 
-                // Parsear el campo imagen con JSON.parse
-                var imagenDecodificada = otherData.imagen;
+          // Parsear el campo imagen con JSON.parse
+          const imagenDecodificada = otherData.imagen
 
-                // Estructurar los datos
-                var elemento = {
-                    nombre: otherData.nombrepais,
-                    imagen: imagenDecodificada,
-                    conflictos: otherData.conflictos,
-                    reflexiones: otherData.reflexiones,
-                };
+          // Estructurar los datos
+          const elemento = {
+            nombre: otherData.nombrepais,
+            imagen: imagenDecodificada,
+            conflictos: otherData.conflictos,
+            reflexiones: otherData.reflexiones
+          }
 
-                // Agregar el elemento al arrayResultado
-                arrayResultado.push(elemento);
-            }
-            // Ahora, arrayResultado contiene la estructura deseada
-            this.niveles = arrayResultado;
-            this.cantidadBanderas = this.niveles[this.nivelActual].conflictos.length;
-            this.listapersonajes.forEach(personaje => {
-              personaje.addEventListener('dragstart', this.dragStart)
-              personaje.addEventListener('dragend', this.dragEnd)
-            })
-            this.listapersonajes.forEach(personaje => {
-              personaje.addEventListener('dragstart', this.dragStart)
-              personaje.addEventListener('dragend', this.dragEnd)
-            })
-        },
-        error: function (status, error) {
-            console.error("Error en la solicitud AJAX: " + status + " - " + error);
+          // Agregar el elemento al arrayResultado
+          arrayResultado.push(elemento)
         }
-    });
+        // Ahora, arrayResultado contiene la estructura deseada
+        this.niveles = arrayResultado
+        this.cantidadBanderas = this.niveles[this.nivelActual].conflictos.length
+        this.listapersonajes.forEach(personaje => {
+          personaje.addEventListener('dragstart', this.dragStart)
+          personaje.addEventListener('dragend', this.dragEnd)
+        })
+        this.listapersonajes.forEach(personaje => {
+          personaje.addEventListener('dragstart', this.dragStart)
+          personaje.addEventListener('dragend', this.dragEnd)
+        })
+      },
+      error: function (status, error) {
+        console.error('Error en la solicitud AJAX: ' + status + ' - ' + error)
+      }
+    })
   }
+
   /**
  * Carga información de personajes mediante una solicitud AJAX y estructura los datos para su uso.
  * Además, realiza acciones relacionadas con la carga de personajes, como almacenar nombres, añadir personajes al documento,
  * seleccionar elementos de la lista de personajes y asignar nombres a los elementos correspondientes.
  * @method
  */
-cargarPersonajes() {
+  cargarPersonajes () {
     // Array para almacenar la información estructurada
-    var arrayResultado = [];
+    const arrayResultado = []
 
     $.ajax({
-        url: "php/ajaxpersonajes.php",
-        type: "GET",
-        dataType: "json",
-        contentType: "application/json; charset=utf-8",
-        success: (data) => {
-            // Iterar sobre los datos recibidos
-            for (var i = 0; i < data.length; i++) {
-                // Extraer otros datos específicos de la estructura recibida
-                var otherData = data[i].otherData;
+      url: 'php/ajaxpersonajes.php',
+      type: 'GET',
+      dataType: 'json',
+      contentType: 'application/json; charset=utf-8',
+      success: (data) => {
+        // Iterar sobre los datos recibidos
+        for (let i = 0; i < data.length; i++) {
+          // Extraer otros datos específicos de la estructura recibida
+          const otherData = data[i].otherData
 
-                // Estructurar los datos
-                var elemento = {
-                    nombre: otherData.nombre,
-                    imagen: otherData.imagen,
-                };
+          // Estructurar los datos
+          const elemento = {
+            nombre: otherData.nombre,
+            imagen: otherData.imagen
+          }
 
-                // Agregar el elemento al arrayResultado
-                arrayResultado.push(elemento);
-            }
-
-            // Ahora, arrayResultado contiene la estructura deseada
-            this.personajes = arrayResultado;
-
-            // Almacenar nombres y realizar acciones relacionadas con la carga de personajes
-            this.controlador.almacenarNames(this.cargarNombres());
-            this.aniadirPersonajes();
-            this.listapersonajes = this.base.querySelectorAll('.personaje');
-            this.asignarNames();
-        },
-        error: function (status, error) {
-            console.error("Error en la solicitud AJAX: " + status + " - " + error);
+          // Agregar el elemento al arrayResultado
+          arrayResultado.push(elemento)
         }
-    });
-}
-/**
+
+        // Ahora, arrayResultado contiene la estructura deseada
+        this.personajes = arrayResultado
+
+        // Almacenar nombres y realizar acciones relacionadas con la carga de personajes
+        this.controlador.almacenarNames(this.cargarNombres())
+        this.aniadirPersonajes()
+        this.listapersonajes = this.base.querySelectorAll('.personaje')
+        this.asignarNames()
+      },
+      error: function (status, error) {
+        console.error('Error en la solicitud AJAX: ' + status + ' - ' + error)
+      }
+    })
+  }
+
+  /**
  * Carga información de centros mediante una solicitud AJAX y estructura los datos para su uso.
  * Además, realiza acciones relacionadas con la carga de centros, como almacenar nombres, añadir centros al documento,
  * @method
  */
-cargarCentros() {
-  var arrayResultado = []; // Array para almacenar la información estructurada
+  cargarCentros () {
+    const arrayResultado = [] // Array para almacenar la información estructurada
 
-  $.ajax({
-      url: "php/ajaxcentros.php",
-      type: "GET",
-      dataType: "json",
-      contentType: "application/json; charset=utf-8",
+    $.ajax({
+      url: 'php/ajaxcentros.php',
+      type: 'GET',
+      dataType: 'json',
+      contentType: 'application/json; charset=utf-8',
       success: (data) => {
-          // Iterar sobre los datos recibidos
-          for (var i = 0; i < data.length; i++) {
-              var otherData = data[i].otherData;
+        // Iterar sobre los datos recibidos
+        for (let i = 0; i < data.length; i++) {
+          const otherData = data[i].otherData
 
-              // Estructurar los datos
-              var elemento = {
-                  nombre: otherData.nombre,
-                  localidad: otherData.localidad,
-              };
-
-              // Agregar el elemento al arrayResultado
-              arrayResultado.push(elemento);
-
-              // Verificar si la localidad ya está en el arrayLocalidades
-              if (!this.arrayLocalidades.includes(elemento.localidad)) {
-                  // Si no está, agregarla al arrayLocalidades
-                  this.arrayLocalidades.push(elemento.localidad);
-              }
+          // Estructurar los datos
+          const elemento = {
+            nombre: otherData.nombre,
+            localidad: otherData.localidad
           }
 
-          // Filtrar arrayResultado para obtener solo los centros
-          this.arrayCentros = arrayResultado.map((elemento) => elemento.nombre);
-          this.aniadirOptions()
+          // Agregar el elemento al arrayResultado
+          arrayResultado.push(elemento)
+
+          // Verificar si la localidad ya está en el arrayLocalidades
+          if (!this.arrayLocalidades.includes(elemento.localidad)) {
+            // Si no está, agregarla al arrayLocalidades
+            this.arrayLocalidades.push(elemento.localidad)
+          }
+        }
+
+        // Filtrar arrayResultado para obtener solo los centros
+        this.arrayCentros = arrayResultado.map((elemento) => elemento.nombre)
+        this.aniadirOptions()
       },
       error: function (status, error) {
-          console.error("Error en la solicitud AJAX: " + status + " - " + error);
+        console.error('Error en la solicitud AJAX: ' + status + ' - ' + error)
       }
-  });
-}
-/**
+    })
+  }
+
+  /**
  * Añade opciones a los elementos <select> de centros y localidades.
  * Utiliza los arrays 'arrayCentros' y 'arrayLocalidades' para generar las opciones dinámicamente.
  * @method
  */
-aniadirOptions() {
+  aniadirOptions () {
   // Añadir opciones al elemento <select> de centros
-  for (var i = 0; i < this.arrayCentros.length; i++) {
-    this.selectCentros.innerHTML += "<option>" + this.arrayCentros[i] + "</option>";
+    for (var i = 0; i < this.arrayCentros.length; i++) {
+      this.selectCentros.innerHTML += '<option>' + this.arrayCentros[i] + '</option>'
+    }
+
+    // Añadir opciones al elemento <select> de localidades
+    for (var i = 0; i < this.arrayLocalidades.length; i++) {
+      this.selectLocalidades.innerHTML += '<option>' + this.arrayLocalidades[i] + '</option>'
+    }
   }
 
-  // Añadir opciones al elemento <select> de localidades
-  for (var i = 0; i < this.arrayLocalidades.length; i++) {
-    this.selectLocalidades.innerHTML += "<option>" + this.arrayLocalidades[i] + "</option>";
-  }
-}
-/**
+  /**
  * Añade elementos de personajes al documento utilizando la información de los personajes cargada.
  * @method
  */
-aniadirPersonajes() {
+  aniadirPersonajes () {
   // Itera sobre cada personaje
-  this.personajes.forEach((personaje, i) => {
+    this.personajes.forEach((personaje, i) => {
     // Crea elementos HTML para el personaje
-    var figure = document.createElement("figure");
-    var img = document.createElement("img");
-    var figcaption = document.createElement("figcaption");
+      const figure = document.createElement('figure')
+      const img = document.createElement('img')
+      const figcaption = document.createElement('figcaption')
 
-    // Configura la imagen del personaje con datos codificados en base64
-    img.src = "data:image/png;base64," + personaje.imagen;
-    img.className = "personaje";
-    img.id = this.personajes[i].nombre;
+      // Configura la imagen del personaje con datos codificados en base64
+      img.src = 'data:image/png;base64,' + personaje.imagen
+      img.className = 'personaje'
+      img.id = this.personajes[i].nombre
 
-    // Añade la imagen y el figcaption al elemento figure
-    figure.appendChild(img);
-    figure.appendChild(figcaption);
+      // Añade la imagen y el figcaption al elemento figure
+      figure.appendChild(img)
+      figure.appendChild(figcaption)
 
-    // Añade el elemento figure al contenedor de imágenes de personajes
-    this.divImagenesPersonjanes.appendChild(figure);
-  });
-}
-/**
+      // Añade el elemento figure al contenedor de imágenes de personajes
+      this.divImagenesPersonjanes.appendChild(figure)
+    })
+  }
+
+  /**
  * Carga y devuelve un array con los nombres de los personajes.
  * @returns {string[]} - Array de nombres de los personajes.
  * @method
  */
-cargarNombres() {
-  let resultado = [];
-  
-  // Itera sobre cada personaje y agrega su nombre al array 'resultado'
-  for (let i = 0; i < this.personajes.length; i++) {
-    resultado.push(this.personajes[i].nombre);
+  cargarNombres () {
+    const resultado = []
+
+    // Itera sobre cada personaje y agrega su nombre al array 'resultado'
+    for (let i = 0; i < this.personajes.length; i++) {
+      resultado.push(this.personajes[i].nombre)
+    }
+
+    return resultado
   }
-  
-  return resultado;
-}
-/**
+
+  /**
    * Cambia el fondo del tablero con la imagen proporcionada.
    * @param {string} imagen - La representación en base64 de la imagen que se utilizará como fondo.
 */
-cargarFondo(imagen){
-  this.tablero.style.backgroundImage = "url('data:image/png;base64,"+imagen+"')"
-}
- /**
+  cargarFondo (imagen) {
+    this.tablero.style.backgroundImage = "url('data:image/png;base64," + imagen + "')"
+  }
+
+  /**
    * Cambia la dificultad del juego y realiza acciones asociadas, como recargar la dificultad
    * y calcular la cantidad de personas a recoger.
    * @param {string} valor - La nueva dificultad del juego.
    */
-cambioDificultad(valor) {
-  this.dificultad = valor
-  this.reload=this.dificultad
-  this.cantidadPersonasRecoger()
-}
-/**
+  cambioDificultad (valor) {
+    this.dificultad = valor
+    this.reload = this.dificultad
+    this.cantidadPersonasRecoger()
+  }
+
+  /**
    * Calcula la cantidad de personas que el jugador debe recoger en función de la dificultad del juego.
 */
-cantidadPersonasRecoger(){
-  if(this.dificultad==this.velocidadFacil)
-    this.cantidadPersonasNivel=this.cantidadPersonasFacil
-  if(this.dificultad==this.velocidadMedio)
-  this.cantidadPersonasNivel=this.cantidadPersonasMedio
-  if(this.dificultad==this.velocidadDificil)
-  this.cantidadPersonasNivel=this.cantidadPersonasDificil
-}
-/**
+  cantidadPersonasRecoger () {
+    if (this.dificultad == this.velocidadFacil) { this.cantidadPersonasNivel = this.cantidadPersonasFacil }
+    if (this.dificultad == this.velocidadMedio) { this.cantidadPersonasNivel = this.cantidadPersonasMedio }
+    if (this.dificultad == this.velocidadDificil) { this.cantidadPersonasNivel = this.cantidadPersonasDificil }
+  }
+
+  /**
    * Detecta colisiones entre el jugador y otros elementos en el juego.
    * Utiliza múltiples puntos para detectar la colisión.
    * @returns {HTMLElement|false} - El elemento con el que se ha producido la colisión o false si no hay colisión.
    */
-detectarColision = () => {
-  let punto = [];
+  detectarColision = () => {
+    const punto = []
 
-  punto[0] = document.elementFromPoint(
+    punto[0] = document.elementFromPoint(
       this.part[0].getBoundingClientRect().left + this.part[0].offsetWidth,
       this.part[0].getBoundingClientRect().top + this.part[0].offsetHeight
-  );
-  punto[1] = document.elementFromPoint(
+    )
+    punto[1] = document.elementFromPoint(
       this.part[0].getBoundingClientRect().left + this.part[0].offsetWidth,
       this.part[0].getBoundingClientRect().top
-  );
-  punto[2] = document.elementFromPoint(
+    )
+    punto[2] = document.elementFromPoint(
       this.part[0].getBoundingClientRect().left,
       this.part[0].getBoundingClientRect().top + this.part[0].offsetHeight
-  );
-  punto[3] = document.elementFromPoint(
+    )
+    punto[3] = document.elementFromPoint(
       this.part[0].getBoundingClientRect().left,
       this.part[0].getBoundingClientRect().top
-  );
-  punto[4] = document.elementFromPoint(
-    this.part[0].getBoundingClientRect().left + this.part[0].offsetWidth/2,
-      this.part[0].getBoundingClientRect().top + this.part[0].offsetHeight/2
-);
+    )
+    punto[4] = document.elementFromPoint(
+      this.part[0].getBoundingClientRect().left + this.part[0].offsetWidth / 2,
+      this.part[0].getBoundingClientRect().top + this.part[0].offsetHeight / 2
+    )
 
-  for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 5; i++) {
       if (punto[i] && punto[i].classList.contains('generado') || punto[i].classList.contains('bandera')) {
-          return punto[i];
+        return punto[i]
       }
+    }
+
+    return false
   }
 
-  return false;
-}
-/**
+  /**
    * Mueve un elemento con una animación suave a una posición específica en el contenedor.
    * @param {HTMLElement} objeto - El elemento que se moverá.
    * @param {number} destinoX - La posición horizontal de destino en porcentaje.
    * @param {number} destinoY - La posición vertical de destino en porcentaje.
    * @param {number} duracion - La duración de la animación en milisegundos.
    */
-moverElementoConAnimacion(objeto, destinoX, destinoY, duracion) {
-    let inicioX = parseFloat(objeto.style.left) || 0;
-    let inicioY = parseFloat(objeto.style.top) || 0;
-    let startTime;
+  moverElementoConAnimacion (objeto, destinoX, destinoY, duracion) {
+    const inicioX = parseFloat(objeto.style.left) || 0
+    const inicioY = parseFloat(objeto.style.top) || 0
+    let startTime
 
     // Convierte destinoX y destinoY de porcentajes a píxeles
-    let contenedorAncho = objeto.parentElement.clientWidth;
-    let contenedorAlto = objeto.parentElement.clientHeight;
-    let destinoXEnPixeles = (destinoX / 100) * contenedorAncho;
-    let destinoYEnPixeles = (destinoY / 100) * contenedorAlto;
+    const contenedorAncho = objeto.parentElement.clientWidth
+    const contenedorAlto = objeto.parentElement.clientHeight
+    const destinoXEnPixeles = (destinoX / 100) * contenedorAncho
+    const destinoYEnPixeles = (destinoY / 100) * contenedorAlto
 
-    objeto.classList.remove('bandera');
+    objeto.classList.remove('bandera')
 
     const animar = (timestamp) => {
-      if (!startTime) startTime = timestamp;
+      if (!startTime) startTime = timestamp
 
-      let tiempoTranscurrido = timestamp - startTime;
-      let progreso = tiempoTranscurrido / duracion;
+      const tiempoTranscurrido = timestamp - startTime
+      const progreso = tiempoTranscurrido / duracion
 
       if (progreso < 1) {
-        let nuevaX = inicioX + (destinoXEnPixeles - inicioX) * progreso;
-        let nuevaY = inicioY + (destinoYEnPixeles - inicioY) * progreso;
+        const nuevaX = inicioX + (destinoXEnPixeles - inicioX) * progreso
+        const nuevaY = inicioY + (destinoYEnPixeles - inicioY) * progreso
 
-        objeto.style.left = nuevaX + 'px';
-        objeto.style.top = nuevaY + 'px';
+        objeto.style.left = nuevaX + 'px'
+        objeto.style.top = nuevaY + 'px'
 
-        requestAnimationFrame(animar);
+        requestAnimationFrame(animar)
       } else {
-        objeto.style.left = destinoXEnPixeles + 'px';
-        objeto.style.top = destinoYEnPixeles + 'px';
+        objeto.style.left = destinoXEnPixeles + 'px'
+        objeto.style.top = destinoYEnPixeles + 'px'
 
-        objeto.classList.add('nobandera');
+        objeto.classList.add('nobandera')
 
         // Aumenta this.banderasrecogidas al finalizar la animación
-        this.banderasRecogidas++;
+        this.banderasRecogidas++
         // Puedes hacer más acciones aquí después de recoger la bandera
       }
-    };
+    }
 
-    requestAnimationFrame(animar);
+    requestAnimationFrame(animar)
   }
+
   /**
    * Finaliza la partida y muestra una reflexión aleatoria si hay reflexiones disponibles para el nivel actual.
    */
-terminarPartida(){
-  let numReflexiones = this.niveles[this.nivelActual].reflexiones.length
-  let numRandom = Math.floor(Math.random() * numReflexiones)
-  let titulo
-  let contenido
-  var parrafo = document.createElement("p")
+  terminarPartida () {
+    const numReflexiones = this.niveles[this.nivelActual].reflexiones.length
+    const numRandom = Math.floor(Math.random() * numReflexiones)
+    let titulo
+    let contenido
+    const parrafo = document.createElement('p')
 
-  if(numReflexiones)
-  {
-    titulo=this.niveles[this.nivelActual].reflexiones[numRandom].titulo
-    contenido=this.niveles[this.nivelActual].reflexiones[numRandom].contenido
-    parrafo.id ="info"
-    parrafo.innerHTML= titulo+"<br>"+contenido
-    this.reflexion = parrafo
+    if (numReflexiones) {
+      titulo = this.niveles[this.nivelActual].reflexiones[numRandom].titulo
+      contenido = this.niveles[this.nivelActual].reflexiones[numRandom].contenido
+      parrafo.id = 'info'
+      parrafo.innerHTML = titulo + '<br>' + contenido
+      this.reflexion = parrafo
+    }
+
+    this.partidaTerminada = true
+    this.restartGame()
   }
 
-  this.partidaTerminada = true
-  this.restartGame()
-}
-/**
+  /**
    * Gestiona el progreso del jugador en el nivel actual, comprobando si ha recogido a todas las personas
    * y banderas necesarias para avanzar al siguiente nivel.
    */
-gestionNivel(){
-  if(this.personasRecogidas>=this.cantidadPersonasNivel && this.banderasRecogidas>=this.cantidadBanderas)
-    this.pasarnivel()
-}
- /**
+  gestionNivel () {
+    if (this.personasRecogidas >= this.cantidadPersonasNivel && this.banderasRecogidas >= this.cantidadBanderas) { this.pasarnivel() }
+  }
+
+  /**
    * Avanza al siguiente nivel, reinicia algunos valores y genera los elementos necesarios para el nuevo nivel.
    */
-pasarnivel(){
-  if(this.nivelActual===this.niveles.length-1)
-    this.nivelActual=-1
-  this.nivelActual++
-  this.nombreapp.textContent = this.niveles[this.nivelActual].nombre.toUpperCase()
-  this.nombreapp.textContent = this.niveles[this.nivelActual].nombre.toUpperCase()
-  this.cargarFondo(this.niveles[this.nivelActual].imagen)
+  pasarnivel () {
+    if (this.nivelActual === this.niveles.length - 1) { this.nivelActual = -1 }
+    this.nivelActual++
+    this.nombreapp.textContent = this.niveles[this.nivelActual].nombre.toUpperCase()
+    this.nombreapp.textContent = this.niveles[this.nivelActual].nombre.toUpperCase()
+    this.cargarFondo(this.niveles[this.nivelActual].imagen)
 
-  let elementosGenerados = this.tablero.querySelectorAll('.generado');
-  elementosGenerados.forEach(elemento => {
-    this.tablero.removeChild(elemento);
-  });
-  elementosGenerados = this.tablero.querySelectorAll('.nobandera');
-  elementosGenerados.forEach(elemento => {
-    this.tablero.removeChild(elemento);
-  });
-  elementosGenerados = this.tablero.querySelectorAll('.conflictos');
-  elementosGenerados.forEach(elemento => {
-    this.tablero.removeChild(elemento);
-  });
+    let elementosGenerados = this.tablero.querySelectorAll('.generado')
+    elementosGenerados.forEach(elemento => {
+      this.tablero.removeChild(elemento)
+    })
+    elementosGenerados = this.tablero.querySelectorAll('.nobandera')
+    elementosGenerados.forEach(elemento => {
+      this.tablero.removeChild(elemento)
+    })
+    elementosGenerados = this.tablero.querySelectorAll('.conflictos')
+    elementosGenerados.forEach(elemento => {
+      this.tablero.removeChild(elemento)
+    })
 
-  this.banderasGeneradas=0
-  this.banderasRecogidas=0
-  this.conflictoActual=1
-  this.cantidadBanderas=this.niveles[this.nivelActual].conflictos.length
-  this.personasRecogidas=0
-  this.generarConflictos()
-}
-/**
+    this.banderasGeneradas = 0
+    this.banderasRecogidas = 0
+    this.conflictoActual = 1
+    this.cantidadBanderas = this.niveles[this.nivelActual].conflictos.length
+    this.personasRecogidas = 0
+    this.generarConflictos()
+  }
+
+  /**
    * Genera elementos de conflicto en el tablero en posiciones específicas.
    */
-generarConflictos(){
-  for(let i =0;i<this.niveles[this.nivelActual].conflictos.length;i++)
-  {
-    let x=this.niveles[this.nivelActual].conflictos[i].x
-    let y=this.niveles[this.nivelActual].conflictos[i].y
-    let conflicto = document.createElement('div')
-    let nombre= document.createElement('p')
-    
-    conflicto.className = "conflictos"
-    conflicto.style.width='6%'
-    conflicto.style.height='6%'
-    conflicto.style.position='absolute'
-    conflicto.style.left=x+'%'
-    conflicto.style.top=y+'%'
-    conflicto.style.backgroundImage='url("../src/img/nivel/conflicto.jpg")'
-    conflicto.style.backgroundSize='cover'
-    nombre.className = "conflictos"
-    nombre.style.left=x-1+'%'
-    nombre.style.top=(parseFloat(y) + 3)+'%'
-    nombre.style.color='black'
-    nombre.style.position='absolute'
-    var nombreConflicto = this.niveles[this.nivelActual].conflictos[i].nombre
-    nombre.textContent= nombreConflicto
+  generarConflictos () {
+    for (let i = 0; i < this.niveles[this.nivelActual].conflictos.length; i++) {
+      const x = this.niveles[this.nivelActual].conflictos[i].x
+      const y = this.niveles[this.nivelActual].conflictos[i].y
+      const conflicto = document.createElement('div')
+      const nombre = document.createElement('p')
 
-    this.tablero.appendChild(nombre)
-    this.tablero.appendChild(conflicto)
+      conflicto.className = 'conflictos'
+      conflicto.style.width = '6%'
+      conflicto.style.height = '6%'
+      conflicto.style.position = 'absolute'
+      conflicto.style.left = x + '%'
+      conflicto.style.top = y + '%'
+      conflicto.style.backgroundImage = 'url("../src/img/nivel/conflicto.jpg")'
+      conflicto.style.backgroundSize = 'cover'
+      nombre.className = 'conflictos'
+      nombre.style.left = x - 1 + '%'
+      nombre.style.top = (parseFloat(y) + 3) + '%'
+      nombre.style.color = 'black'
+      nombre.style.position = 'absolute'
+      const nombreConflicto = this.niveles[this.nivelActual].conflictos[i].nombre
+      nombre.textContent = nombreConflicto
+
+      this.tablero.appendChild(nombre)
+      this.tablero.appendChild(conflicto)
+    }
   }
-}
 }

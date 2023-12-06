@@ -46,14 +46,12 @@ class Personaje {
                  $imagenBinaria = file_get_contents($imagenTmp);
                  
                  $consulta->execute();
-                 
                  $index++;
              }
              
              $this->conexion->commit(); 
          } catch (PDOException $e) {
              $this->conexion->rollBack();
-             // Manejar la excepción si ocurre algún error al insertar en la base de datos
          }
      }
      
@@ -80,9 +78,9 @@ class Personaje {
          } catch (PDOException $e) {
              $this->conexion->rollBack();
              if ($e->getCode() === '23000') {
-                 echo 'Error al eliminar el personaje: tiene valores asociados en otras tablas';
+                 $this->mensaje = 'Error al eliminar el personaje: tiene valores asociados en otras tablas';
              } else {
-                 echo 'Error al eliminar el personaje: ' . $e->getMessage();
+                 $this->mensaje = 'Error al eliminar el personaje: ' . $e->getMessage();
              }
          }
      }

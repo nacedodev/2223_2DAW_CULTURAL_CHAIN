@@ -27,7 +27,6 @@ class Game {
     this.modelNames = new ModeloNames()
     this.ModelConfig = new ModeloConfig()
 
-
     // Almacenar configuraciones iniciales
     const configs = ['fácil', 'muted']
     this.almacenarConfig(configs)

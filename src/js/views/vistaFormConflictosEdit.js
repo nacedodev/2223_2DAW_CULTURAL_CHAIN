@@ -93,36 +93,36 @@ const validarNombreConflicto = (input) => {
 }
 
 const validarEjeX = (valor) => {
-  const ejeX = document.getElementById('ejeX');
-  const errorSpan = document.getElementById('ejeX-error');
+  const ejeX = document.getElementById('ejeX')
+  const errorSpan = document.getElementById('ejeX-error')
 
   // Verificar si es un número entre 0 y 100
-  const numero = parseFloat(valor);
+  const numero = parseFloat(valor)
   if (isNaN(numero) || numero < 0 || numero > 100) {
-    aplicarEstilo(ejeX, false);
-    errorSpan.textContent = 'Eje X debe ser un número entre 0 y 100.';
+    aplicarEstilo(ejeX, false)
+    errorSpan.textContent = 'Eje X debe ser un número entre 0 y 100.'
   } else {
-    ejeX.value = numero;
-    aplicarEstilo(ejeX, true);
-    errorSpan.textContent = '';
+    ejeX.value = numero
+    aplicarEstilo(ejeX, true)
+    errorSpan.textContent = ''
   }
-};
+}
 
 const validarEjeY = (valor) => {
-  const ejeY = document.getElementById('ejeY');
-  const errorSpan = document.getElementById('ejeY-error');
+  const ejeY = document.getElementById('ejeY')
+  const errorSpan = document.getElementById('ejeY-error')
 
   // Verificar si es un número entre 0 y 100
-  const numero = parseFloat(valor);
+  const numero = parseFloat(valor)
   if (isNaN(numero) || numero < 0 || numero > 100) {
-    aplicarEstilo(ejeY, false);
-    errorSpan.textContent = 'Eje Y debe ser un número entre 0 y 100.';
+    aplicarEstilo(ejeY, false)
+    errorSpan.textContent = 'Eje Y debe ser un número entre 0 y 100.'
   } else {
-    ejeY.value = numero;
-    aplicarEstilo(ejeY, true);
-    errorSpan.textContent = '';
+    ejeY.value = numero
+    aplicarEstilo(ejeY, true)
+    errorSpan.textContent = ''
   }
-};
+}
 
 // Agregada función para validar el estado del conflicto
 const validarEstadoConflicto = (input) => {
