@@ -23,7 +23,7 @@ class ControladorPersonajes {
     {
         $this->view = 'gestionpersonajes';
         
-        // Definir el tamaño máximo en bytes (por ejemplo, 2MB = 2 * 1024 * 1024 bytes)
+        // Definir el tamaño máximo en bytes (0.5MB = 2 * 1024 * 1024 bytes)
         $tamanioMaximo = 0.5 * 1024 * 1024;
         $extensionesValidas = array("jpg", "jpeg", "png", "gif", "webp"); // Extensiones permitidas
     
@@ -116,7 +116,7 @@ class ControladorPersonajes {
         {
             $this->view = 'modificarPersonajes';
         
-            // Definir el tamaño máximo en bytes (por ejemplo, 2MB = 2 * 1024 * 1024 bytes)
+            // Definir el tamaño máximo en bytes (0.5MB = 0.5 * 1024 * 1024 bytes)
             $tamanioMaximo = 0.5 * 1024 * 1024;
             $extensionesValidas = array("jpg", "jpeg", "png", "gif","webp"); // Extensiones permitidas
         
@@ -146,15 +146,26 @@ class ControladorPersonajes {
                     } elseif (!in_array($extensionImagen, $extensionesValidas)) {
                         // Mensaje de error para extensión no válida
                         $mensaje = "La imagen seleccionada tiene una extensión no válida. Asegúrate de subir archivos de imagen con extensiones: " . implode(", ", $extensionesValidas);
+                        header("Location: index.php?action=modificarPersonajes&controller=personajes&id=$id&nombre=$nombre&mensaje=$mensaje");
+                        exit();
                     } elseif ($tamanioImagen > $tamanioMaximo) {
                         // Mensaje de error para tamaño excedido
                         $mensaje = "La imagen seleccionada excede el tamaño permitido.";
+                        header("Location: index.php?action=modificarPersonajes&controller=personajes&id=$id&nombre=$nombre&mensaje=$mensaje");
+                        exit();
                     }
                 } else {
                     // No se ha seleccionado una nueva imagen, modificar solo el nombre
                     $imagenPersonaje = 0;
                     $this->objPersonajes->modificar($id, $nombre, $imagenPersonaje);
+                    if(isset($this->objPersonajes->mensaje)){
+                        //Si el modelo nos devuelve algún mensaje de error , lo mostramos en la vista
+                        $mensaje = $this->objPersonajes->mensaje;
+                        header("Location: index.php?action=gestionarPersonajes&controller=personajes&mensaje=$mensaje");
+                        exit;
+                    } else {
                     header("Location: index.php?action=gestionarPersonajes&controller=personajes");
+                    }
                 }
             }
         }
