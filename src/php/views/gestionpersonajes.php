@@ -1,4 +1,4 @@
-<?php if(isset($_GET['mensaje'])): ?>
+<?php if(isset($_GET['mensaje'])): ?> <!-- Si nos llega algún tipo de mensaje desde el controlador , lo mostramos-->
         <p id="error-edit"><?php echo $_GET['mensaje']; ?></p>
     <?php endif; ?>
 <form enctype="multipart/form-data" style="background: transparent;" action="index.php?action=gestionarPersonajes&controller=personajes" method="post" id="form-personajes">

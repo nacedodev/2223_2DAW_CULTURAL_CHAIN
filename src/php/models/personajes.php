@@ -54,7 +54,7 @@ class Personaje {
              // Si todo salió bien , se hace commit
              $this->conexion->commit(); 
          } catch (PDOException $e) {
-            //Si algo salió mal se ahce rollback y se deshacen todos los cambios
+            //Si algo salió mal se hace rollback y se deshacen todos los cambios
              $this->conexion->rollBack();
              $this->mensaje = 'Error al añadir el personaje: ' . $e->getMessage();
          }
@@ -64,24 +64,28 @@ class Personaje {
      public function borrar(array $ids)
      {
          try {
-             $this->conexion->beginTransaction();
+             $this->conexion->beginTransaction(); // Se inicia la transacción
      
              $sql = "DELETE FROM Personaje WHERE id = ?";
+             // Se prepara la consulta una sola vez 
              $consulta = $this->conexion->prepare($sql);
              $consulta->bindParam(1, $id, PDO::PARAM_INT);
      
              $index = 0;
              $totalIDs = count($ids);
      
+             // Se van borrando todos los personajes en el while
              while ($index < $totalIDs) {
                  $id = $ids[$index];
                  $consulta->execute();
                  $index++;
              }
      
+             //Si todo salió bien , se hace commit
              $this->conexion->commit();
              $this->mensaje = 'Los personajes han sido eliminados correctamente';
          } catch (PDOException $e) {
+            //Si algo salió mal se hace rollback y se deshacen todos los cambios
              $this->conexion->rollBack();
              if ($e->getCode() === '23000') {
                  $this->mensaje = 'Error al eliminar el personaje: tiene valores asociados en otras tablas';
@@ -116,6 +120,7 @@ class Personaje {
         }
     }
 
+    // Función para mostrar una imagen gracias a su ID asociado
     public function obtenerImagenPorId($id) {
         $query = "SELECT imagenPersonaje FROM Personaje WHERE id = :id";
         
@@ -137,6 +142,7 @@ class Personaje {
             if (!empty($imagen)) {
                 $query = "UPDATE Personaje SET nombre = :nombre, imagenPersonaje = :imagen WHERE id = :id";
                 $consulta = $this->conexion->prepare($query);
+                // Esta es otra forma de asignar parametros por PDO , en lugar de poner 1,2.. se puede poner el nombre que se le ha asignado en la consulta , con ':' delante
                 $consulta->bindParam(':nombre', $nombre);
                 $consulta->bindParam(':imagen', $imagen);
             } else {

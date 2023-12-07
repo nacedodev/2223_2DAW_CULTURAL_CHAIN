@@ -33,6 +33,7 @@ class ControladorPersonajes {
                 $nombres = $_POST['nombres'];
                 $errores = true;
     
+                //Esta función me permite eliminar los personajes que tienen imagen o nombre vacíos antes de hacer el insert into
                 $imagenes = array_filter($imagenes);
                 $nombres = array_filter($nombres);
     
@@ -40,7 +41,14 @@ class ControladorPersonajes {
                     foreach ($imagenes['size'] as $indice => $tamanio) {
                         $nombreArchivo = $imagenes['name'][$indice];
                         $extension = strtolower(pathinfo($nombreArchivo, PATHINFO_EXTENSION)); // Obtener la extensión del archivo
-    
+
+                        //Si no hay imagen se envia un mensaje de error a la vista
+                        if($tamanio === 0){
+                            $mensaje = "Imagen o Nombre Vacíos.";
+                            header("Location: index.php?controller=personajes&action=gestionarPersonajes&mensaje=$mensaje");
+                            exit;
+                        }
+
                         // Verificar si la extensión es válida y el tamaño no excede el límite
                         if (in_array($extension, $extensionesValidas) && $tamanio <= $tamanioMaximo) {
                             $errores = false;
@@ -71,6 +79,7 @@ class ControladorPersonajes {
                     }
                 }
                 else{
+                    // Mensaje si no se crea ningún personaje
                     $mensaje = "Imagen o Nombre Vacíos.";
                     header("Location: index.php?controller=personajes&action=gestionarPersonajes&mensaje=$mensaje");
                     exit;
@@ -89,11 +98,12 @@ class ControladorPersonajes {
         $this->view = 'gestionpersonajes';
         
         if (isset($_GET['ids'])) {
-            $idsString = $_GET['ids']; // Obtener los IDs como una cadena desde la URL
-            $ids = explode(',', $idsString);
+            $idsString = $_GET['ids']; // Obtener los IDs como una cadena
+            $ids = explode(',', $idsString); //Los convertimos en un array
             // Llamar al método borrar del modelo y pasarle la cadena de IDs
             $this->objPersonajes->borrar($ids);
             if(isset($this->objPersonajes->mensaje)){
+                //Si el modelo nos devuelve algún mensaje de error , lo mostramos en la vista
                 $mensaje = $this->objPersonajes->mensaje;
                 header("Location: index.php?action=gestionarPersonajes&controller=personajes&mensaje=$mensaje");
                 exit;
@@ -107,7 +117,7 @@ class ControladorPersonajes {
             $this->view = 'modificarPersonajes';
         
             // Definir el tamaño máximo en bytes (por ejemplo, 2MB = 2 * 1024 * 1024 bytes)
-            $tamanioMaximo = 0.5 * 1024 * 1024; // Cambiar este valor según tu necesidad
+            $tamanioMaximo = 0.5 * 1024 * 1024;
             $extensionesValidas = array("jpg", "jpeg", "png", "gif","webp"); // Extensiones permitidas
         
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
