@@ -11,7 +11,7 @@ class ControladorReflexiones {
     /** @var string Vista por defecto del controlador. */
     public $view;
     /**
-     * Constructor del controlador de centros.
+     * Constructor del controlador de reflexiones.
      */
     public function __construct() {
         $this->objReflexiones = new Reflexion(HOST,USER,PASSWORD,DATABASE, CHARSET);
@@ -26,6 +26,7 @@ class ControladorReflexiones {
 {
     $this->view = 'gestionreflexiones';
     $nivel_id = $_GET['nivel_id'];
+    $nombrepais = $_GET['nombrepais'];
 
     // Si se envía el formulario para añadir nuevas reflexiones
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -41,13 +42,31 @@ class ControladorReflexiones {
                 // Si hay elementos después de la filtración, se añaden las nuevas reflexiones
                 $this->objReflexiones->borrar($nivel_id);
                 $this->objReflexiones->aniadir($titulos, $contenidos, $nivel_id);
+                // si nos llega algún mensaje de error desde el modelo , lo mostramos
+                if(isset($this->objReflexiones->mensaje)){
+                    $mensaje = $this->objReflexiones->mensaje;
+                    header("Location: index.php?controller=reflexiones&action=gestionarReflexiones&nivel_id=$nivel_id&nombrepais=$nombrepais&&mensaje=$mensaje");
+                    exit;
+                }
             } else {
                 // Si ambos arrays están vacíos, se borran todas las reflexiones asociadas al nivel
                 $this->objReflexiones->borrar($nivel_id);
+                // Si nos llega algún mensaje de error desde el modelo , lo mostramos
+                if(isset($this->objReflexiones->mensaje)){
+                    $mensaje = $this->objReflexiones->mensaje;
+                    header("Location: index.php?controller=reflexiones&action=gestionarReflexiones&nivel_id=$nivel_id&nombrepais=$nombrepais&&mensaje=$mensaje");
+                    exit;
+                }
             }
         } else {
             // Si no se envían los arrays 'titulos' y 'contenidos', se borran todas las reflexiones asociadas al nivel
             $this->objReflexiones->borrar($nivel_id);
+            // Si nos llega algún mensaje de error desde el modelo , lo mostramos
+            if(isset($this->objReflexiones->mensaje)){
+                $mensaje = $this->objReflexiones->mensaje;
+                header("Location: index.php?controller=reflexiones&action=gestionarReflexiones&nivel_id=$nivel_id&nombrepais=$nombrepais&&mensaje=$mensaje");
+                exit;
+            }
         }
     }
 

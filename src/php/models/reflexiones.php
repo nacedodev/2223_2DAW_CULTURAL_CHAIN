@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Clase para la manipulación de datos relacionados con las reflexiones.
  */
@@ -32,8 +31,10 @@ class Reflexion {
     public function aniadir(array $titulos, array $contenidos, int $nivel_id)
     {
         try {
+            // Se inicia la transacción
             $this->conexion->beginTransaction();
             $sql = 'INSERT INTO Reflexion (titulo, contenido, nivel_id) VALUES (?, ?, ?)';
+            // Se prepara la consulta una sola vez
             $consulta = $this->conexion->prepare($sql);
 
             // asignacion de variables una sola vez
@@ -59,11 +60,10 @@ class Reflexion {
             // Si ocurre un error, revertir la transacción y manejar la excepción
             $this->conexion->rollBack();
             if ($e->getCode() === '23000') {
-                // Código de error para violación de clave única
-                echo 'Nombre duplicado: ya existe un registro con ese nombre';
+                $this->mensaje = 'Esta reflexión ya existe';
             } else {
                 // Otro tipo de error
-                echo 'Error al añadir el centro: ' . $e->getMessage();
+                $this->mensaje = 'Error al añadir la reflexión: ' . $e->getMessage();
             }
         }
     }
@@ -71,38 +71,41 @@ class Reflexion {
  /**
      * Borra todas las reflexiones asociadas a un nivel de la base de datos.
      *
-     * @param int $id ID de la reflexión a borrar.
+     * @param int $id ID del nivel que se desean borrar sus reflexiones.
      */
     public function borrar(int $nivel_id)
     {
         try {
+            $this->conexion->beginTransaction(); //Se inicia la transacción
+            // Se prepara la consulta
             $sql = "DELETE FROM Reflexion WHERE nivel_id = ?";
             $consulta = $this->conexion->prepare($sql);
             $consulta->bindParam(1, $nivel_id, PDO::PARAM_INT);
             $consulta->execute();
 
-            // // Verificar si se eliminó alguna fila
-            // if ($consulta->rowCount() === 0) {
-            //     echo 'No se encontró ningúna reflexión con el ID proporcionado';
-            // }
+            // Si todo salió bien , se hace commit
+            $this->conexion->commit();
         } catch (PDOException $e) {
+            // Si algo salió mal , se hace rollback
+            $this->conexion->rollBack();
             if ($e->getCode() === '23000') {
-                // Código de error para violación de clave foránea
-                echo 'El centro tiene valores asociados en otras tablas';
+                // Error personalizado de foreign key
+                $this->mensaje = 'La reflexión tiene valores asociados en otras tablas';
             } else {
-                echo 'Error al eliminar el centro: ' . $e->getMessage();
+                $this->mensaje = 'Error al eliminar las reflexiones: ' . $e->getMessage();
             }
         }
     }
      /**
-     * Lista todas las reflexiones registrados en la base de datos.
+     * Lista todas las reflexiones asociadas a un nivel.
      *
-     * @return array Arreglo asociativo con los datos de las reflexiones.
+     * @return array array asociativo con los datos de las reflexiones.
      */
     public function listar($nivel_id): array
     {
         try {
             $sql = 'SELECT titulo, contenido FROM Reflexion WHERE nivel_id = ' . $nivel_id;
+            // Se prepara la consulta
             $consulta = $this->conexion->query($sql);
 
             if ($consulta === false) {
@@ -114,7 +117,7 @@ class Reflexion {
 
             return $reflexiones; // Devolver los datos de las reflexiones
         } catch (PDOException $e) {
-            echo 'Error al listar los centros: ' . $e->getMessage();
+            $this->mensaje = 'Error al listar las reflexiones: ' . $e->getMessage();
             return [];
         }
     }

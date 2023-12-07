@@ -31,7 +31,7 @@ class ControladorAdministracion {
         $estado_reflexiones = $this->objAdministracion->estado_reflexiones;
         $mensajes = $this->objAdministracion->mensajes;
     
-        // Redireccionar a la vista con los mensajes como parámetros GET
+        // Enviar del controlador a la vista los mensajes de la verificación
         header("Location: index.php?controller=administracion&action=mostrarPanel&estado=$estado&reflexiones=$estado_reflexiones&mensajes=$mensajes");
         exit();
     }

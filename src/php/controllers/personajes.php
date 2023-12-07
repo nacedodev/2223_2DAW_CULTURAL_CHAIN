@@ -71,6 +71,7 @@ class ControladorPersonajes {
                     }
                     if($errores == false){
                         $this->objPersonajes->aniadir($imagenes,$nombres);
+                        // Si nos llega algún mensaje de error desde el modelo lo mostramos en la vista
                         if(isset($this->objPersonajes->mensaje)){
                             $mensaje = $this->objPersonajes->mensaje;
                             header("Location: index.php?controller=personajes&action=gestionarPersonajes&mensaje=$mensaje");

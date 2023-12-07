@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Clase para la manipulación de datos relacionados con las reflexiones.
+ * Clase para la validación de tablas en la web.
  */
 class Administracion {
 
@@ -9,9 +9,6 @@ class Administracion {
     public $mensajes;
     public $estado;
     public $estado_reflexiones;
-
-//    public function __construct($host, $user, $password, $database) {
-//        $dsn = "sqlsrv:Server=$host;Database=$database";
 
     public function __construct($host, $user, $password, $database , $charset)
     {
@@ -27,11 +24,6 @@ class Administracion {
             $this->mensajes = 'Error de conexión: ' . $e->getMessage();
         }
     }
-     /* Añade nuevas reflexiones a la base de datos.
-     *
-     * @param string $nombre     Nombre del centro.
-     * @param string $localidad  Localidad del centro.
-     */
 
      public function verificarTablas() {
         try {
@@ -54,6 +46,7 @@ class Administracion {
     
             // Verificar si hay al menos una reflexión por cada nivel
             $consultaReflexiones = $this->conexion->query("SELECT Nivel.nombrepais FROM Nivel LEFT JOIN Reflexion ON Nivel.id = Reflexion.nivel_id GROUP BY Nivel.nombrepais HAVING COUNT(Reflexion.id) = 0");
+            // La cláusula HAVING COUNT(Reflexion.id) = 0 permite filtrar aquellos resultados que tienen una cuenta (count) de reflexiones igual a cero.
             $nivelesSinReflexiones = $consultaReflexiones->fetchAll(PDO::FETCH_COLUMN);
             if (!empty($nivelesSinReflexiones)) {
                 $allTablesHaveData = false;
@@ -67,7 +60,7 @@ class Administracion {
                 $this->estado = "La web no está lista para salir a producción.";
             }
         } catch(PDOException $e) {
-            echo "Error de conexión: " . $e->getMessage();
+            $this->mensajes = "Error de conexión: " . $e->getMessage();
         }
     
         // Cerrar la conexión

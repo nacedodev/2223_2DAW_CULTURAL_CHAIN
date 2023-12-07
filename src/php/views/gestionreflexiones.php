@@ -1,5 +1,8 @@
 <div id='vistaFormReflexiones' style='flex-direction: column;'>
     <p style="margin:0;color: var(--terciary);font-size: 2vw;font-family: 'Poppins', sans-serif"> <?php echo $_GET['nombrepais']; ?> </p>
+    <?php if(isset($_GET['mensaje'])): ?> <!-- Si nos llega algún tipo de mensaje desde el controlador , lo mostramos-->
+        <p id="error-edit"><?php echo $_GET['mensaje']; ?></p>
+    <?php endif; ?>
     <div id="cabecera">
         <p>Título</p>
         <p>Reflexión</p>
