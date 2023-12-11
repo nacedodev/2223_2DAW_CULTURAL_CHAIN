@@ -56,7 +56,7 @@ function obtenerConflictos($conexion, $nivelId) {
     while ($conflicto = $resultado->fetch_assoc()) {
         // Procesa los datos del conflicto según tus necesidades
         $conflictos[] = array(
-            'nombre' => utf8_encode($conflicto['nombreconflicto']),
+            'nombre' => $conflicto['nombreconflicto'],
             'x' => $conflicto['posx'],
             'y' => $conflicto['posy'],
         );
