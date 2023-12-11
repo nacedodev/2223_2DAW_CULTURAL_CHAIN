@@ -637,7 +637,7 @@ export class VistaPrincipal extends Vista {
   recoger = () => {
     // Detectar el objeto (imagen) en las coordenadas actuales del this.part[0]
     const objetoEnPunto = this.detectarColision();
-    if(this.score>999)
+    if(this.score>999 && this.puntuacion.style.margin != "35px")
       this.puntuacion.style.margin = "35px"
     if (objetoEnPunto && objetoEnPunto.className === 'generado') {
       this.score = this.score + 10;
