@@ -8,9 +8,18 @@ class Clase {
      * Inicia la conexión a la base de datos.
      */
     public function __construct() { 
-       
         $this->conexion = new mysqli(HOST, USER, PASSWORD, DATABASE);
 
+        // Verificar la conexión
+        if ($this->conexion->connect_error) {
+            die("Error de conexión: " . $this->conexion->connect_error);
+        }
+
+        // Establecer el conjunto de caracteres utf8mb4
+        if (!$this->conexion->set_charset("utf8mb4")) {
+            printf("Error al establecer el conjunto de caracteres utf8mb4: %s\n", $this->conexion->error);
+            exit();
+        }
 
     }
  /**
