@@ -12,10 +12,8 @@ export class VistaSettings extends Vista {
   constructor (controlador, base) {
     super(controlador, base)
 
-    const btnBack = this.base.querySelectorAll('button')[10]
-    const btnGET = this.base.querySelectorAll('button')[7]
-    const btnPOST = this.base.querySelectorAll('button')[8]
-    const btonGETJSON = this.base.querySelectorAll('button')[9]
+    const btnBack = this.base.querySelectorAll('button')[7]
+   
     const btnTheme = this.base.querySelector('#vistaSettings #theme')
 
     /**
@@ -34,12 +32,7 @@ export class VistaSettings extends Vista {
     btnBack.onclick = this.irMain
 
     // Asignar evento para realizar la petición GET al hacer clic en el botón correspondiente.
-    btnGET.onclick = this.llamarGET
-
-    // Asignar evento para realizar la petición POST al hacer clic en el botón correspondiente.
-    btnPOST.onclick = this.llamarPOST
-    btnTheme.onclick = this.changeTheme
-    btonGETJSON.onclick = this.llamarGETJSON
+    
   }
 
   /**

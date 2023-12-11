@@ -1500,7 +1500,7 @@ input:-webkit-autofill {
   }
 
 #send{
-    position: relative;
+
     bottom:84px;
     left:0;
     background-color: var(--secondary) !important;
