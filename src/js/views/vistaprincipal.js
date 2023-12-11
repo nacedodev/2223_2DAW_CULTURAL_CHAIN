@@ -1095,7 +1095,7 @@ export class VistaPrincipal extends Vista {
       conflicto.style.position='absolute'
       conflicto.style.left=x+'%'
       conflicto.style.top=y+'%'
-      conflicto.style.backgroundImage='url("../src/img/nivel/conflicto.png")'
+      conflicto.style.backgroundImage='url("../src/img/nivel/conflicto2.png")'
       conflicto.style.backgroundSize='cover'
       nombre.className = "conflictos"
       nombre.style.left=x-1+'%'
