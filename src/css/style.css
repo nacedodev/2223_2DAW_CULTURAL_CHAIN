@@ -1487,6 +1487,7 @@ input:-webkit-autofill {
     font-size: 1vw;
     margin-top:40px;
     filter: drop-shadow(0 0 3px black);
+    font-family: 'Poppins' , sans-serif;
   }
 
   #vistaFormReflexiones .reflection {
