@@ -142,7 +142,7 @@ class Personaje {
     }
 
     public function modificar($id, $nombre, $imagen) {
-        try{
+        try {
             if (!empty($imagen)) {
                 $query = "UPDATE Personaje SET nombre = :nombre, imagenPersonaje = :imagen WHERE id = :id";
                 $consulta = $this->conexion->prepare($query);

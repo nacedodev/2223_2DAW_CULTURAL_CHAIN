@@ -61,7 +61,11 @@ class Reflexion {
             $this->conexion->rollBack();
             if ($e->getCode() === '23000') {
                 $this->mensaje = 'Esta reflexión ya existe';
-            } else {
+            } 
+            else if ($e->getCode() === '22001') {
+                $this->mensaje = 'El texto excede la longitud permitida.';
+            }
+            else {
                 // Otro tipo de error
                 $this->mensaje = 'Error al añadir la reflexión: ' . $e->getMessage();
             }
