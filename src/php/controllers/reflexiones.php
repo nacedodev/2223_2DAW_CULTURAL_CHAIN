@@ -10,6 +10,8 @@ class ControladorReflexiones {
     public $objReflexiones;
     /** @var string Vista por defecto del controlador. */
     public $view;
+    /** @var array variable que almacena una copia de seguridad de las reflexiones asociaas a una BD , en caso de error al añadir. */
+    private $backupReflexiones = array();
     /**
      * Constructor del controlador de reflexiones.
      */
@@ -45,12 +47,17 @@ class ControladorReflexiones {
             $titulos = array_filter($titulos);
             $contenidos = array_filter($contenidos);
 
+            // Si hay elementos después de la filtración, se añaden las nuevas reflexiones
             if (!empty($titulos) && !empty($contenidos)) {
-                // Si hay elementos después de la filtración, se añaden las nuevas reflexiones
+                // Almaceno un backup del estado actual de las reflexiones , para que en caso de error al añadir , no se pierda todo por el borrado previo.
+                $this->backupReflexiones = $this->obtenerReflexiones($nivel_id);
+                
                 $this->objReflexiones->borrar($nivel_id);
                 $this->objReflexiones->aniadir($titulos, $contenidos, $nivel_id);
-                // si nos llega algún mensaje de error desde el modelo , lo mostramos
                 if(isset($this->objReflexiones->mensaje)){
+                    //Si recibimos un mensaje de error , restauramos las reflexiones a como estaban antes del borrado , para no perder el contenido.
+                    $this->restaurarReflexiones($nivel_id);
+                    // si nos llega algún mensaje de error desde el modelo , lo mostramos
                     $mensaje = $this->objReflexiones->mensaje;
                     header("Location: index.php?controller=reflexiones&action=gestionarReflexiones&nivel_id=$nivel_id&nombrepais=$nombrepais&&mensaje=$mensaje");
                     exit;
@@ -81,6 +88,30 @@ class ControladorReflexiones {
     $reflexiones = $this->objReflexiones->listar($nivel_id);
 
     return $reflexiones;
-}
+    }
+
+// Método para obtener las reflexiones actuales antes de borrarlas
+    public function obtenerReflexiones($nivel_id) {
+        // Obtener las reflexiones actuales
+        $reflexiones = $this->objReflexiones->listar($nivel_id);
+        $this->backupReflexiones = $reflexiones;
+        return $this->backupReflexiones;
+    }
+
+    // Método para restaurar las reflexiones previas al borrado , por si el añadir sale mal
+    public function restaurarReflexiones($nivel_id) {
+        if (isset($this->backupReflexiones)) {
+            // Restaurar las reflexiones guardadas en la copia de seguridad
+            $titulos = $this->backupReflexiones['titulo'];
+            $contenidos = $this->backupReflexiones['contenido'];
+            
+            // Verificar si las claves 'titulos' y 'contenidos' existen en las reflexiones guardadas
+            if (isset($titulos) && isset($contenidos)) {
+                $this->objReflexiones->borrar($nivel_id); // Borrar las reflexiones actuales
+                $this->objReflexiones->aniadir($titulos, $contenidos, $nivel_id); // Añadir las reflexiones guardadas
+            }
+        }
+    }
+
 
 }
