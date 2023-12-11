@@ -22,10 +22,11 @@ class Reflexion {
             echo 'Error de conexión: ' . $e->getMessage();
         }
     }
-     /* Añade nuevas reflexiones a la base de datos.
+     /** Añade nuevas reflexiones a la base de datos.
      *
-     * @param string $nombre     Nombre del centro.
-     * @param string $localidad  Localidad del centro.
+     * @param array $titulos 
+     * @param array $contenidos  
+     * @param int $nivel_id
      */
 
     public function aniadir(array $titulos, array $contenidos, int $nivel_id)

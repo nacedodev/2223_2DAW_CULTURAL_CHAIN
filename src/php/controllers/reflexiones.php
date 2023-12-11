@@ -38,6 +38,18 @@ class ControladorReflexiones {
             $titulos = array_filter($titulos);
             $contenidos = array_filter($contenidos);
 
+            foreach ($titulos as $titulo) {
+                foreach ($contenidos as $contenido) {
+                    if (empty($titulo) || empty($contenido)) {
+                        // Si alguno de los campos está vacío, salir de la ejecución
+                        // Puedes mostrar un mensaje de error o manejar la situación aquí
+                        $mensaje = "Alguno de los campos está vacío.";
+                        header("Location: index.php?controller=reflexiones&action=gestionarReflexiones&nivel_id=$nivel_id&nombrepais=$nombrepais&mensaje=$mensaje");
+                        exit;
+                    }
+                }
+            }
+
             if (!empty($titulos) && !empty($contenidos)) {
                 // Si hay elementos después de la filtración, se añaden las nuevas reflexiones
                 $this->objReflexiones->borrar($nivel_id);
