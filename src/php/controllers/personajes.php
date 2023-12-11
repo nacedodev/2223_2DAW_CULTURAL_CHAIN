@@ -81,7 +81,7 @@ class ControladorPersonajes {
                 }
                 else{
                     // Mensaje si no se crea ningún personaje
-                    $mensaje = "Imagen o Nombre Vacíos.";
+                    $mensaje = "Imagen o Nombre Inválidos.";
                     header("Location: index.php?controller=personajes&action=gestionarPersonajes&mensaje=$mensaje");
                     exit;
                 }

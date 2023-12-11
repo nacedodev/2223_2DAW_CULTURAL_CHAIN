@@ -56,7 +56,11 @@ class Personaje {
          } catch (PDOException $e) {
             //Si algo salió mal se hace rollback y se deshacen todos los cambios
              $this->conexion->rollBack();
+             if ($e->getCode() === '22001') {
+                $this->mensaje = 'El texto excede la longitud permitida';
+            } else {
              $this->mensaje = 'Error al añadir el personaje: ' . $e->getMessage();
+            }
          }
      }
      
@@ -156,7 +160,12 @@ class Personaje {
             
             return $resultado;
         } catch(PDOException $e){
+            if ($e->getCode() === '22001') {
+                $this->mensaje = 'El texto excede la longitud permitida.';
+            }
+            else {
             $this->mensaje = 'Error al modificar el personaje: '. $e->getMessage();
+            }
         }
     }
 }
