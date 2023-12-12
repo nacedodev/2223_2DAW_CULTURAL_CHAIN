@@ -13,7 +13,7 @@ class Centro {
     public function __construct($host, $user, $password, $database , $charset)
     {
         // Normalmente a esta variable se le llama $dsn (Data Source Name / Nombre de origen de datos)
-//        acceder sin seleccionar bd
+        //acceder sin seleccionar bd
         $cadenaConexion = "mysql:host=$host;dbname=$database;charset=$charset";
         try {
             // Establecemos la conexión mediante PDO
