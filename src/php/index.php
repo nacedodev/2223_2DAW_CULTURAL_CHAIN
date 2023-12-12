@@ -1,6 +1,7 @@
 <?php
 
 require_once '../php/config/config_db.php';
+require_once '../php/config/config.php';
 require_once '../php/models/centros.php';
 require_once '../php/models/clases.php';
 require_once '../php/models/niveles.php';
