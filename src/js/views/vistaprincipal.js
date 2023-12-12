@@ -636,10 +636,12 @@ export class VistaPrincipal extends Vista {
    */
   recoger = () => {
     // Detectar el objeto (imagen) en las coordenadas actuales del this.part[0]
+    let audiorecoger =document.getElementById("sonidorecoger")
     const objetoEnPunto = this.detectarColision();
     if(this.score>999 && this.puntuacion.style.margin != "35px")
       this.puntuacion.style.margin = "35px"
     if (objetoEnPunto && objetoEnPunto.className === 'generado') {
+      audiorecoger.play()
       this.score = this.score + 10;
       this.puntuacion.textContent = '' + this.score;
       const imagenRecogida = new Image();
@@ -653,7 +655,7 @@ export class VistaPrincipal extends Vista {
       const self = this;
   
       // Animación al recoger a una persona
-      this.tablero.style.animation = 'recogerPersona 0.3s';
+      // this.tablero.style.animation = 'recogerPersona 0.3s';
   
       // Luego, después de un breve momento, eliminamos la animación
       setTimeout(function() {
@@ -666,6 +668,7 @@ export class VistaPrincipal extends Vista {
       this.personasRecogidas++;
     }
     if (objetoEnPunto && objetoEnPunto.className === 'bandera') {
+      audiorecoger.play()
       let conflictos = this.tablero.querySelectorAll('.conflictos');
       let conflicto=conflictos[this.conflictoActual]
       this.conflictoActual++
