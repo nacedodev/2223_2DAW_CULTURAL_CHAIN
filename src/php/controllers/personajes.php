@@ -12,6 +12,8 @@ class Personajes {
     public $pagina;
     /** @var string Vista por defecto del controlador. */
     public $view;
+
+    public $mensaje;
     /**
      * Constructor del controlador de personajes.
      */
@@ -44,9 +46,8 @@ class Personajes {
 
                         //Si no hay imagen se envia un mensaje de error a la vista
                         if($tamanio === 0){
-                            $mensaje = "Imagen o Nombre Vacíos.";
-                            header("Location: index.php?controller=personajes&action=gestionarPersonajes&mensaje=$mensaje");
-                            exit;
+                            $this->mensaje = "Imagen o Nombre Vacíos.";
+                            $this->view = 'gestionpersonajes';
                         }
 
                         // Verificar si la extensión es válida y el tamaño no excede el límite
@@ -54,36 +55,31 @@ class Personajes {
                             $errores = false;
                         } elseif (!in_array($extension, $extensionesValidas) && $tamanio > $tamanioMaximo) {
                             // Mensaje para archivo que no cumple ni tamaño ni extensión
-                            $mensaje = "La imagen $nombreArchivo no es válida , excede el tamaño permitido y no tiene una extensión válida ( ". implode(", ", $extensionesValidas).").";
-                            header("Location: index.php?controller=personajes&action=gestionarPersonajes&mensaje=$mensaje");
-                            exit;
+                            $this->mensaje = "La imagen $nombreArchivo no es válida , excede el tamaño permitido y no tiene una extensión válida ( ". implode(", ", $extensionesValidas).").";
+                            $this->view = 'gestionpersonajes';
                         } elseif (!in_array($extension, $extensionesValidas)) {
                             // Mensaje de error para extensión no válida
-                            $mensaje = "La imagen $nombreArchivo tiene una extensión no válida. Asegúrate de subir archivos de imagen con extensiones: " . implode(", ", $extensionesValidas);
-                            header("Location: index.php?controller=personajes&action=gestionarPersonajes&mensaje=$mensaje");
-                            exit;
+                            $this->mensaje = "La imagen $nombreArchivo tiene una extensión no válida. Asegúrate de subir archivos de imagen con extensiones: " . implode(", ", $extensionesValidas);
+                            $this->view = 'gestionpersonajes';
                         } elseif ($tamanio > $tamanioMaximo) {
                             // Mensaje de error para tamaño excedido
-                            $mensaje = "La imagen $nombreArchivo excede el tamaño permitido.";
-                            header("Location: index.php?controller=personajes&action=gestionarPersonajes&mensaje=$mensaje");
-                            exit;
+                            $this->mensaje = "La imagen $nombreArchivo excede el tamaño permitido.";
+                            $this->view = 'gestionpersonajes';
                         }
                     }
                     if($errores == false){
                         $this->objPersonajes->aniadir($imagenes,$nombres);
                         // Si nos llega algún mensaje de error desde el modelo lo mostramos en la vista
                         if(isset($this->objPersonajes->mensaje)){
-                            $mensaje = $this->objPersonajes->mensaje;
-                            header("Location: index.php?controller=personajes&action=gestionarPersonajes&mensaje=$mensaje");
-                            exit;
+                            $this->mensaje = $this->objPersonajes->mensaje;
+                            $this->view = 'gestionpersonajes';
                         }
                     }
                 }
                 else{
                     // Mensaje si no se crea ningún personaje
-                    $mensaje = "Imagen o Nombre Inválidos.";
-                    header("Location: index.php?controller=personajes&action=gestionarPersonajes&mensaje=$mensaje");
-                    exit;
+                    $this->mensaje = "Imagen o Nombre Inválidos.";
+                    $this->view = 'gestionpersonajes';
                 }
             }
         }
@@ -105,9 +101,8 @@ class Personajes {
             $this->objPersonajes->borrar($ids);
             if(isset($this->objPersonajes->mensaje)){
                 //Si el modelo nos devuelve algún mensaje de error , lo mostramos en la vista
-                $mensaje = $this->objPersonajes->mensaje;
-                header("Location: index.php?action=gestionarPersonajes&controller=personajes&mensaje=$mensaje");
-                exit;
+                $this->mensaje = $this->objPersonajes->mensaje;
+                $this->view = 'gestionpersonajes';
             }
         }
     }
@@ -136,24 +131,21 @@ class Personajes {
                     if (in_array($extensionImagen, $extensionesValidas) && $tamanioImagen <= $tamanioMaximo) {
                         $imagenPersonaje = file_get_contents($imagenTmp);
                         $this->objPersonajes->modificar($id, $nombre, $imagenPersonaje);
-                        header("Location: index.php?action=gestionarPersonajes&controller=personajes");
+                        $this->view = 'gestionpersonajes';
+
                     } elseif (!in_array($extensionImagen, $extensionesValidas) && $tamanioImagen > $tamanioMaximo) {
                         // Mensaje para imagen que no cumple ni tamaño ni extensión
-                        $mensaje = "La imagen ".$_FILES['imagenPersonaje']['name']." no es válida , excede el tamaño permitido y no tiene una extensión válida ( ". implode(", ", $extensionesValidas).").";
-                        header("Location: index.php?action=modificarPersonajes&controller=personajes&id=$id&nombre=$nombre&mensaje=$mensaje");
-                        exit();
-
+                        $this->mensaje = "La imagen ".$_FILES['imagenPersonaje']['name']." no es válida , excede el tamaño permitido y no tiene una extensión válida ( ". implode(", ", $extensionesValidas).").";
+                        $this->view = 'modificarPersonajes';
 
                     } elseif (!in_array($extensionImagen, $extensionesValidas)) {
                         // Mensaje de error para extensión no válida
-                        $mensaje = "La imagen seleccionada tiene una extensión no válida. Asegúrate de subir archivos de imagen con extensiones: " . implode(", ", $extensionesValidas);
-                        header("Location: index.php?action=modificarPersonajes&controller=personajes&id=$id&nombre=$nombre&mensaje=$mensaje");
-                        exit();
+                        $this->mensaje = "La imagen seleccionada tiene una extensión no válida. Asegúrate de subir archivos de imagen con extensiones: " . implode(", ", $extensionesValidas);
+                        $this->view = 'modificarPersonajes';
                     } elseif ($tamanioImagen > $tamanioMaximo) {
                         // Mensaje de error para tamaño excedido
-                        $mensaje = "La imagen seleccionada excede el tamaño permitido.";
-                        header("Location: index.php?action=modificarPersonajes&controller=personajes&id=$id&nombre=$nombre&mensaje=$mensaje");
-                        exit();
+                        $this->mensaje = "La imagen seleccionada excede el tamaño permitido.";
+                        $this->view = 'modificarPersonajes';
                     }
                 } else {
                     // No se ha seleccionado una nueva imagen, modificar solo el nombre
@@ -161,11 +153,10 @@ class Personajes {
                     $this->objPersonajes->modificar($id, $nombre, $imagenPersonaje);
                     if(isset($this->objPersonajes->mensaje)){
                         //Si el modelo nos devuelve algún mensaje de error , lo mostramos en la vista
-                        $mensaje = $this->objPersonajes->mensaje;
-                        header("Location: index.php?action=gestionarPersonajes&controller=personajes&mensaje=$mensaje");
-                        exit;
+                        $this->mensaje = $this->objPersonajes->mensaje;
+                        $this->view = 'modificarPersonajes';
                     } else {
-                    header("Location: index.php?action=gestionarPersonajes&controller=personajes");
+                        $this->view = 'gestionpersonajes';
                     }
                 }
             }

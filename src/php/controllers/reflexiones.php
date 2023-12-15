@@ -11,6 +11,8 @@ class Reflexiones {
     /** @var string Vista por defecto del controlador. */
     public $view;
     /** @var array variable que almacena una copia de seguridad de las reflexiones asociaas a una BD , en caso de error al añadir. */
+    public $mensaje;
+
     private $backupReflexiones = array();
     /**
      * Constructor del controlador de reflexiones.
@@ -38,9 +40,8 @@ class Reflexiones {
 
             // Si algun valor de los titulos o del contenido está vacío , mostramos un mensaje de error y salímos de la funcion
             if (in_array('', $contenidos, true) || in_array('', $titulos, true)) {
-                $mensaje = "Título o contenido vacío";
-                header("Location: index.php?controller=reflexiones&action=gestionarReflexiones&nivel_id=$nivel_id&nombrepais=$nombrepais&&mensaje=$mensaje");
-                exit;
+                $this->mensaje = "Título o contenido vacío";
+                $this->view = 'gestionreflexiones';
             }
             
             // Filtrar los arrays para eliminar elementos vacíos
@@ -58,18 +59,16 @@ class Reflexiones {
                     //Si recibimos un mensaje de error , restauramos las reflexiones a como estaban antes del borrado , para no perder el contenido.
                     $this->restaurarReflexiones($nivel_id);
                     // si nos llega algún mensaje de error desde el modelo , lo mostramos
-                    $mensaje = $this->objReflexiones->mensaje;
-                    header("Location: index.php?controller=reflexiones&action=gestionarReflexiones&nivel_id=$nivel_id&nombrepais=$nombrepais&&mensaje=$mensaje");
-                    exit;
+                    $this->mensaje = $this->objReflexiones->mensaje;
+                    $this->view = 'gestionreflexiones';
                 }
             } else {
                 // Si ambos arrays están vacíos, se borran todas las reflexiones asociadas al nivel
                 $this->objReflexiones->borrar($nivel_id);
                 // Si nos llega algún mensaje de error desde el modelo , lo mostramos
                 if(isset($this->objReflexiones->mensaje)){
-                    $mensaje = $this->objReflexiones->mensaje;
-                    header("Location: index.php?controller=reflexiones&action=gestionarReflexiones&nivel_id=$nivel_id&nombrepais=$nombrepais&&mensaje=$mensaje");
-                    exit;
+                    $this->mensaje = $this->objReflexiones->mensaje;
+                    $this->view = 'gestionreflexiones';
                 }
             }
         } else {
@@ -77,9 +76,8 @@ class Reflexiones {
             $this->objReflexiones->borrar($nivel_id);
             // Si nos llega algún mensaje de error desde el modelo , lo mostramos
             if(isset($this->objReflexiones->mensaje)){
-                $mensaje = $this->objReflexiones->mensaje;
-                header("Location: index.php?controller=reflexiones&action=gestionarReflexiones&nivel_id=$nivel_id&nombrepais=$nombrepais&&mensaje=$mensaje");
-                exit;
+                $this->mensaje = $this->objReflexiones->mensaje;
+                $this->view = 'gestionreflexiones';
             }
         }
     }
@@ -102,9 +100,11 @@ class Reflexiones {
     public function restaurarReflexiones($nivel_id) {
         if (isset($this->backupReflexiones)) {
             // Restaurar las reflexiones guardadas en la copia de seguridad
-            $titulos = $this->backupReflexiones['titulo'];
-            $contenidos = $this->backupReflexiones['contenido'];
-            
+            foreach ($this->backupReflexiones as $reflexion) {
+                $titulos[] = $reflexion["titulo"];
+                $contenidos[] = $reflexion["contenido"];
+            }
+
             // Verificar si las claves 'titulos' y 'contenidos' existen en las reflexiones guardadas
             if (isset($titulos) && isset($contenidos)) {
                 $this->objReflexiones->borrar($nivel_id); // Borrar las reflexiones actuales
