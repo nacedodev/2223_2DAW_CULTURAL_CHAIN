@@ -1,12 +1,12 @@
 <?php
 
-require_once '../php/models/personajes.php';
+require_once '../php/models/mPersonajes.php';
 /**
  * Controlador para la gestión de personajes.
  */
-class ControladorPersonajes {
+class Personajes {
 
-    /** @var Personaje Objeto para la manipulación de personajes. */
+    /** @var mPersonaje Objeto para la manipulación de personajes. */
     public $objPersonajes;
      /** @var string Página actual del controlador. */
     public $pagina;
@@ -16,7 +16,7 @@ class ControladorPersonajes {
      * Constructor del controlador de personajes.
      */
     public function __construct() {
-        $this->objPersonajes = new Personaje(HOST,USER,PASSWORD,DATABASE, CHARSET);
+        $this->objPersonajes = new mPersonaje(HOST,USER,PASSWORD,DATABASE, CHARSET);
     }
 
     public function gestionarPersonajes()

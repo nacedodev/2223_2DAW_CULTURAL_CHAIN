@@ -3,7 +3,7 @@
 /**
  * Clase para la validación de tablas en la web.
  */
-class Administracion {
+class mAdministracion {
 
     private $conexion;
     public $mensajes;

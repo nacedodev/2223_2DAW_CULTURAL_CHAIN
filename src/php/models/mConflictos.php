@@ -1,5 +1,5 @@
 <?php
-class Conflicto {
+class mConflicto {
  /** @var mysqli Conexión a la base de datos. */
     private $conexion;
    

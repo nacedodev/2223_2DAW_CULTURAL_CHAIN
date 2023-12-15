@@ -5,7 +5,7 @@
   <div id="figures-container">
           <?php foreach ($dataToView['data'] as $personaje) : ?>
               <figure class="figure-container" data-image="">
-                  <img src="data:image/png;base64,<?php $imagen = new Personaje(HOST,USER,PASSWORD,DATABASE, CHARSET); echo $imagen->obtenerImagenPorId($personaje['id']);?>" class="personaje" name="imagenPersonajes[]">
+                  <img src="data:image/png;base64,<?php $imagen = new mPersonaje(HOST,USER,PASSWORD,DATABASE, CHARSET); echo $imagen->obtenerImagenPorId($personaje['id']);?>" class="personaje" name="imagenPersonajes[]">
                   <input type="text" value="<?php echo $personaje['nombre']; ?>" class="personaje-input" readonly>
                   <input type="hidden" value="<?php echo $personaje['id'] ?>">
                   <button class="delete-button" type="button">-</button>

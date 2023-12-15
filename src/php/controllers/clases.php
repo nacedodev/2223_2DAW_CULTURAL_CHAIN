@@ -1,21 +1,21 @@
 <?php
-require_once '../php/models/clases.php';
+require_once '../php/models/mClases.php';
 /**
  * Controlador para la gestión de clases.
  */
-class ControladorClases{
+class Clases{
  /** @var string Página actual del controlador. */
     public $pagina;
      /** @var string Página actual del controlador. */
     public $view;
-     /** @var Clase Objeto para la manipulación de clases. */
+     /** @var mClase Objeto para la manipulación de clases. */
     private $objClases;
  /**
      * Constructor del controlador de clases.
      */
     public function __construct() {
         $this->pagina = '';
-        $this->objClases = new Clase();
+        $this->objClases = new mClase();
     }
  /**
      * Lista las clases disponibles para un centro específico.
@@ -39,10 +39,7 @@ class ControladorClases{
         $centro_id = $_GET['centro_id'];
           $this->objClases->aniadir($_POST['etapa'], $_POST['clase'], $centro_id);
         
-       
           header("Location: index.php?action=listarClases&controller=clases&centro_id=$centro_id&centronombre=$centronombre");
-         
-        
     }
     }
     /**

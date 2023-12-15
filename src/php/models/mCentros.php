@@ -3,7 +3,7 @@
 /**
  * Clase para la manipulación de datos relacionados con los centros.
  */
-class Centro {
+class mCentro {
 
     private $conexion;
 

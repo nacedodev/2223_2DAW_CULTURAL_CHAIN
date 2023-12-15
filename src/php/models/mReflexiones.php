@@ -2,7 +2,7 @@
 /**
  * Clase para la manipulación de datos relacionados con las reflexiones.
  */
-class Reflexion {
+class mReflexion {
 
     private $conexion;
     public $mensaje;

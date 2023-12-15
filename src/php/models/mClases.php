@@ -1,5 +1,5 @@
 <?php
-class Clase {
+class mClase {
  /** @var mysqli Conexión a la base de datos. */
     private $conexion;
    

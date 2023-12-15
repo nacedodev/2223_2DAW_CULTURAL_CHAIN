@@ -2,7 +2,7 @@
 /**
  * Clase para la manipulación de datos relacionados con los personajes.
  */
-class Personaje {
+class mPersonaje {
 
     private $conexion;
     public $mensaje;

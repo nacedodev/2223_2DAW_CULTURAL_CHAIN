@@ -1,12 +1,12 @@
 <?php
 
-require_once '../php/models/reflexiones.php';
+require_once '../php/models/mReflexiones.php';
 /**
  * Controlador para la gestión de reflexiones.
  */
-class ControladorReflexiones {
+class Reflexiones {
 
-    /** @var Reflexion Objeto para la manipulación de reflexiones. */
+    /** @var mReflexion Objeto para la manipulación de reflexiones. */
     public $objReflexiones;
     /** @var string Vista por defecto del controlador. */
     public $view;
@@ -16,7 +16,7 @@ class ControladorReflexiones {
      * Constructor del controlador de reflexiones.
      */
     public function __construct() {
-        $this->objReflexiones = new Reflexion(HOST,USER,PASSWORD,DATABASE, CHARSET);
+        $this->objReflexiones = new mReflexion(HOST,USER,PASSWORD,DATABASE, CHARSET);
     }
 /**
      * Lista las reflexiones añadidas.

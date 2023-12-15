@@ -1,12 +1,12 @@
 <?php
 
-require_once '../php/models/centros.php';
+require_once '../php/models/mCentros.php';
 /**
  * Controlador para la gestión de centros.
  */
-class ControladorCentros {
+class Centros {
 
-    /** @var Centro Objeto para la manipulación de centros. */
+    /** @var mCentro Objeto para la manipulación de centros. */
     public $objCentros;
      /** @var string Página actual del controlador. */
     public $pagina;
@@ -17,7 +17,7 @@ class ControladorCentros {
      */
     public function __construct() {
         $this->pagina = '';
-        $this->objCentros = new Centro(HOST,USER,PASSWORD,DATABASE, CHARSET);
+        $this->objCentros = new mCentro(HOST,USER,PASSWORD,DATABASE, CHARSET);
     }
 /**
      * Lista los centros disponibles.

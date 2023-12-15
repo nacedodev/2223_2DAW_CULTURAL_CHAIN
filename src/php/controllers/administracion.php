@@ -1,11 +1,11 @@
 <?php
-require_once '../php/models/administracion.php';
+require_once '../php/models/mAdministracion.php';
 /**
  * Controlador para la gestión de centros.
  */
-class ControladorAdministracion {
+class Administracion {
 
-    /** @var Administracion Objeto para la manipulación de centros. */
+    /** @var mAdministracion Objeto para la manipulación de centros. */
     public $objAdministracion;
      /** @var string Página actual del controlador. */
     public $pagina;
@@ -16,7 +16,7 @@ class ControladorAdministracion {
      */
     public function __construct() {
         $this->pagina = '';
-        $this->objAdministracion = new Administracion(HOST,USER,PASSWORD,DATABASE, CHARSET);
+        $this->objAdministracion = new mAdministracion(HOST,USER,PASSWORD,DATABASE, CHARSET);
     }
     public function mostrarPanel(){
          $this->view='admin';

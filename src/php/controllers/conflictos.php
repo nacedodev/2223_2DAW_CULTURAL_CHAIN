@@ -1,21 +1,21 @@
 <?php
-require_once '../php/models/conflictos.php';
+require_once '../php/models/mConflictos.php';
 /**
  * Controlador para la gestión de clases.
  */
-class ControladorConflictos{
+class Conflictos{
  /** @var string Página actual del controlador. */
     public $pagina;
      /** @var string Página actual del controlador. */
     public $view;
-     /** @var Clase Objeto para la manipulación de clases. */
+     /** @var mClase Objeto para la manipulación de clases. */
     private $objConflictos;
  /**
      * Constructor del controlador de clases.
      */
     public function __construct() {
         $this->pagina = '';
-        $this->objConflictos = new Conflicto();
+        $this->objConflictos = new mConflicto();
     }
  /**
      * Lista las clases disponibles para un centro específico.

@@ -3,7 +3,7 @@
 /**
  * Clase para la manipulación de datos relacionados con los niveles.
  */
-class Nivel {
+class mNivel {
     /** @var mysqli Conexión a la base de datos. */
   private $conexion;
 

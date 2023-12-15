@@ -1,12 +1,12 @@
 <?php
 
-require_once '../php/models/niveles.php';
+require_once '../php/models/mNiveles.php';
 /**
  * Controlador para la gestión de niveles.
  */
-class ControladorNiveles {
+class Niveles {
 
-    /** @var Nivel Objeto para la manipulación de niveles. */
+    /** @var mNivel Objeto para la manipulación de niveles. */
     public $objNiveles;
      /** @var string Página actual del controlador. */
     public $pagina;
@@ -17,7 +17,7 @@ class ControladorNiveles {
      */
     public function __construct() {
         $this->pagina = '';
-        $this->objNiveles = new Nivel();
+        $this->objNiveles = new mNivel();
     }
 /**
      * Lista los centros disponibles.
