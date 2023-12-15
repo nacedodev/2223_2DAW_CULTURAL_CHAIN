@@ -58,8 +58,9 @@ class Reflexiones {
                 if(isset($this->objReflexiones->mensaje)){
                     //Si recibimos un mensaje de error , restauramos las reflexiones a como estaban antes del borrado , para no perder el contenido.
                     $this->restaurarReflexiones($nivel_id);
-                    // si nos llega algún mensaje de error desde el modelo , lo mostramos
-                    $this->mensaje = $this->objReflexiones->mensaje;
+                    // si nos llega algún mensaje de error desde el modelo y no existe previamente un mensaje de error del controlador, lo mostramos en la vista
+                    if(!isset($this->mensaje)) $this->mensaje = $this->objReflexiones->mensaje;
+
                     $this->view = 'gestionreflexiones';
                 }
             } else {
