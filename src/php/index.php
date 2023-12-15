@@ -8,7 +8,7 @@ require_once '../php/models/mConflictos.php';
 require_once '../php/models/mPersonajes.php';
 require_once '../php/models/mReflexiones.php';
 
-// Si es la primera vez que se llama al index , cojemos el controlador y método por defecto 
+// Si es la primera vez que se llama al index o si a la hora de redireccionar no especificamos el controlador y el método, cojemos el controlador y método por defecto 
 if(!isset($_GET["controller"])) $_GET["controller"] = constant("DEFAULT_CONTROLLER");
 if(!isset($_GET["action"])) $_GET["action"] = constant("DEFAULT_ACTION");
 
