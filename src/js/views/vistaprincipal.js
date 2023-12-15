@@ -292,7 +292,6 @@ export class VistaPrincipal extends Vista {
       this.divPersonajes.style.animation = 'appearRight 1s forwards'
       this.info.style.animation = 'mostrarTexto 1s forwards'
       this.titulo.style.animation = 'mostrarTexto 1s forwards'
-      this.end.style.animation = 'none'
       this.form.style.animation = 'none'
       this.tablero.style.filter = 'none'
       this.divPersonajes.style.pointerEvents = 'auto'
@@ -416,7 +415,6 @@ export class VistaPrincipal extends Vista {
     personajeSelected.style.width = '2.3%'
     this.divPersonajes.style.pointerEvents = 'none'
     this.info.style.animation = 'ocultarTexto 1.5s forwards'
-    this.end.style.animation = 'mostrarTexto 4s forwards'
     this.gameStarted = true
 
     let info = document.getElementById("info")
@@ -1035,7 +1033,7 @@ export class VistaPrincipal extends Vista {
       titulo=this.niveles[this.nivelActual].reflexiones[numRandom].titulo
       contenido=this.niveles[this.nivelActual].reflexiones[numRandom].contenido
       parrafo.id ="info"
-      parrafo.innerHTML= titulo+"<br>"+contenido
+      parrafo.innerHTML= titulo+"<br>"+contenido+"<br><br>Pulsa Enter para Guardar la partida"
       this.reflexion = parrafo
     }
 
