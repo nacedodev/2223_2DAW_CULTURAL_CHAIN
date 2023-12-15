@@ -26,6 +26,7 @@ require_once $controller_path;
 $controllerName = $_GET["controller"];
 $controller = new $controllerName();
 
+// Almacenamos en $dataToView["data] la información que nos devuelve el método al que hemos llamado , para poder mostrarlo en la vista
 $dataToView["data"] = array();
 if(method_exists($controller,$_GET["action"])) $dataToView["data"] = $controller->{$_GET["action"]}();
 
