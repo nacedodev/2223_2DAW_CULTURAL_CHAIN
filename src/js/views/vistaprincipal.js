@@ -84,7 +84,7 @@ export class VistaPrincipal extends Vista {
     this.arrayLocalidades = []
 
     //Variables del juego
-    this.puntuacion = document.getElementById('puntuacion')
+    this.puntos =0
     this.posX
     this.posY
     this.dir = null
@@ -1027,7 +1027,10 @@ export class VistaPrincipal extends Vista {
     let titulo
     let contenido
     var parrafo = document.createElement("p")
+    
+    this.controlador.puntuacion=this.score
 
+    console.log(this.controlador.puntuacion)
     if(numReflexiones)
     {
       titulo=this.niveles[this.nivelActual].reflexiones[numRandom].titulo

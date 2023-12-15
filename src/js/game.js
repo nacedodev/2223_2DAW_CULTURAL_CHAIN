@@ -30,7 +30,6 @@ class Game {
     // Almacenar configuraciones iniciales
     const configs = ['fácil', 'muted']
     this.almacenarConfig(configs)
-
     this.vistaPrincipal = new VistaPrincipal(this, div1)
     this.vistaSettings = new VistaSettings(this, div2)
     this.vistaRanking = new VistaRanking(this, div3)
@@ -98,7 +97,6 @@ class Game {
 
     return result
   }
-
   /**
      * Muestra un formulario en la vista actual.
      * @method

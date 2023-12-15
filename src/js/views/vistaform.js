@@ -28,26 +28,31 @@ export class VistaForm extends Vista {
   }
 
   enviarForm() {
-    console.log(this.nickname)
-    console.log(this.nickname.value)
     const data = {
       nickname: this.nickname.value,
       correo: this.correo.value,
       centro: this.centro.value,
       cp: this.cp.value,
-      localidad: this.localidad.value
+      localidad: this.localidad.value,
+      puntuacion: this.controlador.puntuacion   
     };
     const jsonData = JSON.stringify(data);
-    
+    console.log(jsonData);
     fetch('php/ajaxpuntuacion.php', {
         method: 'POST',
         body: jsonData
     })
     .then(response => {
-        if (!response.ok) {
-            throw new Error('Error al enviar el formulario');
-        }
-        return response.json();
+      if (!response.ok) {
+          throw new Error('Error al enviar el formulario');
+      }
+  
+      const contentType = response.headers.get('Content-Type');
+      if (contentType && contentType.includes('application/json')) {
+          return response.json();
+      } else {
+          throw new Error('Respuesta no válida del servidor');
+      }
     })
     .then(data => {
         console.log('Formulario enviado correctamente', data);
