@@ -11,7 +11,7 @@ import { Vista } from './vista.js'
 export class VistaForm extends Vista {
   constructor (controlador, base) {
     super(controlador, base)
-    const nickname = document.getElementById('nickname')
+    this.nickname = document.getElementById('nickname')
     this.correo = document.getElementById('correo')
     this.centro = document.getElementById('centro')
     this.cp = document.getElementById('cp')
@@ -23,9 +23,44 @@ export class VistaForm extends Vista {
     this.centro.onchange = this.validarSelectC
     this.localidad.onchange = this.validarSelectL
     this.cp.onblur = this.validarCP
-    send.onclick = this.validarForm
+
+    send.onclick = this.validarForm;
   }
 
+  enviarForm() {
+    const data = {
+      nickname: this.nickname.value,
+      correo: this.correo.value,
+      centro: this.centro.value,
+      cp: this.cp.value,
+      localidad: this.localidad.value,
+      puntuacion: this.controlador.puntuacion   
+    };
+    const jsonData = JSON.stringify(data);
+    console.log(jsonData);
+    fetch('php/ajaxpuntuacion.php', {
+        method: 'POST',
+        body: jsonData
+    })
+    .then(response => {
+      if (!response.ok) {
+          throw new Error('Error al enviar el formulario');
+      }
+  
+      const contentType = response.headers.get('Content-Type');
+      if (contentType && contentType.includes('application/json')) {
+          return response.json();
+      } else {
+          throw new Error('Respuesta no válida del servidor');
+      }
+    })
+    .then(data => {
+        console.log('Formulario enviado correctamente', data);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+  }
   /**
  * Realiza la validación del campo de `nickname` en un formulario.
  * @method
@@ -245,12 +280,13 @@ export class VistaForm extends Vista {
     if (todosLosCamposLlenos && todosLosMensajesVacios && this.centro.selectedIndex !== 0 && this.localidad.selectedIndex !== 0) {
       statusSpan.textContent = ''
       form.style.animation = 'okAnimation 3s forwards'
+      
+      this.enviarForm()
 
       setTimeout(function () {
         form.style.animation = 'sendTop 1.8s forwards'
         form.parentElement.style.animation = 'hideBG 2s forwards'
       }, 3000)
-
       setTimeout(function () {
         form.parentElement.style.display = 'none'
       }, 4800)

@@ -1502,7 +1502,7 @@ input:-webkit-autofill {
 
 #send{
     position: relative;
-    bottom:84px;
+    bottom:34px;
     left:0;
     background-color: var(--secondary) !important;
     color: var(--terciary) !important;
