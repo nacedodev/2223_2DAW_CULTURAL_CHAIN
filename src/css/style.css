@@ -559,14 +559,13 @@ ul > li > a> img:not(:first-child){
  }
 
 #tablonranking>div>p:nth-child(2){
-    font-size: 2.5vw;
+    font-size: 2vw;
 }
 
 #tablonranking>div>p:nth-child(3){
     position:relative;
     font-size: 15px;
-    bottom:20%;
-    left: 4.5%;
+    left: 1.5%;
 }
 
 #tablonranking>div>p:nth-child(4){
@@ -584,14 +583,10 @@ ul > li > a> img:not(:first-child){
 }
 
 #tablonranking>div>p:nth-child(6){
-    font-size: 3vw;
+    font-size: 2.3vw;
     position: relative;
-    right: 80px;
+    right: 105px;
     text-transform: uppercase;
-/*   gradiente para el texto del score */
-    background: linear-gradient(to left, var(--secondary) 0%, var(--primary) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
 }
 
 #tablonranking>div>img{
@@ -1256,6 +1251,16 @@ body > #nombreapp{
     border: none;
 }
 
+#tablonranking p{
+    width: 10vw;
+    text-align: center;
+}
+
+#tablonranking p:nth-child(2){
+    width: 15vw;
+}
+
+
 input:focus, select:focus {
     outline: none;
     filter: drop-shadow(0 0 0.2em var(--terciary));
@@ -1276,7 +1281,6 @@ input:-webkit-autofill {
         border: none;
         border-radius: 5px;
         cursor: pointer;
-        margin-left: 20px;
 }
 
 #vistaForm form button:hover 

@@ -72,7 +72,7 @@ export class VistaRanking extends Vista {
       nuevoDiv.innerHTML += '<p>' + (index + 1) + '</p>'
       nuevoDiv.innerHTML += '<p>' + arrayResultado[index].nombre.toUpperCase() + '</p>'
       nuevoDiv.innerHTML += '<p>' + arrayResultado[index].centro.toUpperCase() + '</p>'
-      nuevoDiv.innerHTML += '<p>' + arrayResultado[index].localidad.toUpperCase() + '</p>'
+      nuevoDiv.innerHTML += '<p style="visibility:hidden">' + arrayResultado[index].localidad.toUpperCase() + '</p>'
       nuevoDiv.innerHTML += '<p>SCORE: </p>'
       nuevoDiv.innerHTML += '<p>' + arrayResultado[index].puntuacion.toUpperCase() + '</p>'
       nuevoDiv.innerHTML += "<img src='img/personajes/astronaut 1.png'>"

@@ -16,9 +16,9 @@ export class VistaForm extends Vista {
     this.centro = document.getElementById('centro')
     this.cp = document.getElementById('cp')
     this.localidad = document.getElementById('localidad')
-    const send = document.getElementById('send')
+    const send = document.getElementById('enviar')
 
-    nickname.onblur = this.validarNick
+    this.nickname.onblur = this.validarNick
     this.correo.onblur = this.validarEmail
     this.centro.onchange = this.validarSelectC
     this.localidad.onchange = this.validarSelectL
