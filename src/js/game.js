@@ -97,6 +97,7 @@ class Game {
 
     return result
   }
+
   /**
      * Muestra un formulario en la vista actual.
      * @method

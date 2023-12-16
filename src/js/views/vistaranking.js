@@ -17,7 +17,7 @@ export class VistaRanking extends Vista {
          */
     const btnBack = this.base.querySelectorAll('button')[1]
     const btnTheme = this.base.querySelector('#vistaRanking #theme')
-    
+
     this.divranking = document.getElementById('tablonranking')
 
     this.cargarRanking()
@@ -25,59 +25,62 @@ export class VistaRanking extends Vista {
     btnBack.onclick = this.irMain
     btnTheme.onclick = this.changeTheme
   }
+
   /**
          * Realiza la navegación de vuelta a la vista principal.
          * @method
          */
-  cargarRanking() {
-    var arrayResultado = []; // Array para almacenar la información estructurada
+  cargarRanking () {
+    const arrayResultado = [] // Array para almacenar la información estructurada
 
     $.ajax({
-        url: "php/ajaxranking.php",
-        type: "GET",
-        dataType: "json",
-        contentType: "application/json; charset=utf-8",
-        success: (data) => {
-            // Iterar sobre los datos recibidos
-            for (var i = 0; i < data.length; i++) {
-                var otherData = data[i].otherData;
+      url: 'php/ajaxranking.php',
+      type: 'GET',
+      dataType: 'json',
+      contentType: 'application/json; charset=utf-8',
+      success: (data) => {
+        // Iterar sobre los datos recibidos
+        for (let i = 0; i < data.length; i++) {
+          const otherData = data[i].otherData
 
-                // Estructurar los datos
-                var elemento = {
-                    nombre: otherData.nombre,
-                    centro: otherData.centro,
-                    localidad: otherData.localidad,
-                    puntuacion: otherData.puntuacion
-                };
+          // Estructurar los datos
+          const elemento = {
+            nombre: otherData.nombre,
+            centro: otherData.centro,
+            localidad: otherData.localidad,
+            puntuacion: otherData.puntuacion
+          }
 
-                // Agregar el elemento al arrayResultado
-                arrayResultado.push(elemento);
-            }
-
-            // Filtrar arrayResultado para obtener solo los centros
-            this.aniadirRanking(arrayResultado)
-        },
-        error: function (status, error) {
-            console.error("Error en la solicitud AJAX: " + status + " - " + error);
+          // Agregar el elemento al arrayResultado
+          arrayResultado.push(elemento)
         }
-    });
+
+        // Filtrar arrayResultado para obtener solo los centros
+        this.aniadirRanking(arrayResultado)
+      },
+      error: function (status, error) {
+        console.error('Error en la solicitud AJAX: ' + status + ' - ' + error)
+      }
+    })
   }
-  aniadirRanking(arrayResultado){
+
+  aniadirRanking (arrayResultado) {
     arrayResultado.forEach((element, index) => {
-      var nuevoDiv = document.createElement('div');
-  
+      const nuevoDiv = document.createElement('div')
+
       // Agregar elementos con texto en mayúsculas al nuevoDiv
-      nuevoDiv.innerHTML += "<p>" + (index + 1) + "</p>";
-      nuevoDiv.innerHTML += "<p>" + arrayResultado[index]['nombre'].toUpperCase() + "</p>";
-      nuevoDiv.innerHTML += "<p>" + arrayResultado[index]['centro'].toUpperCase() + "</p>";
-      nuevoDiv.innerHTML += "<p>" + arrayResultado[index]['localidad'].toUpperCase() + "</p>";
-      nuevoDiv.innerHTML += "<p>SCORE: </p>";
-      nuevoDiv.innerHTML += "<p>" + arrayResultado[index]['puntuacion'].toUpperCase() + "</p>";
-      nuevoDiv.innerHTML += "<img src='img/personajes/astronaut 1.png'>";
-  
+      nuevoDiv.innerHTML += '<p>' + (index + 1) + '</p>'
+      nuevoDiv.innerHTML += '<p>' + arrayResultado[index].nombre.toUpperCase() + '</p>'
+      nuevoDiv.innerHTML += '<p>' + arrayResultado[index].centro.toUpperCase() + '</p>'
+      nuevoDiv.innerHTML += '<p>' + arrayResultado[index].localidad.toUpperCase() + '</p>'
+      nuevoDiv.innerHTML += '<p>SCORE: </p>'
+      nuevoDiv.innerHTML += '<p>' + arrayResultado[index].puntuacion.toUpperCase() + '</p>'
+      nuevoDiv.innerHTML += "<img src='img/personajes/astronaut 1.png'>"
+
       // Añadir nuevoDiv al contenedor existente (divranking)
-      this.divranking.appendChild(nuevoDiv);
-  });
+      this.divranking.appendChild(nuevoDiv)
+    })
   }
+
   irMain = () => this.controlador.irAVista(this.controlador.vistaPrincipal)
 }
