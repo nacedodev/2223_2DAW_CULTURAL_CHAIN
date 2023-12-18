@@ -231,12 +231,27 @@ export class VistaPrincipal extends Vista {
   }
 
   ocultarPreloader () {
-    this.divPersonajes.style.animation = 'disappearRight 0.2s forwards'
-    document.getElementById('loader').style.animation = 'hideLoader 0.4s forwards'
-    this.divIzq.style.animation = 'showTablero 1.2s forwards'
-    this.divPersonajes.style.animation = 'appearRight 1.4s forwards'
-    this.divPersonajes.style.zIndex = 0
-    this.logo.style.zIndex = 1
+    
+    if (!this.clickerMode) {
+      this.divPersonajes.style.animation = 'disappearRight 0.2s forwards'
+      document.getElementById('loader').style.animation = 'hideLoader 0.4s forwards'
+      setTimeout(() => {
+        this.base.style.display = 'block'
+        this.divIzq.style.display = 'flex'
+        this.divIzq.style.animation = 'showTablero 0.8s forwards'
+      }, 400)
+      this.divPersonajes.style.animation = 'appearRight 1.4s forwards'
+      this.divPersonajes.style.zIndex = 0
+      this.logo.style.zIndex = 1
+    } else {
+      document.getElementById('loader').style.animation = 'hideLoader 0.4s forwards'
+      setTimeout(() => {
+        this.base.style.display = 'block'
+        this.divIzq.style.display = 'flex'
+      }, 400)
+      this.divPersonajes.style.zIndex = 0
+      this.logo.style.zIndex = 1
+    }
   }
 
   /**
@@ -741,7 +756,7 @@ export class VistaPrincipal extends Vista {
   }
 
   cargarNiveles () {
-    const tiempoMinimo = 3000; // Mínimo tiempo de espera en milisegundos (3 segundos)
+    const tiempoMinimo = 3000 // Mínimo tiempo de espera en milisegundos (3 segundos)
     const tiempoInicio = Date.now()
     const arrayResultado = [] // Array para almacenar la información estructurada
     $.ajax({
@@ -768,12 +783,12 @@ export class VistaPrincipal extends Vista {
           // Agregar el elemento al arrayResultado
           arrayResultado.push(elemento)
           const tiempoTranscurrido = Date.now() - tiempoInicio;
-      const tiempoRestante = Math.max(0, tiempoMinimo - tiempoTranscurrido);
+          const tiempoRestante = Math.max(0, tiempoMinimo - tiempoTranscurrido);
 
-      // Ocultar el preloader después de un mínimo de 3 segundos o al completar la carga
-      setTimeout(() => {
-        this.ocultarPreloader();
-      }, tiempoRestante);
+          // Ocultar el preloader después de un mínimo de 3 segundos o al completar la carga
+          setTimeout(() => {
+            this.ocultarPreloader()
+          }, tiempoRestante)
         }
         // Ahora, arrayResultado contiene la estructura deseada
         this.niveles = arrayResultado

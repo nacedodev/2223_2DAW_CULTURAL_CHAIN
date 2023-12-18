@@ -37,7 +37,6 @@ class Game {
     this.vistas = [this.vistaPrincipal, this.vistaSettings, this.vistaRanking]
 
     // Mostrar vista principal inicialmente
-    this.irAVista(this.vistaPrincipal)
   }
 
   /**
