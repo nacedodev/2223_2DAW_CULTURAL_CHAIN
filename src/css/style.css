@@ -798,6 +798,10 @@ ul > li > a> img:not(:first-child){
     font-family: Arial, sans-serif;
 }
 
+#vistaFormReflexiones{
+    height: auto;
+}
+
 #form-end{
     top: 50%;
     left: 50%;
@@ -1514,8 +1518,8 @@ input:-webkit-autofill {
 
 #send{
     position: relative;
-    bottom:34px;
-    left:0;
+    bottom:81px;
+    left:1%;
     background-color: var(--secondary) !important;
     color: var(--terciary) !important;
     padding: 3% 6%;
@@ -1523,6 +1527,12 @@ input:-webkit-autofill {
     margin-top: 25px;
     font-size: 1vw;
     font-family: 'Poppins',sans-serif;
+  }
+
+  #form-end > #send{
+    bottom:auto;
+    background-color: var(--terciary) !important;
+    color: var(--secondary) !important;
   }
 
 #send:hover{

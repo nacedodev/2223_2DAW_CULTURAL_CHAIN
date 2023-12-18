@@ -103,6 +103,7 @@ class Personajes {
                 //Si el modelo nos devuelve algún mensaje de error , lo mostramos en la vista
                 $this->mensaje = $this->objPersonajes->mensaje;
                 $this->view = 'gestionpersonajes';
+                return $this->objPersonajes->listar();
             }
         }
     }
@@ -132,6 +133,7 @@ class Personajes {
                         $imagenPersonaje = file_get_contents($imagenTmp);
                         $this->objPersonajes->modificar($id, $nombre, $imagenPersonaje);
                         $this->view = 'gestionpersonajes';
+                        return $this->objPersonajes->listar();
 
                     } elseif (!in_array($extensionImagen, $extensionesValidas) && $tamanioImagen > $tamanioMaximo) {
                         // Mensaje para imagen que no cumple ni tamaño ni extensión
@@ -157,6 +159,7 @@ class Personajes {
                         $this->view = 'modificarPersonajes';
                     } else {
                         $this->view = 'gestionpersonajes';
+                        return $this->objPersonajes->listar();
                     }
                 }
             }
