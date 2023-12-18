@@ -1,4 +1,4 @@
 <?php
 
-define('DEFAULT_CONTROLLER', 'administracion');
-define('DEFAULT_ACTION', 'mostrarPanel');
+define('DEFAULT_CONTROLLER', 'login');
+define('DEFAULT_ACTION', 'mostrarLogin');

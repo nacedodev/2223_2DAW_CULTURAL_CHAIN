@@ -1,3 +1,27 @@
+<style>
+  #logout{
+    display: flex;
+            align-items: center;
+            justify-content: center;
+            position: fixed;
+            bottom:10px;
+            right: 10px;
+            background-color: transparent;
+            aspect-ratio: 1/1;
+            width: 3%;
+            border:none;
+            border-radius: 10px;
+            cursor:pointer;
+  }
+
+  #logout img{
+    width: 80%;
+  }
+
+  #logout:hover{
+    filter: drop-shadow(0 0 0.4em gray);
+  }
+</style>
 <!-- Mostrar la hora -->
 <p id="hora"></p>
 
@@ -23,7 +47,7 @@
 
 <!-- Mensaje de bienvenida al panel de administración -->
 <p id="admin">BIENVENIDO AL PANEL DE ADMINISTRACIÓN</p>
-<p id="informacion">SELECCIONA UNA CATEGORÍA PARA GESTIONARLA</p>
+<p id="informacion"><?php echo strtoupper($_SESSION['nombre']); ?></p>
 
 <!-- Si existe 'estado' , muestra su valor y le da estilos -->
 <?php if(isset($_GET['estado'])) : ?>
@@ -44,6 +68,8 @@
 
 <!-- Nombre de la aplicación -->
 <p data-shadow='CULTURAL CHAIN' id="nombreapp">CULTURAL CHAIN</p>
+
+<button id="logout" onclick="window.location.href='index.php?controller=login&action=cerrarSesion'"> <img width="60" src="../img/iconos/logout.svg" alt="back"> </button>
 
 <!-- Script para el comportamiento de la vista usando JavaScript -->
 <script type="module" src="../js/views/vistapanel.js"></script>

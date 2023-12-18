@@ -654,7 +654,7 @@ ul > li > a> img:not(:first-child){
     border-radius: 15px;
     background: var(--secondary);
     padding-top:15px;
-    padding-bottom: 15px;
+    padding-bottom: 40px;
 }
 
 #panelajustes p{
@@ -877,7 +877,13 @@ nav #logo{
     margin:0;
 }
 
-#menu li:first-child{
+#menu:last-child #logo{
+    border-radius: 0;
+    box-shadow: none;
+}
+
+#menu li:first-child,
+#menu li:last-child{
     margin:0;
     background-color: transparent;
     margin-left: 20px;
@@ -1026,7 +1032,7 @@ nav.translucent li:first-child{
     font-size: 1vw;
     color: var(--terciary);
     position: absolute;
-    top: 52%;
+    top: 55%;
     left: 50%;
     transform: translate(-50%,-50%);
 }

@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once '../php/config/config_db.php';
 require_once '../php/config/config.php';
 require_once '../php/models/mCentros.php';
@@ -31,6 +32,9 @@ $dataToView["data"] = array();
 if(method_exists($controlador,$_GET["action"])) $dataToView["data"] = $controlador->{$_GET["action"]}();
 
 // incluimos la cabecera , la vista que nos llega desde el controlador y por último el footer
-require_once '../php/views/template/header.php';
+$excluded_views = array('sregistro', 'login', 'aregistro');
+if (!in_array($controlador->view, $excluded_views) && $controlador->view) {
+    require_once '../php/views/template/header.php';
+}
 require_once '../php/views/'.$controlador->view.'.php';
 require_once '../php/views/template/footer.php';
