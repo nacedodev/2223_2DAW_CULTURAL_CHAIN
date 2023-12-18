@@ -4,8 +4,7 @@
   <meta charset="UTF-8">
   <title>CodePen - Encrypted Password Reveal w/ GSAP</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@900&family=Press+Start+2P&display=swap');
+  <style>
   @font-face {
   font-family: "Geist Mono";
   src: url("https://assets.codepen.io/605876/GeistMonoVariableVF.ttf") format("truetype");
@@ -25,6 +24,7 @@
 	--button-shade: 80%;
 	--transition: 0.25s;
 	--spark: 1.8s;
+	--bg-button: #3E0900;
 }
 :root:focus-within {
 	--grid-accent: hsla(0, 0%, 10%, 0);
@@ -41,6 +41,25 @@
 		--color-alpha: #6F7789;
 		--grid-line: hsl(0, 0%, 16%);
 		--input-bg: hsl(0 0% 0% / 0.2);
+		--bg-button:#131723; 
+	}
+	:root:focus-within {
+		--grid-accent: hsla(0, 0%, 80%, 0);
+	}
+}
+
+@media(prefers-color-scheme: light) {
+	:root {
+		--button-shade: 30%;
+		--glint: black;
+		--grid-accent: hsla(0, 0%, 80%, 0);
+		--selection: hsl(0 0% 20%);
+		--color: #8a1500;
+		--bg: #FFF5DD;
+		--color-alpha: #3E0900;
+		--grid-line: rgba(204, 172, 146, 0.5);
+		--input-bg: hsl(0 0% 0% / 0.2);
+		--bg-button: #3E0900;
 	}
 	:root:focus-within {
 		--grid-accent: hsla(0, 0%, 80%, 0);
@@ -66,17 +85,6 @@ body {
 	font-family:  'Geist Mono', sans-serif, system-ui;
 	color: var(--color);
 	background: var(--bg);
-}
-
-nav{
-  font-family: 'Poppins',sans-serif;
-}
-
-body{
-  min-height: 100vh;
-	font-family:  'Geist Mono', sans-serif, system-ui;
-	color: var(--color);
-	background: var(--bg); 
 }
 
 body::before {
@@ -189,10 +197,22 @@ input{
 	padding: 10px;
 }
 
-#sendform{
+@media(prefers-color-scheme: dark) {
+	#send{
+		--bg:#131723; 
+	}
+}
+
+@media(prefers-color-scheme: light) {
+	#send{
+		--bg:#3E0900; 
+	}
+}
+
+#send{
+	
 		--cut: 0.1em;
 		--active: 0;
-		--bg: #131723;
 		background: var(--bg);
 		font-size: 1.2rem;
 		filter: drop-shadow(0 0 0.2em);
@@ -215,7 +235,7 @@ input{
 		scale: calc(1 + (var(--active) * 0.1));
 }
 
-#sendform:active {
+#send:active {
 	scale: 1;
   }
 
@@ -230,7 +250,7 @@ input{
 	transition: color var(--transition);
 }
 
-#sendform:is(:hover, :focus-visible) path {
+#send:is(:hover, :focus-visible) path {
 	animation-name: bounce;
 }
 
@@ -258,7 +278,7 @@ input{
 }
 
 
-#sendform:before {
+#send:before {
 	content: "";
 	position: absolute;
 	inset: -0.25em;
@@ -326,7 +346,7 @@ input{
 	}
 }
 
-#sendform:is(:hover, :focus-visible) {
+#send:is(:hover, :focus-visible) {
 	--active: 0.4;
 	--play-state: running;
 }
@@ -334,13 +354,13 @@ input{
 .text {
 	translate: 2% -6%;
 	letter-spacing: 0.01ch;
-	background: linear-gradient(90deg, hsl(0 0% calc((0 * 100%) + 65%)), hsl(0 0% calc((0 * 100%) + 26%)));
+	background: linear-gradient(90deg, hsl(0 0% calc((0.3 * 100%) + 65%)), hsl(0 0% calc((0.1 * 100%) + 26%)));
 	-webkit-background-clip: text;
 	color: transparent;
 	transition: background var(--transition);
 }
 
-#sendform:before {
+#send:before {
 	content: "";
 	position: absolute;
 	inset: -0.25em;
@@ -378,14 +398,14 @@ button:is(:focus-visible, :hover) {
     form {
         width: 90%;
     }
-	
 }
 
 #error{
-  color: #6F7789;
+  color: var(--color-alpha);
   text-align: center;
   opacity: 0.7;
 }
+
 </style>
 </head>
 <body>

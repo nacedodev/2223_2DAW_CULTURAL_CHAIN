@@ -230,6 +230,15 @@ export class VistaPrincipal extends Vista {
     this.hora.innerHTML = horaActual
   }
 
+  ocultarPreloader () {
+    this.divPersonajes.style.animation = 'disappearRight 0.2s forwards'
+    document.getElementById('loader').style.animation = 'hideLoader 0.4s forwards'
+    this.divIzq.style.animation = 'showTablero 1.2s forwards'
+    this.divPersonajes.style.animation = 'appearRight 1.4s forwards'
+    this.divPersonajes.style.zIndex = 0
+    this.logo.style.zIndex = 1
+  }
+
   /**
  * Realiza acciones específicas cuando se hace clic en un botón, dependiendo del modo actual (clickerMode).
  * @param {Event} e - Objeto de evento que representa la acción de clic.
@@ -732,6 +741,8 @@ export class VistaPrincipal extends Vista {
   }
 
   cargarNiveles () {
+    const tiempoMinimo = 3000; // Mínimo tiempo de espera en milisegundos (3 segundos)
+    const tiempoInicio = Date.now()
     const arrayResultado = [] // Array para almacenar la información estructurada
     $.ajax({
       url: 'php/ajaxniveles.php',
@@ -756,6 +767,13 @@ export class VistaPrincipal extends Vista {
 
           // Agregar el elemento al arrayResultado
           arrayResultado.push(elemento)
+          const tiempoTranscurrido = Date.now() - tiempoInicio;
+      const tiempoRestante = Math.max(0, tiempoMinimo - tiempoTranscurrido);
+
+      // Ocultar el preloader después de un mínimo de 3 segundos o al completar la carga
+      setTimeout(() => {
+        this.ocultarPreloader();
+      }, tiempoRestante);
         }
         // Ahora, arrayResultado contiene la estructura deseada
         this.niveles = arrayResultado
