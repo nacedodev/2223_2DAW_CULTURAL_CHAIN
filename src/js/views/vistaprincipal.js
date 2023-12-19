@@ -231,11 +231,11 @@ export class VistaPrincipal extends Vista {
   }
 
   ocultarPreloader () {
-    
     if (!this.clickerMode) {
       this.divPersonajes.style.animation = 'disappearRight 0.2s forwards'
       document.getElementById('loader').style.animation = 'hideLoader 0.4s forwards'
       setTimeout(() => {
+        document.getElementById('loader').style.display = 'none'
         this.base.style.display = 'block'
         this.divIzq.style.display = 'flex'
         this.divIzq.style.animation = 'showTablero 0.8s forwards'
@@ -246,6 +246,7 @@ export class VistaPrincipal extends Vista {
     } else {
       document.getElementById('loader').style.animation = 'hideLoader 0.4s forwards'
       setTimeout(() => {
+        document.getElementById('loader').style.display = 'none'
         this.base.style.display = 'block'
         this.divIzq.style.display = 'flex'
       }, 400)
